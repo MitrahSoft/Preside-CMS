@@ -12,6 +12,7 @@
 	param name="args.trashed"                     type="boolean";
 	param name="args.child_count"                 type="numeric";
 	param name="args.access_restriction"          type="string";
+	param name="args.main_image"				  type="string" default="";
 
 	param name="args.permission_context"          type="array" default=[];
 	param name="args.parent_restriction"          type="string" default="none";
@@ -28,6 +29,8 @@
 	permContextKeys = Duplicate( args.permission_context );
 	permContextKeys.prepend( args.id );
 	hasNavigatePermission = hasCmsPermission( permissionKey="sitetree.navigate", context="page", contextKeys=permContextKeys )
+	httpHost = cgi.http_host;
+	protocol  = cgi.https=="" ? "http://":"https://";
 
 	if ( hasNavigatePermission ) {
 		pageUrl     = quickBuildLink( args.previewPageBaseLink, { id=args.id } );
@@ -69,8 +72,7 @@
 				<cfif hasChildren><i class="fa fa-lg fa-fw fa-caret-right tree-toggler"></i></cfif><i class="fa fa-fw #pageIcon# page-type-icon" title="#HtmlEditFormat( pageType )#"></i>
 
 				<cfif hasEditPagePermission>
-					<a class="page-title" href="#quickBuildLink( args.editPageBaseLink, {id=args.id} )#" title="#translateResource( "cms:sitetree.edit.child.page.link" )#">
-						#args.title#
+					<a class="page-title screenshot" href="#quickBuildLink( args.editPageBaseLink, {id=args.id} )#" title="#translateResource( "cms:sitetree.edit.child.page.link" )#" data-mainImgsrc="#protocol##httpHost#/asset/#args.main_image#/adminThumbnail/">#args.title#
 					</a>
 				<cfelse>
 					<span class="page-title">#args.title#</span>

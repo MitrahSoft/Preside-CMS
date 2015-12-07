@@ -72,6 +72,7 @@ component extends="preside.system.base.AdminHandler" {
 			, "page.access_restriction"
 			, "page._hierarchy_depth"
 			, "Count( child_pages.id ) as child_count"
+			, "page.main_image"
 		] );
 
 		var additionalNodeArgs = {

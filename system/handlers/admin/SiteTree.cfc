@@ -47,6 +47,7 @@ component extends="preside.system.base.AdminHandler" {
 			, "page.trashed"
 			, "page.access_restriction"
 			, "Count( child_pages.id ) as child_count"
+			, "page.main_image"
 		] );
 
 		prc.trashCount = siteTreeService.getTrashCount();

@@ -55,7 +55,6 @@
 
 			ajaxCompleteHandler = function(){
 				var $children = calculateChildren( $parent );
-
 				$loadingRow.remove();
 				$parent.data( "childrenLoaded", true );
 				$parent.data( "childrenLoading", false );
@@ -65,6 +64,15 @@
 				$children.filter( "[data-open-on-start]" ).each( function(){
 					openChildren( $( this ) );
 				} );
+
+				$page = $parent.parent().find('[data-content]');
+				$page.popover({ 
+					placement : 'top',
+					trigger : "hover",
+					content : $(this).attr("data-content"),
+					html    : true 
+				});
+
 			};
 
 			$.ajax( buildAjaxLink( 'sitetree.ajaxChildNodes', { parentId : $parent.data( "id" ), selected : selectedNode  } ), {

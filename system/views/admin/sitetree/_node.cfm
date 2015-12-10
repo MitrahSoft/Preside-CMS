@@ -29,8 +29,6 @@
 	permContextKeys = Duplicate( args.permission_context );
 	permContextKeys.prepend( args.id );
 	hasNavigatePermission = hasCmsPermission( permissionKey="sitetree.navigate", context="page", contextKeys=permContextKeys )
-	httpHost = cgi.http_host;
-	protocol  = cgi.https=="" ? "http://":"https://";
 
 	if ( hasNavigatePermission ) {
 		pageUrl     = quickBuildLink( args.previewPageBaseLink, { id=args.id } );
@@ -72,7 +70,8 @@
 				<cfif hasChildren><i class="fa fa-lg fa-fw fa-caret-right tree-toggler"></i></cfif><i class="fa fa-fw #pageIcon# page-type-icon" title="#HtmlEditFormat( pageType )#"></i>
 
 				<cfif hasEditPagePermission>
-					<a class="page-title screenshot" href="#quickBuildLink( args.editPageBaseLink, {id=args.id} )#" title="#translateResource( "cms:sitetree.edit.child.page.link" )#" data-mainImgsrc="#protocol##httpHost#/asset/#args.main_image#/adminThumbnail/">#args.title#
+					<cfset image = len('#renderAsset( assetId=args.main_image, context='pickericon' )#') gt 0 ? "#renderAsset( assetId=args.main_image, context='pickericon' )#":"<span>No Main <br> image</span>">
+					<a class="page-title screenshot" href="#quickBuildLink( args.editPageBaseLink, {id=args.id} )#" data-content='#image#'>#args.title#
 					</a>
 				<cfelse>
 					<span class="page-title">#args.title#</span>

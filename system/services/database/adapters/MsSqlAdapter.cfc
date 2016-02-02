@@ -226,12 +226,16 @@ component extends="BaseAdapter" {
 		,          array   joins         = []
 		,          numeric maxRows       = 0
 		,          numeric startRow      = 1
-
+		,		   boolean distinct		 = false
 	) {
 		var newGroupBy  = "";
 		var sql         = "select";
 		var delim       = " ";
 		var col         = "";
+
+		if( arguments.distinct ){
+			sql &= ' distinct'
+		}
 
 		for( col in arguments.selectColumns ){
 			sql &= delim & col;

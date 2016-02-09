@@ -4,7 +4,7 @@ component output=false {
 		var data = args.data ?: "";
 
 		if ( IsDate( data ) ) {
-			return dateFormat( parseDateTime( data ), "long" );
+			return LSDateFormat( parseDateTime( data ), "long",getFwLocale() );
 		}
 
 		return data;

@@ -5,7 +5,7 @@ component output=false {
 
 		if ( IsDate( data ) ) {
 			data = parseDateTime( data );
-			return dateFormat( data, "long" ) & " " & timeFormat( data, "medium" );
+			return LSDateFormat(data,"long",getFwLocale()) & " " & LSTimeFormat( data, "medium" );
 		}
 
 		return data;

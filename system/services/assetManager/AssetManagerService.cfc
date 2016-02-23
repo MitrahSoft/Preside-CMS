@@ -972,13 +972,10 @@ component displayName="AssetManager Service" {
 		var filename        = arguments.assetId & ( Len( Trim( arguments.versionId ) ) ? ".#arguments.versionId#" : "" ) & ".#fileext#";
 		var derivativeSlug  = ReReplace( arguments.derivativeName, "\W", "_", "all" ) & "_" & signature;
 		var storagePath     = "/derivatives/#derivativeSlug#/#filename#";
-		var assetDimension  = getAsset( id=arguments.assetId, throwOnMissing=true, selectFields=[ "height",'width' ] );
 
-		var assetProperty               = {};
-		assetProperty.height            = assetDimension.height ?: 0;
-		assetProperty.width             = assetDimension.width  ?: 0;
-		assetProperty.sourceFile        = expandPath( '/uploads/assets' & asset.storage_path );
-		assetProperty.destinationFile   = expandPath( '/uploads/assets' & storagePath        );
+		var assetProperties               = {};
+		assetProperties.sourceFile        = expandPath( _getStorageProviderForFolder( asset.asset_folder ).getPhysicalPath() & asset.storage_path );
+		assetProperties.filename          = filename;
 
 		for( var transformation in transformations ) {
 			if ( not Len( Trim( transformation.inputFileType ?: "" ) ) or transformation.inputFileType eq fileext ) {
@@ -986,7 +983,7 @@ component displayName="AssetManager Service" {
 					  assetBinary          = assetBinary
 					, transformationMethod = transformation.method ?: ""
 					, transformationArgs   = transformation.args   ?: {}
-					, assetProperty        = assetProperty         ?: {}
+					, assetProperties      = assetProperties       ?: {}
 				);
 
 				if ( Len( Trim( transformation.outputFileType ?: "" ) ) ) {
@@ -1261,13 +1258,13 @@ component displayName="AssetManager Service" {
 		}
 	}
 
-	private binary function _applyAssetTransformation( required binary assetBinary, required string transformationMethod, required struct transformationArgs, required struct assetProperty) {
+	private binary function _applyAssetTransformation( required binary assetBinary, required string transformationMethod, required struct transformationArgs, required struct assetProperties) {
 		var args        = Duplicate( arguments.transformationArgs );
 
 		// todo, sanity check the input
 
-		args.asset         = arguments.assetBinary;
-		args.assetProperty = arguments.assetProperty;
+		args.asset           = arguments.assetBinary;
+		args.assetProperties = arguments.assetProperties;
 		return _getAssetTransformer()[ arguments.transformationMethod ]( argumentCollection = args );
 	}
 

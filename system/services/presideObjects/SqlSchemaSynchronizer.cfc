@@ -531,7 +531,7 @@ component {
 						}
 						try {
 							if ( _getAdapter( obj.meta.dsn ).requiresManualCommitForTransactions() ) {
-								_runSql( sql = 'commit', dsn = obj.meta.dsn );
+								transaction action="commit";
 							}
 							_runSql( sql = obj.sql.relationships[ key ].createSql, dsn = obj.meta.dsn );
 						} catch( any e ) {

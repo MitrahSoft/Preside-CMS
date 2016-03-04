@@ -12,14 +12,14 @@ component output="false" singleton=true {
 
 // PUBLIC API METHODS
 	public ValidationResult function validate( required string ruleset, required struct data, any result=newValidationResult(), boolean ignoreMissing=false ) outut=false {
-		var rules       = _getRuleset( arguments.ruleset );
-		var validators  = _getValidators();
-		var validator   = _getValidators();
-		var providers   = "";
-		var provider    = "";
-		var rule        = "";
-		var fieldResult = "";
-
+		var rules           = _getRuleset( arguments.ruleset );
+		var validators      = _getValidators();
+		var validator       = _getValidators();
+		var providers       = "";
+		var provider        = "";
+		var rule            = "";
+		var fieldResult     = "";
+		var fieldNameSuffix = arguments.data.fieldNameSuffix  ?: "";
 		for( rule in rules ){
 			if ( arguments.ignoreMissing && !arguments.data.keyExists( rule.fieldName ) ) {
 				continue;
@@ -37,14 +37,14 @@ component output="false" singleton=true {
 
 				if ( not IsBoolean( fieldResult ) or not fieldResult ) {
 					result.addError(
-						  fieldName = rule.fieldName
+						  fieldName = rule.fieldName&fieldNameSuffix
 						, message   = ( Len( Trim( rule.message ) ) ? rule.message : provider.getDefaultMessage( name=rule.validator ) )
 						, params    = provider.getValidatorParamValues( name=rule.validator, params=rule.params )
 					);
 				}
 			}
 		}
-
+		
 		return result;
 	}
 

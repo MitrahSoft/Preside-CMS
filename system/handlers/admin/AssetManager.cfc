@@ -93,49 +93,59 @@ component extends="preside.system.base.AdminHandler" {
 
 	function addAssetAction( event, rc, prc ) {
 		_checkPermissions( argumentCollection=arguments, key="assets.upload" );
-
-		var fileId           = rc.fileId ?: "";
-		var folder           = rc.folder ?: assetManagerService.getRootFolderId();
-		var formName         = "preside-objects.asset.admin.add";
-		var formData         = event.getCollectionForForm( formName );
-		var validationResult = "";
-
-		formData.asset_folder = folder;
-
-		validationResult = validateForm( formName, formData );
-
-		if ( validationResult.validated() ) {
-			try {
-				var assetId = assetManagerService.saveTemporaryFileAsAsset(
-					  tmpId     = fileId
-					, folder    = folder
-					, assetData = formData
-				);
-
-				event.renderData( type="json", data={
-					  success = true
-					, title   = ( rc.title ?: "" )
-					, id      = assetId
-				} );
-			} catch( "PresideCMS.AssetManager.asset.wrong.type.for.folder" e ) {
-				validationResult.addError( fieldname="folder", message=translateResource( uri="cms:assetmanager.folder.type.restriction.validation.message" ) );
-			} catch( "PresideCMS.AssetManager.asset.too.big.for.folder" e ) {
-				validationResult.addError( fieldname="folder", message=translateResource( uri="cms:assetmanager.folder.size.restriction.validation.message" ) );
-			} catch ( any e ) {
-				logError( e );
-				event.renderData( data={
-					  success = false
-					, title   = translateResource( "cms:assetmanager.add.asset.unexpected.error.title" )
-					, message = translateResource( "cms:assetmanager.add.asset.unexpected.error.message" )
+		var fileIdList        = rc.fileId     ?: "";
+		var folder            = rc.folder     ?: assetManagerService.getRootFolderId();
+		var formName          = "preside-objects.asset.admin.add";
+		var assetForm         = rc.assetForm  ?: "";
+		var validationResult  = "";
+		var validation        = "";
+		var validationMessage = {};
+		var formData          = event.getCollectionForForm( formName );
+		for( var fileId in fileIdList ) {
+		    if( len( assetForm ) ){
+		   	    formData                   = event.getCollectionForFormAsset( formName, fileId );
+		    	formData.fieldNameSuffix   = "_"&fileId;
+		    }
+		    formData.asset_folder          = folder;
+		    validationResult               = validateForm( formName, formData );
+		    validation                     = listAppend( validation, validationResult.validated() );
+		    if ( listFind( validation, false ) ) {
+		    	structAppend( validationMessage, translateValidationMessages( validationResult, fileId ) );
+			    event.renderData( data={
+					  success          = false
+					, validationResult = validationMessage
 				}, type="json" );
 			}
 		}
-
-		if ( !validationResult.validated() ) {
-			event.renderData( data={
-				  success          = false
-				, validationResult = translateValidationMessages( validationResult )
-			}, type="json" );
+		if ( !listFind( validation, false ) ) {
+			for( var fileId in fileIdList ) {
+				if(len( assetForm ) ) {
+		   	        formData = event.getCollectionForFormAsset( formName, fileId );
+		        }
+			    try {
+					var assetId   = assetManagerService.saveTemporaryFileAsAsset(
+						  tmpId     = fileId
+						, folder    = folder
+						, assetData = formData
+					);
+					event.renderData( type="json", data={
+						  success = true
+						, title   = ( formData.title ?: "" )
+						, id      = assetId
+					} );
+			    }catch( "PresideCMS.AssetManager.asset.wrong.type.for.folder" e ) {
+				validationResult.addError( fieldname="folder", message=translateResource( uri="cms:assetmanager.folder.type.restriction.validation.message" ) );
+			    } catch( "PresideCMS.AssetManager.asset.too.big.for.folder" e ) {
+				validationResult.addError( fieldname="folder", message=translateResource( uri="cms:assetmanager.folder.size.restriction.validation.message" ) );
+			    } catch ( any e ) {
+				    logError( e );
+				    event.renderData( data={
+						  success = false
+						, title   = translateResource( "cms:assetmanager.add.asset.unexpected.error.title" )
+						, message = translateResource( "cms:assetmanager.add.asset.unexpected.error.message" )
+					}, type="json" );
+				}
+			}
 		}
 	}
 

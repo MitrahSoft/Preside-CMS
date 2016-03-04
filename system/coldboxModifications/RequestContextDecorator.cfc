@@ -126,6 +126,18 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		return collection;
 	}
 
+	public struct function getCollectionForFormAsset( required string formName, required string fileId) output=false {
+		var formFields = getModel( "formsService" ).listFields( arguments.formName );
+		var collection = {};
+		var rc         = getRequestContext().getCollection();
+
+		for( var field in formFields ){
+			collection[ field ] = ( rc[ field&"_"&arguments.fileId ] ?: "" );
+		}
+
+		return collection;
+	}
+
 // Admin specific
 	public string function buildAdminLink( string linkTo="", string queryString="" ) output=false {
 		arguments.linkTo = ListAppend( "admin", arguments.linkTo, "." );

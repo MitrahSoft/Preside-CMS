@@ -18,8 +18,10 @@ component extends="preside.system.base.AdminHandler" {
 			i18n.setFwLocale( Trim( rc.l ) );
 		}
 
+		var redirectTo = structKeyExists(rc, "callBack") ? rc.callBack : adminDefaultEvent;
+
 		if ( event.isAdminUser() ){
-			setNextEvent( url=event.buildAdminLink( linkto=adminDefaultEvent ) );
+			setNextEvent( url=event.buildAdminLink( linkto=redirectTo ) );
 		}
 
 		if ( loginService.isUserDatabaseNotConfigured() ) {

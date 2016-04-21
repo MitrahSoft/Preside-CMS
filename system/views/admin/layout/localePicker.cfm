@@ -12,7 +12,7 @@
 		<ul class="admin-locale-picker dropdown-menu dropdown-caret pull-right dropdown-close dropdown-yellow">
 			<cfloop array="#args.locales#" item="locale" index="i">
 				<li <cfif locale.selected>class="active"</cfif>>
-					<a href="#event.buildAdminLink( linkTo='login', querystring='l=#locale.locale#' )#" class="locale-link">
+					<a href="#event.buildAdminLink( linkTo='login', querystring='l=#locale.locale#&callBack=#event.getCurrentHandler()#.#event.getCurrentAction()#' )#" class="locale-link">
 						<span class="flag-and-title">
 							<img src="/preside/system/assets/images/flags/16x16/#locale.flag#" class="locale-flag" />
 							#locale.title#

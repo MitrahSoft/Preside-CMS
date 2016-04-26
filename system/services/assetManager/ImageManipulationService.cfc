@@ -32,7 +32,7 @@ component displayname="Image Manipulation Service" {
 		,          boolean maintainAspectRatio = false
 	) {
 		var image              = "";
-		var interpolation      = arguments.quality
+		var interpolation      = arguments.quality;
 		var targetAspectRatio  = 0;
 		var currentImageInfo   = {};
 		var currentAspectRatio = 0;

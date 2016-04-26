@@ -26,7 +26,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 	private void function _initSticker() output=false {
 		var sticker           = new sticker.Sticker();
 		var settings          = super.getController().getSettingStructure();
-		var sysAssetsPath     = "/preside/system/assets/"
+		var sysAssetsPath     = "/preside/system/assets/";
 		var extensionsRootUrl = "/preside/system/assets/extension/";
 		var siteAssetsPath    = settings.static.siteAssetsPath ?: "/assets";
 		var siteAssetsUrl     = settings.static.siteAssetsUrl  ?: "/assets";

@@ -425,7 +425,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var joinTargets        = "";
 		var joins              = [];
 		var cleanedData        = Duplicate( arguments.data );
-		var manyToManyData     = {}
+		var manyToManyData     = {};
 		var key                = "";
 		var requiresVersioning = arguments.useVersioning && objectIsVersioned( arguments.objectName );
 		var preparedFilter     = "";

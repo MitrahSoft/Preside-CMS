@@ -32,12 +32,12 @@
 
 	appMapping = getSetting( "appMapping" );
 	if ( FileExists( "#appMapping#/config/Routes.cfm" ) ) {
-		include template="#appMapping#/config/Routes.cfm";
+		include "#appMapping#/config/Routes.cfm";
 	}
 
 	getSetting( "activeExtensions" ).each( function( ext ){
 		if ( FileExists( ext.directory & "/config/Routes.cfm" ) ) {
-			include template=ext.directory & "/config/Routes.cfm";
+			include "#ext.directory#/config/Routes.cfm";
 		}
 	} );
 

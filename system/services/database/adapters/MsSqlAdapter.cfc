@@ -25,7 +25,7 @@ component extends="BaseAdapter" {
 		,          boolean  autoIncrement = false
 
 	) {
-		var columnDef  = escapeEntity( arguments.columnName )
+		var columnDef  = escapeEntity( arguments.columnName );
 		var isNullable = not arguments.primaryKey and ( arguments.nullable or StructKeyExists( arguments, 'defaultValue' ) );
 
 		switch( arguments.dbType ) {
@@ -366,7 +366,7 @@ component extends="BaseAdapter" {
 	public boolean function supportsCascadeUpdateDelete() {
 		return false;
 	}
-	
+
 	public boolean function supportsRenameInAlterColumnStatement() {
 		return false;
 	}

@@ -942,7 +942,7 @@ component {
 
 		for( var item in existingItems ) {
 			try {
-				item = DeserializeJson( item.configuration )
+				item = DeserializeJson( item.configuration );
 			} catch ( any e ) {
 				item = {};
 			}

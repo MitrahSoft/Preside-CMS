@@ -28,7 +28,7 @@ component output=false hint="Manage preside extensions" {
 
 	private any function list( event, rc, prc ) output=false {
 		var extensions = extensionManagerService.listExtensions();
-		var msg           = ""
+		var msg           = "";
 		var tableWidth    = 0;
 		var titleWidth    = 5;
 		var idWidth       = 2;

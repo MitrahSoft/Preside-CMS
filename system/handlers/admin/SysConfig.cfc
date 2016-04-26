@@ -48,8 +48,8 @@ component extends="preside.system.base.AdminHandler" output=false {
 			, link  = ""
 		);
 
-		prc.pageTitle    = translateResource( uri="cms:sysconfig.editCategory.title", data=[ prc.categoryName ] )
-		prc.pageSubtitle = prc.categoryDescription
+		prc.pageTitle    = translateResource( uri="cms:sysconfig.editCategory.title", data=[ prc.categoryName ] );
+		prc.pageSubtitle = prc.categoryDescription;
 		prc.pageIcon     = translateResource( uri=prc.category.getIcon(), defaultValue="" );
 
 		if ( !Len( Trim( prc.pageIcon ) ) ) {

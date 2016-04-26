@@ -216,7 +216,7 @@ component output=false {
 			 }
 		};
 
-		settings.adminRoles = StructNew( "linked" );
+		settings.adminRoles = createObject("java", "java.util.LinkedHashMap").init();
 
 		settings.adminRoles.sysadmin           = [ "usermanager.*", "groupmanager.*", "systemConfiguration.*", "presideobject.security_user.*", "presideobject.security_group.*", "websiteBenefitsManager.*", "websiteUserManager.*", "sites.*", "presideobject.links.*", "notifications.*", "passwordPolicyManager.*", "urlRedirects.*"  ];
 		settings.adminRoles.contentadmin       = [ "sites.*", "presideobject.site.*", "presideobject.link.*", "sitetree.*", "presideobject.page.*", "datamanager.*", "assetmanager.*", "presideobject.asset.*", "presideobject.asset_folder.*", "formbuilder.*", "!formbuilder.lockForm", "!formbuilder.activateForm" ];
@@ -297,7 +297,7 @@ component output=false {
 
 		environments = {
 			local = "^local\.,\.local$,^localhost(:[0-9]+)?$,^127.0.0.1(:[0-9]+)?$"
-		}
+		};
 
 	}
 
@@ -416,7 +416,7 @@ component output=false {
 			, pptm = { serveAsAttachment=true, mimeType="application/vnd.ms-powerpoint.presentation.macroEnabled.12" }
 			, potm = { serveAsAttachment=true, mimeType="application/vnd.ms-powerpoint.template.macroEnabled.12" }
 			, ppsm = { serveAsAttachment=true, mimeType="application/vnd.ms-powerpoint.slideshow.macroEnabled.12" }
-		}
+		};
 
 		// TODO, more types to be defined here!
 
@@ -488,7 +488,7 @@ component output=false {
 	}
 
 	private string function _getCookieEncryptionKey() output=false {
-		var cookieKeyFile = "#settings.appMapping#/config/.cookieEncryptionKey";
+		var cookieKeyFile = expandPath( "#settings.appMapping#/config/.cookieEncryptionKey" );
 		if ( FileExists( cookieKeyFile ) ) {
 			try {
 				return FileRead( cookieKeyFile );

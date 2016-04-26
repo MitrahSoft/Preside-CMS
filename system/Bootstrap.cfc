@@ -14,7 +14,7 @@ component {
 		this.PRESIDE_APPLICATION_ID                  = arguments.id;
 		this.PRESIDE_APPLICATION_RELOAD_LOCK_TIMEOUT = arguments.applicationReloadLockTimeout;
 		this.PRESIDE_APPLICATION_RELOAD_TIMEOUT      = arguments.applicationReloadTimeout;
-		this.name                                    = arguments.name
+		this.name                                    = arguments.name;
 		this.sessionManagement                       = arguments.sessionManagement;
 		this.sessionTimeout                          = arguments.sessionTimeout;
 		this.scriptProtect                           = arguments.scriptProtect;
@@ -79,13 +79,13 @@ component {
 		}
 	}
 
-	public void function onError(  required struct exception, required string eventName ) output=true {
+	public void function onError(  required any exception, required string eventName ) output=true {
 		if ( _dealWithSqlReloadProtectionErrors( arguments.exception ) ) {
 			return;
 		}
 
 		if ( _showErrors() ) {
-			throw object=arguments.exception;
+			throw (object=arguments.exception);
 
 
 		} else {
@@ -110,7 +110,7 @@ component {
 		this.mappings[ "/coldbox"        ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox";
 		this.mappings[ "/sticker"        ] = presideroot & "/system/externals/sticker";
 		this.mappings[ "/spreadsheetlib" ] = presideroot & "/system/externals/lucee-spreadsheet";
-		this.mappings[ "/javaloader"     ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox/system/core/javaloader"
+		this.mappings[ "/javaloader"     ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox/system/core/javaloader";
 
 		this.mappings[ arguments.appMapping     ] = arguments.appPath;
 		this.mappings[ arguments.assetsMapping  ] = arguments.assetsPath;
@@ -148,7 +148,7 @@ component {
 					_announceInterception( "prePresideReload" );
 
 
-					log file="application" text="Application starting up (fwreinit called, or application starting for the first time).";
+					writelog( file="application", text="Application starting up (fwreinit called, or application starting for the first time)." );
 
 					_clearExistingApplication();
 					_fetchInjectedSettings();
@@ -156,7 +156,7 @@ component {
 					_initColdBox();
 
 					_announceInterception( "postPresideReload" );
-					log file="application" text="Application start up complete";
+					writelog( file="application", text="Application start up complete" );
 				}
 			}
 		} catch( lock e ) {
@@ -216,18 +216,18 @@ component {
 			var luceeAdminPassword = config[ "lucee.admin.password" ] ?: "";
 
 			// use cfadmin tag here; using this.datasources proving to be unreliable
-			admin action     = "updateDatasource"
-			      type       = "web"
-			      classname  = "org.gjt.mm.mysql.Driver"
-			      dsn        = "jdbc:mysql://#host#:#port#/#dbName#?useUnicode=true&characterEncoding=#encoding#&useLegacyDatetimeCode=true"
-			      name       = dsn
-			      newName    = dsn
-			      host       = host
-			      database   = dbname
-			      port       = port
-			      dbusername = username
-			      dbpassword = password
-			      password   = luceeAdminPassword;
+			cfadmin(  action     = "updateDatasource"
+			         ,type       = "web"
+			         ,classname  = "org.gjt.mm.mysql.Driver"
+			         ,dsn        = "jdbc:mysql://#host#:#port#/#dbName#?useUnicode=true&characterEncoding=#encoding#&useLegacyDatetimeCode=true"
+			         ,name       = dsn
+			         ,newName    = dsn
+			         ,host       = host
+			         ,database   = dbname
+			         ,port       = port
+			         ,dbusername = username
+			         ,dbpassword = password
+			         ,password   = luceeAdminPassword );
 		}
 	}
 
@@ -280,7 +280,7 @@ component {
 		return;
 	}
 
-	private boolean function _dealWithSqlReloadProtectionErrors( required struct exception ) output=true {
+	private boolean function _dealWithSqlReloadProtectionErrors( required any exception ) output=true {
 		var exceptionType = ( arguments.exception.type ?: "" );
 
 		if ( exceptionType == "presidecms.auto.schema.sync.disabled" ) {
@@ -293,8 +293,8 @@ component {
 				).raiseError( attributes.e );
 			}
 
-			header statuscode=500;content reset=true;
-			include template="/preside/system/views/errors/sqlRebuild.cfm";
+			cfheader( statuscode=500 );cfcontent( reset=true );
+			cfinclude( template="/preside/system/views/errors/sqlRebuild.cfm" );
 			return true;
 		}
 
@@ -447,11 +447,8 @@ component {
 		return anyCleared;
 	}
 
-	private string function _getApplicationRoot() {
-		var trace      = CallStackGet();
-		var appCfcPath = trace[ trace.len() ].template;
-		var dir        = GetDirectoryFromPath( appCfcPath );
-
+	private string function _getApplicationRoot() {		
+		var dir        = GetDirectoryFrompath ( expandPath( "/" ) );
 		return ReReplace( dir, "[\\/]$", "" );
 	}
 
@@ -469,8 +466,8 @@ component {
 			).raiseError( attributes.e );
 		}
 
-		content reset=true;
-		header statuscode=arguments.statusCode;
+		cfcontent( reset=true );
+		cfheader( statuscode=arguments.statusCode );
 
 		if ( FileExists( ExpandPath( "/#arguments.statusCode#.htm" ) ) ) {
 			Writeoutput( FileRead( ExpandPath( "/#arguments.statusCode#.htm" ) ) );

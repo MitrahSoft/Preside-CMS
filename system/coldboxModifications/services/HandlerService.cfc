@@ -170,7 +170,7 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 		for( var subDir in DirectoryList( arguments.siteTemplatesPath, false, "query" ) ) {
 			if ( subDir.type == "Dir" ) {
 				var handlersDir    = arguments.siteTemplatesPath & "/#subDir.name#/handlers";
-				var invocationPath = arguments.siteTemplatesInvocationPath & ".#subDir.name#.handlers"
+				var invocationPath = arguments.siteTemplatesInvocationPath & ".#subDir.name#.handlers";
 
 				if ( DirectoryExists( handlersDir ) ) {
 					arguments.existingMappings[ subDir.name ] = arguments.existingMappings[ subDir.name ] ?: [];
@@ -182,9 +182,9 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 
 	private array function _getCfcMethods( required struct meta ) output=false {
 		var methods = {};
-
-		if ( ( arguments.meta.extends ?: {} ).count() ) {
-			_getCfcMethods( arguments.meta.extends ).each( function( method ){
+		var metaextends = arguments.meta.extends ?: {};
+		if ( metaextends.count() ) {
+			_getCfcMethods( metaextends ).each( function( method ){
 				methods[ method ] = true;
 			} );
 		}

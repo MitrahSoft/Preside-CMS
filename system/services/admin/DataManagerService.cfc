@@ -51,7 +51,8 @@ component output="false" singleton=true {
 		}
 
 		for( var group in groups ) {
-			groups[ group ].objects.sort( function( obj1, obj2 ){
+			var currentgroup=groups[ group ];
+			currentgroup.objects.sort( function( obj1, obj2 ){
 				return obj1.title > obj2.title ? 1 : -1;
 			} );
 			ArrayAppend( groupedObjects, groups[ group ] );
@@ -92,7 +93,7 @@ component output="false" singleton=true {
 		var forbiddenFields      = [ "id", "datecreated", "datemodified", _getPresideObjectService().getObjectAttribute( arguments.objectName, "labelfield", "label" ) ];
 		var isFieldBatchEditable = function( propertyName, attributes ) {
 			if ( forbiddenFields.findNoCase( propertyName ) ) {
-				return false
+				return false;
 			}
 			if ( attributes.relationship == "one-to-many" ) {
 				return false;
@@ -105,7 +106,7 @@ component output="false" singleton=true {
 			}
 
 			return true;
-		}
+		};
 
 		for( var property in objectAttributes ) {
 			if ( isFieldBatchEditable( property, objectAttributes[ property ] ) ) {
@@ -291,7 +292,7 @@ component output="false" singleton=true {
 						case "delete":
 							targetIdList = existingIds;
 							for( var id in newChoices ) {
-								targetIdList.delete( id )
+								targetIdList.delete( id );
 							}
 							break;
 						default:
@@ -359,7 +360,7 @@ component output="false" singleton=true {
 
 		if ( arguments.ids.len() ) {
 			args.filter = { id = arguments.ids };
-		} elseif ( Len( Trim( arguments.searchQuery ) ) ) {
+		} else if ( Len( Trim( arguments.searchQuery ) ) ) {
 			args.filter       = _buildSearchFilter( arguments.searchQuery, arguments.objectName, arguments.selectFields );
 			args.filterParams = { q = { type="varchar", value="%" & arguments.searchQuery & "%" } };
 		}
@@ -367,7 +368,7 @@ component output="false" singleton=true {
 		records = _getPresideObjectService().selectData( argumentCollection = args );
 		if ( arguments.ids.len() ) {
 			var tmp = {};
-			for( var r in records ) { tmp[ r.id ] = transormResult( r ) };
+			for( var r in records ) { tmp[ r.id ] = transormResult( r ); };
 			for( var id in arguments.ids ){
 				if ( tmp.keyExists( id ) ) {
 					result.append( tmp[id] );

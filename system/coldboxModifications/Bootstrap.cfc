@@ -27,7 +27,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 			content = Trim( content );
 
 			if ( Len( content ) ) {
-				content reset=true;WriteOutput( content );return true;
+				cfcontent( reset=true );WriteOutput( content );return true;
 			}
 		}
 
@@ -45,9 +45,9 @@ component extends="coldbox.system.Coldbox" output="false" {
 		var exceptionBean      = 0;
 		var renderedContent    = "";
 		var eventCacheEntry    = 0;
-		var interceptorData    = {}
-		var renderData         = {}
-		var refResults         = {}
+		var interceptorData    = {};
+		var renderData         = {};
+		var refResults         = {};
 		var debugPanel         = "";
 		var interceptorService = "";
 
@@ -76,13 +76,13 @@ component extends="coldbox.system.Coldbox" output="false" {
 						WriteOutput( cbController.getDebuggerService().renderProfiler() );
 					break;
 					case "cache,cacheReport,cacheContentReport,cacheViewer":
-						module template="/coldbox/system/cache/report/monitor.cfm" cacheFactory=cbController.getCacheBox();
+						cfmodule( template="/coldbox/system/cache/report/monitor.cfm", cacheFactory=cbController.getCacheBox() );
 					break;
 				}
 
 				// Stop Processing, we are rendering a debugger panel
 				if ( len(debugPanel) ) {
-					setting showdebugoutput=false;
+					cfsetting( showdebugoutput=false );
 					return;
 				}
 			}
@@ -107,12 +107,12 @@ component extends="coldbox.system.Coldbox" output="false" {
 				}
 				// Render Content as binary or just output
 				if ( refResults.eventCaching.isBinary ) {
-					content type=refResults.eventCaching.contentType variable=refResults.eventCaching.renderedContent;
+					cfcontent( type=refResults.eventCaching.contentType, variable=refResults.eventCaching.renderedContent );
 				} else {
 					WriteOutput( refResults.eventCaching.renderedContent );
 				}
 				// Authoritative Header
-				header statuscode=203 statustext="Non-Authoritative Information";
+				cfheader( statuscode=203, statustext="Non-Authoritative Information" );
 			} else {
 				// Run Default/Set Event not executing an event
 				if ( not event.isNoExecution() ) {
@@ -133,7 +133,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 						renderedContent = cbController.getPlugin( "Utilities" ).marshallData( argumentCollection=renderData );
 
 					// Check for Event Handler return results
-					} elseif ( StructKeyExists( refResults, "results" ) ) {
+					} else if ( StructKeyExists( refResults, "results" ) ) {
 						renderedContent = refResults.results;
 					} else {
 						// Render Layout/View pair via set variable to eliminate whitespace--->
@@ -166,7 +166,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 									statusCode      = "",
 									statusText      = "",
 									isBinary        = false
-								}
+								};
 
 								// Render Data Caching Metadata
 								if ( IsStruct( renderData ) and not structisEmpty( renderData ) ) {
@@ -189,7 +189,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 						event.showDebugPanel( false );
 						renderDataSetup( argumentCollection=renderData );/*
 						Binary
-						*/if ( renderData.isBinary ) { content type=renderData.contentType variable=renderedContent;/*
+						*/if ( renderData.isBinary ) { cfcontent( type=renderData.contentType, variable=renderedContent );/*
 						Non Binary
 						*/} else { WriteOutput( renderedContent ); }
 					// Normal HTML

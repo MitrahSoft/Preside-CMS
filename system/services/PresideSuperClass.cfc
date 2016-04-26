@@ -570,6 +570,6 @@ component displayName="Preside Super Class" {
 	 *
 	 */
 	public any function $announceInterception() {
-		return $getColdbox().getInterceptorService().processState( argumentCollection=arguments )
+		return $getColdbox().getInterceptorService().processState( argumentCollection=arguments );
 	}
 }

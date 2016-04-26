@@ -834,7 +834,7 @@ component displayName="AssetManager Service" {
 
 		if ( asset.recordCount ) {
 			var assetInfo = _getStorageProviderForFolder( asset.asset_folder ).getObjectInfo( asset.storage_path, arguments.isTrashed );
-			var etag      = LCase( Hash( SerializeJson( assetInfo ) ) )
+			var etag      = LCase( Hash( SerializeJson( assetInfo ) ) );
 
 			return Left( etag, 8 );
 		}
@@ -1007,7 +1007,7 @@ component displayName="AssetManager Service" {
 			, restricted                         = false
 			, fullLoginRequired                  = false
 			, grantAcessToAllLoggedInUsers       = false
-		}
+		};
 
 		if ( !asset.recordCount ){ return settings; }
 
@@ -1237,7 +1237,7 @@ component displayName="AssetManager Service" {
 
 	private void function _setupConfiguredSystemFolder( required string id, required struct settings, required string parentId ) {
 		var dao            = _getFolderDao();
-		var existingRecord = dao.selectData( selectfields=[ "id" ], filter={ is_system_folder=true, system_folder_key=arguments.id } )
+		var existingRecord = dao.selectData( selectfields=[ "id" ], filter={ is_system_folder=true, system_folder_key=arguments.id } );
 		var folderId       = existingRecord.id ?: "";
 
 		if ( !Len( Trim( folderId ) ) ) {
@@ -1261,9 +1261,13 @@ component displayName="AssetManager Service" {
 		var args        = Duplicate( arguments.transformationArgs );
 
 		// todo, sanity check the input
-
 		args.asset = arguments.assetBinary;
-		return _getAssetTransformer()[ arguments.transformationMethod ]( argumentCollection = args );
+		var invokation = "";
+
+		//TOCHECK
+        cfinvoke ( component=_getAssetTransformer(), method=arguments.transformationMethod, argumentCollection = args, returnVariable="invokation" );
+
+        return invokation;
 	}
 
 	private array function _getPreconfiguredDerivativeTransformations( required string derivativeName ) {
@@ -1324,7 +1328,7 @@ component displayName="AssetManager Service" {
 	}
 
 	private struct function _getExcludeHiddenFilter() {
-		return { filter="hidden is null or hidden = '0'" }
+		return { filter="hidden is null or hidden = '0'" };
 	}
 
 	private numeric function _getNextAssetVersionNumber( required string assetId ) {

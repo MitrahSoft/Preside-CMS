@@ -61,11 +61,11 @@
 					, interceptorService = arguments.interceptorService
 					, featureService = mockFeatureService
 				);
-				var localCachebox       = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
+				var localCachebox  = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
 				var dbInfoService  = new preside.system.services.database.DbInfoService();
 				var sqlRunner      = new preside.system.services.database.sqlRunner( logger = logger );
 
-				var adapterFactory = new preside.system.services.database.adapters.AdapterFactory(
+				var adapterFactory  = new preside.system.services.database.adapters.AdapterFactory(
 					  cache         = localCachebox.getCache( "PresideSystemCache" )
 					, dbInfoService = dbInfoService
 				);
@@ -182,7 +182,7 @@
 			var tables          = [];
 			var reservedSchemas = [ "sys", "information_schema" ];
 
-			cfdbinfo(type="tables", name="tableInfo", datasource=application.dsn);
+			cfdbinfo( type="tables", name="tableInfo", datasource="#application.dsn#" );
 
 			for( var table in tableInfo ){
 				var isInReservedSchema = reservedSchemas.find( table.table_schem ?: "" );
@@ -271,7 +271,7 @@
 		<cfscript>
 			var columns = "";
 
-			cfdbinfo(type="columns", name="columns", table=arguments.tableName, datasource=application.dsn);
+			cfdbinfo( type="columns", name="columns", table="#arguments.tableName#", datasource="#application.dsn#" );
 
 			return columns;
 		</cfscript>

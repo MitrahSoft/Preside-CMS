@@ -73,7 +73,7 @@ component extends="testbox.system.BaseSpec"{
 					  id            = CreateUUId()
 					, action        = { id="webhook", submissionHandler="formbuilder.actions.webhook.onSubmit" }
 					, configuration = { endpoint="http://myhook.com/receiver/" }
-				}]
+				}];
 
 				service.$( "getFormActions" ).$args( formId ).$results( savedActions );
 				mockColdbox.$( "runEvent" );

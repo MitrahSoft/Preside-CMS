@@ -59,10 +59,11 @@ component output="false" {
 		var methods  = GetMetaData( arguments.sourceCfc ).functions;
 		var method   = "";
 		var result   = "";
-
+		var source   = "";
 		for( method in methods ) {
 			if ( method.access eq "public" and method.name eq jsMethod ) {
-				result = arguments.sourceCfc[ jsMethod ]();
+				source = arguments.sourceCfc[ jsMethod ];
+				result = source();
 
 				if ( not IsSimpleValue( result ) ) {
 					throw( type="ValidationProvider.badJsReturnValue", message="A non-string value was returned from the javascript validator function, [#jsMethod#]. This method should return a string containing a javascript function." );

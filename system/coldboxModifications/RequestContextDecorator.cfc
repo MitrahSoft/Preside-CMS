@@ -313,7 +313,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		var getPageArgs = {};
 		var isActive    = function( required boolean active, required string embargo_date, required string expiry_date ) {
 			return arguments.active && ( !IsDate( arguments.embargo_date ) || Now() >= arguments.embargo_date ) && ( !IsDate( arguments.expiry_date ) || Now() <= arguments.expiry_date );
-		}
+		};
 
 		if ( ( arguments.slug ?: "/" ) == "/" && !Len( Trim( arguments.pageId ?: "" ) ) && !Len( Trim( arguments.systemPage ?: "" ) ) ) {
 			page = sitetreeSvc.getSiteHomepage();
@@ -321,7 +321,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		} else {
 			if ( Len( Trim( arguments.pageId ?: "" ) ) ) {
 				getPageArgs.id = arguments.pageId;
-			} elseif ( Len( Trim( arguments.systemPage ?: "" ) ) ) {
+			} else if ( Len( Trim( arguments.systemPage ?: "" ) ) ) {
 				getPageArgs.systemPage = arguments.systemPage;
 			} else {
 				getPageArgs.slug = arguments.slug;
@@ -444,8 +444,8 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 	}
 
 	public void function preventPageCache() output=false {
-		header name="cache-control" value="no-cache, no-store";
-		header name="expires"       value="Fri, 20 Nov 2015 00:00:00 GMT";
+		cfheader( name="cache-control", value="no-cache, no-store" );
+		cfheader( name="expires",      value="Fri, 20 Nov 2015 00:00:00 GMT");
 	}
 
 	public boolean function canPageBeCached() output=false {
@@ -558,7 +558,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		getRequestContext().setValue( name="_presideCmsEditPageLink", value=arguments.editPageLink, private=true );
 	}
 
-<!--- FRONT END - Multilingual helpers --->
+// FRONT END - Multilingual helpers 
 	public string function getLanguage() output=false {
 		return getRequestContext().getValue( name="_language", defaultValue="", private=true );
 	}
@@ -566,11 +566,12 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		getRequestContext().setValue( name="_language", value=arguments.language, private=true );
 	}
 
-<!--- status codes --->
+//status codes 
 	public void function notFound() output=false {
 		announceInterception( "onNotFound" );
 		getController().runEvent( "general.notFound" );
-		content reset=true type="text/html";header statusCode="404";WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
+		cfcontent( reset=true, type="text/html");
+		cfheader( statusCode="404");WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
 	}
 
 	public void function accessDenied( required string reason ) output=false {
@@ -579,7 +580,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
 	}
 
-<!--- private helpers --->
+// private helpers 
 	public string function _structToQueryString( required struct inputStruct ) output=false {
 		var qs    = "";
 		var delim = "";

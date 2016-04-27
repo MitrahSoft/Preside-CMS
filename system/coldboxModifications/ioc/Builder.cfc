@@ -27,8 +27,8 @@ component output=false extends="coldbox.system.ioc.Builder" {
 			if ( !StructIsEmpty( arguments.initArguments ) ) {
 				StructAppend( constructorArgs, arguments.initArguments, true );
 			}
-
-			oModel[ thisMap.getConstructor() ]( argumentCollection=constructorArgs );
+			var constructor = oModel[ thisMap.getConstructor() ];	
+			constructor( argumentCollection=constructorArgs );
 		}
 
 		return oModel;

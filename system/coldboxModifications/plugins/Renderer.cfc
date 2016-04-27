@@ -782,7 +782,7 @@
 			}
 
 			lock name="#instance.lockName#" type="readonly" timeout="15" throwontimeout="true" {
-				controller.setSetting( cacheKey, mappings )
+				controller.setSetting( cacheKey, mappings );
 			}
 
 			return mappings;

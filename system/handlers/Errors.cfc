@@ -1,7 +1,7 @@
 component {
 	property name="websiteLoginService" inject="websiteLoginService";
 
-<!--- VIEWLETS --->
+// VIEWLETS
 	private string function notFound( event, rc, prc, args={} ) {
 		event.setHTTPHeader( statusCode="404" );
 		event.setHTTPHeader( name="X-Robots-Tag", value="noindex" );
@@ -12,7 +12,7 @@ component {
 				setNextEvent( url=event.buildAdminLink( "login" ) );
 			}
 			event.setLayout( "admin" );
-			return renderView( view="/admin/errorPages/notFound" )
+			return renderView( view="/admin/errorPages/notFound" );
 		}
 		event.initializePresideSiteteePage( systemPage="notFound" );
 		return renderView( view="/errors/notFound", presideobject="notFound", id=event.getCurrentPageId(), args=args );

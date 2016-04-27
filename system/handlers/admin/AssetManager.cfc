@@ -567,7 +567,7 @@ component extends="preside.system.base.AdminHandler" {
 
 			if ( ( fileTypeDetails.groupName ?: "" ) eq "image" ) {
 				// brutal for now - no thumbnail generation, just spit out the file
-				content reset="true" variable="#assetManagerService.getTemporaryFileBinary( fileId )#" type="#fileTypeDetails.mimeType#";abort;
+				cfcontent( reset="true", variable="#assetManagerService.getTemporaryFileBinary( fileId )#", type="#fileTypeDetails.mimeType#" );abort;
 			}
 		}
 
@@ -696,7 +696,7 @@ component extends="preside.system.base.AdminHandler" {
 				);
 			} catch ( "AssetManager.mismatchedMimeType" e ) {
 				messagebox.error( translateResource( "cms:assetmanager.upload.new.version.mismatched.type.error" ) );
-				setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) )
+				setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) );
 
 			} catch ( any e ) {
 				success = false;
@@ -710,7 +710,7 @@ component extends="preside.system.base.AdminHandler" {
 			}
 		}
 
-		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) )
+		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) );
 	}
 
 	function assetPickerBrowser( event, rc, prc ) {
@@ -807,7 +807,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 		var gridFields = [ "title", "datemodified" ];
 		var renderedOptions = [];
-		var checkboxCol     = []
+		var checkboxCol     = [];
 
 		var records = Duplicate( result.records );
 
@@ -845,7 +845,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		var gridFields = [ "title", "datemodified" ];
 		var renderedOptions = [];
-		var checkboxCol     = []
+		var checkboxCol     = [];
 
 		var records = Duplicate( result.records );
 
@@ -1049,7 +1049,7 @@ component extends="preside.system.base.AdminHandler" {
 		var locationArgs = {
 			  storageProvider = provider
 			, configuration   = providerFormData
-		}
+		};
 		locationArgs.append( generalFormData );
 		var id = storageLocationService.addLocation( argumentCollection = locationArgs );
 		var editLink = '<a href="#event.buildAdminLink( linkTo='assetmanager.editLocation', querystring='id=#id#' )#">#( completeFormData.name ?: '' )#</a>';
@@ -1129,7 +1129,7 @@ component extends="preside.system.base.AdminHandler" {
 		var locationArgs = {
 			  id            = locationId
 			, configuration = providerFormData
-		}
+		};
 		locationArgs.append( generalFormData );
 
 		storageLocationService.updateLocation( argumentCollection = locationArgs );

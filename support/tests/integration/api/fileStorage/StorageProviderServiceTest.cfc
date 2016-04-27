@@ -39,7 +39,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should pass any configuration options to the class constructor", function(){
 				var service      = _getService();
 				var mockProvider = getMockBox().createStub();
-				var configuration = { test="this", isatest=true }
+				var configuration = { test="this", isatest=true };
 
 				mockProvider.id = CreateUUId();
 
@@ -51,7 +51,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should skip invoking constructor when asked to do so", function(){
 				var service      = _getService();
 				var mockProvider = getMockBox().createStub();
-				var configuration = { test="this", isatest=true }
+				var configuration = { test="this", isatest=true };
 
 				mockProvider.id = CreateUUId();
 
@@ -75,7 +75,7 @@ component extends="testbox.system.BaseSpec"{
 				var mockProvider     = getMockBox().createStub();
 				var validationResult = getMockBox().createStub();
 				var providerId       = "test";
-				var configuration    = { test="this", isATest=true }
+				var configuration    = { test="this", isATest=true };
 
 				service.$( "getProvider" ).$args(
 					  id              = providerId
@@ -112,6 +112,6 @@ component extends="testbox.system.BaseSpec"{
 		return {
 			  file = { class="preside.system.fileStorage.FileStorageProvider" }
 			, s3   = { class="preside.system.fileStorage.S3StorageProvider"   }
-		}
+		};
 	}
 }

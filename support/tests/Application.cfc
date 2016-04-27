@@ -4,6 +4,7 @@ component {
 
 	currentDir = GetDirectoryFromPath( GetCurrentTemplatePath() );
 
+
 	this.mappings['/tests']       = currentDir;
 	this.mappings['/integration'] = currentDir & "integration";
 	this.mappings['/resources']   = currentDir & "resources";
@@ -36,7 +37,7 @@ component {
 		var dsn = "preside_test_suite";
 
 		try {
-			dbinfo type="version" name="info" datasource="#dsn#";
+			cfdbinfo(type="version", name="info", datasource="#dsn#");
 
 		} catch ( database e ) {
 			var isCommandLineExecuted = cgi.server_protocol == "CLI/1.0";
@@ -123,17 +124,17 @@ component {
 		} catch( any e ) {}
 	}
 
-	private string function _getEnvironmentVariable( required string variableName, string default="" ) {
+	private string function _getEnvironmentVariable( required string variableName, string defaultValue="" ) {
 		var result = CreateObject("java", "java.lang.System").getenv().get( arguments.variableName );
 
-		return IsNull( result ) ? arguments.default : result;
+		return IsNull( result ) ? arguments.defaultValue : result;
 	}
 
 	private boolean function _dsnExists() {
 		try {
 			var info = "";
 
-			dbinfo type="version" name="info" datasource="preside_test_suite";
+			cfdbinfo( type="version", name="info", datasource="preside_test_suite");
 
 			return info.recordcount > 0;
 		} catch ( database e ) {

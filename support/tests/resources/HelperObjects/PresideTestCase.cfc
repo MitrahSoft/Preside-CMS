@@ -61,12 +61,12 @@
 					, interceptorService = arguments.interceptorService
 					, featureService = mockFeatureService
 				);
-				var cachebox       = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
+				var localCachebox       = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
 				var dbInfoService  = new preside.system.services.database.DbInfoService();
 				var sqlRunner      = new preside.system.services.database.sqlRunner( logger = logger );
 
 				var adapterFactory = new preside.system.services.database.adapters.AdapterFactory(
-					  cache         = cachebox.getCache( "PresideSystemCache" )
+					  cache         = localCachebox.getCache( "PresideSystemCache" )
 					, dbInfoService = dbInfoService
 				);
 				var schemaVersioning = new preside.system.services.presideObjects.sqlSchemaVersioning(
@@ -87,7 +87,7 @@
 				);
 				var presideObjectDecorator = new preside.system.services.presideObjects.presideObjectDecorator();
 
-				var coldbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
+				var localColdbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
 
 				mockFilterService = getMockBox().createStub();
 				mockFilterService.$( "getFilter", {} );
@@ -98,7 +98,7 @@
 
 					event.$( "isAdminUser", true );
 					event.$( "getAdminUserId", "" );
-					coldbox.$( "getRequestContext", event );
+					localColdbox.$( "getRequestContext", event );
 				}
 
 				request[ key ] = new preside.system.services.presideObjects.PresideObjectService(
@@ -110,9 +110,9 @@
 					, relationshipGuidance   = relationshipGuidance
 					, presideObjectDecorator = presideObjectDecorator
 					, filterService          = mockFilterService
-					, cache                  = cachebox.getCache( "PresideSystemCache" )
-					, defaultQueryCache      = cachebox.getCache( "defaultQueryCache" )
-					, coldboxController      = coldbox
+					, cache                  = localCachebox.getCache( "PresideSystemCache" )
+					, defaultQueryCache      = localCachebox.getCache( "defaultQueryCache" )
+					, coldboxController      = localColdbox
 					, interceptorService     = arguments.interceptorService
 					, reloadDb               = false
 				);
@@ -125,19 +125,23 @@
 	</cffunction>
 
 	<cffunction name="_insertData" access="private" returntype="any" output="false">
-		<cfreturn ( request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() ).insertData( argumentCollection = arguments ) />
+		<cfset presideObject =  request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() >
+		<cfreturn presideObject.insertData( argumentCollection = arguments ) />
 	</cffunction>
 
 	<cffunction name="_selectData" access="private" returntype="query" output="false">
-		<cfreturn ( request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() ).selectData( argumentCollection = arguments ) />
+		<cfset presideObject =  request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() >
+		<cfreturn presideObject.selectData( argumentCollection = arguments ) />
 	</cffunction>
 
 	<cffunction name="_deleteData" access="private" returntype="numeric" output="false">
-		<cfreturn ( request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() ).deleteData( argumentCollection = arguments ) />
+		<cfset presideObject =  request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() >
+		<cfreturn presideObject.deleteData( argumentCollection = arguments ) />
 	</cffunction>
 
 	<cffunction name="_dbSync" access="private" returntype="void" output="false">
-		<cfreturn ( request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() ).dbSync( argumentCollection = arguments ) />
+		<cfset presideObject =  request[ '_mostRecentPresideObjectFetch' ] ?: _getPresideObjectService() >
+		<cfreturn presideObject.dbSync( argumentCollection = arguments ) />
 	</cffunction>
 
 	<cffunction name="_clearRecentPresideServiceFetch" access="private" returntype="void" output="false">
@@ -176,9 +180,9 @@
 		<cfscript>
 			var tableInfo       = "";
 			var tables          = [];
-			var reservedSchemas = [ "sys", "information_schema" ]
+			var reservedSchemas = [ "sys", "information_schema" ];
 
-			dbinfo type="tables" name="tableInfo" datasource=application.dsn;
+			cfdbinfo(type="tables", name="tableInfo", datasource=application.dsn);
 
 			for( var table in tableInfo ){
 				var isInReservedSchema = reservedSchemas.find( table.table_schem ?: "" );
@@ -204,14 +208,15 @@
 			rules["0"] = "cascade";
 			rules["2"] = "set null";
 
-			dbinfo type="Foreignkeys" table=arguments.table datasource="#application.dsn#" name="keys";
+			cfdbinfo( type="Foreignkeys", table="#arguments.table#", datasource="#application.dsn#", name="keys" );
+			
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
 					  pk_table  = key.pktable_name
 					, fk_table  = key.fktable_name
 					, pk_column = key.pkcolumn_name
 					, fk_column = key.fkcolumn_name
-				}
+				};
 
 				if ( StructKeyExists( rules, key.update_rule ) ) {
 					constraints[ key.fk_name ].on_update = rules[ key.update_rule ];
@@ -238,7 +243,7 @@
 			var index   = "";
 			var ixs     = {};
 
-			dbinfo type="index" table="#arguments.tableName#" name="indexes" datasource="#application.dsn#";
+			cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#application.dsn#" );
 
 			for( index in indexes ){
 				var isPrimaryKeyIndex = index.index_name == "PRIMARY" || ReFindNoCase( "^pk_", index.index_name ) || ReFindNoCase( "_pkey$", index.index_name );
@@ -249,7 +254,7 @@
 						ixs[ index.index_name ] = {
 							  unique = not index.non_unique
 							, fields = ""
-						}
+						};
 					}
 
 					ixs[ index.index_name ].fields = ListAppend( ixs[ index.index_name ].fields, index.column_name );
@@ -266,7 +271,7 @@
 		<cfscript>
 			var columns = "";
 
-			dbinfo type="columns" name="columns" table=arguments.tableName datasource=application.dsn;
+			cfdbinfo(type="columns", name="columns", table=arguments.tableName, datasource=application.dsn);
 
 			return columns;
 		</cfscript>

@@ -77,7 +77,7 @@
 						description="{test:test.fieldset2.description}",
 						id="",
 						fields=[{
-							name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+							name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default":"10", rules=[
 								  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 								, { validator="sameAs", params={field="somefield1"} }
 							]
@@ -291,7 +291,7 @@
 				super.assertEquals( "The form, [someform.that.does.not.exist], could not be found", e.message );
 				errorThrown = true;
 			} catch( any e ) {
-				super.fail( "The wrong kind of error was thrown. Expected [FormsService.MissingForm], but received, [#e.type#]")
+				super.fail( "The wrong kind of error was thrown. Expected [FormsService.MissingForm], but received, [#e.type#]");
 			}
 
 			super.assert( errorThrown, "A suitable error was not thrown" );
@@ -319,7 +319,7 @@
 				super.assertEquals( "The form field, [Does not exist], could not be found in the form, [test.form]", e.message );
 				errorThrown = true;
 			} catch( any e ) {
-				super.fail( "The wrong kind of error was thrown. Expected [FormsService.MissingField], but received, [#e.type#]")
+				super.fail( "The wrong kind of error was thrown. Expected [FormsService.MissingField], but received, [#e.type#]");
 			}
 
 			super.assert( errorThrown, "A suitable error was not thrown" );
@@ -490,7 +490,7 @@
 						description="{test:test.fieldset2.description}",
 						id="",
 						fields=[{
-							name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+							name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default"="10", rules=[
 								  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 								, { validator="sameAs", params={field="somefield1"} }
 							]
@@ -539,7 +539,7 @@
 						description="{test:test.fieldset2.description}",
 						id="",
 						fields=[{
-							name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+							name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default"="10", rules=[
 								  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 								, { validator="sameAs", params={field="somefield1"} }
 							]

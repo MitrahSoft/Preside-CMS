@@ -3,7 +3,7 @@
 	<cffunction name="setup" access="public" returntype="void" output="false">
 		<cfscript>
 			super.setup();
-			_emptyDatabase();
+			_dropAllTables();
 		</cfscript>
 	</cffunction>
 
@@ -14,7 +14,6 @@
 			var tables    = "";
 			var i         = "";
 			var columns   = "";
-			var datetimeTypeName = _getDbAdapter().getColumnDBType('datetime');
 
 			poService.dbSync();
 			tables = _getDbTables();
@@ -36,10 +35,10 @@
 				super.assertFalse( columns.label.nullable, "The label column should not be nullable" );
 
 				super.assert( StructKeyExists( columns, "datecreated" ), "The datecreated column was not created." );
-				super.assertEquals( datetimeTypeName, columns.datecreated.type_name, "The datecreated column was not a datetime field." );
+				super.assertEquals( "datetime", columns.datecreated.type_name, "The datecreated column was not a datetime field." );
 				super.assertFalse( columns.datecreated.nullable, "The datecreated column should not be nullable" );
 				super.assert( StructKeyExists( columns, "datemodified" ), "The datemodified column was not created." );
-				super.assertEquals( datetimeTypeName, columns.datemodified.type_name, "The datemodified column was not a datetime field." );
+				super.assertEquals( "datetime", columns.datemodified.type_name, "The datemodified column was not a datetime field." );
 				super.assertFalse( columns.datemodified.nullable, "The datemodified column should not be nullable" );
 			}
 		</cfscript>
@@ -72,10 +71,6 @@
 			var expectedTables = [ "test_test_1", "test_test_2", "test_3" ];
 			var table          = "";
 
-			var idTypeName = _getDbAdapter().getColumnDBType('int', 'autoIncrement');
-			var bitTypeName = _getDbAdapter().getColumnDBType('bit');
-			var datetimeTypeName = _getDbAdapter().getColumnDBType('datetime');
-
 			poService.dbSync();
 			tables = _getDbTables();
 
@@ -85,13 +80,13 @@
 				columns = _getDbTableColumns( table );
 
 				super.assert( StructKeyExists( columns, "id" ), "The id column was not created." );
-				super.assertEquals( idTypeName, ListFirst( columns.id.type_name, " " ), "The id column was not an int." );
+				super.assertEquals( "int", columns.id.type_name, "The id column was not an int." );
 				super.assertFalse( columns.id.nullable, "The id column should not be nullable" );
 				super.assert( columns.id.is_primarykey, "The id column should be the primary key" );
 				super.assert( columns.id.is_autoincrement, "The id column should be auto incrementing" );
 
 				super.assert( StructKeyExists( columns, "test_property" ), "The test_property column was not created." );
-				super.assertEquals( bitTypeName, columns.test_property.type_name, "The test_property column was not an bit." );
+				super.assertEquals( "bit", columns.test_property.type_name, "The test_property column was not an bit." );
 
 				switch( table ){
 					case "test_test_1":
@@ -102,7 +97,7 @@
 						super.assert( columns.test_property.nullable, "The test_property column for table 1 was not nullable." );
 
 						super.assert( StructKeyExists( columns, "some_date" ), "The some_date column was not created." );
-						super.assertEquals( datetimeTypeName, columns.some_date.type_name, "The some_date column was not an int." );
+						super.assertEquals( "datetime", columns.some_date.type_name, "The some_date column was not an int." );
 
 						if ( table eq "test_table_2" ){
 							super.assertFalse( columns.some_date.nullable, "The some_date column for table 2 was nullable." );
@@ -125,8 +120,6 @@
 			var columns        = "";
 			var expectedTables = [ "test_test_1", "test_test_2", "test_3" ];
 			var table          = "";
-			var idTypeName = _getDbAdapter().getColumnDBType('int', 'autoIncrement');
-			var bitTypeName = _getDbAdapter().getColumnDBType('bit');
 
 			poService.dbSync();
 
@@ -148,20 +141,22 @@
 				columns = _getDbTableColumns( table );
 
 				super.assert( StructKeyExists( columns, "id" ), "The id column was not created." );
-				super.assertEquals( idTypeName, ListFirst( columns.id.type_name, " " ), "The id column was not an int." );
+				super.assertEquals( "varchar", columns.id.type_name, "The id column was not a varchar." );
+				super.assertEquals( "35", columns.id.column_size, "The id column did not have a length of 35." );
 				super.assertFalse( columns.id.nullable, "The id column should not be nullable" );
 				super.assert( columns.id.is_primarykey, "The id column should be the primary key" );
+				super.assertFalse( columns.id.is_autoincrement, "The id column should not be auto incrementing" );
 
 				switch( table ){
 					case "test_test_1":
 						super.assert( StructKeyExists( columns, "__deprecated__test_property" ), "The test_property column was not soft deleted." );
-						super.assertEquals( bitTypeName, columns.__deprecated__test_property.type_name, "The test_property column was not a bit." );
+						super.assertEquals( "bit", columns.__deprecated__test_property.type_name, "The test_property column was not a bit." );
 						super.assert( columns.__deprecated__test_property.nullable, "The test_property column for table 1 was not nullable." );
 					break;
 					case "test_test_2":
 					case "test_3":
 						super.assert( StructKeyExists( columns, "test_property" ), "The test_property column does not exist." );
-						super.assertEquals( bitTypeName, columns.test_property.type_name, "The test_property column was not a bit." );
+						super.assertEquals( "bit", columns.test_property.type_name, "The test_property column was not a bit." );
 						super.assert( columns.test_property.nullable, "The test_property column for table 1 was not nullable." );
 
 						super.assert( StructKeyExists( columns, "some_date" ), "The some_date column was not created." );
@@ -258,12 +253,12 @@
 				, ix_an_object_indexc     = { unique="false", fields="field4,field1"        }
 				, ux_an_object_uniqueness = { unique="true" , fields="field2,field1"        }
 				, ux_an_object_uniq       = { unique="true" , fields="field3"               }
-			}
+			};
 			var realIndexes = "";
 
 			poService.dbSync();
 
-			realIndexes = _getTableIndexes( "ptest_an_object" );
+			realIndexes = _getDbTableIndexes( "ptest_an_object" );
 
 			super.assertEquals( expectedIndexes, realIndexes );
 
@@ -281,7 +276,7 @@
 				, ix_an_object_indexd     = { unique="false", fields="field2"               }
 				, ux_an_object_uniqueness = { unique="true" , fields="field4"               }
 				, ux_an_object_uniq       = { unique="true" , fields="field3"               }
-			}
+			};
 			var realIndexes = "";
 
 			poService.dbSync();
@@ -290,7 +285,7 @@
 
 			poService.dbSync();
 
-			realIndexes = _getTableIndexes( "ptest_an_object" );
+			realIndexes = _getDbTableIndexes( "ptest_an_object" );
 
 			super.assertEquals( expectedIndexes, realIndexes );
 		</cfscript>
@@ -300,31 +295,30 @@
 		<cfscript>
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithRelationship/" ] );
 			var constraints = "";
-			var cascadeType = _getDbAdapter().supportsCascadeUpdateDelete() ? "cascade" : "error";
 			var expectedResult = {
-				"fk_9a2cb7e9423ef863c7903bb6fcd47d62" = {
-					  pk_table  = "ptest_object_a"
-					, fk_table  = "ptest_object_b"
-					, pk_column = "id"
-					, fk_column = "related_to_a_again"
-					, on_update = cascadeType
-					, on_delete = cascadeType
-				},
-				"fk_974b4dc11f57ab136c6b4692ee879f77" = {
-					  pk_table  = "ptest_object_b"
-					, fk_table  = "ptest_object_c"
-					, pk_column = "id"
-					, fk_column = "object_b"
-					, on_update = cascadeType
-					, on_delete = cascadeType
-				},
-				"fk_c1b6799c2f91c4924d0b170b238ad57d" = {
+				"fk_c3f5fa6fe828a7c89f411d93d5e0ce7c" = {
 					  pk_table  = "ptest_object_a"
 					, fk_table  = "ptest_object_b"
 					, pk_column = "id"
 					, fk_column = "related_to_a"
-					, on_update = cascadeType
-					, on_delete = cascadeType
+					, on_update = "cascade"
+					, on_delete = "error"
+				},
+				"fk_6a2b9624ca18e99fd0b48df47187ed70" = {
+					  pk_table  = "ptest_object_a"
+					, fk_table  = "ptest_object_b"
+					, pk_column = "id"
+					, fk_column = "related_to_a_again"
+					, on_update = "cascade"
+					, on_delete = "set null"
+				},
+				"fk_e8ad2c420c66dc63e413e0b99e7137e5" = {
+					  pk_table  = "ptest_object_b"
+					, fk_table  = "ptest_object_c"
+					, pk_column = "id"
+					, fk_column = "object_b"
+					, on_update = "cascade"
+					, on_delete = "error"
 				}
 			};
 			var keys = "";
@@ -359,7 +353,7 @@
 					, fk_column = "object_b"
 					, on_update = "cascade"
 					, on_delete = "error"
-				},
+				}
 			};
 			var keys = "";
 
@@ -401,8 +395,8 @@
 			try {
 				_getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentWithBadRelationship/" ] );
 			} catch ( "RelationshipGuidance.BadRelationship" e ) {
-				super.assertEquals( expectedMessage, e.message )
-				super.assertEquals( expectedDetail , e.detail )
+				super.assertEquals( expectedMessage, e.message );
+				super.assertEquals( expectedDetail , e.detail );
 				errorThrown = true;
 			}
 
@@ -420,7 +414,7 @@
 			super.assertFalse( poService.dataExists( objectName="object_a" ), "dataExists() returned true when no data does exist" );
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', Now(), Now() )" );
 			q.execute();
 
 			cachebox.clearAll();
@@ -434,11 +428,11 @@
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithRelationship/" ] );
 			var q = new query();
 			var result = "";
-			var filter = "label like :label and ( -1 <= :age or -1 <= :age )";
+			var filter = "label like :label and ( DateDiff( Now(), datemodified ) <= :age or DateDiff( Now(), datecreated ) <= :age )";
 			var filterParams = {
 				  label = "test%"
 				, age       = { value=2, type="cf_sql_integer" }
-			}
+			};
 
 			poService.dbSync();
 
@@ -451,7 +445,7 @@
 			super.assertFalse( result, "dataExists() returned true when no data does exist" );
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', Now(), Now() )" );
 			q.execute();
 
 			result = poService.dataExists(
@@ -469,11 +463,11 @@
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 			var q = new query();
 			var result = "";
-			var filter = "object_e.label like :object_e.label and ( -1 <= :age or -1 <= :age )";
+			var filter = "object_e.label like :object_e.label and ( DateDiff( Now(), object_e.datemodified ) <= :age or DateDiff( Now(), object_d.datecreated ) <= :age )";
 			var filterParams = {
 				  "object_e.label" = "test%"
 				, age       = { value=2, type="cf_sql_integer" }
-			}
+			};
 			var eId = "";
 
 			poService.dbSync();
@@ -508,7 +502,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', Now(), Now() )" );
 			q.execute();
 
 			result = poService.dataExists(
@@ -545,32 +539,32 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values (  #_getNowSql()#, #_getNowSql()#, 'a test' )" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values (  Now(), Now(), 'a test' )" );
 			q.execute();
 
 			q = new query();
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_e ( datecreated, datemodified, id, label ) values (  #_getNowSql()#, #_getNowSql()#, '#eId#','e test' )" );
+			q.setSQL( "insert into ptest_object_e ( datecreated, datemodified, id, label ) values (  Now(), Now(), '#eId#','e test' )" );
 			q.execute();
 
 			q = new query();
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_d ( datecreated, datemodified, label, object_e ) values (  #_getNowSql()#, #_getNowSql()#, 'd test', '#eId#' )" );
+			q.setSQL( "insert into ptest_object_d ( datecreated, datemodified, label, object_e ) values (  Now(), Now(), 'd test', '#eId#' )" );
 			q.execute();
 
 			q = new query();
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_b ( datecreated, datemodified, id, label, related_to_a, object_d ) values (  #_getNowSql()#, #_getNowSql()#,  '#bId#', 'b test', 1, 1 )" );
+			q.setSQL( "insert into ptest_object_b ( datecreated, datemodified, id, label, related_to_a, object_d ) values (  Now(), Now(),  '#bId#', 'b test', 1, 1 )" );
 			q.execute();
 
 			q = new query();
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_c ( datecreated, datemodified, id, label, object_b ) values (  #_getNowSql()#, #_getNowSql()#,  '#cId#', 'testing c', '#bId#' )" );
+			q.setSQL( "insert into ptest_object_c ( datecreated, datemodified, id, label, object_b ) values (  Now(), Now(),  '#cId#', 'testing c', '#bId#' )" );
 			q.execute();
 
 			q = new query();
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_f ( datecreated, datemodified, id, label, object_c ) values (  #_getNowSql()#, #_getNowSql()#,  '#fId#', 'testing f', '#cId#' )" );
+			q.setSQL( "insert into ptest_object_f ( datecreated, datemodified, id, label, object_c ) values (  Now(), Now(),  '#fId#', 'testing f', '#cId#' )" );
 			q.execute();
 
 			result = poService.dataExists(
@@ -602,7 +596,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', Now(), Now() )" );
 			q.execute();
 
 			result = poService.deleteData(
@@ -628,7 +622,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( #_getNowSql()#, #_getNowSql()#, 'test'),( #_getNowSql()#, #_getNowSql()#, 'test2'),( #_getNowSql()#, #_getNowSql()#, 'test3'),( #_getNowSql()#, #_getNowSql()#, 'test4')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( Now(), Now(), 'test'),( Now(), Now(), 'test2'),( Now(), Now(), 'test3'),( Now(), Now(), 'test4')" );
 			q.execute();
 
 			result = poService.deleteData(
@@ -654,7 +648,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( #_getNowSql()#, #_getNowSql()#, 'test'),( #_getNowSql()#, #_getNowSql()#, 'test2'),( #_getNowSql()#, #_getNowSql()#, 'test3'),( #_getNowSql()#, #_getNowSql()#, 'test4')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( Now(), Now(), 'test'),( Now(), Now(), 'test2'),( Now(), Now(), 'test3'),( Now(), Now(), 'test4')" );
 			q.execute();
 
 			result = poService.deleteData(
@@ -700,7 +694,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', #_getNowSql()#, #_getNowSql()# ), ('test2', #_getNowSql()#, #_getNowSql()# ), ('test3', #_getNowSql()#, #_getNowSql()# ), ('test4', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', Now(), Now() ), ('test2', Now(), Now() ), ('test3', Now(), Now() ), ('test4', Now(), Now() )" );
 			q.execute();
 
 			super.assert( poService.dataExists( objectName="object_a" ), "Test failed, data should have been inserted into the table before attempting the delete" );
@@ -806,7 +800,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( #_getNowSql()#, #_getNowSql()#, 'test1' ), ( #_getNowSql()#, #_getNowSql()#, 'test2'), ( #_getNowSql()#, #_getNowSql()#, 'test3'), ( #_getNowSql()#, #_getNowSql()#, 'test4')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( Now(), Now(), 'test1' ), ( Now(), Now(), 'test2'), ( Now(), Now(), 'test3'), ( Now(), Now(), 'test4')" );
 			q.execute();
 
 			super.assert( poService.dataExists( objectName="object_a" ), "Test failed, data should have been inserted into the table before attempting the delete" );
@@ -854,7 +848,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( #_getNowSql()#, #_getNowSql()#, 'test1' ), ( #_getNowSql()#, #_getNowSql()#, 'test2'), ( #_getNowSql()#, #_getNowSql()#, 'test3'), ( #_getNowSql()#, #_getNowSql()#, 'test4'), ( #_getNowSql()#, #_getNowSql()#, 'test5')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( Now(), Now(), 'test1' ), ( Now(), Now(), 'test2'), ( Now(), Now(), 'test3'), ( Now(), Now(), 'test4'), ( Now(), Now(), 'test5')" );
 			q.execute();
 
 			result = poService.updateData(
@@ -889,22 +883,22 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( #_getNowSql()#, #_getNowSql()#, 'a test' ), ( #_getNowSql()#, #_getNowSql()#, 'another test')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( Now(), Now(), 'a test' ), ( Now(), Now(), 'another test')" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_e ( datecreated, datemodified, id, label ) values ( #_getNowSql()#, #_getNowSql()#, '#eId#','e test' )" );
+			q.setSQL( "insert into ptest_object_e ( datecreated, datemodified, id, label ) values ( Now(), Now(), '#eId#','e test' )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_d ( datecreated, datemodified, label, object_e ) values ( #_getNowSql()#, #_getNowSql()#, 'd test', '#eId#' )" );
+			q.setSQL( "insert into ptest_object_d ( datecreated, datemodified, label, object_e ) values ( Now(), Now(), 'd test', '#eId#' )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_b ( datecreated, datemodified, id, label, related_to_a, object_d ) values (  #_getNowSql()#, #_getNowSql()#, '#bId#', 'b test', 1, 1 ),(  #_getNowSql()#, #_getNowSql()#, '#bId2#', 'b test', 2, 1 )" );
+			q.setSQL( "insert into ptest_object_b ( datecreated, datemodified, id, label, related_to_a, object_d ) values (  Now(), Now(), '#bId#', 'b test', 1, 1 ),(  Now(), Now(), '#bId2#', 'b test', 2, 1 )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_c ( datecreated, datemodified, id, label, object_b ) values (  #_getNowSql()#, #_getNowSql()#, '#cId#', 'testing c', '#bId#' ),(  #_getNowSql()#, #_getNowSql()#, '#cId2#', 'testing c 2', '#bId2#' )" );
+			q.setSQL( "insert into ptest_object_c ( datecreated, datemodified, id, label, object_b ) values (  Now(), Now(), '#cId#', 'testing c', '#bId#' ),(  Now(), Now(), '#cId2#', 'testing c 2', '#bId2#' )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_f ( datecreated, datemodified, id, label, object_c ) values (  #_getNowSql()#, #_getNowSql()#, '#fId#', 'testing f', '#cId#' ),(  #_getNowSql()#, #_getNowSql()#, '#fId2#', 'testing f again', '#cId2#' )" );
+			q.setSQL( "insert into ptest_object_f ( datecreated, datemodified, id, label, object_c ) values (  Now(), Now(), '#fId#', 'testing f', '#cId#' ),(  Now(), Now(), '#fId2#', 'testing f again', '#cId2#' )" );
 			q.execute();
 
 			result = poService.updateData(
@@ -938,22 +932,22 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( #_getNowSql()#, #_getNowSql()#, 'a test' ), ( #_getNowSql()#, #_getNowSql()#, 'another test')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, datemodified, label ) values ( Now(), Now(), 'a test' ), ( Now(), Now(), 'another test')" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_e ( datecreated, datemodified, id, label ) values ( #_getNowSql()#, #_getNowSql()#, '#eId#','e test' )" );
+			q.setSQL( "insert into ptest_object_e ( datecreated, datemodified, id, label ) values ( Now(), Now(), '#eId#','e test' )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_d ( datecreated, datemodified, label, object_e ) values ( #_getNowSql()#, #_getNowSql()#, 'd test', '#eId#' )" );
+			q.setSQL( "insert into ptest_object_d ( datecreated, datemodified, label, object_e ) values ( Now(), Now(), 'd test', '#eId#' )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_b ( datecreated, datemodified, id, label, related_to_a, object_d ) values ( #_getNowSql()#, #_getNowSql()#, '#bId#', 'b test', 1, 1 ),(  #_getNowSql()#, #_getNowSql()#, '#bId2#', 'b test', 2, 1 )" );
+			q.setSQL( "insert into ptest_object_b ( datecreated, datemodified, id, label, related_to_a, object_d ) values ( Now(), Now(), '#bId#', 'b test', 1, 1 ),(  Now(), Now(), '#bId2#', 'b test', 2, 1 )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_c ( datecreated, datemodified, id, label, object_b ) values ( #_getNowSql()#, #_getNowSql()#, '#cId#', 'testing c', '#bId#' ),(  #_getNowSql()#, #_getNowSql()#, '#cId2#', 'testing c 2', '#bId2#' )" );
+			q.setSQL( "insert into ptest_object_c ( datecreated, datemodified, id, label, object_b ) values ( Now(), Now(), '#cId#', 'testing c', '#bId#' ),(  Now(), Now(), '#cId2#', 'testing c 2', '#bId2#' )" );
 			q.execute();
 
-			q.setSQL( "insert into ptest_object_f ( datecreated, datemodified, id, label, object_c ) values ( #_getNowSql()#, #_getNowSql()#, '#fId#', 'testing f', '#cId#' ),( #_getNowSql()#, #_getNowSql()#,  '#fId2#', 'testing f again', '#cId2#' )" );
+			q.setSQL( "insert into ptest_object_f ( datecreated, datemodified, id, label, object_c ) values ( Now(), Now(), '#fId#', 'testing f', '#cId#' ),( Now(), Now(),  '#fId2#', 'testing f again', '#cId2#' )" );
 			q.execute();
 
 			result = poService.updateData(
@@ -982,7 +976,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( datecreated, label, datemodified ) values ( #_getNowSql()#, 'test1',  '1980-12-09 03:15:34'), ( #_getNowSql()#, 'test2', '1980-12-09 03:15:34'), ( #_getNowSql()#, 'test3', '1980-12-09 03:15:34'), ( #_getNowSql()#, 'test4', '1980-12-09 03:15:34'), ( #_getNowSql()#, 'test5', '1980-12-09 03:15:34')" );
+			q.setSQL( "insert into ptest_object_a ( datecreated, label, datemodified ) values ( Now(), 'test1',  '1980-12-09 03:15:34'), ( Now(), 'test2', '1980-12-09 03:15:34'), ( Now(), 'test3', '1980-12-09 03:15:34'), ( Now(), 'test4', '1980-12-09 03:15:34'), ( Now(), 'test5', '1980-12-09 03:15:34')" );
 			q.execute();
 
 			result = poService.updateData(
@@ -1179,7 +1173,7 @@
 
 			result = poService.selectData(
 				  objectname   = "object_b"
-				, filter       = "object_a.id = :object_a.id and -1 <= :age"
+				, filter       = "object_a.id = :object_a.id and DateDiff( Now(), object_d.datecreated ) <= :age"
 				, filterParams = { "object_a.id" = 2, age = { value = 0, type="cf_sql_integer" } }
 			);
 
@@ -1333,8 +1327,8 @@
 				, datemodified = { name="datemodified", control="none"     , dbtype="datetime", generator="none", maxLength=0, relatedTo="none", relationship="none", required=true, type="date" }
 				, id           = { name="id"          , control="none"     , dbtype="varchar" , generator="UUID", maxLength=35, relatedTo="none", relationship="none", required=true, type="string", pk=true }
 				, label        = { name="label"       , control="textinput", dbtype="varchar" , generator="none", maxLength=250, relatedTo="none", relationship="none", required=true, type="string" }
-				, object_d         = { name="object_d"        , control="default"  , dbtype="int"      , generator="none", maxLength=0,  relatedTo="object_d", relationship="many-to-one", required=false, type="string", onDelete="set null", onUpdate="cascade-if-no-cycle-check" }
-				, related_to_a     = { name="related_to_a"    , control="default"  , dbtype="int"      , generator="none", maxLength=0,  relatedTo="object_a", relationship="many-to-one", required=true, type="string", onDelete="error", onUpdate="cascade-if-no-cycle-check" }
+				, object_d         = { name="object_d"        , control="default"  , dbtype="int"      , generator="none", maxLength=0,  relatedTo="object_d", relationship="many-to-one", required=false, type="string", onDelete="set null", onUpdate="cascade" }
+				, related_to_a     = { name="related_to_a"    , control="default"  , dbtype="int"      , generator="none", maxLength=0,  relatedTo="object_a", relationship="many-to-one", required=true, type="string", onDelete="error", onUpdate="cascade" }
 			};
 
 			result = poService.getObjectProperties( objectName = "object_b" );
@@ -1361,7 +1355,7 @@
 				, required     = false
 				, type         = "string"
 				, onDelete     = "set null"
-				, onUpdate     = "cascade-if-no-cycle-check"
+				, onUpdate     = "cascade"
 			};
 
 			result = poService.getObjectProperty( objectName = "object_b", propertyName="object_d" );
@@ -1374,7 +1368,7 @@
 		<cfscript>
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 
-			super.assertFalse( poService.fieldExists( objectName="object_a", fieldName="i_do_not_exist" ), "fieldExists() returned true for a field that does not exist." )
+			super.assertFalse( poService.fieldExists( objectName="object_a", fieldName="i_do_not_exist" ), "fieldExists() returned true for a field that does not exist." );
 		</cfscript>
 	</cffunction>
 
@@ -1382,7 +1376,7 @@
 		<cfscript>
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 
-			super.assert( poService.fieldExists( objectName="object_b", fieldName="object_d" ), "fieldExists() returned false for a field that does exist." )
+			super.assert( poService.fieldExists( objectName="object_b", fieldName="object_d" ), "fieldExists() returned false for a field that does exist." );
 		</cfscript>
 	</cffunction>
 
@@ -1415,7 +1409,7 @@
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_a ( label, datemodified, datecreated) values ('test', Now(), Now() )" );
 			q.execute();
 
 			result = poService.listForeignObjectsBlockingDelete(
@@ -1432,16 +1426,16 @@
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 			var q = new query();
 			var result = "";
-			var expected = [ { objectName="object_d", recordcount=2, fk="object_e" } ]
+			var expected = [ { objectName="object_d", recordcount=2, fk="object_e" } ];
 
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_e ( id, label, datemodified, datecreated) values ( 'TEST-UUID', 'test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_e ( id, label, datemodified, datecreated) values ( 'TEST-UUID', 'test', Now(), Now() )" );
 			q.execute();
-			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test1', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test1', Now(), Now() )" );
 			q.execute();
-			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test2', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test2', Now(), Now() )" );
 			q.execute();
 
 			result = poService.listForeignObjectsBlockingDelete(
@@ -1458,16 +1452,16 @@
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 			var q = new query();
 			var result = "";
-			var expected = [ { objectName="object_d", recordcount=2 } ]
+			var expected = [ { objectName="object_d", recordcount=2 } ];
 
 			poService.dbSync();
 
 			q.setDatasource( application.dsn );
-			q.setSQL( "insert into ptest_object_e ( id, label, datemodified, datecreated) values ( 'TEST-UUID', 'test', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_e ( id, label, datemodified, datecreated) values ( 'TEST-UUID', 'test', Now(), Now() )" );
 			q.execute();
-			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test1', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test1', Now(), Now() )" );
 			q.execute();
-			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test2', #_getNowSql()#, #_getNowSql()# )" );
+			q.setSQL( "insert into ptest_object_d ( object_e, label, datemodified, datecreated) values ( 'TEST-UUID', 'test2', Now(), Now() )" );
 			q.execute();
 
 			super.assert( poService.selectData( objectName="object_d" ).recordCount );
@@ -1877,7 +1871,7 @@
 
 			actualPropNames.sort( "textnocase" );
 
-			super.assertEquals( expectedPropNames, actualPropNames )
+			super.assertEquals( expectedPropNames, actualPropNames );
 
 			for( key in mergedProperties ){
 				super.assertEquals( expectedMergedProperties[ key ], mergedProperties[ key ] );
@@ -1915,7 +1909,7 @@
 	<cffunction name="test057_versionedObjectsShouldHaveVersionTableAutoCreatedInTheDatabase" returntype="void">
 		<cfscript>
 			var poService      = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/objectsWithVersioning" ] );
-			var expectedTables = [ "_preside_generated_entity_versions", "_version_number_sequence", "_version_ptest_a_category_object", left("_version_ptest_a_category_object__join__an_object_with_versioning",_getDbAdapter().getTableNameMaxLength() ), "_version_ptest_an_object_with_versioning", "ptest_a_category_object", "ptest_a_category_object__join__an_object_with_versioning", "ptest_an_object_with_versioning" ];
+			var expectedTables = [ "_preside_generated_entity_versions", "_version_number_sequence", "_version_ptest_a_category_object", "_version_ptest_a_category_object__join__an_object_with_versionin", "_version_ptest_an_object_with_versioning", "ptest_a_category_object", "ptest_a_category_object__join__an_object_with_versioning", "ptest_an_object_with_versioning" ];
 			var tables         = "";
 
 			poService.dbSync();
@@ -2593,6 +2587,27 @@
 
 
 <!--- private helpers --->
+	<cffunction name="_dropAllTables" access="private" returntype="void" output="false">
+		<cfset var tables = _getDbTables() />
+		<cfset var table  = "" />
+		<cfset var fks    = "" />
+		<cfset var fk     = "" />
+
+		<cfloop list="#tables#" index="table">
+			<cfset fks = _getTableForeignKeys( table ) />
+			<cfloop collection="#fks#" item="fk">
+				<cfquery datasource="#application.dsn#">
+					alter table #fks[fk].fk_table# drop foreign key #fk#
+				</cfquery>
+			</cfloop>
+		</cfloop>
+		<cfloop list="#tables#" index="table">
+			<cfquery datasource="#application.dsn#">
+				drop table #table#
+			</cfquery>
+		</cfloop>
+	</cffunction>
+
 	<cffunction name="_getService" access="private" returntype="any" output="false">
 		<cfargument name="objectDirectories" type="array"  required="true" />
 		<cfargument name="defaultPrefix"     type="string" required="false" default="ptest_" />
@@ -2614,8 +2629,14 @@
 				, cacheBox           = cacheBox
 				, coldbox            = mockColdbox
 				, interceptorService = mockInterceptorService
-			)
+			);
 		</cfscript>
+	</cffunction>
+
+	<cffunction name="_getDbTables" access="private" returntype="string" output="false">
+		<cfset var tables = "" />
+		<cfdbinfo type="tables" name="tables" datasource="#application.dsn#" />
+		<cfreturn ValueList( tables.table_name ) />
 	</cffunction>
 
 	<cffunction name="_getDbTableColumns" access="private" returntype="struct" output="false">
@@ -2635,6 +2656,33 @@
 		</cfscript>
 	</cffunction>
 
+	<cffunction name="_getDbTableIndexes" access="private" returntype="struct" output="false">
+		<cfargument name="table" type="string" required="true" />
+
+		<cfscript>
+			var indexes = "";
+			var index   = "";
+			var ixs     = {};
+
+			dbinfo( type="index", table="#arguments.table#", name="indexes", datasource="#application.dsn#" );
+
+			for( index in indexes ){
+				if ( index.index_name neq "PRIMARY" ) {
+					if ( not StructKeyExists( ixs, index.index_name ) ){
+						ixs[ index.index_name ] = {
+							  unique = not index.non_unique
+							, fields = ""
+						};
+					}
+
+					ixs[ index.index_name ].fields = ListAppend( ixs[ index.index_name ].fields, index.column_name );
+				}
+			}
+
+			return ixs;
+		</cfscript>
+	</cffunction>
+
 	<cffunction name="_getTableForeignKeys" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
 
@@ -2647,14 +2695,15 @@
 			rules["0"] = "cascade";
 			rules["2"] = "set null";
 
-			dbinfo type="Foreignkeys" table=arguments.table datasource="#application.dsn#" name="keys";
+			dbinfo( type="Foreignkeys", table=arguments.table, datasource="#application.dsn#", name="keys" );
+
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
 					  pk_table  = key.pktable_name
 					, fk_table  = key.fktable_name
 					, pk_column = key.pkcolumn_name
 					, fk_column = key.fkcolumn_name
-				}
+				};
 
 				if ( StructKeyExists( rules, key.update_rule ) ) {
 					constraints[ key.fk_name ].on_update = rules[ key.update_rule ];
@@ -2673,7 +2722,4 @@
 		</cfscript>
 	</cffunction>
 
-	<cffunction name="_getNowSql" access="private" returntype="string" output="false">
-		<cfreturn _getDbAdapter().getNowFunctionSql() />
-	</cffunction>
 </cfcomponent>

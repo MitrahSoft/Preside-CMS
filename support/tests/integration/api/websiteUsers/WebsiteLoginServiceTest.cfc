@@ -76,7 +76,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		userService.$( "isLoggedIn" ).$results( false );
 		mockUserDao.$( "selectData" ).$args(
-			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = '1'"
+			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = 1"
 			, filterParams = { login_id = "dummy" }
 			, useCache     = false
 		).$results( QueryNew( '' ) );
@@ -99,7 +99,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		userService.$( "isLoggedIn" ).$results( false );
 		mockUserDao.$( "selectData" ).$args(
-			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = '1'"
+			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = 1"
 			, filterParams = { login_id = "dummy" }
 			, useCache     = false
 		).$results( mockRecord );
@@ -123,7 +123,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		userService.$( "isLoggedIn" ).$results( false );
 		userService.$( "recordLogin" ).$results( true );
 		mockUserDao.$( "selectData" ).$args(
-			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = '1'"
+			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = 1"
 			, filterParams = { login_id = "dummy" }
 			, useCache     = false
 		).$results( mockRecord );
@@ -150,7 +150,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		userService.$( "isLoggedIn" ).$results( false );
 		userService.$( "recordLogin" ).$results( true );
 		mockUserDao.$( "selectData" ).$args(
-			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = '1'"
+			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = 1"
 			, filterParams = { login_id = "dummy" }
 			, useCache     = false
 		).$results( mockRecord );
@@ -208,7 +208,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		mockSessionStorage.$( "setVar" );
 		mockBCryptService.$( "hashPw" ).$args( newToken ).$results( "reHashedToken" );
 		mockUserDao.$( "selectData" ).$args(
-			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = '1'"
+			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = 1"
 			, filterParams = { login_id = "fred" }
 			, useCache     = false
 		).$results( mockRecord );
@@ -250,7 +250,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		var mockRecord          = QueryNew( 'password,email_address,login_id,id,display_name', 'varchar,varchar,varchar,varchar,varchar', [['blah', 'test@test.com', 'dummy', 'someid', 'test user' ]] );
 		var testCookie          = { loginId="fred", expiry=20, series="someseries", token="sometoken" };
 		var alertThrown         = false;
-		var testAlertClosure    = function(){ alertThrown = true };
+		var testAlertClosure    = function(){ alertThrown = true; };
 
 		StructDelete( request, "_presideWebsiteAutoLoginResult" );
 
@@ -266,7 +266,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		mockCookieService.$( "deleteVar" ).$args( "_presidecms-site-persist" ).$results( true );
 		mockUserLoginTokenDao.$( "deleteData" );
 		mockUserDao.$( "selectData" ).$args(
-			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = '1'"
+			  filter       = "( login_id = :login_id or email_address = :login_id ) and active = 1"
 			, filterParams = { login_id = "fred" }
 			, useCache     = false
 		).$results( mockRecord );
@@ -384,7 +384,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		).$results( true );
 
 		super.assertFalse( userService.validateResetPasswordToken( testToken ) );
-		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() )
+		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() );
 	}
 
 	function test20_validateResetPasswordToken_shouldReturnFalseAndClearToken_whenRecordFoundAndNotExipiredByHashedKeyDoesNotMatch() output=false {
@@ -405,7 +405,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		mockBCryptService.$( "checkPw" ).$args( ListLast( testToken, "-" ), testRecord.reset_password_key ).$results( false );
 
 		super.assertFalse( userService.validateResetPasswordToken( testToken ) );
-		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() )
+		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() );
 	}
 
 	function test21_validateResetPasswordToken_shouldReturnTrue_whenRecordFoundAndNotExipiredAndHashedKeyMatches() output=false {
@@ -447,7 +447,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		).$results( true );
 
 		super.assert( userService.resetPassword( testToken, plainPassword ) );
-		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() )
+		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() );
 	}
 
 

@@ -190,7 +190,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 			  { name="another.txt", path="/testdir/another.txt", size=0, lastmodified="2014-03-17 09:56:11" }
 			, { name="file.txt"   , path="/testdir/file.txt"   , size=0, lastmodified="2014-03-17 09:56:19" }
 			, { name="loading.gif", path="/testdir/loading.gif", size=9427, lastmodified="2013-07-30 16:11:08" }
-		]
+		];
 
 		super.assertEquals( expected.len(), actual.recordCount );
 

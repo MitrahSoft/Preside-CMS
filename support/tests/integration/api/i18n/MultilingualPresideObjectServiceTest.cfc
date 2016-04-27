@@ -13,10 +13,10 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 			,[ "id-4", "de", "German" , "Deutche" , 0 ]
 		] );
 		var expectedResult = [
-			  { id="id-2", iso_code="ar", name="Arabic" , native_name="Arbic"   , left_to_right=1, default=true , sortOrder=1 }
-			, { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, default=false, sortOrder=2 }
-			, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, default=false, sortOrder=3 }
-			, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, default=false, sortOrder=4 }
+			  { id="id-2", iso_code="ar", name="Arabic" , native_name="Arbic"   , left_to_right=1, "default"=true , sortOrder=1 }
+			, { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, "default"=false, sortOrder=2 }
+			, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, "default"=false, sortOrder=3 }
+			, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, "default"=false, sortOrder=4 }
 		];
 
 		var languagesCombined = ListToArray( mockSettings.additional_languages );
@@ -39,9 +39,9 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 			,[ "id-4", "de", "German" , "Deutche" , 0 ]
 		] );
 		var expectedResult = [
-			  { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, default=false, sortOrder=1 }
-			, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, default=false, sortOrder=2 }
-			, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, default=false, sortOrder=3 }
+			  { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, "default"=false, sortOrder=1 }
+			, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, "default"=false, sortOrder=2 }
+			, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, "default"=false, sortOrder=3 }
 		];
 
 		var languagesCombined = ListToArray( mockSettings.additional_languages );
@@ -79,14 +79,14 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 	function test04_getLanguage_shouldReturnAnEmptyStruct_whenTheLanguageIsNotAnActivelyTranslatableLanguage() {
 		var svc = _getService();
 
-		svc.$( "listLanguages", [{id="id-1", name="French", default=true }] );
+		svc.$( "listLanguages", [{id="id-1", name="French", "default"=true }] );
 
 		super.assert( svc.getLanguage( "id-5" ).isEmpty() );
 	}
 
 	function test05_getLanguage_shouldReturnDetailsOfActivelyTranslatableLanguage() {
 		var svc = _getService();
-		var languages = [{id="id-1", name="French", default=true }, {id="id-2", name="English", default=false}]
+		var languages = [{id="id-1", name="French", "default"=true }, {id="id-2", name="English", "default"=false}];
 
 		svc.$( "listLanguages", languages );
 
@@ -174,7 +174,7 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 			, required      = false
 			, type          = "boolean"
 			, dbtype        = "boolean"
-			, default       = false
+			, "default"       = false
 			, uniqueindexes = ""
 			, indexes       = ""
 			, relationship  = "none"

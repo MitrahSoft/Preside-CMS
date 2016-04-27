@@ -14,14 +14,12 @@ component extends="testbox.system.BaseSpec"{
 
 			it( "should find first regex match for a passed URI", function(){
 				var restService = getService();
-				var result = restService.getResourceForUri( api="/api1", resourcePath="/test/my-pattern/#CreateUUId()#/" );
-				expect( result ).toBe( {
+
+				expect( restService.getResourceForUri( api="/api1", resourcePath="/test/my-pattern/#CreateUUId()#/" ) ).toBe( {
 					  handler    = "api1.ResourceX"
 					, tokens     = [ "pattern", "id" ]
 					, uriPattern = "^/test/(.*?)/(.*?)/$"
 					, verbs      = { post="post", get="get", delete="delete", put="putDataTest" }
-					, requiredParameters = { delete=[], get=[], put=[] }
-					, parameterTypes = { delete={}, get={}, put={} }
 				} );
 			} );
 
@@ -355,7 +353,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should set a 400 error when 'Origin' request header is missing", function(){
 				var restService        = getService();
 				var resource           = { uriPattern="/some/uri/", handler="somehandler", tokens=[], verbs={ GET="testGetMethod", PUT="put", DELETE="delete" } };
-				var uri                = "/some/test/304958/"
+				var uri                = "/some/test/304958/";
 				var restResponse       = getRestResponse();
 				var restRequest        = getRestRequest( resource=resource, uri=uri, verb="OPTIONS" );
 				var mockRequestContext = getMockRequestContext();
@@ -382,7 +380,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should set a 400 error when 'Access-Control-Request-Method' request header is missing", function(){
 				var restService        = getService();
 				var resource           = { uriPattern="/some/uri/", handler="somehandler", tokens=[], verbs={ GET="testGetMethod", PUT="put", DELETE="delete" } };
-				var uri                = "/some/test/304958/"
+				var uri                = "/some/test/304958/";
 				var restResponse       = getRestResponse();
 				var restRequest        = getRestRequest( resource=resource, uri=uri, verb="OPTIONS" );
 				var mockRequestContext = getMockRequestContext();
@@ -435,7 +433,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should set a 'plain' renderer on the response object when access control request is valid", function(){
 				var restService        = getService();
 				var resource           = { uriPattern="/some/uri/", handler="somehandler", tokens=[], verbs={ GET="testGetMethod", PUT="put", DELETE="delete" } };
-				var uri                = "/some/test/304958/"
+				var uri                = "/some/test/304958/";
 				var mockRequestContext = getMockRequestContext();
 				var restResponse       = getRestResponse();
 				var restRequest        = getRestRequest( resource=resource, uri=uri, verb="OPTIONS" );
@@ -865,7 +863,7 @@ component extends="testbox.system.BaseSpec"{
 				var restService  = getService();
 				var response     = new preside.system.services.rest.PresideRestResponse();
 				var data         = { this="is some test data", which="is", very=true };
-				var expectedEtag = LCase( Hash( Serialize( data ) ) );
+				var expectedEtag = LCase( Hash( SerializeJson( data ) ) );
 
 				response.setData( data );
 
@@ -985,171 +983,16 @@ component extends="testbox.system.BaseSpec"{
 			} );
 		} );
 
-		describe( "_validateRestParameters()", function(){
-			it( "should validate correctly if there are no required parameters", function(){
-				var restService        = getService();
-				var restResponse       = getRestResponse();
-				var restRequest        = getRestRequest(
-					resource={
-						  handler    = "myResource"
-						, tokens     = [ "whatever", "thisisjust", "atest" ]
-						, uriPattern = "/test/(.*?)/(.*?)/"
-						, verbs      = { post="post", get="get", delete="delete" }
-					},
-					uri="/some/uri/23",
-					verb="get"
-				);
-
-				makePublic( restService, "_validateRestParameters" );
-				restService._validateRestParameters( restRequest, restResponse, {} );
-
-				expect( restRequest.getFinished() ).toBeFalse();
-				expect( restResponse.getStatusCode() ).toBe(200);
-			} );
-			it( "should detect missing required parameters", function(){
-				var restService        = getService();
-				var restResponse       = getRestResponse();
-				var restRequest        = getRestRequest(
-					resource={
-						  handler    = "api1.subapi.ParamAwareResource"
-						, tokens     = [ "param1" ]
-						, uriPattern = "^/my/paramaware/pattern/(.*?)$"
-						, verbs      = { get="get" }
-						, parameterTypes = { get={param1="string", x="numeric", y="date", z="uuid"} }
-						, requiredParameters = { get=["param1", "x"] }
-					},
-					uri="/my/paramaware/pattern/23",
-					verb="get"
-				);
-
-				restService.$("_translateValidationResultMessages").$results({x="Required field"});
-				makePublic( restService, "_validateRestParameters" );
-
-				restService._validateRestParameters( restRequest, restResponse, {param1="xxx"} );
-				
-				expect( restRequest.getFinished() ).toBeTrue();
-				expect( restResponse.getStatusCode() ).toBe(400);
-				expect( restResponse.getStatusText() ).toBe("REST Parameter Validation Error");
-				expect( restResponse.getData() ).toBeTypeOf( "struct" );
-
-				var responseData = restResponse.getData();
-
-				expect( responseData ).toHaveKey( "detail" );
-				expect( responseData ).toHaveKey( "extra-detail" );
-				expect( responseData ).toHaveKey( "status" );
-				expect( responseData ).toHaveKey( "title" );
-				expect( responseData ).toHaveKey( "type" );
-				expect( responseData ).toHaveKey( "x" );
-
-				expect( responseData.detail ).toBe( "A parameter validation error occurred within the REST API" );
-				expect( responseData["extra-detail"] ).toBe( "The request has errors in the following parameters: x" );
-				expect( responseData.status ).toBe( 400 );
-				expect( responseData.title ).toBe( "REST Parameter Validation Error" );
-				expect( responseData.x ).toBe( "Required field" );
-			} );
-			it( "should validate correctly if there are no defined parameter types", function(){
-				var restService        = getService();
-				var restResponse       = getRestResponse();
-				var restRequest        = getRestRequest(
-					resource={
-						  handler    = "myResource"
-						, tokens     = [ "whatever", "thisisjust", "atest" ]
-						, uriPattern = "/test/(.*?)/(.*?)/"
-						, verbs      = { post="post", get="get", delete="delete" }
-						, parameterTypes = { get= {} }
-						, requiredParameters = { get=[] }
-					},
-					uri="/some/uri/23",
-					verb="get"
-				);
-
-				makePublic( restService, "_validateRestParameters" );
-				restService._validateRestParameters( restRequest, restResponse, {a=5, b="xxx", c=now()} );
-				expect( restRequest.getFinished() ).toBeFalse();
-				expect( restResponse.getStatusCode() ).toBe(200);
-			} );
-			it( "should validate date, numeric and uuid values correctly if supplied parameters are correct", function(){
-				var restService        = getService();
-				var restResponse       = getRestResponse();
-				var restRequest        = getRestRequest(
-					resource={
-						  handler    = "api1.subapi.ParamAwareResource"
-						, tokens     = [ "param1" ]
-						, uriPattern = "^/my/paramaware/pattern/(.*?)$"
-						, verbs      = { get="get" }
-						, parameterTypes = { get={param1="string", x="numeric", y="date", z="uuid"} }
-						, requiredParameters = { get=["param1", "x"] }
-					},
-					uri="/my/paramaware/pattern/23",
-					verb="get"
-				);
-
-				makePublic( restService, "_validateRestParameters" );
-				restService._validateRestParameters( restRequest, restResponse, {param1="xxx", x=5, y=now(), z=createUUID()} );
-				expect( restRequest.getFinished() ).toBeFalse();
-				expect( restResponse.getStatusCode() ).toBe(200);
-			} );
-			it( "should validate date, numeric and uuid values correctly if supplied parameters are incorrect", function(){
-				var restService        = getService();
-				var restResponse       = getRestResponse();
-				var restRequest        = getRestRequest(
-					resource={
-						  handler    = "api1.subapi.ParamAwareResource"
-						, tokens     = [ "param1" ]
-						, uriPattern = "^/my/paramaware/pattern/(.*?)$"
-						, verbs      = { get="get" }
-						, parameterTypes = { get={param1="string", x="numeric", y="date", z="uuid"} }
-						, requiredParameters = { get=["param1", "x"] }
-					},
-					uri="/my/paramaware/pattern/23",
-					verb="get"
-				);
-
-				restService.$("_translateValidationResultMessages").$results({x="Parameter 'x' needs to be a numeric value", y="Parameter 'y' needs to be a date value", z="Parameter 'z' needs to be a UUID"});
-				makePublic( restService, "_validateRestParameters" );
-
-				makePublic( restService, "_validateRestParameters" );
-				restService._validateRestParameters( restRequest, restResponse, {param1="xxx", x="xxx", y="sdfg", z=7} );
-
-				expect( restRequest.getFinished() ).toBeTrue();
-				expect( restResponse.getStatusCode() ).toBe(400);
-				expect( restResponse.getStatusText() ).toBe("REST Parameter Validation Error");
-				expect( restResponse.getData() ).toBeTypeOf( "struct" );
-
-				var responseData = restResponse.getData();
-
-				expect( responseData ).toHaveKey( "detail" );
-				expect( responseData ).toHaveKey( "extra-detail" );
-				expect( responseData ).toHaveKey( "status" );
-				expect( responseData ).toHaveKey( "title" );
-				expect( responseData ).toHaveKey( "type" );
-				expect( responseData ).toHaveKey( "x" );
-				expect( responseData ).toHaveKey( "y" );
-				expect( responseData ).toHaveKey( "z" );
-
-				expect( responseData.detail ).toBe( "A parameter validation error occurred within the REST API" );
-				expect( responseData["extra-detail"] ).toBe( "The request has errors in the following parameters: x, y, z" );
-				expect( responseData.status ).toBe( 400 );
-				expect( responseData.title ).toBe( "REST Parameter Validation Error" );
-				expect( responseData.x ).toBe( "Parameter 'x' needs to be a numeric value" );
-				expect( responseData.y ).toBe( "Parameter 'y' needs to be a date value" );
-				expect( responseData.z ).toBe( "Parameter 'z' needs to be a UUID" );				
-			} );
-		} );
 	}
 
 	private any function getService( ) {
 		variables.mockController    = createStub();
 		variables.mockConfigWrapper = createEmptyMock( "preside.system.services.rest.PresideRestConfigurationWrapper" );
-		variables.mockValidationEngine = createMock( "preside.system.services.validation.ValidationEngine" ).init();
-		variables.mockI18n = createMock( "preside.system.coldboxModifications.plugins.i18n" );
 
 		var restService = createMock( object=new preside.system.services.rest.PresideRestService(
 			  controller           = mockController
 			, resourceDirectories  = [ "/resources/rest/dir1", "/resources/rest/dir2" ]
 			, configurationWrapper = mockConfigWrapper
-			, validationEngine 	   = mockValidationEngine
-			, i18n 				   = mockI18n
 		) );
 
 		restService.$( "_announceInterception" );

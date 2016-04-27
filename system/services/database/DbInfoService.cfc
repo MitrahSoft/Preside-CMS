@@ -22,7 +22,7 @@ component {
 	public query function getTableInfo( required string tableName, required string dsn ) {
 		var table = "";
 
-		dbinfo type="tables" name="table" pattern="#arguments.tableName#" datasource="#arguments.dsn#";
+		cfdbinfo( type="tables", name="table", pattern="#arguments.tableName#", datasource="#arguments.dsn#" );
 
 		return table;
 	}
@@ -30,7 +30,7 @@ component {
 	public query function getTableColumns( required string tableName, required string dsn ) {
 		var columns = "";
 
-		dbinfo type="columns" name="columns" table=arguments.tableName datasource=arguments.dsn;
+		cfdbinfo( type="columns", name="columns", table=arguments.tableName, datasource=arguments.dsn );
 
 		return columns;
 	}
@@ -40,7 +40,7 @@ component {
 		var index   = "";
 		var ixs     = {};
 
-		dbinfo type="index" table="#arguments.tableName#" name="indexes" datasource="#arguments.dsn#";
+		cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#arguments.dsn#");
 
 		for( index in indexes ){
 			if ( Len( Trim( index.index_name ) ) && index.index_name != "PRIMARY" ) {
@@ -67,14 +67,14 @@ component {
 		rules["0"] = "cascade";
 		rules["2"] = "set null";
 
-		dbinfo type="foreignKeys" table=arguments.tableName datasource="#arguments.dsn#" name="keys";
+		cfdbinfo( type="foreignKeys", table=arguments.tableName, datasource="#arguments.dsn#", name="keys" );
 		for( key in keys ){
 			constraints[ key.fk_name ] = {
 				  pk_table  = key.pktable_name
 				, fk_table  = key.fktable_name
 				, pk_column = key.pkcolumn_name
 				, fk_column = key.fkcolumn_name
-			}
+			};
 
 			if ( StructKeyExists( rules, key.update_rule ) ) {
 				constraints[ key.fk_name ].on_update = rules[ key.update_rule ];

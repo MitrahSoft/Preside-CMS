@@ -214,7 +214,7 @@ component extends="BaseAdapter" {
 	}
 
 	public string function getDeleteSql( required string tableName, required any filter, string tableAlias="" ) {
-		var sql = "delete from "
+		var sql = "delete from ";
 
 		if(Len( Trim( arguments.tableAlias ) ) ) {
 			sql &= arguments.tableName & ' as ' & arguments.tableAlias;
@@ -268,7 +268,7 @@ component extends="BaseAdapter" {
 			sql &= " group by " & arguments.groupBy;
 			if ( ArrayLen( arguments.joins ) ) {
 				for( aliasCol in arguments.joins) {
-					sql &= ", #aliasCol.tableAlias#.#aliasCol.tableColumn#"
+					sql &= ", #aliasCol.tableAlias#.#aliasCol.tableColumn#";
 				}
 			}
 		}

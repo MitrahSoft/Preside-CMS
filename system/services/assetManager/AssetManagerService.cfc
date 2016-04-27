@@ -318,11 +318,11 @@ component displayName="AssetManager Service" {
 	}
 
 	public array function expandTypeList( required array types, boolean prefixExtensionsWithPeriod=false ) {
-		var expanded = [];
-		var types    = _getTypes();
+		var expanded   = [];
+		var AssetTypes = _getTypes();
 
 		for( var typeName in arguments.types ){
-			if ( types.keyExists( typeName ) ) {
+			if ( AssetTypes.keyExists( typeName ) ) {
 				expanded.append( typeName );
 			} else {
 				for( var typeName in listTypesForGroup( typeName ) ){
@@ -397,7 +397,7 @@ component displayName="AssetManager Service" {
 		var assetDao    = _getAssetDao();
 		var filter      = "( asset.is_trashed = :is_trashed )";
 		var params      = { is_trashed = false };
-		var types       = _getTypes();
+		var AssetTypes  = _getTypes();
 		var records     = "";
 		var result      = [];
 
@@ -495,9 +495,9 @@ component displayName="AssetManager Service" {
 
 		try {
 			uploadedFile = FileUpload(
-				  destination  = GetTempDirectory()
-				, fileField    = arguments.filefield
-				, nameConflict = "MakeUnique"
+				  GetTempDirectory()
+				, arguments.filefield
+				, "MakeUnique"
 			);
 		} catch( any e ) {
 			return "";
@@ -767,10 +767,10 @@ component displayName="AssetManager Service" {
 	}
 
 	public struct function getAssetType( string filename="", string name=ListLast( arguments.fileName, "." ), boolean throwOnMissing=false ) {
-		var types = _getTypes();
+		var AssetTypes = _getTypes();
 
-		if ( StructKeyExists( types, arguments.name ) ) {
-			return types[ arguments.name ];
+		if ( StructKeyExists( AssetTypes, arguments.name ) ) {
+			return AssetTypes[ arguments.name ];
 		}
 
 		if ( not arguments.throwOnMissing ) {
@@ -1284,15 +1284,15 @@ component displayName="AssetManager Service" {
 	}
 
 	private void function _setupConfiguredFileTypesAndGroups( required struct typesByGroup ) {
-		var types  = {};
-		var groups = {};
+		var AssetTypes = {};
+		var groups     = {};
 
 		for( var groupName in typesByGroup ){
 			if ( IsStruct( typesByGroup[ groupName ] ) ) {
 				groups[ groupName ] = StructKeyArray( typesByGroup[ groupName ] );
 				for( var typeName in typesByGroup[ groupName ] ) {
 					var type = typesByGroup[ groupName ][ typeName ];
-					types[ typeName ] = {
+					AssetTypes[ typeName ] = {
 						  typeName          = typeName
 						, groupName         = groupName
 						, extension         = type.extension ?: typeName
@@ -1304,7 +1304,7 @@ component displayName="AssetManager Service" {
 		}
 
 		_setGroups( groups );
-		_setTypes( types );
+		_setTypes( AssetTypes );
 	}
 
 	private void function _saveAssetMetaData( required string assetId, required struct metaData, string versionId="" ) {

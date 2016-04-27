@@ -226,7 +226,7 @@ component output=false singleton=true autodoc=true displayName="Email service" {
 			);
 		}
 
-		if ( !( sendArgs.to ?: [] ).len() ) {
+		if ( !Len( Trim( sendArgs.to ?: [] ) ) ) {
 			throw(
 				  type   = "EmailService.missingToAddress"
 				, message= "Missing to email address(es) when sending message with subject [#sendArgs.subject ?: ''#]"
@@ -235,8 +235,8 @@ component output=false singleton=true autodoc=true displayName="Email service" {
 
 		if ( !Len( Trim( sendArgs.subject ?: "" ) ) ) {
 			throw(
-				  type   = "EmailService.missingSubject"
-				, message= "Missing subject when sending message to [#(sendArgs.to ?: []).toList(';')#], from [#(sendArgs.from ?: '')#]"
+				  type   = "EmailService.missingSubject" 
+				, message= "Missing subject when sending message to [#ArrayToList(sendArgs.to ?: [],';')#], from [#(sendArgs.from ?: '')#]"
 			);
 		}
 

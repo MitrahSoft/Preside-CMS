@@ -152,7 +152,7 @@ component displayname="Image Manipulation Service" {
 			}
 		}
 
-		pdf attributeCollection=pdfAttributes;
+		cfpdf( attributeCollection=pdfAttributes );
 
 		return FileReadBinary( tmpFilePath );
 	}

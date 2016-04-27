@@ -202,7 +202,7 @@ component extends="BaseAdapter" {
 	}
 
 	public string function getDeleteSql( required string tableName, required any filter, string tableAlias="" ) {
-		var sql = "delete "
+		var sql = "delete ";
 
 		if ( Len( Trim( arguments.tableAlias ) ) ) {
 			sql &= "#escapeEntity( arguments.tableAlias )# from #escapeEntity( arguments.tableName )# as #escapeEntity( arguments.tableAlias )#";

@@ -16,7 +16,7 @@ component displayName="System configuration service" {
 	 */
 	public any function init( required array autoDiscoverDirectories, required any dao, required struct injectedConfig, required any formsService ) {
 		_setAutoDiscoverDirectories( arguments.autoDiscoverDirectories );
-		_setDao( arguments.dao )
+		_setDao( arguments.dao );
 		_setInjectedConfig( arguments.injectedConfig );
 		_setFormsService( arguments.formsService );
 		_setLoaded( false );
@@ -73,7 +73,7 @@ component displayName="System configuration service" {
 			result[ record.setting ] = record.value;
 		}
 
-		var injected = _getInjectedConfig().filter( function( key ){ return key.startsWith( injectedStartsWith ) } );
+		var injected = _getInjectedConfig().filter( function( key ){ return key.startsWith( injectedStartsWith ); } );
 		for( var key in injected ) {
 			var setting = ListRest( key, "." );
 

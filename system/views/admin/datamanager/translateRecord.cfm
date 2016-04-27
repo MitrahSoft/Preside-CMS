@@ -10,8 +10,8 @@
 	formName            = prc.formName ?: "";
 
 	deleteRecordLink   = event.buildAdminLink( linkTo="datamanager.deleteTranslationAction", queryString="object=#object#&id=#id#&language=#currentLanguageId#" );
-	deleteRecordPrompt = translateResource( uri="cms:datamanager.deleteTranslation.prompt", data=[ currentLanguage.name, objectTitleSingular, recordLabel ] )
-	deleteRecordTitle = translateResource( uri="cms:datamanager.deleteRecord.btn" )
+	deleteRecordPrompt = translateResource( uri="cms:datamanager.deleteTranslation.prompt", data=[ currentLanguage.name, objectTitleSingular, recordLabel ] );
+	deleteRecordTitle = translateResource( uri="cms:datamanager.deleteRecord.btn" );
 
 	canDelete        = prc.canDelete;
 	translations     = prc.translations ?: [];

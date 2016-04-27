@@ -199,7 +199,7 @@ component singleton=true {
 			fileContent &= "	private function #context#( event, rc, prc, args={} ) {" & _nl()
 			             & "		// TODO: create your handler logic here" & _nl()
 			             & "		return renderView( view='#viewPath#', args=args );" & _nl()
-			             & "	}" & _nl() & _nl()
+			             & "	}" & _nl() & _nl();
 		}
 
 		fileContent &= "}" & _nl();

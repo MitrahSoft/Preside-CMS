@@ -16,13 +16,13 @@ component {
 					args.maxDate = DateAdd( 'd', -1, Now() );
 				break;
 				case "lte":
-					args.maxDate = Now()
+					args.maxDate = Now();
 				break;
 				case "gt":
 					args.minDate = DateAdd( 'd', 1, Now() );
 				break;
 				case "gte":
-					args.minDate = Now()
+					args.minDate = Now();
 				break;
 			}
 		}

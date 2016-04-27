@@ -6,9 +6,9 @@
 	latestVersionDownloaded = prc.latestVersionDownloaded ?: false;
 	downloadedVersions      = prc.downloadedVersions      ?: [];
 	availableVersions       = prc.availableVersions       ?: [];
-	downloadingVersions     = prc.downloadingVersions     ?: {}
-	completeDownloads       = prc.completeDownloads       ?: []
-	erroredDownloads        = prc.erroredDownloads        ?: []
+	downloadingVersions     = prc.downloadingVersions     ?: {};
+	completeDownloads       = prc.completeDownloads       ?: [];
+	erroredDownloads        = prc.erroredDownloads        ?: [];
 </cfscript>
 
 <cfoutput>
@@ -52,7 +52,7 @@
 					</a>
 					<cfset event.includeData( { downloadingVersion=latestVersion.version } ) />
 				<cfelse>
-					#translateResource( uri="cms:updateManager.latest.version.downloadable", data=[ "<strong>#currentVersion#</strong>", "<strong>#latestVersion.version#</strong>", #dateformat(latestVersion.date,'mmmm dd, yyyy')#,  "<a href='#latestVersion.noteURL#'>#translateResource( uri="cms:updateManager.releaseNotes.th" )#</a>"] )# 
+					#translateResource( uri="cms:updateManager.latest.version.downloadable", data=[ "<strong>#currentVersion#</strong>", "<strong>#latestVersion.version#</strong>", #dateformat(latestVersion.date,'mmmm dd, yyyy')#,  "<a href='#latestVersion.noteURL#'>#translateResource( uri="cms:updateManager.releaseNotes.th" )#</a>"] )#
 					<a class="btn pull-right btn-primary" href="#event.buildAdminLink( linkTo='updateManager.downloadVersionAction', queryString='version=#latestVersion.version#' )#">
 						<i class="fa fa-cloud-download"></i>
 						#translateResource( uri="cms:updateManager.download.version.btn" )#
@@ -138,7 +138,7 @@
 								<td>
 									<cfif version.noteURL eq '-'>
 										-
-									<cfelse>	
+									<cfelse>
 										<a href="#version.noteURL#" target="_blank">#translateResource( "cms:updateManager.notes.in" )#</a>
 									</cfif>
 								</td>

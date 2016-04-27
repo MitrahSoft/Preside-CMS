@@ -34,7 +34,7 @@ component {
 			if ( Len( Trim( linkUrl ) ) && linkUrl != arguments.fullUrl ) {
 				var statusCode = ( match.redirect_type == "302" ? 302 : 301 );
 
-				location addtoken=false url=linkUrl statusCode=statusCode;
+				location( addtoken=false, url=linkUrl, statusCode=statusCode );
 			}
 		}
 	}

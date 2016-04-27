@@ -19,7 +19,7 @@ component {
 		required array resourceDirectories,
 		required any   controller,
 		required any   configurationWrapper,
-		required any   validationEngine,
+		required any   validationEngine
 	) {
 		_readResourceDirectories( arguments.resourceDirectories );
 		_setController( arguments.controller );

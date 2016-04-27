@@ -24,10 +24,10 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 			command = "cmd.exe";
 			args    = "/c mklink /D /J ""#arguments.target#"" ""#arguments.source#""";
 		} else {
-			command = "ln"
+			command = "ln";
 			args    = "-s ""#arguments.source#"" ""#arguments.target#""";
 		}
 
-		execute name="#command#" arguments="#args#" timeout="10" variable="output" errorVariable="e";
+		cfexecute( name="#command#", arguments="#args#", timeout="10", variable="output", errorVariable="e" );
 	}
 }

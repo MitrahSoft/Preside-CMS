@@ -1,6 +1,6 @@
 <cfscript>
 	objectName          = rc.object             ?: "";
-	parentObject        = rc.parentObject       ?: ""
+	parentObject        = rc.parentObject       ?: "";
 	parentId            = rc.parentId           ?: "";
 	relationshipKey     = rc.relationshipKey    ?: "";
 	gridFields          = prc.gridFields        ?: [ "label","datecreated","datemodified" ];

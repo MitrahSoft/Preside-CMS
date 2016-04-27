@@ -14,7 +14,7 @@ component {
 	public query function getDatabaseVersion( required string dsn ) {
 		var db = "";
 
-		dbinfo type="version" datasource=arguments.dsn name="db";
+		cfdbinfo( type="version", datasource=arguments.dsn, name="db" );
 
 		return db;
 	}

@@ -113,7 +113,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		} catch( "presidecms.auto.schema.sync.disabled" exception ) {
 			var errorMessage = "";
 			savecontent variable="errorMessage" {
-				include template="/preside/system/views/errors/sqlRebuild.cfm";
+				include "/preside/system/views/errors/sqlRebuild.cfm";
 			}
 			header statuscode=500;content reset=true;WriteOutput( Trim( errorMessage ) );abort;
 		}

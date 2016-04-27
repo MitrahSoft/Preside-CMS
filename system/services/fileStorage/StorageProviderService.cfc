@@ -48,7 +48,7 @@ component {
 	private any function _createObject( required string cfcPath, required struct constructorArgs, required boolean skipConstructor ) {
 		var instance = CreateObject( "component", arguments.cfcPath );
 
-		return arguments.skipConstructor ? instance : instance.init( argumentCollection=constructorArgs )
+		return arguments.skipConstructor ? instance : instance.init( argumentCollection=constructorArgs );
 	}
 
 // GETTERS AND SETTERS

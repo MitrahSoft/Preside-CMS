@@ -33,8 +33,8 @@ component output=false singleton=true {
 		StructDelete( selectDataArgs, "view"   );
 		StructDelete( selectDataArgs, "layout" );
 
-		selectDataArgs.objectName   = arguments.presideObject
-		selectDataArgs.selectFields = viewDetails.selectFields
+		selectDataArgs.objectName   = arguments.presideObject;
+		selectDataArgs.selectFields = viewDetails.selectFields;
 
 		data = _getPresideObjectService().selectData( argumentCollection = selectDataArgs );
 		for( record in data ) {

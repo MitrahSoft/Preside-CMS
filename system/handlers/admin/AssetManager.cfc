@@ -190,8 +190,8 @@ component extends="preside.system.base.AdminHandler" {
 
 	function multiRecordAction( event, rc, prc ) {
 		// TODO: permissions checks, etc.
-		var action = rc.multiAction ?: ""
-		var ids    = rc.id          ?: ""
+		var action = rc.multiAction ?: "";
+		var ids    = rc.id          ?: "";
 
 		if ( not Len( Trim( ids ) ) ) {
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager" ) );
@@ -455,7 +455,7 @@ component extends="preside.system.base.AdminHandler" {
 		_checkPermissions( argumentCollection=arguments, key="storagelocations.manage" );
 
 		var folderId          = ( rc.folder ?: "" );
-		var formName          = "preside-objects.asset_folder.admin.setlocation"
+		var formName          = "preside-objects.asset_folder.admin.setlocation";
 		var formData          = event.getCollectionForForm( formName );
 		var validationResult  = "";
 

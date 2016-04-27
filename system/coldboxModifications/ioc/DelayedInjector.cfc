@@ -15,7 +15,7 @@ component output=false {
 		}
 
 		_setInjector( arguments.injector );
-		_setInjectorArgs( injectorArgs )
+		_setInjectorArgs( injectorArgs );
 
 		return this;
 	}

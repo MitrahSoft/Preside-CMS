@@ -179,9 +179,9 @@ component {
 			var message = "";
 
 			if ( isOriginAllowed ) {
-				message = "This CORS request is not allowed. The resource at [#restRequest.getUri()#] does not support the [#requestMethodHeader#] method."
+				message = "This CORS request is not allowed. The resource at [#restRequest.getUri()#] does not support the [#requestMethodHeader#] method.";
 			} else {
-				message = "This CORS request is not allowed. Either CORS is disabled for this resource, or the Origin [#originHeader#] has not been whitelisted."
+				message = "This CORS request is not allowed. Either CORS is disabled for this resource, or the Origin [#originHeader#] has not been whitelisted.";
 			}
 
 			restResponse.setError(

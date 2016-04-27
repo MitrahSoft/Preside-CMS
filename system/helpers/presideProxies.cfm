@@ -104,7 +104,7 @@
 			var cacheKey = "translateResource" & SerializeJson( args );
 
 			return simpleRequestCache( cacheKey, function(){
-				return getPlugin( "i18n" ).translateResource( argumentCollection = args )
+				return getPlugin( "i18n" ).translateResource( argumentCollection = args );
 			} );
 		</cfscript>
 	</cffunction>

@@ -40,7 +40,7 @@ component {
 		var index   = "";
 		var ixs     = {};
 
-		cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#arguments.dsn#");
+		cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#arguments.dsn#" );
 
 		for( index in indexes ){
 			if ( Len( Trim( index.index_name ) ) && index.index_name != "PRIMARY" ) {

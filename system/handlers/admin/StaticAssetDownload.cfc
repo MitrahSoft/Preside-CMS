@@ -18,8 +18,8 @@ component {
 
 		_doBrowserEtagLookup( etag );
 
-		header name="cache-control" value="max-age=31536000";
-		header name="etag" value=etag;
+		cfheader( name="cache-control", value="max-age=31536000" );
+		cfheader( name="etag", value=etag );
 		content file="#assetFile#" type=_getMimeType( assetFile );abort;
 	}
 

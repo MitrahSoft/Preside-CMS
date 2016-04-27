@@ -360,7 +360,7 @@ component {
 
 		thread name=downloadId downloadId=downloadId downloadUrl=arguments.downloadUrl unpackToDir=_getVersionContainerDirectory() downloadPath=tempPath updateManagerService=this version=arguments.version {
 			try {
-				http url=attributes.downloadUrl path=attributes.downloadPath throwOnError=true timeout=Val( _getSetting( "download_timeout", 120 ) );
+				cfhttp( url=attributes.downloadUrl, path=attributes.downloadPath, throwOnError=true, timeout=Val( _getSetting( "download_timeout", 120 ) ) );
 			} catch ( any e ) {
 				attributes.updateManagerService.markDownloadAsErrored( attributes.version, attributes.downloadId, e );
 				abort;
@@ -368,7 +368,7 @@ component {
 
 			if ( attributes.updateManagerService.downloadIsActive( attributes.version, attributes.downloadId ) ) {
 				try {
-					zip action="unzip" file=attributes.downloadPath destination=attributes.unpackToDir;
+					cfzip( action="unzip", file=attributes.downloadPath, destination=attributes.unpackToDir );
 				} catch( any e ) {
 					attributes.updateManagerService.markDownloadAsErrored( attributes.version, attributes.downloadId, e );
 					abort;

@@ -461,7 +461,7 @@ component autodoc=true displayName="Notification Service" {
 		}
 
 		var data = Duplicate( arguments.settings );
-		data.security_user = arguments.userId
+		data.security_user = arguments.userId;
 		data.topic         = arguments.topic;
 
 		_getSubscriptionDao().insertData( data=data );

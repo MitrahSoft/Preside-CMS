@@ -185,7 +185,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		event.setHTTPHeader( name="X-Robots-Tag"    , value="noindex" );
 		event.setHTTPHeader( name="WWW-Authenticate", value='Website realm="website"' );
 
-		content reset=true type="text/html";header statusCode="401";WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
+		cfcontent( reset=true, type="text/html" );cfheader( statusCode="401" );WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
 	}
 
 	public void function audit() output=false {

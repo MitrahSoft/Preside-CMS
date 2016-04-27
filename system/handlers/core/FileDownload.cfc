@@ -31,9 +31,9 @@ component output=false {
 		var fileBinary = storageProvider.getObject( storagePath );
 
 		if ( type.serveAsAttachment ) {
-			header name="Content-Disposition" value="attachment; filename=""#filename#""";
+			cfheader( name="Content-Disposition", value="attachment; filename=""#filename#""" );
 		} else {
-			header name="Content-Disposition" value="inline; filename=""#filename#""";
+			cfheader( name="Content-Disposition", value="inline; filename=""#filename#""" );
 		}
 
 		announceInterception( "onDownloadFile", {
@@ -44,12 +44,12 @@ component output=false {
 			, fileBinary      = fileBinary
 		} );
 
-		header name="etag" value=etag;
-		header name="cache-control" value="max-age=31536000";
-		content
-			reset    = true
-			variable = fileBinary
-			type     = type.mimeType;
+		cfheader( name="etag", value=etag );
+		cfheader( name="cache-control", value="max-age=31536000" );
+		cfcontent(
+			reset    = true,
+			variable = fileBinary,
+			type     = type.mimeType );
 		abort;
 	}
 
@@ -57,7 +57,7 @@ component output=false {
 	private string function _doBrowserEtagLookup( required string etag ) output=false {
 		if ( ( cgi.http_if_none_match ?: "" ) == arguments.etag ) {
 			announceInterception( "onReturnFile304", { etag = arguments.etag } );
-			content reset=true;header statuscode=304 statustext="Not Modified";abort;
+			cfcontent( reset=true );cfheader( statuscode=304, statustext="Not Modified" );abort;
 		}
 	}
 }

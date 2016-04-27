@@ -51,7 +51,7 @@ component singleton=true {
 
 		var filter           = "page.trashed = :trashed";
 		if( !arguments.trash ){
-			filter &= " and page.page_type in (:page_type)"
+			filter &= " and page.page_type in (:page_type)";
 		}
 
 		var maxDepth         = arguments.maxDepth;
@@ -144,8 +144,8 @@ component singleton=true {
 		}
 
 		if ( arguments.version ) {
-			args.fromVersionTable = true
-			args.specificVersion  = arguments.version
+			args.fromVersionTable = true;
+			args.specificVersion  = arguments.version;
 		}
 
 		return _getPObj().selectData( argumentCollection = args );
@@ -192,7 +192,7 @@ component singleton=true {
 			return {};
 		}
 
-		for( var r in record ) { record = r }; // query to struct hack
+		for( var r in record ) { record = r; }; // query to struct hack
 		StructDelete( record, "id" );
 		StructDelete( record, "datecreated" );
 		StructDelete( record, "datemodified" );

@@ -16,10 +16,10 @@ component {
 		var resp      = "";
 		var secretKey = $getPresideSetting( "recaptcha", "secret_key" );
 
-		http url=_getValidationEndpoint() method="POST" timeout="10" result="resp" {
-			httpparam type="formfield" name="secret"   value=secretKey;
-			httpparam type="formfield" name="response" value=arguments.response;
-			httpparam type="formfield" name="remoteip" value=arguments.remoteAddress;
+		cfhttp( url=_getValidationEndpoint(), method="POST", timeout="10", result="resp" ){
+			cfhttpparam( type="formfield", name="secret",   value=secretKey );
+			cfhttpparam( type="formfield", name="response", value=arguments.response );
+			cfhttpparam( type="formfield", name="remoteip", value=arguments.remoteAddress );
 		}
 
 		if ( IsJson( resp.fileContent ) ) {

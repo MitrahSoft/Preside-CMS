@@ -436,7 +436,7 @@ component {
 			if ( ReFind( versionNumberRegex, versionNumber ) ) {
 				if ( migrationType == "downgrade" && compareVersions( versionNumber, arguments.currentVersion ) <= 0 && compareVersions( versionNumber, arguments.newVersion ) > 0 ) {
 					migrations.append( ListAppend( componentPath, ListChangeDelims( versionNumber, "-", "." ), "." ) );
-				} elseif ( migrationType == "upgrade" && compareVersions( versionNumber, arguments.currentVersion ) > 0 && compareVersions( versionNumber, arguments.newVersion ) <= 0 ) {
+				} else if ( migrationType == "upgrade" && compareVersions( versionNumber, arguments.currentVersion ) > 0 && compareVersions( versionNumber, arguments.newVersion ) <= 0 ) {
 					migrations.append( ListAppend( componentPath, ListChangeDelims( versionNumber, "-", "." ), "." ) );
 				}
 			}

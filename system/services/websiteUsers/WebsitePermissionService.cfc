@@ -54,10 +54,10 @@ component displayName="Website permissions service" {
 		if ( Len( Trim( arguments.benefit ) ) ) {
 			return _getBenefitPermissions( arguments.benefit );
 
-		} elseif ( Len( Trim( arguments.user ) ) ) {
+		} else if ( Len( Trim( arguments.user ) ) ) {
 			return _getUserPermissions( arguments.user );
 
-		} elseif ( arguments.filter.len() ) {
+		} else if ( arguments.filter.len() ) {
 			return _filterPermissions( arguments.filter );
 		}
 
@@ -118,7 +118,7 @@ component displayName="Website permissions service" {
 			, orderby      = "benefits.priority desc"
 		);
 
-		var userBenefits = ValueArray( benefits.id );
+		var userBenefits = listToArray( ValueList( benefits.id ) );
 		var comboFound   = false;
 
 		do {
@@ -361,13 +361,13 @@ component displayName="Website permissions service" {
 				if ( Left( permissionKey, 1 ) == "!" ) {
 					exclusions.append( ReReplace( permissionKey, "^!(.*)$", "\1" ) );
 
-				} elseif ( permissionKey contains "*" ) {
+				} else if ( permissionKey contains "*" ) {
 					( _expandWildCardPermissionKey( permissionKey ) ).each( function( expandedKey ){
 						if ( !filtered.findNoCase( expandedKey ) ) {
 							filtered.append( expandedKey );
 						}
 					} );
-				} elseif ( allPerms.findNoCase( permissionKey ) && !filtered.findNoCase( permissionKey ) ) {
+				} else if ( allPerms.findNoCase( permissionKey ) && !filtered.findNoCase( permissionKey ) ) {
 					filtered.append( permissionKey );
 				}
 			}
@@ -443,7 +443,7 @@ component displayName="Website permissions service" {
 				for( var childPerm in childPerms ){
 					expanded.append( childPerm );
 				}
-			} elseif ( IsArray( permissions[ perm ] ) ) {
+			} else if ( IsArray( permissions[ perm ] ) ) {
 				for( var key in permissions[ perm ] ) {
 					if ( IsSimpleValue( key ) ) {
 						expanded.append( ListAppend( newPrefix, key, "." ) );

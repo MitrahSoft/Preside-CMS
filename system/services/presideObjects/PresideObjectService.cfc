@@ -322,7 +322,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 			);
 
 			result = _runSql( sql=sql[1], dsn=obj.dsn, params=params, returnType=adapter.getInsertReturnType() );
-			
+
 			if ( adapter.requiresManualCommitForTransactions() ){
 				_runSql( sql='commit', dsn=obj.dsn );
 			}
@@ -434,7 +434,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 			if ( arguments.updateManyToManyRecords and getObjectPropertyAttribute( objectName, key, "relationship", "none" ) eq "many-to-many" ) {
 				manyToManyData[ key ] = cleanedData[ key ];
 				cleanedData.delete( key );
-			} elseif ( !ListFindNoCase( obj.dbFieldList, key ) ) {
+			} else if ( !ListFindNoCase( obj.dbFieldList, key ) ) {
 				cleanedData.delete( key );
 			}
 		}
@@ -1693,7 +1693,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 
 		if ( IsStruct( arguments.filter ) and StructKeyExists( arguments.filter, "id" ) ) {
 			objId = arguments.filter.id;
-		} elseif ( StructKeyExists( arguments.filterParams, "id" ) ) {
+		} else if ( StructKeyExists( arguments.filterParams, "id" ) ) {
 			objId = arguments.filterParams.id;
 		}
 
@@ -1707,7 +1707,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 			for( id in objId ){
 				cacheMaps[ arguments.objectName ][ id ][ arguments.cacheKey ] = 1;
 			}
-		} elseif ( IsSimpleValue( objId ) and Len( Trim( objId) ) ) {
+		} else if ( IsSimpleValue( objId ) and Len( Trim( objId) ) ) {
 			cacheMaps[ arguments.objectName ][ objId ][ arguments.cacheKey ] = 1;
 		} else {
 			cacheMaps[ arguments.objectName ].__complexFilter[ arguments.cacheKey ] = 1;
@@ -1739,7 +1739,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 
 			if ( IsStruct( arguments.filter ) and StructKeyExists( arguments.filter, "id" ) ) {
 				objIds = arguments.filter.id;
-			} elseif ( StructKeyExists( arguments.filterParams, "id" ) ) {
+			} else if ( StructKeyExists( arguments.filterParams, "id" ) ) {
 				objIds = arguments.filterParams.id;
 			}
 
@@ -1755,7 +1755,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 					}
 				}
 				StructClear( cacheMaps[ arguments.objectName ].__complexFilter );
-			} elseif ( arguments.clearSingleRecordCaches ) {
+			} else if ( arguments.clearSingleRecordCaches ) {
 				for( objId in cacheMaps[ arguments.objectName ] ) {
 					if ( objId neq "__complexFilter" ) {
 						keysToClear = ListAppend( keysToClear, StructKeyList( cacheMaps[ arguments.objectName ][ objId ] ) );

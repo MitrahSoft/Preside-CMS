@@ -312,7 +312,7 @@ component autodoc=true displayName="Notification Service" {
 
 		var subscriptions = _getSubscriptionDao().selectData( selectFields=[ "topic" ], filter={ security_user=arguments.userId } );
 
-		return subscriptions.recordCount ? ValueArray( subscriptions.topic ) : [];
+		return subscriptions.recordCount ? listToArray( ValueList( subscriptions.topic ) ) : [];
 	}
 
 	/**
@@ -337,7 +337,7 @@ component autodoc=true displayName="Notification Service" {
 	public array function listTopicUserGroups( required string topic ) autodoc=true {
 		var groups = _getTopicDao().selectData( filter={ topic=arguments.topic }, selectFields=[ "available_to_groups.id" ], forcejoins="inner" );
 		if ( groups.recordCount ) {
-			return ValueArray( groups.id );
+			return listToArray( ValueList( groups.id ) );
 		}
 
 		return [];
@@ -513,7 +513,7 @@ component autodoc=true displayName="Notification Service" {
 			}
 		}
 
-		existingTopics = ValueArray( existingTopics.topic );
+		existingTopics = listToArray( ValueList( existingTopics.topic ) );
 		for( var topic in configuredTopics ) {
 			if ( !existingTopics.findNoCase( topic ) ) {
 				topicsToInsert.append( topic );

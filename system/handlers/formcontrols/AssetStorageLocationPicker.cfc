@@ -8,8 +8,8 @@ component {
 		args.labels    = [ translateResource( "cms:assetmanager.storagelocationpicker.inherit.option" ) ];
 
 		if ( locations.recordCount ) {
-			args.values.append( ValueArray( locations.id   ), true );
-			args.labels.append( ValueArray( locations.name ), true );
+			args.values.append( listToArray( ValueList( locations.id   ) ), true );
+			args.labels.append( listToArray( ValueList( locations.name ) ), true );
 		}
 
 		return renderView( view="formcontrols/select/index", args=args );

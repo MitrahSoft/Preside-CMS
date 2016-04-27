@@ -31,7 +31,7 @@ component extends="preside.system.base.AdminHandler" {
 	public void function index( event, rc, prc ) {
 		if ( ( rc.selected ?: "" ).len() ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
-			prc.selectedAncestors = prc.selectedAncestors.recordCount ? ValueArray( prc.selectedAncestors.id ) : [];
+			prc.selectedAncestors = prc.selectedAncestors.recordCount ? listToArray( ValueList( prc.selectedAncestors.id ) ) : [];
 			event.includeData( { selectedNode = rc.selected } );
 		}
 		prc.activeTree = siteTreeService.getTree( trash = false, format="nestedArray", maxDepth=0, selectFields=[
@@ -91,7 +91,7 @@ component extends="preside.system.base.AdminHandler" {
 		};
 
 		if ( ancestors.recordCount ) {
-			additionalNodeArgs.permission_context = ValueArray( ancestors.id );
+			additionalNodeArgs.permission_context = listToArray( ValueList( ancestors.id ) );
 			additionalNodeArgs.permission_context.reverse();
 		}
 		additionalNodeArgs.permission_context.prepend( parentId );
@@ -120,7 +120,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		if ( ( rc.selected ?: "" ).len() ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
-			prc.selectedAncestors = prc.selectedAncestors.recordcount ? ValueArray( prc.selectedAncestors.id ) : [];
+			prc.selectedAncestors = prc.selectedAncestors.recordcount ? listToArray( ValueList( prc.selectedAncestors.id ) ): [];
 			event.includeData( { selectedPage = rc.selected } );
 		}
 

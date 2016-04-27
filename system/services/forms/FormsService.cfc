@@ -828,7 +828,7 @@ component {
 			if ( StructIsEmpty( matchingTab ) ) {
 				ArrayAppend( form1.tabs, tab );
 				continue;
-			} elseif ( IsBoolean( tab.deleted ?: "" ) and tab.deleted ) {
+			} else if ( IsBoolean( tab.deleted ?: "" ) and tab.deleted ) {
 				ArrayDelete( form1.tabs, matchingTab );
 				continue;
 			}
@@ -846,7 +846,7 @@ component {
 				if ( StructIsEmpty( matchingFieldset ) ) {
 					ArrayAppend( matchingTab.fieldsets, fieldset );
 					continue;
-				} elseif ( IsBoolean( fieldSet.deleted ?: "" ) and fieldSet.deleted ) {
+				} else if ( IsBoolean( fieldSet.deleted ?: "" ) and fieldSet.deleted ) {
 					ArrayDelete( matchingTab.fieldSets, matchingFieldset );
 					continue;
 				}

@@ -341,7 +341,7 @@ component singleton=true autodoc=true displayName="Website login service" {
 			, forceJoins   = "inner"
 		);
 
-		return ValueArray( benefits.id );
+		return listToArray( ValueList( benefits.id ) );
 	}
 
 	/**
@@ -447,7 +447,7 @@ component singleton=true autodoc=true displayName="Website login service" {
 		var cookieValue = _getCookieService().getVar( _getRememberMeCookieKey(), {} );
 
 		if ( IsStruct( cookieValue ) ) {
-			var keys = cookieValue.keyArray()
+			var keys = cookieValue.keyArray();
 			keys.sort( "textNoCase" );
 
 			if ( keys.toList() == "expiry,loginId,series,token" ) {

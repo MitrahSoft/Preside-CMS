@@ -714,7 +714,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		if ( not Len( Trim( selectDataArgs.orderBy ) ) ) {
 			var relatedVia = getObjectPropertyAttribute( arguments.objectName, arguments.propertyName, "relatedVia", "" );
 			if ( Len( Trim( relatedVia ) ) ) {
-				selectDataArgs.orderBy = relatedVia & ".sort_order"
+				selectDataArgs.orderBy = relatedVia & ".sort_order";
 			}
 		}
 
@@ -1094,7 +1094,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 
 		for( foreignObjName in joins ){
 			for( join in joins[ foreignObjName ] ) {
-				if ( join.type == "one-to-many" && join.ondelete !== "cascade" ) {
+				if ( join.type EQ "one-to-many" && join.ondelete NEQ "cascade" ) {
 					filter = { "#join.fk#" = arguments.recordId };
 					recordCount = selectData( objectName=foreignObjName, selectFields=["count(*) as record_count"], filter=filter, useCache=false ).record_count;
 
@@ -1188,7 +1188,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var dsns    = {};
 
 		for( var objName in objects ){
-			dsns[ objects[ objName ].meta.dsn ] = 1
+			dsns[ objects[ objName ].meta.dsn ] = 1;
 		}
 
 		if ( StructCount( objects ) ) {
@@ -1221,7 +1221,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var paths       = [];
 		var path        = "";
 		for( dir in dirs ) {
-			files = DirectoryList( path=dir, recurse=true, filter="*.cfc" );
+			files = DirectoryList( dir, true, "*.cfc" );
 			dirExpanded = ExpandPath( dir );
 
 			for( file in files ) {
@@ -1295,7 +1295,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		return params;
 	}
 
-	private array function _convertUserFilterParamsToQueryParams( required struct columnDefinitions, required struct params, required any dbAdapter, required string objectName ) {
+	private array function _convertUserFilterParamsToQueryParams( required struct columnDefinitions, required struct parameters, required any dbAdapter, required string objectName ) {
 		var key        = "";
 		var params     = [];
 		var param      = "";
@@ -1350,7 +1350,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 	) {
 		var key        = "";
 		var cache      = _getCache();
-		var cacheKey   = "Detected foreign objects for generated SQL. Obj: #arguments.objectName#. Data: #StructKeyList( arguments.data )#. Fields: #ArrayToList( arguments.selectFields )#. Order by: #arguments.orderBy#. Filter: #IsStruct( arguments.filter ) ? StructKeyList( arguments.filter ) : arguments.filter#"
+		var cacheKey   = "Detected foreign objects for generated SQL. Obj: #arguments.objectName#. Data: #StructKeyList( arguments.data )#. Fields: #ArrayToList( arguments.selectFields )#. Order by: #arguments.orderBy#. Filter: #IsStruct( arguments.filter ) ? StructKeyList( arguments.filter ) : arguments.filter#";
 		var objects    = cache.get( cacheKey );
 
 		if ( not IsNull( objects ) ) {
@@ -1363,7 +1363,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var matches    = "";
 		var match      = "";
 
-		objects = {}
+		objects = {};
 
 		if ( IsStruct( arguments.filter ) ) {
 			StructAppend( all, arguments.filter );
@@ -1414,7 +1414,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 
 		if ( ArrayLen( arguments.joinTargets ) ) {
 			var joinsCache    = _getCache();
-			var joinsCacheKey = "SQL Joins for #arguments.objectName# with join targets: #ArrayToList( arguments.joinTargets )#. From version table: #arguments.fromVersionTable#."
+			var joinsCacheKey = "SQL Joins for #arguments.objectName# with join targets: #ArrayToList( arguments.joinTargets )#. From version table: #arguments.fromVersionTable#.";
 
 			joins = joinsCache.get( joinsCacheKey );
 
@@ -1535,7 +1535,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 			, joinToColumn      = "id"
 			, type              = "left"
 			, additionalClauses = "#adapter.escapeEntity( '_latestVersionCheck' )#.#adapter.escapeEntity( '_version_number' )# > #adapter.escapeEntity( arguments.tableAlias )#.#adapter.escapeEntity( '_version_number' )#"
-		}
+		};
 	}
 
 	private array function _alterJoinsToUseVersionTables(
@@ -1887,7 +1887,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 			result.filter = ReReplaceNoCase( result.filter, "(:#objOrPropRegex#)[\.\$](#objOrPropRegex#)", "\1__\2", "all" );
 			result.params = _convertUserFilterParamsToQueryParams(
 				  columnDefinitions = arguments.columnDefinitions
-				, params            = result.filterParams
+				, parameters        = result.filterParams
 				, dbAdapter         = adapter
 				, objectName        = arguments.objectName
 			);
@@ -1906,23 +1906,25 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var newData = Duplicate( arguments.data );
 
 		for( var propName in props ){
-			if ( !StructKeyExists( arguments.data, propName ) && Len( Trim( props[ propName ].default ?: "" ) ) ) {
-				var default = props[ propName ].default;
-				switch( ListFirst( default, ":" ) ) {
+			if ( !StructKeyExists( arguments.data, propName ) && Len( Trim( props[ propName ]['default'] ?: "" ) ) ) {
+				var defaultValue = props[ propName ]['default'];
+
+				switch( ListFirst( defaultValue, ":" ) ) {
 					case "cfml":
-						newData[ propName ] = Evaluate( ListRest( default, ":" ) );
+						newData[ propName ] = Evaluate( ListRest( defaultValue, ":" ) );
 					break;
 					case "closure":
-						var func = Evaluate( ListRest( default, ":" ) );
+						var func = Evaluate( ListRest( defaultValue, ":" ) );
 						newData[ propName ] = func( arguments.data );
 					break;
 					case "method":
 						var obj = getObject( arguments.objectName );
+						var fun = obj[ ListRest( defaultValue, ":" ) ];
 
-						newData[ propName ] = obj[ ListRest( default, ":" ) ]( arguments.data );
+						newData[ propName ] = fun( arguments.data );
 					break;
 					default:
-						newData[ propName ] = default;
+						newData[ propName ] = defaultValue;
 				}
 			}
 		}

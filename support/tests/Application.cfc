@@ -37,7 +37,7 @@ component {
 		var dsn = "preside_test_suite";
 
 		try {
-			cfdbinfo(type="version", name="info", datasource="#dsn#");
+			cfdbinfo( type="version", name="info", datasource="#dsn#" );
 
 		} catch ( database e ) {
 			var isCommandLineExecuted = cgi.server_protocol == "CLI/1.0";
@@ -46,7 +46,7 @@ component {
 			    errorDetail &= "Host     : localhost"    & nl;
 			    errorDetail &= "Port     : 3306"         & nl;
 			    errorDetail &= "DB Name  : preside_test" & nl;
-			    errorDetail &= "User     : travis"       & nl;
+			    errorDetail &= "User     : root"         & nl;
 			    errorDetail &= "Password : (empty)"      & nl;
 
 			    errorDetail &= nl & "These defaults can be overwritten by setting the following environment variables: " & nl & nl;
@@ -104,7 +104,7 @@ component {
 			  port     = _getEnvironmentVariable( "PRESIDETEST_DB_PORT"    , "3306" )
 			, host     = _getEnvironmentVariable( "PRESIDETEST_DB_HOST"    , "localhost" )
 			, database = _getEnvironmentVariable( "PRESIDETEST_DB_NAME"    , "preside_test" )
-			, username = _getEnvironmentVariable( "PRESIDETEST_DB_USER"    , "travis" )
+			, username = _getEnvironmentVariable( "PRESIDETEST_DB_USER"    , "root" )
 			, password = _getEnvironmentVariable( "PRESIDETEST_DB_PASSWORD", "" )
 		};
 
@@ -134,7 +134,7 @@ component {
 		try {
 			var info = "";
 
-			cfdbinfo( type="version", name="info", datasource="preside_test_suite");
+			cfdbinfo( type="version", name="info", datasource="preside_test_suite" );
 
 			return info.recordcount > 0;
 		} catch ( database e ) {

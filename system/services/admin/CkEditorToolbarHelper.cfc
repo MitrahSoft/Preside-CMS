@@ -4,24 +4,24 @@ component output=false singleton=true {
 	/**
 	 * @configuredToolbars.inject coldbox:setting:ckeditor.toolbars
 	 */
-	public any function init( required struct configuredToolbars ) output=false {
+	public any function init( required struct configuredToolbars ) {
 		_setConfiguredToolbars( arguments.configuredToolbars );
 
 		return this;
 	}
 
 // PUBLIC API METHODS
-	public string function getToolbarDefinition( required string toolbarDefinition ) output=false {
+	public string function getToolbarDefinition( required string toolbarDefinition ) {
 		var toolbars = _getConfiguredToolbars();
 
-		return toolbars[ arguments.toolbarDefinition ] ?: arguments.toolbarDefinition;
+		return structKeyExists(toolbars, "#arguments.toolbarDefinition#") ? toolBars[ arguments.toolbarDefinition ] : arguments.toolbarDefinition;
 
 		// return _stripPermissionRestrictedButtons( toolbars[ arguments.toolbarDefinition ] ?: arguments.toolbarDefinition );
 	}
 
 
 // PRIVATE HELPERS
-	private string function _stripPermissionRestrictedButtons( required string toolbar ) output=false {
+	private string function _stripPermissionRestrictedButtons( required string toolbar ) {
 		var bars               = ListToArray( arguments.toolbar, "|" );
 		var securityService    = _getSecurityService();
 		var ignoreButtons      = [ "/", "-" ];
@@ -74,10 +74,10 @@ component output=false singleton=true {
 	}
 
 // GETTERS AND SETTERS
-	private struct function _getConfiguredToolbars() output=false {
+	private struct function _getConfiguredToolbars() {
 		return _configuredToolbars;
 	}
-	private void function _setConfiguredToolbars( required struct configuredToolbars ) output=false {
+	private void function _setConfiguredToolbars( required struct configuredToolbars ) {
 		_configuredToolbars = arguments.configuredToolbars;
 	}
 }

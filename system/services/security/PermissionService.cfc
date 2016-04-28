@@ -283,11 +283,13 @@ component displayName="Admin permissions service" {
 					exclusions.append( ReReplace( permissionKey, "^!(.*)$", "\1" ) );
 
 				} else if ( permissionKey contains "*" ) {
-					( _expandWildCardPermissionKey( permissionKey ) ).each( function( expandedKey ){
+					var getPermissionKey = _expandWildCardPermissionKey( permissionKey );
+
+					for ( var expandedKey in getPermissionKey ){
 						if ( !filtered.findNoCase( expandedKey ) ) {
 							filtered.append( expandedKey );
 						}
-					} );
+					}
 				} else if ( allPerms.findNoCase( permissionKey ) && !filtered.findNoCase( permissionKey ) ) {
 					filtered.append( permissionKey );
 				}
@@ -296,9 +298,11 @@ component displayName="Admin permissions service" {
 
 		for( var exclusion in exclusions ){
 			if ( exclusion contains "*" ) {
-				( _expandWildCardPermissionKey( exclusion ) ).each( function( expandedKey ){
+				var getPermissionKey = _expandWildCardPermissionKey( exclusion );
+
+				for ( var expandedKey in getPermissionKey ){
 					filtered.delete( expandedKey );
-				} );
+				}
 			} else {
 				filtered.delete( exclusion );
 			}

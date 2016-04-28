@@ -180,7 +180,7 @@ component output="false" extends="mxunit.framework.TestCase" {
 			, changelog = ""
 		};
 
-		super.assertEquals( expected, manager.getExtensionInfo( "/tests/resources/extensionManager/notYetInstalledExtensions/validExtension" ) );
+		super.assertEquals( expected, manager.getExtensionInfo( "#expandPath('/tests/resources/extensionManager/notYetInstalledExtensions/validExtension')#" ) );
 	}
 
 	function test13_getExtensionInfo_shouldThrowInformativeError_whenManifestIsNotValidJson() output=false {
@@ -220,7 +220,7 @@ component output="false" extends="mxunit.framework.TestCase" {
 			, { name="untracked"          , priority=0  , installed=true , active=false, directory="/tests/resources/extensionManager/extensions/untracked" }
 		];
 
-		manager.installExtension( "/tests/resources/extensionManager/notYetInstalledExtensions/extensionWithDiffIdFromFolder/" );
+		manager.installExtension( "#expandPath('/tests/resources/extensionManager/notYetInstalledExtensions/extensionWithDiffIdFromFolder/')#" );
 
 		super.assertEquals( expected, manager.listExtensions() );
 	}
@@ -229,7 +229,7 @@ component output="false" extends="mxunit.framework.TestCase" {
 		var errorThrown = false;
 
 		try {
-			manager.installExtension( "/tests/resources/extensionManager/notYetInstalledExtensions/preExistingExtension" );
+			manager.installExtension( "#expandPath('/tests/resources/extensionManager/notYetInstalledExtensions/preExistingExtension')#" );
 
 		} catch ( "ExtensionManager.manifestExists" e ) {
 			super.assertEquals( "The extension, [someExtension], is already installed", e.message );
@@ -250,7 +250,7 @@ component output="false" extends="mxunit.framework.TestCase" {
 
 // PRIVATE HELPERS
 	private void function _resetTestResources() output=false {
-		FileCopy( "/tests/resources/extensionManager/extensions/extensions.json.bak", "/tests/resources/extensionManager/extensions/extensions.json" );
+		FileCopy( "#expandPath('/tests/resources/extensionManager/extensions/extensions.json.bak')#", "#expandPath('/tests/resources/extensionManager/extensions/extensions.json')#" );
 		var dirs         = DirectoryList( "/tests/resources/extensionManager/extensions/", false, "Query" );
 		var expectedDirs = [ "anotherExtension", "someExtension", "untracked" ];
 

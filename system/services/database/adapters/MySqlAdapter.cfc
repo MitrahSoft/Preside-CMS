@@ -69,7 +69,6 @@ component extends="BaseAdapter" {
 		var columnDef = getColumnDefinitionSql(
 			  columnName    = arguments.newName
 			, dbType        = arguments.dbType
-			, defaultValue  = arguments.defaultValue
 			, maxLength     = arguments.maxLength
 			, nullable      = arguments.nullable
 			, autoIncrement = arguments.autoIncrement

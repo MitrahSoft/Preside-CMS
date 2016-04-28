@@ -25,6 +25,7 @@ component singleton=true autodoc=true displayName="Feature service" {
 	 */
 	public boolean function isFeatureEnabled( required string feature, string siteTemplate ) autodoc=true {
 		var features  = _getConfiguredFeatures();
+		
 		var isEnabled = IsBoolean( features[ arguments.feature ].enabled ?: "" ) && features[ arguments.feature ].enabled;
 
 		if ( !isEnabled ) {
@@ -38,7 +39,7 @@ component singleton=true autodoc=true displayName="Feature service" {
 		var activeSiteTemplate   = Len( Trim( arguments.siteTemplate ) ) ? arguments.siteTemplate : "default";
 		var availableToTemplates = features[ arguments.feature ].siteTemplates ?: [ "*" ];
 
-		return !IsArray( availableToTemplates ) || availableToTemplates.find( "*" ) || availableToTemplates.find( activeSiteTemplate );
+		return (!IsArray( availableToTemplates ) OR arrayFindNoCase( availableToTemplates, "*" ) OR arrayFindNoCase( availableToTemplates, activeSiteTemplate ));
 	}
 
 	/**

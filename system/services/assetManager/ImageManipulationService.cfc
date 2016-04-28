@@ -45,17 +45,17 @@ component displayname="Image Manipulation Service" {
 
 		currentImageInfo = ImageInfo( image );
 
-		if ( !arguments.height ) {
-			if ( currentImageInfo.width == arguments.width ) {
+		if ( NOT arguments.height ) {
+			if ( currentImageInfo.width EQ arguments.width ) {
 				return arguments.asset;
 			}
 			ImageScaleToFit( image, arguments.width, "", interpolation );
-		} else if ( !arguments.width ) {
-			if ( currentImageInfo.height == arguments.height ) {
+		} else if ( NOT arguments.width ) {
+			if ( currentImageInfo.height EQ arguments.height ) {
 				return arguments.asset;
 			}
 			ImageScaleToFit( image, "", arguments.height, interpolation );
-		} else if ( currentImageInfo.width == arguments.width && currentImageInfo.height == arguments.height ) {
+		} else if ( currentImageInfo.width EQ arguments.width && currentImageInfo.height EQ arguments.height ) {
 			return arguments.asset;
 		} else {
 			if ( maintainAspectRatio ) {
@@ -77,6 +77,10 @@ component displayname="Image Manipulation Service" {
 				}
 			}
 		}
+		
+		writeDump(image);
+		writeDump(ImageGetBlob( image ));
+		abort;
 
 		return ImageGetBlob( image );
 	}

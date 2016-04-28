@@ -70,8 +70,8 @@ component singleton=true {
 
 
 		extensionList.sort( function( a, b ){
-			if ( a.priority == b.priority ) {
-				return a.name == b.name ? 0 : ( a.name > b.name ? 1 : -1 );
+			if ( a.priority EQ b.priority ) {
+				return a.name EQ b.name ? 0 : ( a.name > b.name ? 1 : -1 );
 			}
 
 			return a.priority < b.priority ? 1 : -1;
@@ -81,49 +81,55 @@ component singleton=true {
 	}
 
 	public void function activateExtension( required string extensionName ) {
-		var extensions = _readExtensionsFromFile();
+		try {
+			var extensions = _readExtensionsFromFile();
 
-		for( var ext in extensions ){
-			if ( ext.name eq arguments.extensionName ) {
-				ext.active = true;
-				_writeExtensionsToFile( extensions );
-				return;
+			for( var ext in extensions ){
+				if ( ext.name eq arguments.extensionName ) {
+					ext.active = true;
+					_writeExtensionsToFile( extensions );
+					return;
+				}
+			}
+
+			var untrackedExtensions = _listPresentExtensions();
+			for( var ext in untrackedExtensions ) {
+				if ( ext EQ arguments.extensionName ) {
+					ArrayAppend( extensions, { name=ext, priority=0, active=true } );
+					_writeExtensionsToFile( extensions );
+					return;
+				}
 			}
 		}
-
-		var untrackedExtensions = _listPresentExtensions();
-		for( var ext in untrackedExtensions ) {
-			if ( ext == arguments.extensionName ) {
-				ArrayAppend( extensions, { name=ext, priority=0, active=true } );
-				_writeExtensionsToFile( extensions );
-				return;
-			}
+		catch(any e) {
+			throw( type="ExtensionManager.missingExtension", message="The extension, [#arguments.extensionName#], could not be found. Present extensions" );
 		}
-
-		throw( type="ExtensionManager.missingExtension", message="The extension, [#arguments.extensionName#], could not be found. Present extensions" );
 	}
 
 	public void function deactivateExtension( required string extensionName ) {
-		var extensions = _readExtensionsFromFile();
+		try {
+			var extensions = _readExtensionsFromFile();
 
-		for( var ext in extensions ){
-			if ( ext.name eq arguments.extensionName ) {
-				ext.active = false;
-				_writeExtensionsToFile( extensions );
-				return;
+			for( var ext in extensions ){
+				if ( ext.name eq arguments.extensionName ) {
+					ext.active = false;
+					_writeExtensionsToFile( extensions );
+					return;
+				}
+			}
+
+			var untrackedExtensions = _listPresentExtensions();
+			for( var ext in untrackedExtensions ) {
+				if ( ext EQ arguments.extensionName ) {
+					ArrayAppend( extensions, { name=ext, priority=0, active=false } );
+					_writeExtensionsToFile( extensions );
+					return;
+				}
 			}
 		}
-
-		var untrackedExtensions = _listPresentExtensions();
-		for( var ext in untrackedExtensions ) {
-			if ( ext == arguments.extensionName ) {
-				ArrayAppend( extensions, { name=ext, priority=0, active=false } );
-				_writeExtensionsToFile( extensions );
-				return;
-			}
+		catch(any e) {
+			throw( type="ExtensionManager.missingExtension", message="The extension, [#arguments.extensionName#], could not be found. Extensions present: #SerializeJson( untrackedExtensions )#" );
 		}
-
-		throw( type="ExtensionManager.missingExtension", message="The extension, [#arguments.extensionName#], could not be found. Extensions present: #SerializeJson( untrackedExtensions )#" );
 	}
 
 	public void function uninstallExtension( required string extensionName ) {
@@ -131,7 +137,7 @@ component singleton=true {
 		var presentExtensions = _listPresentExtensions();
 
 		for( var extension in extensionList ) {
-			if ( extension.name == arguments.extensionName ) {
+			if ( extension.name EQ arguments.extensionName ) {
 				ArrayDelete( extensionList, extension );
 				_writeExtensionsToFile( extensionList );
 				break;
@@ -139,7 +145,7 @@ component singleton=true {
 		}
 
 		for( var extension in presentExtensions ) {
-			if ( extension == arguments.extensionName ) {
+			if ( extension EQ arguments.extensionName ) {
 				DirectoryDelete( _getExtensionsDirectory() & "/" & extension, true );
 				break;
 			}
@@ -219,7 +225,7 @@ component singleton=true {
 		var extensions = [];
 
 		for( var dir in dirs ) {
-			if ( dir.type == "Dir" ) {
+			if ( dir.type EQ "Dir" ) {
 				extensions.append( dir.name );
 			}
 		}

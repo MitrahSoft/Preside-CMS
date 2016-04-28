@@ -112,8 +112,8 @@ component output=false singleton=true autodoc=true displayName="Email service" {
 			dir   = ExpandPath( dir );
 			files = DirectoryList( dir, true, "path", "*.cfc" );
 
-			for( file in files ){
-				var templateName = ReplaceNoCase( file, dir, "" );
+			for( filePath in files ){
+				var templateName = ReplaceNoCase( filePath, dir, "" );
 				    templateName = ReReplace( templateName, "\.cfc$", "" );
 				    templateName = ListChangeDelims( templateName, ".", "\/" );
 
@@ -218,6 +218,7 @@ component output=false singleton=true autodoc=true displayName="Email service" {
 	}
 
 	private void function _validateArguments( required struct sendArgs ) output=false {
+
 		if ( !Len( Trim( sendArgs.from ?: "" ) ) ) {
 			throw(
 				  type   = "EmailService.missingSender"
@@ -226,7 +227,7 @@ component output=false singleton=true autodoc=true displayName="Email service" {
 			);
 		}
 
-		if ( !Len( Trim( sendArgs.to ?: [] ) ) ) {
+		if ( !arrayLen( sendArgs.to ?: [] ) ) {
 			throw(
 				  type   = "EmailService.missingToAddress"
 				, message= "Missing to email address(es) when sending message with subject [#sendArgs.subject ?: ''#]"

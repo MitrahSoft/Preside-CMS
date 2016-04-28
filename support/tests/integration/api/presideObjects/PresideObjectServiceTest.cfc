@@ -2695,7 +2695,7 @@
 			rules["0"] = "cascade";
 			rules["2"] = "set null";
 
-			dbinfo( type="Foreignkeys", table=arguments.table, datasource="#application.dsn#", name="keys" );
+			cfdbinfo( type="Foreignkeys", table=arguments.table, datasource="#application.dsn#", name="keys" );
 
 			for( key in keys ){
 				constraints[ key.fk_name ] = {

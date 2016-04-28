@@ -55,7 +55,7 @@ component output=false singleton=true {
 				, rendered    = rendered.toString()
 				, data        = data
 				, columnlist  = data.getColumnlist(false)
-			}
+			};
 		}else{
 			return rendered.toString();
 		}
@@ -71,7 +71,7 @@ component output=false singleton=true {
 			return _parseFieldsFromViewFile(
 				  objectName = args.object
 				, filePath   = args.viewPath
-			)
+			);
 		} );
 	}
 
@@ -81,7 +81,7 @@ component output=false singleton=true {
 		var regexes         = [ '<' & '(?:cfparam|cf_presideparam)\s[^>]*?name\s*=\s*"args\.(.*?)".*?>', 'param\s[^;]*?name\s*=\s*"args\.(.*?)".*?;' ];
 		var fieldRegex      = 'field\s*=\s*"(.*?)"';
 		var rendererRegex   = 'renderer\s*=\s*"(.*?)"';
-		var editableRegex   = 'editable\s*=\s*(true|"true")'
+		var editableRegex   = 'editable\s*=\s*(true|"true")';
 		var result          = "";
 		var startPos        = 1;
 		var match           = "";

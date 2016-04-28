@@ -31,7 +31,7 @@ component extends="testbox.system.BaseSpec"{
 
 				mockProvider.id = CreateUUId();
 
-				service.$( "_createObject" ).$args( cfcPath="preside.system.fileStorage.S3StorageProvider", constructorArgs={}, skipConstructor=false ).$results( mockProvider );
+				service.$( "_createInstanceObject" ).$args( cfcPath="preside.system.fileStorage.S3StorageProvider", constructorArgs={}, skipConstructor=false ).$results( mockProvider );
 
 				expect( service.getProvider( "s3" ) ).toBe( mockProvider );
 			} );
@@ -43,7 +43,7 @@ component extends="testbox.system.BaseSpec"{
 
 				mockProvider.id = CreateUUId();
 
-				service.$( "_createObject" ).$args( cfcPath="preside.system.fileStorage.S3StorageProvider", constructorArgs=configuration, skipConstructor=false ).$results( mockProvider );
+				service.$( "_createInstanceObject" ).$args( cfcPath="preside.system.fileStorage.S3StorageProvider", constructorArgs=configuration, skipConstructor=false ).$results( mockProvider );
 
 				expect( service.getProvider( "s3", configuration ) ).toBe( mockProvider );
 			} );
@@ -55,7 +55,7 @@ component extends="testbox.system.BaseSpec"{
 
 				mockProvider.id = CreateUUId();
 
-				service.$( "_createObject" ).$args( cfcPath="preside.system.fileStorage.S3StorageProvider", constructorArgs={}, skipConstructor=true ).$results( mockProvider );
+				service.$( "_createInstanceObject" ).$args( cfcPath="preside.system.fileStorage.S3StorageProvider", constructorArgs={}, skipConstructor=true ).$results( mockProvider );
 
 				expect( service.getProvider( id="s3", skipConstructor=true ) ).toBe( mockProvider );
 			} );

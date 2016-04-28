@@ -95,7 +95,7 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 
 	function test06_createTranslationObject_shouldReturnAnObjectWhosTableNameIsTheSourceObjectPrependedWith_translation() {
 		var svc               = _getService();
-		var dummyProps        = StructNew( "linked" );
+		var dummyProps        = createObject("java", "java.util.LinkedHashMap").init();
 
 		dummyProps.prop1 = { name="prop1", multilingual=true };
 		dummyProps.prop2 = { name="prop2", multilingual=false };
@@ -112,7 +112,7 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 
 	function test07_createTranslationObject_shouldReturnAnObjectWithOnlyMultilingualPropertiesFromTheSourceObjectCarriedOver(){
 		var svc        = _getService();
-		var dummyProps = StructNew( "linked" );
+		var dummyProps = createObject("java", "java.util.LinkedHashMap").init();
 
 		dummyProps.prop1 = { name="prop1", multilingual=true };
 		dummyProps.prop2 = { name="prop2", multilingual=false };
@@ -187,7 +187,7 @@ component extends="tests.resources.HelperObjects.PresideTestCase" {
 
 	function test09_createTranslationObject_shouldModifyDbFieldListBasedOnAdditionalFieldsAndMultilingualFields(){
 		var svc        = _getService();
-		var dummyProps = StructNew( "linked" );
+		var dummyProps = createObject("java", "java.util.LinkedHashMap").init();
 
 		dummyProps.prop1 = { name="prop1", multilingual=true };
 		dummyProps.prop2 = { name="prop2", multilingual=false };

@@ -1,7 +1,7 @@
 <cfoutput><!DOCTYPE html>
 <html>
 <head>
-	<title>#replace( HTMLEditFormat( trim( catch.message ) ), chr(10), '<br>', 'all' )#</title>
+	<title>#replace( HTMLEditFormat( trim( localCatch.message ) ), chr(10), '<br>', 'all' )#</title>
 </head>
 <body>
 
@@ -48,7 +48,7 @@
 </script>
 
 
-
+<cfset catch = localCatch>
 <table id="-railo-err" cellpadding="4" cellspacing="2">
 	<tr>
 		<td colspan="2" class="label">Railo #server.railo.version# Error (#catch.type#)</td>

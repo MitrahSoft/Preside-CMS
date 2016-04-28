@@ -331,7 +331,7 @@ component {
 			var layoutArgs = {
 				  control  = renderedControl
 				, label    = arguments.label
-				, for      = arguments.id
+				, "FOR"      = arguments.id
 				, error    = arguments.error
 				, required = arguments.required
 				, help     = arguments.help
@@ -550,7 +550,7 @@ component {
 				, description = attribs.description ?: ""
 				, id          = attribs.id          ?: ""
 				, fieldsets   = []
-			}
+			};
 			StructAppend( tab, attribs, false );
 
 			if ( StructKeyExists( tabs[i], "fieldset" ) ) {
@@ -664,8 +664,8 @@ component {
 		return rules;
 	}
 
-	private string function _getPresideObjectNameFromFormNameByConvention( required string formName ) {
-		if ( [ "page-types", "preside-objects" ].find( ListFirst( arguments.formName, "." ) ) and ListLen( arguments.formName, "." ) gt 1 ) {
+	private string function _getPresideObjectNameFromFormNameByConvention( required string formName ) {		
+		if ( ArrayFind( [ "page-types", "preside-objects" ],ListFirst( arguments.formName, "." ) ) and ListLen( arguments.formName, "." ) gt 1 ) {
 			return ListGetAt( arguments.formName, 2, "." );
 		}
 

@@ -29,10 +29,10 @@ component displayName="Error Log Service" {
 	 *
 	 */
 	public void function raiseError( required struct error ) {
-		var rendered = "";
-		var cache    = arguments.error;
-		var fileName = "rte-" & GetTickCount() & ".html";
-		var filePath = _getLogDirectory() & "/" & filename;
+		var rendered   = "";
+		var localCatch = arguments.error;
+		var fileName   = "rte-" & GetTickCount() & ".html";
+		var filePath   = _getLogDirectory() & "/" & filename;
 
 		savecontent variable="rendered" {
 			include "errorTemplate.cfm";
@@ -156,7 +156,7 @@ component displayName="Error Log Service" {
 		_logDirectory = Replace( arguments.logDirectory, "\", "/", "all" );
 		_logDirectory = ReReplace( _logDirectory, "/$", "" );
 
-		if ( !DirectoryExists( _logDirectory ) ) {
+		if ( !DirectoryExists( _logDirectory ) ) {			
 			DirectoryCreate( _logDirectory );
 		}
 	}

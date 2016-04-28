@@ -37,12 +37,13 @@ component output=false singleton=true {
 		var bundle      = "";
 		var resourceKey = "";
 		var bundleData  = "";
-
+		var languages   = arguments.language ?: "";
+		var countries   = arguments.country  ?: "";
 		_validateUri( arguments.uri );
 
 		bundle      = ListFirst( arguments.uri, ":" );
 		resourceKey = ListRest( arguments.uri, ":" );
-		bundleData  = _getBundleData( bundleName=bundle, language=arguments.language, country=arguments.country );
+		bundleData  = _getBundleData( bundleName=bundle, language=languages, country=countries );
 
 		if ( StructKeyExists( bundleData, resourceKey ) ) {
 			return bundleData[ resourceKey ];
@@ -179,7 +180,7 @@ component output=false singleton=true {
 		var files              = "";
 		var directory          = "";
 		var file               = "";
-		var bundleData         = StructNew( "linked" );
+		var bundleData         = createObject("java", "java.util.LinkedHashMap").init();
 		var filePattern        = ListLast( arguments.bundleName, "." );
 
 		if ( ListLen( arguments.bundleName, "." ) gt 1 ) {

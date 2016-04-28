@@ -156,7 +156,7 @@ component displayName="Multilingual Preside Object Service" {
 		translationProperties._translation_active = {
 			  name          = "_translation_active"
 			, required      = false
-			, default       = false
+			, 'DEFAULT'     = false
 			, type          = "boolean"
 			, dbtype        = "boolean"
 			, uniqueindexes = ""
@@ -167,6 +167,7 @@ component displayName="Multilingual Preside Object Service" {
 			, maxLength     = 0
 			, control       = "none"
 		};
+		
 		dbFieldList.append( "_translation_active" );
 		propertyNames.append( "_translation_active" );
 
@@ -327,7 +328,7 @@ component displayName="Multilingual Preside Object Service" {
 			if ( mappedRecords.keyExists( language.id ) ) {
 				language.status = Val( mappedRecords[ language.id ] ) ? "active" : "inprogress";
 			} else {
-				language.status = "notstarted"
+				language.status = "notstarted";
 			}
 		}
 
@@ -501,7 +502,7 @@ component displayName="Multilingual Preside Object Service" {
 			, propertyName = propertyName
 			, selector     = selector
 			, alias        = selectFieldParts.len() == 1 ? propertyName : selectFieldParts[ selectFieldParts.len() ]
-		}
+		};
 	}
 
 	private string function _transformSelectFieldToGetTranslationIfExists( required string objectName, required string selector, required string alias, required any dbAdapter ) {

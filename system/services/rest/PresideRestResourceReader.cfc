@@ -69,7 +69,7 @@ component displayName="Preside REST Resource Reader" {
 				var bUri = Replace( b.uriPattern, "(.*?)", "", "all" );
 
 				return aUri.len() > bUri.len() ? -1 : 1;
-			} )
+			} );
 		}
 
 		return apis;

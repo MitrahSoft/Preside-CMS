@@ -1507,7 +1507,7 @@
 		<cfargument name="prc"               type="struct"  required="true" />
 		<cfargument name="object"            type="string"  required="false" default="#( rc.object ?: '' )#" />
 		<cfargument name="postAction"        type="string"  required="false" default="datamanager.object" />
-		<cfargument name="postActionUrl"     type="string"  required="false" default="#( event.buildAdminLink( linkTo=postAction, queryString=( postAction=="datamanager.object" ? "id=#object#" : "" ) ) )#" />
+		<cfargument name="postActionUrl"     type="string"  required="false" default="#( event.buildAdminLink( linkTo=postAction, queryString=( postAction EQ "datamanager.object" ? "id=#object#" : "" ) ) )#" />
 		<cfargument name="redirectOnSuccess" type="boolean" required="false" default="true" />
 
 		<cfscript>

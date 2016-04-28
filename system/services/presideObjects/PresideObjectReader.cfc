@@ -64,7 +64,7 @@ component {
 
 	public void function finalizeMergedObject( required any object ) {
 		var meta = arguments.object.meta = arguments.object.meta ?: {};
-		var componentName = ListLast( meta.name, "." );
+		var componentName = ListLast( meta.name ?: "", "." );
 
 		_announceInterception( "postReadPresideObject", { objectMeta=meta } );
 
@@ -92,8 +92,8 @@ component {
 	public struct function getAutoPivotObjectDefinition( required struct sourceObject, required struct targetObject, required string pivotObjectName, required string sourcePropertyName, required string targetPropertyName ) {
 		var tmp = "";
 		var autoObject = "";
-		var objAName = LCase( ListLast( sourceObject.name, "." ) );
-		var objBName = LCase( ListLast( targetObject.name, "." ) );
+		var objAName = LCase( ListLast( sourceObject.name ?: "", "." ) );
+		var objBName = LCase( ListLast( targetObject.name ?: "", "." ) );
 		var fieldOrder = ( sourcePropertyName < targetPropertyName ) ? "#sourcePropertyName#,#targetPropertyName#" : "#targetPropertyName#,#sourcePropertyName#";
 
 		autoObject = {
@@ -105,8 +105,8 @@ component {
 			, tablePrefix = sourceObject.tablePrefix
 			, versioned   = ( ( sourceObject.versioned ?: false ) || ( targetObject.versioned ?: false ) )
 			, properties  = {
-				  "#sourcePropertyName#" = { name=sourcePropertyName, control="auto", type=sourceObject.properties.id.type, dbtype=sourceObject.properties.id.dbtype, maxLength=sourceObject.properties.id.maxLength, generator="none", relationship="many-to-one", relatedTo=objAName, required=true, onDelete="cascade" }
-				, "#targetPropertyName#" = { name=targetPropertyName, control="auto", type=targetObject.properties.id.type, dbtype=targetObject.properties.id.dbtype, maxLength=targetObject.properties.id.maxLength, generator="none", relationship="many-to-one", relatedTo=objBName, required=true, onDelete="cascade" }
+				  "#sourcePropertyName#" = { name=sourcePropertyName, control="auto", type=sourceObject.properties.id.type ?: "", dbtype=sourceObject.properties.id.dbtype ?: "", maxLength=sourceObject.properties.id.maxLength ?: "", generator="none", relationship="many-to-one", relatedTo=objAName, required=true, onDelete="cascade" }
+				, "#targetPropertyName#" = { name=targetPropertyName, control="auto", type=targetObject.properties.id.type ?: "", dbtype=targetObject.properties.id.dbtype ?: "", maxLength=targetObject.properties.id.maxLength ?: "", generator="none", relationship="many-to-one", relatedTo=objBName, required=true, onDelete="cascade" }
 				, "sort_order"           = { name="sort_order"      , control="auto", type="numeric"                      , dbtype="int"                            , maxLength=0                                   , generator="none", relationship="none"                           , required=false }
 			  }
 		};
@@ -158,7 +158,7 @@ component {
 		var propName     = "";
 		var orderedProps = _getOrderedPropertiesInAHackyWayBecauseRailoGivesThemInRandomOrder( pathToCfc = arguments.pathToCfc );
 
-		param name="arguments.meta.properties"    default=StructNew( "linked" );
+		param name="arguments.meta.properties"    default=createObject("java", "java.util.LinkedHashMap").init();
 		param name="arguments.meta.propertyNames" default=ArrayNew(1);
 
 		for( propName in orderedProps ){
@@ -228,16 +228,17 @@ component {
 				prop.relatedTo = propName;
 			}
 
-			if ( [ "many-to-many", "one-to-many" ].find( prop.relationship ?: "" ) ) {
+			if ( ArrayFind([ "many-to-many", "one-to-many" ], prop.relationship ?: "") ) {
 				prop.dbtype = "none";
 			}
 		}
 	}
 
 	private string function _calculateDbFieldList( required struct properties ) {
-		var list = [];
-		for( var propName in arguments.properties ){
-			if ( ( arguments.properties[ propName ].dbtype ?: "" ) != "none" ) {
+		var list     = [];
+		var property = arguments.properties;
+		for( var propName in property ){
+			if ( ( property[ propName ].dbtype ?: "" ) NEQ "none" ) {
 				list.append( propName );
 			}
 		}
@@ -338,10 +339,10 @@ component {
 
 	private void function _fixOrderOfProperties( required struct meta ) {
 		param name="arguments.meta.propertyNames" default=ArrayNew(1);
-		param name="arguments.meta.properties"    default=StructNew();
+		param name="arguments.meta.properties"    default=createObject("java", "java.util.LinkedHashMap").init();
 
 		var propName     = "";
-		var orderedProps = StructNew( 'linked' );
+		var orderedProps = createObject("java", "java.util.LinkedHashMap").init();
 
 		for( propName in arguments.meta.propertyNames ){
 			orderedProps[ propName ] = arguments.meta.properties[ propName ];
@@ -390,7 +391,7 @@ component {
 		} else {
 			arguments.objectMeta.labelfield = arguments.objectMeta.labelfield ?: "label";
 		}
-		arguments.objectMeta.noLabel = arguments.objectMeta.noLabel ?: arguments.objectMeta.labelfield !== "label";
+		arguments.objectMeta.noLabel = arguments.objectMeta.noLabel ?: structKeyExists(arguments, "objectMeta") AND arguments.objectMeta.labelfield NEQ "label";
 	}
 
 	private void function _removeObjectsUsedInDisabledFeatures( required struct objects ) {

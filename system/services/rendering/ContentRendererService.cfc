@@ -23,18 +23,18 @@ component singleton=true output="false" {
 
 // PUBLIC API METHODS
 	public string function render( required string renderer, required string data, any context="default" ) output=false {
-		var renderer = _getRenderer( name=arguments.renderer, context=arguments.context );
-		var r        = "";
-		var rendered = arguments.data;
+		var localRenderer = _getRenderer( name=arguments.renderer, context=arguments.context );
+		var r             = "";
+		var rendered      = arguments.data;
 
-		if ( renderer.isChain() ) {
-			for( r in renderer.getChain() ){
+		if ( localRenderer.isChain() ) {
+			for( r in localRenderer.getChain() ){
 				rendered = this.render( renderer=r, data=rendered, context=arguments.context );
 			}
 
 			return rendered;
 		} else {
-			return _getColdbox().renderViewlet( event=renderer.getViewlet(), args={ data=arguments.data } );
+			return _getColdbox().renderViewlet( event=localRenderer.getViewlet(), args={ data=arguments.data } );
 		}
 	}
 

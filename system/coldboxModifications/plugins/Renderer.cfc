@@ -750,7 +750,7 @@
 	</cffunction>
 
 	<cffunction name="_getThreadSafeInstanceOfThisPlugin" access="private" returntype="any" output="false">
-		<cfreturn Duplicate( this, false ) />
+		<cfreturn Duplicate( this ) />
 	</cffunction>
 
 	<cffunction name="_getViewMappings" access="private" returntype="struct" output="false">

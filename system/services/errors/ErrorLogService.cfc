@@ -88,7 +88,7 @@ component displayName="Error Log Service" {
 	 */
 	public void function deleteError( required string logFile ) {
 		try {
-			return FileDelete( _getLogDirectory() & "/" & arguments.logFile );
+			FileDelete( _getLogDirectory() & "/" & arguments.logFile );
 		} catch( any e ) {
 		}
 	}

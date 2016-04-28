@@ -18,7 +18,7 @@ interface displayname="Storage provider" {
 	 * @validationResult.hint A [[api-validationresult]] object with which problems can be reported.
 	 *
 	 */
-	public any function validate( required struct configuration, required any validationResult ) {}
+	public any function validate( required struct configuration, required any validationResult );
 
 	/**
 	 * Returns whether or not an object exists for the passed path.
@@ -28,7 +28,7 @@ interface displayname="Storage provider" {
 	 * @trashed.hint Whether or not the object has been "trashed"
 	 *
 	 */
-	public boolean function objectExists( required string path, boolean trashed=false ) {}
+	public boolean function objectExists( required string path, boolean trashed=false );
 
 	/**
 	 * Returns a query of objects that live beneath the given path. Query columns should be:
@@ -38,7 +38,7 @@ interface displayname="Storage provider" {
 	 * @path.hint A path prefix that the method should use when deciding which objects to return. Any object who's path begins with the provide path should be returned.
 	 *
 	 */
-	public query function listObjects( required string path ) {}
+	public query function listObjects( required string path );
 
 	/**
 	 * Returns the binary data of the object that lives at the given path.
@@ -48,7 +48,7 @@ interface displayname="Storage provider" {
 	 * @trashed.hint Whether or not the object has been "trashed"
 	 *
 	 */
-	public binary function getObject( required string path, boolean trashed=false ) {}
+	public binary function getObject( required string path, boolean trashed=false );
 
 	/**
 	 * Returns size and lastmodified information about the object that resides at the provided path.
@@ -58,7 +58,7 @@ interface displayname="Storage provider" {
 	 * @trashed.hint Whether or not the object has been "trashed"
 	 *
 	 */
-	public struct function getObjectInfo( required string path, boolean trashed=false ) {}
+	public struct function getObjectInfo( required string path, boolean trashed=false );
 
 	/**
 	 * Puts an object into the store.
@@ -68,7 +68,7 @@ interface displayname="Storage provider" {
 	 * @path.hint   Path in the storage provider at which the object should be stored
 	 *
 	 */
-	public void function putObject( required any object, required string path ) {}
+	public void function putObject( required any object, required string path );
 
 
 	/**
@@ -79,7 +79,7 @@ interface displayname="Storage provider" {
 	 * @trashed.hint Whether or not the object has been "trashed"
 	 *
 	 */
-	public void function deleteObject( required string path, boolean trashed=false ) {}
+	public void function deleteObject( required string path, boolean trashed=false );
 
 	/**
 	 * "Soft" deletes the object that resides at the given path. This requires
@@ -90,7 +90,7 @@ interface displayname="Storage provider" {
 	 * @path.hint The path of the stored object
 	 *
 	 */
-	public string function softDeleteObject( required string path ) {}
+	public string function softDeleteObject( required string path );
 
 	/**
 	 * Restores an object that has been previously "trashed"/"Soft deleted".
@@ -100,7 +100,7 @@ interface displayname="Storage provider" {
 	 * @newPath.hint     Path to restore the object to
 	 *
 	 */
-	public boolean function restoreObject( required string trashedPath, required string newPath ) {}
+	public boolean function restoreObject( required string trashedPath, required string newPath );
 
 	/**
 	 * Should return a direct URL at which the object can be retrieved.
@@ -110,5 +110,5 @@ interface displayname="Storage provider" {
 	 * @path.hint The path of the stored object
 	 *
 	 */
-	public string function getObjectUrl( required string path ) {}
+	public string function getObjectUrl( required string path );
 }

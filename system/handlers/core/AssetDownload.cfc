@@ -51,17 +51,17 @@ component output=false {
 
 			var filename = _getFilenameForAsset( asset.title, type.extension );
 			if ( type.serveAsAttachment ) {
-				header name="Content-Disposition" value="attachment; filename=""#filename#""";
+				cfheader( name="Content-Disposition", value="attachment; filename=""#filename#""" );
 			} else {
-				header name="Content-Disposition" value="inline; filename=""#filename#""";
+				cfheader( name="Content-Disposition", value="inline; filename=""#filename#""" );
 			}
 
-			header name="etag" value=etag;
-			header name="cache-control" value="max-age=31536000";
-			content
-				reset    = true
-				variable = assetBinary
-				type     = type.mimeType;
+			cfheader( name="etag", value=etag );
+			cfheader( name="cache-control", value="max-age=31536000" );
+			cfcontent(
+				  reset    = true
+				, variable = assetBinary
+				, type     = type.mimeType );
 			abort;
 		}
 
@@ -79,10 +79,10 @@ component output=false {
 
 			if ( ( fileTypeDetails.groupName ?: "" ) eq "image" ) {
 				// brutal for now - no thumbnail generation, just spit out the file
-				content reset=true variable="#assetManagerService.getTemporaryFileBinary( tmpId )#" type="#fileTypeDetails.mimeType#";abort;
+				cfcontent( reset=true, variable="#assetManagerService.getTemporaryFileBinary( tmpId )#", type="#fileTypeDetails.mimeType#" );abort;
 			} else {
 				var iconFile = "/preside/system/assets/images/asset-type-icons/48px/#ListLast( fileDetails.name, "." )#.png";
-				content reset=true file="#iconFile#" deleteFile=false type="image/png";abort;
+				cfcontent( reset=true, file="#iconFile#", deleteFile=false, type="image/png" );abort;
 			}
 		}
 
@@ -94,7 +94,7 @@ component output=false {
 	private string function _doBrowserEtagLookup( required string etag ) output=false {
 		if ( ( cgi.http_if_none_match ?: "" ) == arguments.etag ) {
 			announceInterception( "onReturnAsset304", { etag = arguments.etag } );
-			content reset=true;header statuscode=304 statustext="Not Modified";abort;
+			cfcontent( reset=true );cfheader( statuscode=304, statustext="Not Modified" );abort;
 		}
 	}
 

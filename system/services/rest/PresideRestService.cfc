@@ -286,7 +286,7 @@ component {
 		var data = restResponse.getData();
 
 		if ( !IsNull( data ) ) {
-			return LCase( Hash( Serialize( restResponse.getData() ) ) );
+			return LCase( Hash( SerializeJson( restResponse.getData() ) ) );
 		}
 
 		return "";
@@ -344,7 +344,7 @@ component {
 	}
 
 	private void function _dealWithEtags( required any restRequest, required any restResponse, required any requestContext ) {
-		if ( [ "HEAD", "GET" ].findNoCase( restRequest.getVerb() ) ) {
+		if ( arrayfindNoCase( [ "HEAD", "GET" ], restRequest.getVerb() ) ) {
 			var etag = setEtag( restResponse );
 
 			if ( Len( Trim( etag ) ) ) {

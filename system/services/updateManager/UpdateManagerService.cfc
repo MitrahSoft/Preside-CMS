@@ -385,15 +385,15 @@ component {
 
 	private void function _updateMapping( required string newPath ) {
 		try {
-			admin action   = "updateMapping"
-			      password = _getSetting( "railo_admin_pw", "password" )
-			      type     = "web"
-			      virtual  = "/preside"
-			      physical = arguments.newPath
-			      archive  = ""
-			      primary  = "physical"
-			      trusted  = true
-			      toplevel = false;
+			cfadmin(  action   = "updateMapping"
+			        , password = _getSetting( "railo_admin_pw", "password" )
+			        , type     = "web"
+			        , virtual  = "/preside"
+			        , physical = arguments.newPath
+			        , archive  = ""
+			        , primary  = "physical"
+			        , trusted  = true
+			        , toplevel = false );
 
 			pagePoolClear();
 		} catch( "security" e ) {

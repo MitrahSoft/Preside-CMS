@@ -986,13 +986,15 @@ component extends="testbox.system.BaseSpec"{
 	}
 
 	private any function getService( ) {
-		variables.mockController    = createStub();
-		variables.mockConfigWrapper = createEmptyMock( "preside.system.services.rest.PresideRestConfigurationWrapper" );
+		variables.mockController       = createStub();
+		variables.mockConfigWrapper    = createEmptyMock( "preside.system.services.rest.PresideRestConfigurationWrapper" );
+		variables.mockValidationEngine = createEmptyMock ( "preside.system.services.validation.ValidationEngine" ) ;
 
 		var restService = createMock( object=new preside.system.services.rest.PresideRestService(
 			  controller           = mockController
 			, resourceDirectories  = [ "/resources/rest/dir1", "/resources/rest/dir2" ]
 			, configurationWrapper = mockConfigWrapper
+			, validationEngine     = mockvalidationEngine
 		) );
 
 		restService.$( "_announceInterception" );

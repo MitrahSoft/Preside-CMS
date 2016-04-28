@@ -343,7 +343,7 @@ component singleton=true {
 		} else {
 			args.maxRows = 0;
 			args.startRow = 1;
-			args.selectFields = [ "count( * ) as nRows" ]
+			args.selectFields = [ "count( * ) as nRows" ];
 			result.totalRecords = _getPresideObjectService().selectData( argumentCollection=args ).nRows;
 		}
 

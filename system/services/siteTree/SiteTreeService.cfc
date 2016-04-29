@@ -54,7 +54,7 @@ component singleton=true {
 			filter &= " and page.page_type in (:page_type)";
 		}
 
-		var maxDepth         = arguments.maxDepth;
+		var _maxDepth         = arguments.maxDepth;
 		var args = {
 			  orderBy      = "page._hierarchy_sort_order"
 			, filter       = filter
@@ -80,14 +80,14 @@ component singleton=true {
 			args.filter       &= " and page._hierarchy_lineage like :_hierarchy_lineage";
 			args.filterParams._hierarchy_lineage = rootPage._hierarchy_child_selector;
 
-			if ( maxDepth >= 0 && !isNull( rootPage._hierarchy_depth ) && isNumeric( rootPage._hierarchy_depth ) ) {
-				maxDepth += rootPage._hierarchy_depth+1;
+			if ( _maxDepth >= 0 && !isNull( rootPage._hierarchy_depth ) && isNumeric( rootPage._hierarchy_depth ) ) {
+				_maxDepth += rootPage._hierarchy_depth+1;
 			}
 		}
 
-		if ( maxDepth >= 0 ) {
+		if ( _maxDepth >= 0 ) {
 			args.filter       &= " and page._hierarchy_depth <= :_hierarchy_depth";
-			args.filterParams._hierarchy_depth = maxDepth;
+			args.filterParams._hierarchy_depth = _maxDepth;
 		}
 
 
@@ -423,7 +423,7 @@ component singleton=true {
 		, boolean isSubMenu         = false
 	) {
 		var args = arguments;
-		var requiredSelectFields = [ "id", "title", "navigation_title", "exclude_children_from_navigation", "page_type", "exclude_from_navigation_when_restricted", "access_restriction" ]
+		var requiredSelectFields = [ "id", "title", "navigation_title", "exclude_children_from_navigation", "page_type", "exclude_from_navigation_when_restricted", "access_restriction" ];
 		for( var field in requiredSelectFields) {
 			if ( !args.selectFields.find( field ) && !args.selectFields.find( "page." & field ) ) {
 				args.selectFields.append( "page." & field );
@@ -499,7 +499,7 @@ component singleton=true {
 		);
 
 		var isManagedType   = Len( Trim( page.parent_type ) ) && getManagedChildTypesForParentType( page.parent_type ).findNoCase( page.page_type );
-		var excludedFromNav = arguments.isSubMenu ? Val( page.exclude_from_sub_navigation ) : ( Val( page.exclude_from_navigation ) || Val( page.exclude_children_from_navigation ) )
+		var excludedFromNav = arguments.isSubMenu ? Val( page.exclude_from_sub_navigation ) : ( Val( page.exclude_from_navigation ) || Val( page.exclude_children_from_navigation ) );
 		if ( isManagedType || excludedFromNav ) {
 			return [];
 		}
@@ -651,16 +651,18 @@ component singleton=true {
 						data._hierarchy_child_selector = data._hierarchy_lineage & existingPage._hierarchy_id & "/%";
 						data._hierarchy_depth          = newParent._hierarchy_depth + 1;
 						data._hierarchy_sort_order     = newParent._hierarchy_sort_order & _paddedSortOrder( data.sort_order ) & "/";
-						data._hierarchy_slug           = newParent._hierarchy_slug & ( slugChanged ? data : existingPage ).slug & "/";
+						var _slugChangedTemp           = slugChanged ? data : existingPage ;
+						data._hierarchy_slug           = newParent._hierarchy_slug & _slugChangedTemp.slug & "/";
 
-					} elseif ( IsBoolean( arguments.trashed ?: "" ) && arguments.trashed ) {
+					} else if ( IsBoolean( arguments.trashed ?: "" ) && arguments.trashed ) {
 						data.sort_order                = _calculateSortOrder();
 						data.parent_page               = "";
 						data._hierarchy_lineage        = "/";
 						data._hierarchy_child_selector = "/" & existingPage._hierarchy_id & "/%";
 						data._hierarchy_depth          = 0;
 						data._hierarchy_sort_order     = "/" & _paddedSortOrder( data.sort_order ) & "/";
-						data._hierarchy_slug           = "/" & ( slugChanged ? data : existingPage ).slug & "/";
+						var _slugChangedTemp           = slugChanged ? data : existingPage;
+						data._hierarchy_slug           = "/" & _slugChangedTemp.slug & "/";
 					} else {
 						throw(
 							  type    = "SiteTreeService.MissingParent"
@@ -883,8 +885,9 @@ component singleton=true {
 
 	public boolean function userHasPageAccess( required string pageId ) {
 		var restrictionRules = getAccessRestrictionRulesForPage( arguments.pageId );
+		var _rulesArray      = [ "none", "partial" ];
 
-		if ( [ "none", "partial" ].find( restrictionRules.access_restriction ) ) {
+		if ( _rulesArray.find( restrictionRules.access_restriction ) ) {
 			return true;
 		}
 

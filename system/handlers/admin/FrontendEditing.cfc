@@ -5,7 +5,7 @@ component output=false {
 	property name="presideObjectService"   inject="presideObjectService";
 
 
-<!--- actions --->
+//actions
 	public void function saveAction( event, rc, prc ) output=false {
 		var pageId   = rc.pageId   ?: "";
 		var object   = rc.object   ?: "";

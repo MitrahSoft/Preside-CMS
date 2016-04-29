@@ -27,7 +27,7 @@ component {
 					, title   = translateResource( uri="locale:title", language=language, country=country )
 					, flag    = translateResource( uri="locale:flag" , language=language, country=country )
 					, selected = ( arguments.locale == currentLocale )
-				}
+				};
 			} ).sort( function( a, b ){
 				if ( a.locale == defaultLocale ) {
 					return -1;

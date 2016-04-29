@@ -129,8 +129,10 @@ component singleton=true autodoc=true displayName="Website login service" {
 	 * @securityAlertCallback.hint A function that will be invoked should their be a security alert during auto login checking. Use this to alert the user that their login may have been compromised.
 	 */
 	public boolean function isLoggedIn( function securityAlertCallback ) autodoc=true {
-		if (! structKeyExists(arguments, securityAlertCallback) ){
-			securityAlertCallback = function(){};
+		
+		// structKeyExists is not working fine in this case in ACF
+		if ( ! isdefined("arguments.securityAlertCallback") ){
+			arguments.securityAlertCallback = function(){};
 		}
 		var userSessionExists = _getSessionStorage().exists( name=_getSessionKey() );
 

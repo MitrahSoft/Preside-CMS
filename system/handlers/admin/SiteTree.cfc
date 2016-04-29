@@ -29,7 +29,8 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	public void function index( event, rc, prc ) {
-		if ( ( rc.selected ?: "" ).len() ) {
+		rc.selected = rc.selected ?: "";
+		if ( rc.selected.len() ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
 			prc.selectedAncestors = prc.selectedAncestors.recordCount ? listToArray( ValueList( prc.selectedAncestors.id ) ) : [];
 			event.includeData( { selectedNode = rc.selected } );
@@ -117,8 +118,8 @@ component extends="preside.system.base.AdminHandler" {
 				, managedChildrenBaseLink = managedChildrenBaseLink
 			} );
 		}
-
-		if ( ( rc.selected ?: "" ).len() ) {
+		rc.selected = rc.selected ?: "";
+		if ( rc.selected.len() ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
 			prc.selectedAncestors = prc.selectedAncestors.recordcount ? listToArray( ValueList( prc.selectedAncestors.id ) ): [];
 			event.includeData( { selectedPage = rc.selected } );
@@ -972,10 +973,10 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	private query function _getPageAndThrowOnMissing( event, rc, prc, pageId, includeTrash=false, allowVersions=false ) {
-		var pageId  = arguments.pageId        ?: ( rc.id ?: "" );
+		var _pageId  = arguments.pageId        ?: ( rc.id ?: "" );
 		var version = arguments.allowVersions ? ( rc.version ?: 0 ) : 0;
 		var page    = siteTreeService.getPage(
-			  id              = pageId
+			  id              = _pageId
 			, version         = Val( version )
 			, includeInactive = true
 			, includeTrash    = arguments.includeTrash
@@ -990,19 +991,19 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	private array function _getPagePermissionContext( event, rc, prc, pageId, includePageId=true ) {
-		var pageId   = arguments.pageId ?: ( rc.id ?: "" );
+		var _pageId   = arguments.pageId ?: ( rc.id ?: "" );
 		var cacheKey = "pagePermissionContext";
 
 		if ( prc.keyExists( cacheKey ) ) {
 			return prc[ cacheKey ];
 		}
 
-		var ancestors = sitetreeService.getAncestors( id = pageId, selectFields=[ "id" ] );
+		var ancestors = sitetreeService.getAncestors( id = _pageId, selectFields=[ "id" ] );
 		var context   = ancestors.recordCount ? ListToArray( ValueList( ancestors.id ) ) : [];
 		var reversed  = [];
 
 		if ( arguments.includePageId ) {
-			context.append( pageId );
+			context.append( _pageId );
 		}
 
 		for( var i=context.len(); i>0; i-- ){

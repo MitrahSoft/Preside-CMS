@@ -61,31 +61,31 @@ component autodoc=true displayName="Notification Service" {
 		_announceInterception( "onCreateNotification", args );
 
 		if ( IsBoolean( topicConfig.save_in_cms ?: "" ) && topicConfig.save_in_cms ) {
-			var data = {
+			var _data = {
 				  topic = arguments.topic
 				, type  = arguments.type
 				, data  = SerializeJson( arguments.data )
 			};
-			data.data_hash = LCase( Hash( data.data ) );
+			_data.data_hash = LCase( Hash( _data.data ) );
 
 			var existingNotification = _getNotificationDao().selectData( filter={
-				  topic     = data.topic
-				, type      = data.type
-				, data_hash = data.data_hash
+				  topic     = _data.topic
+				, type      = _data.type
+				, data_hash = _data.data_hash
 			} );
 
 			if ( existingNotification.recordCount ) {
-				createNotificationConsumers( existingNotification.id, args.topic, data );
+				createNotificationConsumers( existingNotification.id, args.topic, _data );
 				return existingNotification.id;
 			}
 
 			_announceInterception( "preCreateNotification", args );
 
-			args.notificationId = _getNotificationDao().insertData( data=data );
+			args.notificationId = _getNotificationDao().insertData( data=_data );
 
 			_announceInterception( "postCreateNotification", args );
 
-			createNotificationConsumers( args.notificationId, topic, data );
+			createNotificationConsumers( args.notificationId, topic, _data );
 
 			if ( Len( Trim( topicConfig.send_to_email_address ?: "" ) ) ) {
 				sendGlobalNotificationEmail(
@@ -322,9 +322,9 @@ component autodoc=true displayName="Notification Service" {
 	 *
 	 */
 	public struct function getGlobalTopicConfiguration( required string topic ) autodoc=true {
-		var topic = _getTopicDao().selectData( filter={ topic=arguments.topic } );
+		var _topic = _getTopicDao().selectData( filter={ topic=arguments.topic } );
 
-		for( var t in topic ) { return t; }
+		for( var t in _topic ) { return t; }
 
 		return {};
 	}

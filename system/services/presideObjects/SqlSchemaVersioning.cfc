@@ -104,11 +104,10 @@ component output=false singleton=true {
 		}
 
 		insertSql &= " ) values (" & insertValues & ")";
+		
+		var result = [{ sql=deleteSql, dsn=arguments.dsn }, { sql=insertSql, dsn=arguments.dsn }];
 
-		return [
-			  { sql=deleteSql, dsn=arguments.dsn }
-			, { sql=insertSql, dsn=arguments.dsn }
-		]
+		return result;
 	}
 
 	public array function cleanupDbVersionTableEntries( required struct versionEntries, required struct objects, required string dsn, boolean execute=false ) output=false {

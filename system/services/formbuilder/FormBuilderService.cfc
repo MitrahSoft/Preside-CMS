@@ -620,8 +620,8 @@ component {
 		  required string formId
 		, required struct requestData
 		,          string instanceId  = ""
-		,          string ipAddress   = Trim( ListLast( cgi.remote_addr ?: "" ) )
-		,          string userAgent   = ( cgi.http_user_agent ?: "" )
+		,          string ipAddress   = ""
+		,          string userAgent   = ""
 	) {
 		var formConfiguration = getForm( arguments.formId );
 		var formItems         = getFormItems( arguments.formId );
@@ -653,8 +653,8 @@ component {
 				, submitted_by   = $getWebsiteLoggedInUserId()
 				, submitted_data = SerializeJson( formData )
 				, form_instance  = arguments.instanceId
-				, ip_address     = arguments.ipAddress
-				, user_agent     = arguments.userAgent
+				, ip_address     = Trim( ListLast( CGI.REMOTE_ADDR ?: "" ) )
+				, user_agent     = ( CGI.HTTP_USER_AGENT ?: "" )
 			} );
 			var submission = getSubmission( submissionId );
 			for( var s in submission ) { submission = s; }

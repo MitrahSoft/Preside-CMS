@@ -99,7 +99,7 @@ component accessors=true displayName="Preside REST Response" {
 	 *
 	 */
 	public any function noData() {
-		variables.data = NullValue();
+		variables.data = javacast("null","");
 		setRenderer( "plain" );
 
 		return this;

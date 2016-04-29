@@ -29,7 +29,7 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	public void function index( event, rc, prc ) {
-		if ( ( rc.selected ?: "" ).len() ) {
+		if ( len( ( rc.selected ?: "" ) ) ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
 			prc.selectedAncestors = prc.selectedAncestors.recordCount ? listToArray( ValueList( prc.selectedAncestors.id ) ) : [];
 			event.includeData( { selectedNode = rc.selected } );

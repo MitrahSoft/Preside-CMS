@@ -83,7 +83,7 @@ component displayName="Password Policy Service" {
 		,          string  message       = ""
 	) {
 		var dao    = _getPolicyDao();
-		var filter = { context=arguments.context }
+		var filter = { context=arguments.context };
 
 		if ( dao.dataExists( filter=filter ) ) {
 			dao.updateData( filter=filter, data=arguments );

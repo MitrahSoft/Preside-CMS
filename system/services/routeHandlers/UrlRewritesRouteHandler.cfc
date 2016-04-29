@@ -21,11 +21,11 @@ component {
 			return false;
 		}
 
-		var path    = event.getCurrentUrl( includeQueryString=true );
-		var fullUrl = event.getBaseUrl() & path;
+		var currentPath = event.getCurrentUrl( includeQueryString=true );
+		var fullUrl     = event.getBaseUrl() & path;
 
 		_getUrlRedirectsService().redirectOnMatch(
-			  path    = path
+			  path    = currentPath
 			, fullUrl = fullUrl
 		);
 

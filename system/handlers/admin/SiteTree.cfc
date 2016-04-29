@@ -225,7 +225,7 @@ component extends="preside.system.base.AdminHandler" {
 			persist = {
 				  _addanother = 1
 				, active      = formData.active ?: 0
-			}
+			};
 
 			setNextEvent( url=event.buildAdminLink( linkTo="sitetree.addPage", queryString="parent_page=#parent#&page_type=#rc.page_type#" ), persistStruct=persist );
 		} else {
@@ -253,7 +253,7 @@ component extends="preside.system.base.AdminHandler" {
 		pageType = pageTypesService.getPageType( prc.page.page_type );
 
 		prc.mainFormName  = "preside-objects.page.edit";
-		prc.mergeFormName = _getPageTypeFormName( pageType, "edit" )
+		prc.mergeFormName = _getPageTypeFormName( pageType, "edit" );
 
 		prc.page = QueryRowToStruct( prc.page );
 		var savedData = getPresideObject( pageType.getPresideObject() ).selectData( filter={ page = pageId }, fromVersionTable=( version > 0 ), specificVersion=version  );
@@ -317,7 +317,7 @@ component extends="preside.system.base.AdminHandler" {
 			setNextEvent( url=event.buildAdminLink( linkTo="sitetree" ) );
 		}
 		pageType = pageTypesService.getPageType( page.page_type );
-		var mergeFormName = _getPageTypeFormName( pageType, "edit" )
+		var mergeFormName = _getPageTypeFormName( pageType, "edit" );
 		if ( Len( Trim( mergeFormName ) ) ) {
 			formName = formsService.getMergedFormName( formName, mergeFormName );
 		}
@@ -537,7 +537,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.pageTypeObjectName     = prc.pageType.getPresideObject();
 		prc.pageIsMultilingual     = multilingualPresideObjectService.isMultilingual( "page" );
 		prc.pageTypeIsMultilingual = multilingualPresideObjectService.isMultilingual( prc.pageTypeObjectName );
-		prc.versionedObjectName    = prc.pageIsMultilingual ? "page" : prc.pageTypeObjectName
+		prc.versionedObjectName    = prc.pageIsMultilingual ? "page" : prc.pageTypeObjectName;
 
 		_pageCrumbtrail( argumentCollection=arguments, pageId=prc.page.id, pageTitle=prc.page.title );
 		event.addAdminBreadCrumb(
@@ -549,7 +549,7 @@ component extends="preside.system.base.AdminHandler" {
 			, link  = ""
 		);
 
-		prc.pageTitle = translateResource( uri="cms:sitetree.pageTranslationHistory.title", data=[ prc.page.title, prc.language.name ] )
+		prc.pageTitle = translateResource( uri="cms:sitetree.pageTranslationHistory.title", data=[ prc.page.title, prc.language.name ] );
 		prc.pageIcon  = "history";
 	}
 
@@ -826,7 +826,7 @@ component extends="preside.system.base.AdminHandler" {
 		var pageTypeObjectName     = pageType.getPresideObject();
 		var pageIsMultilingual     = multilingualPresideObjectService.isMultilingual( "page" );
 		var pageTypeIsMultilingual = multilingualPresideObjectService.isMultilingual( pageTypeObjectName );
-		var versionedObjectName    = pageIsMultilingual ? "page" : pageTypeObjectName
+		var versionedObjectName    = pageIsMultilingual ? "page" : pageTypeObjectName;
 
 		runEvent(
 			  event          = "admin.DataManager._getTranslationRecordHistoryForAjaxDataTables"
@@ -860,7 +860,7 @@ component extends="preside.system.base.AdminHandler" {
 		_checkPermissions( argumentCollection=arguments, key="navigate", pageId=parentId );
 
 		prc.pageTitle    = translateResource( uri="cms:sitetree.manage.type", data=[ LCase( translateResource( "page-types.#pageType#:name" ) ) ] );
-		prc.pageSubTitle = translateResource( uri="cms:sitetree.manage.type.subtitle", data=[ LCase( translateResource( "page-types.#pageType#:name" ) ), prc.parentPage.title ] );;
+		prc.pageSubTitle = translateResource( uri="cms:sitetree.manage.type.subtitle", data=[ LCase( translateResource( "page-types.#pageType#:name" ) ), prc.parentPage.title ] );
 		prc.pageIcon     = translateResource( "page-types.#pageType#:iconClass" );
 		prc.canAddChildren = _checkPermissions( argumentCollection=arguments, key="add", pageId=parentId, throwOnError=false );
 
@@ -925,7 +925,7 @@ component extends="preside.system.base.AdminHandler" {
 		setNextEvent( url=event.buildLink( page=( rc.id ?: "" ) ) );
 	}
 
-<!--- private viewlets --->
+//private viewlets 
 	private string function searchBox( event, rc, prc, args={} ) {
 		var prefetchCacheBuster = datamanagerService.getPrefetchCachebusterForAjaxSelect( "page" );
 
@@ -935,7 +935,7 @@ component extends="preside.system.base.AdminHandler" {
 		return renderView( view="/admin/sitetree/_searchBox", args=args );
 	}
 
-<!--- private helpers --->
+// private helpers 
 	private boolean function _checkPermissions( event, rc, prc, required string key, string pageId="", string prefix="sitetree.", boolean throwOnError=true ) {
 		var permitted = "";
 		var permKey   = arguments.prefix & arguments.key;

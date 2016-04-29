@@ -130,7 +130,7 @@ component output=false {
 				, context             = "asset"
 				, contextKeys         = permissionSettings.contextTree
 				, forceGrantByDefault = IsBoolean( permissionSettings.grantAcessToAllLoggedInUsers ) && permissionSettings.grantAcessToAllLoggedInUsers
-			)
+			);
 			if ( !hasPerm ) {
 				event.accessDenied( reason="INSUFFICIENT_PRIVILEGES" );
 			}

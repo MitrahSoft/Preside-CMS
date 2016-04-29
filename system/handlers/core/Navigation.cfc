@@ -1,7 +1,7 @@
 component output=false {
 	property name="siteTreeSvc" inject="siteTreeService";
 
-<!--- VIEWLETS --->
+// VIEWLETS 
 
 	private string function mainNavigation( event, rc, prc, args={} ) output=false {
 		var activeTree = ListToArray( event.getPageProperty( "ancestorList" ) );

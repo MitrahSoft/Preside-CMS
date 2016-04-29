@@ -12,12 +12,12 @@ component extends="testbox.system.BaseSpec"{
 				var memento = restResponse.getMemento();
 
 				expect( memento ).toBe( {
-					  data         = NullValue()
+					  data         = javacast("null","")
 					, mimeType     = "application/json"
 					, renderer     = "json"
 					, statusCode   = 200
 					, statusText   = ""
-					, headers      = NullValue()
+					, headers      = javacast("null","")
 				} );
 
 			} );
@@ -207,7 +207,7 @@ component extends="testbox.system.BaseSpec"{
 				restResponse.setError( errorCode=451 );
 
 				expect( restResponse.getStatusCode() ).toBe( 451 );
-				expect( restResponse.getData().status ?: "" ).toBe( 451 );
+				expect( restResponse.getData().status ? restResponse.getData().status : "" ).toBe( 451 );
 			} );
 
 			it( "should use the supplied title as the status text", function(){
@@ -216,7 +216,7 @@ component extends="testbox.system.BaseSpec"{
 				restResponse.setError( title="Verb not supported" );
 
 				expect( restResponse.getStatusText() ).toBe( "Verb not supported" );
-				expect( restResponse.getData().title ?: "" ).toBe( "Verb not supported" );
+				expect( len( restResponse.getData().title ) ? restResponse.getData().title : "" ).toBe( "Verb not supported" );
 			} );
 
 			it( "should use the supplied type in the response data", function(){
@@ -224,7 +224,7 @@ component extends="testbox.system.BaseSpec"{
 
 				restResponse.setError( type="some.type.here" );
 
-				expect( restResponse.getData().type ?: "" ).toBe( "some.type.here" );
+				expect( len( restResponse.getData().type ) ? restResponse.getData().type : "" ).toBe( "some.type.here" );
 			} );
 
 			it( "should use the supplied message in the response data's 'detail' field", function(){
@@ -232,7 +232,7 @@ component extends="testbox.system.BaseSpec"{
 
 				restResponse.setError( message="An error occurred, it was bad and stuff" );
 
-				expect( restResponse.getData().detail ?: "" ).toBe( "An error occurred, it was bad and stuff" );
+				expect( len( restResponse.getData().detail )? restResponse.getData().detail : "" ).toBe( "An error occurred, it was bad and stuff" );
 			} );
 
 			it( "should use the supplied detail in the response data's 'extra-detail' field", function(){
@@ -240,7 +240,7 @@ component extends="testbox.system.BaseSpec"{
 
 				restResponse.setError( detail="Some really detailed stuff here" );
 
-				expect( restResponse.getData()[ "extra-detail" ] ?: "" ).toBe( "Some really detailed stuff here" );
+				expect( len( restResponse.getData()[ "extra-detail" ] ) ? restResponse.getData()[ "extra-detail" ] : "" ).toBe( "Some really detailed stuff here" );
 			} );
 
 			it( "should append the supplied additionalInfo struct to the response data struct", function(){
@@ -252,7 +252,7 @@ component extends="testbox.system.BaseSpec"{
 				var data = restResponse.getData();
 
 				for( var key in additionalInfo ) {
-					expect( data[ key ] ?: "" ).toBe( additionalInfo[ key ] );
+					expect( data[ key ] ).toBe( additionalInfo[ key ] );
 				}
 			} );
 		} );

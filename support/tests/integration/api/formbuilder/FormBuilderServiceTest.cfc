@@ -524,7 +524,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should return false when the given form is set to inactive", function(){
 				var service    = getService();
 				var formId     = CreateUUId();
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[false,NullValue(),NullValue()]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[false,javacast("null",""),javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -534,7 +534,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should return true when the given form is set to active and no active_from / active_to dates are set", function(){
 				var service    = getService();
 				var formId     = CreateUUId();
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,NullValue(),NullValue()]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,javacast("null",""),javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -545,7 +545,7 @@ component extends="testbox.system.BaseSpec"{
 				var service    = getService();
 				var formId     = CreateUUId();
 				var activeFrom = DateAdd( 'd', 1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,activeFrom,NullValue()]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,activeFrom,javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -556,7 +556,7 @@ component extends="testbox.system.BaseSpec"{
 				var service    = getService();
 				var formId     = CreateUUId();
 				var activeTo   = DateAdd( 'd', -1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,NullValue(),activeTo]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,javacast("null",""),activeTo]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -739,7 +739,7 @@ component extends="testbox.system.BaseSpec"{
 
 				service.$( "getFormItems" ).$args( id=formId ).$results( items );
 				service.$( "getItemDataFromRequest" ).$args( itemType="type2", inputName="test2", requestData=input, itemConfiguration=items[2].configuration ).$results( processed.test2 );
-				service.$( "getItemDataFromRequest" ).$args( itemType="type3", inputName="test3", requestData=input, itemConfiguration=items[3].configuration ).$results( NullValue() );
+				service.$( "getItemDataFromRequest" ).$args( itemType="type3", inputName="test3", requestData=input, itemConfiguration=items[3].configuration ).$results( javacast("null","") );
 				service.$( "getItemDataFromRequest" ).$args( itemType="type4", inputName="test4", requestData=input, itemConfiguration=items[4].configuration ).$results( processed.test4 );
 
 				expect(

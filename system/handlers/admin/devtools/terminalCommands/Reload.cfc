@@ -34,7 +34,8 @@ component output=false hint="Reload all or part of your preside application" {
 		target = validTargets[ params[1] ];
 
 		var start = GetTickCount();
-		applicationReloadService[ target.reloadMethod ]();
+		var applicationReload = applicationReloadService[ target.reloadMethod ];
+		applicationReload();
 		var timeTaken = GetTickCount() - start;
 
 		return Chr(10) & "[[b;white;]Reload completed with message: ]" & target.successMessage & Chr(10)

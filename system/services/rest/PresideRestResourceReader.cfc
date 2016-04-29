@@ -64,7 +64,7 @@ component displayName="Preside REST Resource Reader" {
 		}
 
 		for( var api in apis ) {
-			apis[ api ].sort( function( a, b ){
+			var resultApi = apis[ api ].sort( function( a, b ){
 				var aUri = Replace( a.uriPattern, "(.*?)", "", "all" );
 				var bUri = Replace( b.uriPattern, "(.*?)", "", "all" );
 

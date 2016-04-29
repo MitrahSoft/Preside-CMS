@@ -1162,13 +1162,16 @@
 		<cfargument name="event"           type="any"     required="true" />
 		<cfargument name="rc"              type="struct"  required="true" />
 		<cfargument name="prc"             type="struct"  required="true" />
-		<cfargument name="object"          type="string"  required="false" default="#( rc.id ?: '' )#" />
-		<cfargument name="gridFields"      type="string"  required="false" default="#( rc.gridFields ?: 'label,datecreated,_version_author' )#" />
+		<cfargument name="object"          type="string"  required="false" default="" />
+		<cfargument name="gridFields"      type="string"  required="false" default="" />
 		<cfargument name="actionsView"     type="string"  required="false" default="" />
 		<cfargument name="filter"          type="struct"  required="false" default="#StructNew()#" />
 		<cfargument name="useMultiActions" type="boolean" required="false" default="true" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.object );
+			arguments.gridFields = ( len(trim(arguments.gridFields)) EQ 0 AND structKeyExists(rc, "gridFields") ? rc.gridFields : 'label,datecreated,_version_author' );
+
 			gridFields = ListToArray( gridFields );
 
 			var objectTitleSingular = translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object );
@@ -1232,13 +1235,18 @@
 		<cfargument name="event"           type="any"     required="true" />
 		<cfargument name="rc"              type="struct"  required="true" />
 		<cfargument name="prc"             type="struct"  required="true" />
-		<cfargument name="object"          type="string"  required="false" default="#( rc.object ?: '' )#" />
-		<cfargument name="recordId"        type="string"  required="false" default="#( rc.id ?: '' )#" />
-		<cfargument name="property"        type="string"  required="false" default="#( rc.property ?: '' )#" />
-		<cfargument name="gridFields"      type="string"  required="false" default="#( rc.gridFields ?: 'datemodified,label,_version_author' )#" />
+		<cfargument name="object"          type="string"  required="false" default="" />
+		<cfargument name="recordId"        type="string"  required="false" default="" />
+		<cfargument name="property"        type="string"  required="false" default="" />
+		<cfargument name="gridFields"      type="string"  required="false" default="" />
 		<cfargument name="actionsView"     type="string"  required="false" default="" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+			arguments.recordId = ( len(trim(arguments.recordId)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.recordId );
+			arguments.property = ( len(trim(arguments.property)) EQ 0 AND structKeyExists(rc, "property") ? rc.property : arguments.property );
+			arguments.gridFields = ( len(trim(arguments.gridFields)) EQ 0 AND structKeyExists(rc, "gridFields") ? rc.gridFields : 'datemodified,label,_version_author' );
+
 			gridFields = ListToArray( gridFields );
 
 			var versionObject       = presideObjectService.getVersionObjectName( object );
@@ -1284,14 +1292,20 @@
 		<cfargument name="event"           type="any"     required="true" />
 		<cfargument name="rc"              type="struct"  required="true" />
 		<cfargument name="prc"             type="struct"  required="true" />
-		<cfargument name="object"          type="string"  required="false" default="#( rc.object ?: '' )#" />
-		<cfargument name="recordId"        type="string"  required="false" default="#( rc.id ?: '' )#" />
-		<cfargument name="languageId"      type="string"  required="false" default="#( rc.language ?: '' )#" />
-		<cfargument name="property"        type="string"  required="false" default="#( rc.property ?: '' )#" />
-		<cfargument name="gridFields"      type="string"  required="false" default="#( rc.gridFields ?: 'datemodified,label,_version_author' )#" />
+		<cfargument name="object"          type="string"  required="false" default="" />
+		<cfargument name="recordId"        type="string"  required="false" default="" />
+		<cfargument name="languageId"      type="string"  required="false" default="" />
+		<cfargument name="property"        type="string"  required="false" default="" />
+		<cfargument name="gridFields"      type="string"  required="false" default="" />
 		<cfargument name="actionsView"     type="string"  required="false" default="" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+			arguments.recordId = ( len(trim(arguments.recordId)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.recordId );
+			arguments.languageId = ( len(trim(arguments.languageId)) EQ 0 AND structKeyExists(rc, "language") ? rc.language : arguments.languageId );
+			arguments.property = ( len(trim(arguments.property)) EQ 0 AND structKeyExists(rc, "property") ? rc.property : arguments.property );
+			arguments.gridFields = ( len(trim(arguments.gridFields)) EQ 0 AND structKeyExists(rc, "gridFields") ? rc.gridFields : 'datemodified,label,_version_author' );
+
 			gridFields = ListToArray( gridFields );
 
 			var translationObject   = multilingualPresideObjectService.getTranslationObjectName( object );
@@ -1345,7 +1359,7 @@
 		<cfargument name="event"             type="any"     required="true"  />
 		<cfargument name="rc"                type="struct"  required="true"  />
 		<cfargument name="prc"               type="struct"  required="true"  />
-		<cfargument name="object"            type="string"  required="false" default="#( rc.object ?: '' )#" />
+		<cfargument name="object"            type="string"  required="false" default="" />
 		<cfargument name="errorAction"       type="string"  required="false" default=""     />
 		<cfargument name="viewRecordAction"  type="string"  required="false" default=""     />
 		<cfargument name="addAnotherAction"  type="string"  required="false" default=""     />
@@ -1354,6 +1368,8 @@
 		<cfargument name="formName"          type="string"  required="false" default="preside-objects.#arguments.object#.admin.add" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+
 			var formData         = event.getCollectionForForm( arguments.formName );
 			var labelField       = presideObjectService.getObjectAttribute( object, "labelfield", "label" );
 			var obj              = "";
@@ -1409,9 +1425,9 @@
 		<cfargument name="event"             type="any"     required="true"  />
 		<cfargument name="rc"                type="struct"  required="true"  />
 		<cfargument name="prc"               type="struct"  required="true"  />
-		<cfargument name="object"            type="string"  required="false" default="#( rc.object          ?: '' )#" />
-		<cfargument name="parentId"          type="string"  required="false" default="#( rc.parentId        ?: '' )#" />
-		<cfargument name="relationshipKey"   type="string"  required="false" default="#( rc.relationshipKey ?: '' )#" />
+		<cfargument name="object"            type="string"  required="false" default="" />
+		<cfargument name="parentId"          type="string"  required="false" default="" />
+		<cfargument name="relationshipKey"   type="string"  required="false" default="" />
 		<cfargument name="errorAction"       type="string"  required="false" default=""     />
 		<cfargument name="viewRecordAction"  type="string"  required="false" default=""     />
 		<cfargument name="addAnotherAction"  type="string"  required="false" default=""     />
@@ -1420,6 +1436,10 @@
 		<cfargument name="formName"          type="string"  required="false" default="preside-objects.#arguments.object#.admin.add" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+			arguments.parentId = ( len(trim(arguments.parentId)) AND structKeyExists(rc, "parentId") ? rc.parentId : arguments.parentId );
+			arguments.relationshipKey = ( len(arguments.relationshipKey) AND structKeyExists(rc, "relationshipKey") ? rc.relationshipKey : arguments.relationshipKey );
+
 			var formData         = event.getCollectionForForm( arguments.formName );
 			var labelField       = presideObjectService.getObjectAttribute( object, "labelfield", "label" );
 			var obj              = "";
@@ -1477,10 +1497,12 @@
 		<cfargument name="event"    type="any"    required="true" />
 		<cfargument name="rc"       type="struct" required="true" />
 		<cfargument name="prc"      type="struct" required="true" />
-		<cfargument name="object"   type="string" required="false" default="#( rc.object ?: '' )#" />
+		<cfargument name="object"   type="string" required="false" default="" />
 		<cfargument name="formName" type="string" required="false" default="preside-objects.#arguments.object#.admin.quickadd" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+
 			var formData         = event.getCollectionForForm( arguments.formName );
 			var validationResult = validateForm( formName=arguments.formName, formData=formData );
 
@@ -1505,12 +1527,17 @@
 		<cfargument name="event"             type="any"     required="true" />
 		<cfargument name="rc"                type="struct"  required="true" />
 		<cfargument name="prc"               type="struct"  required="true" />
-		<cfargument name="object"            type="string"  required="false" default="#( rc.object ?: '' )#" />
+		<cfargument name="object"            type="string"  required="false" default="" />
 		<cfargument name="postAction"        type="string"  required="false" default="datamanager.object" />
-		<cfargument name="postActionUrl"     type="string"  required="false" default="#( event.buildAdminLink( linkTo=postAction, queryString=( postAction EQ "datamanager.object" ? "id=#object#" : "" ) ) )#" />
+		<cfargument name="postActionUrl"     type="string"  required="false" default="" />
 		<cfargument name="redirectOnSuccess" type="boolean" required="false" default="true" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+			
+			action = ( postAction EQ "datamanager.object" ? "id=#object#" : "" );
+			arguments.postActionUrl = ( event.buildAdminLink( linkTo=postAction, queryString=action ) );
+
 			var id               = rc.id          ?: "";
 			var forceDelete      = rc.forceDelete ?: false;
 			var ids              = ListToArray( id );
@@ -1577,16 +1604,21 @@
 		<cfargument name="event"             type="any"     required="true" />
 		<cfargument name="rc"                type="struct"  required="true" />
 		<cfargument name="prc"               type="struct"  required="true" />
-		<cfargument name="object"            type="string"  required="false" default="#( rc.object ?: '' )#" />
+		<cfargument name="object"            type="string"  required="false" default="" />
 		<cfargument name="errorAction"       type="string"  required="false" default="" />
-		<cfargument name="errorUrl"          type="string"  required="false" default="#( errorAction.len() ? event.buildAdminLink( linkTo=errorAction ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) )#" />
+		<cfargument name="errorUrl"          type="string"  required="false" default="" />
 		<cfargument name="successAction"     type="string"  required="false" default="" />
-		<cfargument name="successUrl"        type="string"  required="false" default="#( successAction.len() ? event.buildAdminLink( linkTo=successAction, queryString='id=' & id ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) )#" />
+		<cfargument name="successUrl"        type="string"  required="false" default="" />
 		<cfargument name="redirectOnSuccess" type="boolean" required="false" default="true" />
 		<cfargument name="formName"          type="string"  required="false" default="preside-objects.#object#.admin.edit" />
 		<cfargument name="mergeWithFormName" type="string"  required="false" default="" />
 
+
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object);
+			arguments.errorUrl = ( len(trim(arguments.errorAction)) ? event.buildAdminLink( linkTo=errorAction ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) ) ;
+			arguments.successUrl = ( len(trim(arguments.successAction)) ? event.buildAdminLink( linkTo=successAction, queryString='id=' & id ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
+
 			formName = Len( Trim( mergeWithFormName ) ) ? formsService.getMergedFormName( formName, mergeWithFormName ) : formName;
 
 			var id               = rc.id      ?: "";
@@ -1628,9 +1660,11 @@
 		<cfargument name="event"             type="any"     required="true" />
 		<cfargument name="rc"                type="struct"  required="true" />
 		<cfargument name="prc"               type="struct"  required="true" />
-		<cfargument name="object"            type="string"  required="false" default="#( rc.object ?: '' )#" />
+		<cfargument name="object"            type="string"  required="false" default="" />
 
 		<cfscript>
+			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object);
+
 			var formName         = "preside-objects.#object#.admin.quickedit";
 			var id               = rc.id      ?: "";
 			var formData         = event.getCollectionForForm( formName );

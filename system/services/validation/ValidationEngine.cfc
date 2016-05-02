@@ -108,11 +108,11 @@ component displayName="Validation Engine" {
 	 *
 	 */
 	public array function newRuleset( required string name, any rules=[] ) {
-		var rulesets = _getRulesets();
+		var _rules = _getRulesets();
 
-		rulesets[ arguments.name ] = _getRuleSetFactory().newRuleset( rules = arguments.rules );
+		_rules[ arguments.name ] = _getRuleSetFactory().newRuleset( rules = arguments.rules );
 
-		return rulesets[ arguments.name ];
+		return _rules[ arguments.name ];
 	}
 
 	/**

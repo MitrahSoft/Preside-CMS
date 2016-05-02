@@ -118,17 +118,33 @@ component displayName="Preside REST Resource Reader" {
 			if ( arguments.meta.keyExists( "restUri" ) ) {
 				readMeta.restUri = arguments.meta.restUri;
 			}
-
-			var functions = meta.functions ?: [];
+			// In ACF, Null-coalescing is not working here
+			if ( structKeyExists(meta, "functions")){
+				var functions = meta.functions;
+			} else {
+				var functions = [];
+			}
 
 			for( var func in functions ) {
 				var verb = "";
 
-				if ( verbs.findNoCase( func.name ?: "" ) ) {
-					verb = func.name;
-				} else if ( verbs.findNoCase( func.restVerb ?: "" ) ) {
-					verb = func.restVerb;
+				// In ACF, Null-coalescing is not working here
+				if (structKeyExists(func, "name"))
+					functionName = func.name;
+				else
+					functionName = "";
+
+				if(structKeyExists(func, "restVerb"))
+					functionRestVerb = func.restVerb;
+				else
+					functionRestVerb = "";
+
+				if ( verbs.findNoCase( functionName ) ) {
+					verb = functionName;
+				} else if ( verbs.findNoCase( functionRestVerb ) ) {
+					verb = functionRestVerb;
 				}
+
 				if ( Len( verb ) ) {
 					readMeta.verbs[ verb ] = func.name;
 					readMeta.requiredParameters[ verb ] = [];
@@ -137,8 +153,13 @@ component displayName="Preside REST Resource Reader" {
 						if ( isBoolean( param.required ?: "" ) && param.required ) {
 							readMeta.requiredParameters[ verb ].append( param.name );
 						}
-						if ( validatableParameterTypes.findNoCase( param.type ?: "" ) ) {
-							readMeta.parameterTypes[ verb ][ param.name ] = param.type;
+						if(structKeyExists(param,"type")){
+							paramType = param.type;
+						}else{
+							paramType = "";
+						}
+						if ( validatableParameterTypes.findNoCase( paramType ) ) {
+							readMeta.parameterTypes[ verb ][ param.name ] = paramType;
 						}
 					}
 				}

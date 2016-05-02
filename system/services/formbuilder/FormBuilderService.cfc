@@ -433,11 +433,11 @@ component {
 					, data = validationResult.listErrorParameterValues( fieldName )
 				);
 			}
-
-			renderedItems.append( renderFormItem(
+			var renderFormItem = renderFormItem(
 				  itemType      = item.type.id
 				, configuration = config
-			) );
+			);
+			renderedItems.append( renderFormItem );
 		}
 
 		coreLayoutArgs.renderedItems = renderedItems.toString();
@@ -601,7 +601,7 @@ component {
 			);
 		}
 
-		return arguments.requestData[ arguments.inputName ] ?: NullValue();
+		return requestData[ inputName ] ?: javacast("null","");
 	}
 
 	/**
@@ -632,7 +632,7 @@ component {
 		);
 
 		if ( IsBoolean( formConfiguration.use_captcha ?: "" ) && formConfiguration.use_captcha ) {
-			if ( !_getRecaptchaService().validate( arguments.requestData[ "g-recaptcha-response" ] ?: "" ) ){
+			if ( !_getRecaptchaService().validate( requestData[ "g-recaptcha-response" ] ?: "" ) ){
 				validationResult.addError( fieldName="recaptcha", message="formbuilder:recaptcha.error.message" );
 			}
 		}

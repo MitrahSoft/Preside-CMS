@@ -596,7 +596,7 @@ component singleton=true autodoc=true displayName="Website login service" {
 	}
 
 	private void function _preventSessionFixation() {
-		var appSettings = getApplicationSettings();
+		var appSettings = getApplicationMetadata();
 
 		if ( ( appSettings.sessionType ?: "cfml" ) != "j2ee" ) {
 			SessionRotate();

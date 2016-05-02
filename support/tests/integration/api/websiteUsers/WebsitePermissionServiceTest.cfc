@@ -5,8 +5,8 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		var userService = _getPermService();
 		var expected    = [ "assets.access", "pages.access" ];
 		var actual      = userService.listPermissionKeys();
-
-		super.assertEquals( expected, actual.sort( "textnocase" ) );
+		actual.sort( "textnocase" );
+		super.assertEquals( expected, actual );
 	}
 
 	function test02_listPermissionKeys_shouldReturnEmptyArray_whenPassedBenefitHasNoAssociatedPermissions() output=false {

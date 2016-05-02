@@ -35,7 +35,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		var provider     = _getStorageProvider();
 		var relativePath = "/testDir/loading.gif";
 		var fullPath     = "/tests/resources/fileStorage/storage/testDir/loading.gif";
-		var binary       = FileReadBinary( fullPath );
+		var binary       = FileReadBinary( expandPath( fullPath ) );
 		var result       = provider.getObject( path=relativePath );
 
 		super.assertEquals( ToBase64( binary ), ToBase64( result ) );
@@ -57,7 +57,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test06_putObject_shouldStoreAnObjectInTheStore() output=false {
 		var provider          = _getStorageProvider();
-		var fileToStore       = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
+		var fileToStore       = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
 		var pathToStoreItAt   = CreateUUId() & ".gif";
 		var fileReadFromStore = "";
 
@@ -71,7 +71,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test07_putObject_shouldCreateSpecifiedSubDirectories_whenTheyDoNotAlreadyExist() output=false {
 		var provider          = _getStorageProvider();
-		var fileToStore       = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
+		var fileToStore       = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
 		var pathToStoreItAt   = "/tmptest/another/dir/that/does/not/exist/" & CreateUUId() & ".gif";
 		var fileReadFromStore = "";
 
@@ -85,8 +85,8 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test08_putObject_shouldOverwriteObject_whenItAlreadyExists() output=false {
 		var provider            = _getStorageProvider();
-		var originalFileToStore = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
-		var secondFileToStore   = FileReadBinary( "/tests/resources/fileStorage/storage/testfile.txt" );
+		var originalFileToStore = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
+		var secondFileToStore   = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testfile.txt')#" );
 		var pathToStoreItAt     = CreateUUId() & ".gif";
 		var fileReadFromStore   = "";
 
@@ -103,7 +103,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test09_deleteObject_shouldRemoveAnObjectFromTheStore() output=false {
 		var provider          = _getStorageProvider();
-		var fileToStore       = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
+		var fileToStore       = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
 		var pathToStoreItAt   = CreateUUId() & ".gif";
 
 		tmpFile = "/tests/resources/fileStorage/storage/" & pathToStoreItAt; // this will get cleaned up by the teardown() function
@@ -133,13 +133,13 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test12_putObject_shouldStoreAnObjectInTheStore_whenObjectPassedAsFilePath() output=false {
 		var provider          = _getStorageProvider();
-		var fileToStore       = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
+		var fileToStore       = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
 		var pathToStoreItAt   = CreateUUId() & ".gif";
 		var fileReadFromStore = "";
 
 		tmpFile = "/tests/resources/fileStorage/storage/" & pathToStoreItAt; // this will get cleaned up by the teardown() function
 
-		provider.putObject( object="/tests/resources/fileStorage/storage/testDir/loading.gif", path=pathToStoreItAt );
+		provider.putObject( object=expandPath("/tests/resources/fileStorage/storage/testDir/loading.gif"), path=pathToStoreItAt );
 		fileReadFromStore = provider.getObject( path=pathToStoreItAt );
 
 		super.assertEquals( ToBase64( fileToStore ), ToBase64( fileReadFromStore ) );
@@ -203,7 +203,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test17_softDeleteObject_shouldSendObjectToRecycleStorage() output=false {
 		var provider          = _getStorageProvider();
-		var fileToStore       = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
+		var fileToStore       = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
 		var pathToStoreItAt   = CreateUUId() & ".gif";
 		var trashedPath       = "";
 		var fileReadFromStore = "";
@@ -219,12 +219,12 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		tmpFile = "/tests/resources/fileStorage/.trash/" & trashedPath; // this will get cleaned up by the teardown() function
 
 		super.assertFalse( provider.objectExists( path=pathToStoreItAt ) );
-		super.assert( FileExists( tmpFile ) );
+		super.assert( FileExists( expandPath( tmpFile ) ) );
 	}
 
 	function test18_restoreObject_shouldMoveObjectFromRecycleBinToPermanentStorage() output=false {
 		var provider          = _getStorageProvider();
-		var fileToStore       = FileReadBinary( "/tests/resources/fileStorage/storage/testDir/loading.gif" );
+		var fileToStore       = FileReadBinary( "#expandPath('/tests/resources/fileStorage/storage/testDir/loading.gif')#" );
 		var pathToStoreItAt   = CreateUUId() & ".gif";
 		var trashedPath       = "";
 		var fileReadFromStore = "";
@@ -239,7 +239,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		tmpFile = "/tests/resources/fileStorage/.trash/" & trashedPath;
 
 		super.assertFalse( provider.objectExists( path=pathToStoreItAt ) );
-		super.assert( FileExists( tmpFile ) );
+		super.assert( FileExists( expandPath( tmpFile ) ) );
 
 		// do the restoring
 		super.assert( provider.restoreObject( trashedPath, pathToStoreItAt ) );

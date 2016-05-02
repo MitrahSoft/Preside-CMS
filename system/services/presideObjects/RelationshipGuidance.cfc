@@ -442,8 +442,8 @@ component output=false singleton=true {
 
 	private struct function _findColumnRelationship( required string objectName, required string columnName ) output=false {
 		var found = {};
-		var relationships = _getRelationships();
-		relationships = relationships[ arguments.objectName ] ?: {};
+		var relationships = _getRelationships();		
+		relationships = relationships[ objectName ] ?: {};
 
 		for( var foreignObj in relationships ){
 			for( var join in relationships[ foreignObj ] ) {
@@ -460,7 +460,7 @@ component output=false singleton=true {
 		}
 
 		relationships = _getManyToManyRelationships();
-		relationships = relationships[ arguments.objectName ] ?: {};
+		relationships = relationships[ objectName ] ?: {};
 		for( var foreignObj in relationships ){
 			for( var join in relationships[ foreignObj ] ) {
 				if ( join.propertyName eq arguments.columnName ) {
@@ -505,7 +505,7 @@ component output=false singleton=true {
 			var property        = oneObject.meta.properties[ propertyName ];
 			var relationship    = property.relationship    ?: "";
 			var relatedTo       = property.relatedTo       ?: "";
-			var relationshipKey = property.relationshipKey ?: arguments.oneObjectName;
+			var relationshipKey = property.relationshipKey ?: oneObjectName;
 
 			if ( relationship == "one-to-many" && relatedTo == manyObjectName && relationshipKey == fkName ) {
 				return propertyName;

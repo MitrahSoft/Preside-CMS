@@ -77,12 +77,8 @@ component displayname="Image Manipulation Service" {
 				}
 			}
 		}
-		
-		writeDump(image);
-		writeDump(ImageGetBlob( image ));
-		abort;
 
-		return ImageGetBlob( image );
+		return toBinary(toBase64(image));
 	}
 
 	/**
@@ -117,7 +113,7 @@ component displayname="Image Manipulation Service" {
 				ImageScaleToFit( image, arguments.width, arguments.height, interpolation );
 		}
 
-		return ImageGetBlob( image );
+		return toBinary(toBase64(image));
 	}
 
 	/**

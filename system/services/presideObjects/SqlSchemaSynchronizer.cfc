@@ -106,7 +106,7 @@ component {
 			objects[ objName ].delete( "sql" );
 		}
 
-		var cleanupScripts = _getSchemaVersioningService().cleanupDbVersionTableEntries( versions, objects, dsns[1], _getAutoRunScripts() );
+		var cleanupScripts = _getSchemaVersioningService().cleanupDbVersionTableEntries( versions, objects, "preside_test_suite", _getAutoRunScripts() );
 
 		if ( !_getAutoRunScripts() ) {
 			var scriptsToRun = _getBuiltSqlScriptArray();

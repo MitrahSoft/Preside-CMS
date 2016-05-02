@@ -14,7 +14,7 @@ component extends="Bootstrap" {
 
 	this.PRESIDE_APPLICATION_RELOAD_LOCK_TIMEOUT = 15;
 	this.PRESIDE_APPLICATION_RELOAD_TIMEOUT      = 1200;
-
+	this.javaSettings = {LoadPaths = [expandPath(".\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar")], loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml"};
 	_setupMappings();
 	_setupDefaultTagAttributes();
 }

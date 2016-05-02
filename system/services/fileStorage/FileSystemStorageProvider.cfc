@@ -136,7 +136,7 @@ component implements="preside.system.services.fileStorage.StorageProvider" displ
 	public string function softDeleteObject( required string path ){
 		var fullPath      = _expandPath( arguments.path );
 		var newPath       = CreateUUId() & ".trash";
-		var fullTrashPath = _getTrashDirectory() & newPath;
+		var fullTrashPath = expandPath(_getTrashDirectory() & newPath);
 
 		try {
 			FileMove( fullPath, fullTrashPath );
@@ -175,7 +175,7 @@ component implements="preside.system.services.fileStorage.StorageProvider" displ
 	private string function _expandPath( required string path, boolean trashed=false ){
 		var relativePath = _cleanPath( arguments.path, arguments.trashed );
 
-		return ( arguments.trashed ? _getTrashDirectory() : _getRootDirectory() ) & relativePath;
+		return expandPath( ( arguments.trashed ? _getTrashDirectory() : _getRootDirectory() ) & relativePath );
 	}
 
 	private string function _cleanPath( required string path, boolean trashed=false ){

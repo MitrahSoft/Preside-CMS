@@ -481,7 +481,8 @@
 
 			guidanceService.setupRelationships( objects );
 			var relationships = guidanceService.getObjectRelationships( "obj_a" );
-			super.assertEquals( 1, relationships.len() );
+			
+			super.assertEquals( 1, StructCount(relationships) );
 			super.assertEquals( "obj_bs", relationships.obj_b[1].alias ?: "" );
 		</cfscript>
 	</cffunction>

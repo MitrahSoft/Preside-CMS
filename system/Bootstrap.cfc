@@ -306,7 +306,7 @@ component {
 	}
 
 	private void function _preventSessionFixation() {
-		var appSettings = getApplicationSettings();
+		var appSettings = getApplicationMetadata();
 
 		if ( ( appSettings.sessionType ?: "cfml" ) != "j2ee" ) {
 			SessionRotate();
@@ -314,7 +314,7 @@ component {
 	}
 
 	private void function _invalidateSessionIfNotUsed() {
-		var applicationSettings  = getApplicationSettings();
+		var applicationSettings  = getApplicationMetadata();
 		var sessionIsUsed        = false;
 		var ignoreKeys           = [ "cfid", "timecreated", "sessionid", "urltoken", "lastvisit", "cftoken" ];
 		var keysToBeEmptyStructs = [ "cbStorage", "cbox_flash_scope" ];

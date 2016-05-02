@@ -107,8 +107,8 @@ component {
 		}
 
 		var branchPath        = _getRemoteBranchPath();
-		var xPath             = "/:ListBucketResult/:Contents/:Key[starts-with(.,'#branchPath#')]";
-		var versionFiles      = XmlSearch( s3Listing, xPath );
+		var xPath             = "//*[local-name()='ListBucketResult']/*[local-name()='Contents']/*[local-name()='Key' and starts-with(.,""#branchPath#"")]";
+		var versionFiles= XmlSearch( s3Listing, xPath );
 		var jsonAndZipMatches = {};
 		var versions          = [];
 

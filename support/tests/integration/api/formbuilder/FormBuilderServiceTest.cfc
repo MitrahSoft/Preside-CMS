@@ -120,7 +120,7 @@ component extends="testbox.system.BaseSpec"{
 				var newId         = CreateUUId();
 				var topSortOrder  = 5;
 
-				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "int", [[ topSortOrder ]]) );
+				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "integer", [[ topSortOrder ]]) );
 				mockFormItemDao.$( "insertData" ).$args( data={
 					  form          = formId
 					, item_type     = itemType
@@ -144,7 +144,7 @@ component extends="testbox.system.BaseSpec"{
 				var newId         = CreateUUId();
 				var topSortOrder  = 5;
 
-				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "int", [[ topSortOrder ]]) );
+				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "integer", [[ topSortOrder ]]) );
 				mockFormItemDao.$( "insertData" ).$args( data={
 					  form          = formId
 					, item_type     = itemType
@@ -524,7 +524,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should return false when the given form is set to inactive", function(){
 				var service    = getService();
 				var formId     = CreateUUId();
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[false,javacast("null",""),javacast("null","")]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[false,javacast("null",""),javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -534,7 +534,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should return true when the given form is set to active and no active_from / active_to dates are set", function(){
 				var service    = getService();
 				var formId     = CreateUUId();
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,javacast("null",""),javacast("null","")]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,javacast("null",""),javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -545,7 +545,7 @@ component extends="testbox.system.BaseSpec"{
 				var service    = getService();
 				var formId     = CreateUUId();
 				var activeFrom = DateAdd( 'd', 1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,activeFrom,javacast("null","")]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,activeFrom,javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -556,7 +556,7 @@ component extends="testbox.system.BaseSpec"{
 				var service    = getService();
 				var formId     = CreateUUId();
 				var activeTo   = DateAdd( 'd', -1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,javacast("null",""),activeTo]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,javacast("null",""),activeTo]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -568,7 +568,7 @@ component extends="testbox.system.BaseSpec"{
 				var formId     = CreateUUId();
 				var activeTo   = DateAdd( 'd', 1, Now() );
 				var activeFrom = DateAdd( 'd', -1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,activeFrom,activeTo]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,activeFrom,activeTo]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -758,7 +758,7 @@ component extends="testbox.system.BaseSpec"{
 				var requestData        = { some="data" };
 				var formSubmissionData = { some="data", tests=CreateUUId() };
 				var formItems          = [ "just", "test", "data" ];
-				var formConfiguration  = QueryNew( 'use_captcha', "boolean", [ [ true ] ] );
+				var formConfiguration  = QueryNew( 'use_captcha', "bit", [ [ true ] ] );
 				var validationResult   = CreateEmptyMock( "preside.system.services.validation.ValidationResult" );
 
 				service.$( "getRequestDataForForm" ).$args(
@@ -789,7 +789,7 @@ component extends="testbox.system.BaseSpec"{
 				var formId             = CreateUUId();
 				var requestData        = { some="data" };
 				var formSubmissionData = { some="data", tests=CreateUUId() };
-				var formConfiguration  = QueryNew( 'use_captcha', "boolean", [ [ true ] ] );
+				var formConfiguration  = QueryNew( 'use_captcha', "bit", [ [ true ] ] );
 				var formItems          = [ "just", "test", "data" ];
 				var validationResult   = CreateEmptyMock( "preside.system.services.validation.ValidationResult" );
 				var userAgent          = CreateUUId();
@@ -838,7 +838,7 @@ component extends="testbox.system.BaseSpec"{
 				var formId             = CreateUUId();
 				var requestData        = { some="data" };
 				var formSubmissionData = { some="data", tests=CreateUUId() };
-				var formConfiguration  = QueryNew( 'use_captcha', "boolean", [ [ true ] ] );
+				var formConfiguration  = QueryNew( 'use_captcha', "bit", [ [ true ] ] );
 				var formItems          = [ "just", "test", "data" ];
 				var validationResult   = CreateEmptyMock( "preside.system.services.validation.ValidationResult" );
 				var userAgent          = CreateUUId();
@@ -886,7 +886,7 @@ component extends="testbox.system.BaseSpec"{
 				var service       = getService();
 				var formId        = CreateUUId();
 				var responseCount = 453;
-				var queryResult   = QueryNew( "submission_count", "int", [ [ responseCount ] ] );
+				var queryResult   = QueryNew( "submission_count", "integer", [ [ responseCount ] ] );
 
 				mockFormSubmissionDao.$( "selectData" ).$args(
 					  filter       = { form=formId }

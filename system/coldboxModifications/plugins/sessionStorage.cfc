@@ -1,7 +1,7 @@
 component extends="coldbox.system.plugins.SessionStorage" output=false {
 
 	private boolean function areSessionsEnabled() output=false {
-		var appSettings = getApplicationSettings();
+		var appSettings = getApplicationMetadata();
 
 		return IsBoolean( appSettings.sessionManagement ?: "" ) && appSettings.sessionManagement;
 	}

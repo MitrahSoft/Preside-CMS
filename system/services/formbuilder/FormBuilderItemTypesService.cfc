@@ -122,10 +122,7 @@ component {
 		}
 
 		categories.sort( function( a, b ){
-			var orderA = configured[ a.id ].sortOrder ?: 10000;
-			var orderB = configured[ b.id ].sortOrder ?: 10000;
-
-			return orderA > orderB ? 1 : -1;
+			return (configured[ a.id ].sortOrder ?: 10000) > (configured[ b.id ].sortOrder ?: 10000) ? 1 : -1;
 		} );
 
 		return categories;

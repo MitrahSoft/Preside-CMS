@@ -9,11 +9,12 @@ component {
 	this.mappings['/integration'] = currentDir & "integration";
 	this.mappings['/resources']   = currentDir & "resources";
 	this.mappings['/testbox']     = currentDir & "testbox";
-	this.mappings['/mxunit' ]     = currentDir & "testbox/system/compat";
-	this.mappings['/app']         = currentDir & "resources/testSite";
-	this.mappings['/preside']     = currentDir & "../../";
-	this.mappings['/coldbox']     = currentDir & "../../system/externals/coldbox-standalone-3.8.2/coldbox";
-
+	this.mappings['/mxunit' ]     = currentDir & "testbox\system\compat";
+	this.mappings['/app']         = currentDir & "resources\testSite";
+	this.mappings['/preside']     = currentDir & "..\..\";
+	this.mappings['/coldbox']     = currentDir & "..\..\system\externals\coldbox-standalone-3.8.2\coldbox";
+	this.sessionmanagement        = true;
+	this.javaSettings             = {LoadPaths = [expandPath("..\..\system/services\encryption\bcrypt\lib\jbcrypt-0.3m.jar")], loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml"};
 	setting requesttimeout="6000";
 	_loadDsn();
 

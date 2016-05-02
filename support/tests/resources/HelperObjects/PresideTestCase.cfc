@@ -50,8 +50,8 @@
 		<cfargument name="coldbox"            type="any"     required="false" />
 
 		<cfscript>
-			var key = "_presideObjectService" & Hash( SerializeJson( arguments ) );
-
+			// To do :: Need to make it unique based upon aruments. ACF making heapsize issue here, if we serialize whole arguments scope.
+			var key = "_presideObjectService" & Hash( SerializeJson( arguments.defaultPrefix ) );
 			if ( arguments.forceNewInstance || !request.keyExists( key ) ) {
 				var logger = _getTestLogger();
 				var mockFeatureService = getMockBox().createEmptyMock( "preside.system.services.features.FeatureService" );
@@ -61,7 +61,7 @@
 					, interceptorService = arguments.interceptorService
 					, featureService = mockFeatureService
 				);
-				var localCachebox  = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
+				var localCachebox  = structKeyExists( arguments,"cachebox") ?arguments.cachebox: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
 				var dbInfoService  = new preside.system.services.database.DbInfoService();
 				var sqlRunner      = new preside.system.services.database.sqlRunner( logger = logger );
 

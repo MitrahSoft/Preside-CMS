@@ -106,7 +106,7 @@ component {
 			objects[ objName ].delete( "sql" );
 		}
 
-		var cleanupScripts = _getSchemaVersioningService().cleanupDbVersionTableEntries( versions, objects, "preside_test_suite", _getAutoRunScripts() );
+		var cleanupScripts = _getSchemaVersioningService().cleanupDbVersionTableEntries( versions, objects, dsns[1], _getAutoRunScripts() );
 
 		if ( !_getAutoRunScripts() ) {
 			var scriptsToRun = _getBuiltSqlScriptArray();
@@ -239,8 +239,8 @@ component {
 		var indexName  = "";
 		var index      = "";
 		var table      = arguments.generatedSql.table;
-
 		_runSql( sql=table.sql, dsn=arguments.dsn );
+
 		_setDatabaseObjectVersion(
 			  entityType = "table"
 			, entityName = arguments.tableName
@@ -673,8 +673,9 @@ component {
 	}
 
 	private void function _ensureValidDbEntityNames( required struct objects ) {
-		for( var objectName in arguments.objects ) {
-			var objMeta = arguments.objects[ objectName ].meta ?: {};
+		var presideObjects = arguments.objects;
+		for( var objectName in presideObjects ) {
+			var objMeta = presideObjects[ objectName ].meta ?: {};
 			var adapter = _getAdapterFactory().getAdapter( objMeta.dsn ?: "" );
 			var maxTableNameLength = adapter.getTableNameMaxLength();
 

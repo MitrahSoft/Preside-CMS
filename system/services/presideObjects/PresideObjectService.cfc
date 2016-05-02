@@ -982,9 +982,9 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 	 *
 	 */
 	public any function getObjectAttribute( required string objectName, required string attributeName, string defaultValue="" ) autodoc=true {
+		var attribute = arguments.attributeName;
 		var obj = _getObject( arguments.objectName );
-
-		return obj.meta[ arguments.attributeName ] ?: arguments.defaultValue;
+		return  StructKeyExists(obj.meta, attribute ) ? obj.meta[ attribute ] : arguments.defaultValue;
 	}
 
 	/**
@@ -1221,15 +1221,16 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var paths       = [];
 		var path        = "";
 		for( dir in dirs ) {
-			files = DirectoryList( dir, true, "*.cfc" );
+			files = DirectoryList( ExpandPath(dir), true, "*.cfc" );
 			dirExpanded = ExpandPath( dir );
 
 			for( file in files ) {
 				path = dir & Replace( file, dirExpanded, "" );
 				path = ListDeleteAt( path, ListLen( path, "." ), "." );
 				path = ListChangeDelims( path, "/", "\" );
-
-				ArrayAppend( paths, path );
+				if( path != "" ){
+					ArrayAppend( paths, path );
+				}
 			}
 		}
 

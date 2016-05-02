@@ -47,7 +47,7 @@ component output=false singleton=true {
 				}
 
 				param.cfsqltype = param.type; // mistakenly had thought we could do param.type - alas no, so need to fix it to the correct argument name here
-
+				structDelete(param, "type");
 				q.addParam( argumentCollection = param );
 			}
 		}

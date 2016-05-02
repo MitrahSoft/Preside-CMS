@@ -63,18 +63,21 @@ component {
 	}
 
 	public void function finalizeMergedObject( required any object ) {
-		var meta = arguments.object.meta = arguments.object.meta ?: {};
-		var componentName = ListLast( meta.name ?: "", "." );
+		arguments.object.meta = structKeyExists( arguments.object,"meta") ? arguments.object.meta : {};
+		var meta = arguments.object.meta;
+		var componentName = ListLast( meta.name, "." );
 
 		_announceInterception( "postReadPresideObject", { objectMeta=meta } );
 
 		meta.tablePrefix   = meta.tablePrefix   ?: _getTablePrefix();
 		meta.tableName     = meta.tableName     ?: componentName;
-		meta.versioned     = meta.versioned     ?: true;
 		meta.dsn           = meta.dsn           ?: _getDsn();
 		meta.propertyNames = meta.propertyNames ?: [];
 		meta.properties    = meta.properties    ?: {};
 
+		if(!structKeyExists(meta, "versioned")){
+			meta.versioned = true;
+		}
 
 		_defineLabelField( meta );
 		_addDefaultsToProperties( meta.properties );
@@ -257,28 +260,28 @@ component {
 		};
 
 		if ( arguments.meta.propertyNames.find( "label" ) ) {
-			StructAppend( arguments.meta.properties.label, defaults.label, false );
+			StructAppend( arguments.meta.properties["label"], defaults.label, false );
 		} else if ( !arguments.meta.noLabel ) {
 			arguments.meta.properties[ "label" ] = defaults[ "label" ];
 			ArrayPrepend( arguments.meta.propertyNames, "label" );
 		}
 
 		if ( arguments.meta.propertyNames.find( "id" ) ) {
-			StructAppend( arguments.meta.properties.id, defaults.id, false );
+			StructAppend( arguments.meta["properties"]["id"], defaults.id, false );
 		} else {
 			arguments.meta.properties[ "id" ] = defaults[ "id" ];
 			ArrayPrepend( arguments.meta.propertyNames, "id" );
 		}
 
 		if ( arguments.meta.propertyNames.find( "datecreated" ) ) {
-			StructAppend( arguments.meta.properties.datecreated, defaults.datecreated, false );
+			StructAppend( arguments.meta.properties["datecreated"], defaults.datecreated, false );
 		} else {
 			arguments.meta.properties[ "datecreated" ] = defaults[ "datecreated" ];
 			ArrayAppend( arguments.meta.propertyNames, "datecreated" );
 		}
 
 		if ( arguments.meta.propertyNames.find( "datemodified" ) ) {
-			StructAppend( arguments.meta.properties.datemodified, defaults.datemodified, false );
+			StructAppend( arguments.meta["properties"]["datemodified"], defaults.datemodified, false );
 		} else {
 			arguments.meta.properties[ "datemodified" ] = defaults[ "datemodified" ];
 			ArrayAppend( arguments.meta.propertyNames, "datemodified" );
@@ -291,8 +294,8 @@ component {
 			var markedForDeletion = IsBoolean( prop.deleted ?: "" ) && prop.deleted;
 
 			if ( markedForDeletion ) {
-				meta.properties.delete( propertyName );
 				meta.propertyNames.delete( propertyName );
+				structClear(meta.properties[ propertyName ]);
 			}
 		}
 	}

@@ -290,9 +290,9 @@ component output=false singleton=true {
 						, alias    = _calculateOneToManyAlias( property.relatedTo, objects[ property.relatedTo ], objectName, propertyName )
 					} );
 
-					property.type      = objects[ property.relatedto ].meta.properties.id.type;
-					property.dbType    = objects[ property.relatedto ].meta.properties.id.dbType;
-					property.maxLength = objects[ property.relatedto ].meta.properties.id.maxLength;
+					property.type      = objects[ property.relatedto ].meta["properties"]["id"]["type"];
+					property.dbType    = objects[ property.relatedto ].meta["properties"]["id"]["dbType"];
+					property.maxLength = objects[ property.relatedto ].meta["properties"]["id"]["maxLength"];
 				} else if ( property.relationship == "one-to-many" ) {
 					if ( not StructKeyExists( objects, property.relatedto ) ) {
 						throw(
@@ -442,7 +442,7 @@ component output=false singleton=true {
 
 	private struct function _findColumnRelationship( required string objectName, required string columnName ) output=false {
 		var found = {};
-		var relationships = _getRelationships();		
+		var relationships = _getRelationships();
 		relationships = relationships[ objectName ] ?: {};
 
 		for( var foreignObj in relationships ){

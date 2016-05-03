@@ -50,8 +50,9 @@
 		<cfargument name="coldbox"            type="any"     required="false" />
 
 		<cfscript>
-			// To do :: Need to make it unique based upon aruments. ACF making heapsize issue here, if we serialize whole arguments scope.
-			var key = "_presideObjectService" & Hash( SerializeJson( arguments.defaultPrefix ) );
+			// To do :: Need to make it unique based upon aruments. ACF making heapsize issue here, if we use serializeJson whole arguments scope.
+            localArguments = duplicate(arguments);
+            var key = "_presideObjectService" & Hash( SerializeXML( localArguments ) );
 			if ( arguments.forceNewInstance || !request.keyExists( key ) ) {
 				var logger = _getTestLogger();
 				var mockFeatureService = getMockBox().createEmptyMock( "preside.system.services.features.FeatureService" );
@@ -209,7 +210,7 @@
 			rules["2"] = "set null";
 
 			cfdbinfo( type="Foreignkeys", table="#arguments.table#", datasource="#application.dsn#", name="keys" );
-			
+
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
 					  pk_table  = key.pktable_name

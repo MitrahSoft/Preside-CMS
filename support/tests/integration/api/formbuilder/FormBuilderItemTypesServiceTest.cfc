@@ -170,10 +170,12 @@ component extends="testbox.system.BaseSpec"{
 				};
 				var service = getService( config );
 				var itemType = "content";
+				var fieldFormName    = "formbuilder.item-types.formfield";
 				var expectedFormName = "formbuilder.item-types." & itemType;
 
 				service.$( "$translateResource", "" );
 				mockFormsService.$( "formExists" ).$args( expectedFormName ).$results( true );
+				mockFormsService.$( "getMergedFormName" ).$args( formName=fieldFormName, mergeWithFormName=expectedFormName ).$results( expectedFormName );
 
 				expect( service.getConfigFormNameForItemType( itemType) ).toBe( expectedFormName );
 			} );
@@ -227,7 +229,7 @@ component extends="testbox.system.BaseSpec"{
 					} }
 				};
 				var service = getService( config );
-				var itemType = "spacer";
+				var itemType = "MyItemType";
 				var expectedFormName = "formbuilder.item-types." & itemType;
 
 				service.$( "$translateResource", "" );

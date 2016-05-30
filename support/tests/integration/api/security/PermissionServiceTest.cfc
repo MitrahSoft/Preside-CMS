@@ -84,10 +84,10 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test05_listPermissionKeys_shouldReturnPermissionsThatHaveBeenExplicitlyConfiguredOnPassedRole(){
 		var expected = [
-			  "assetmanager.blah.test.blah"
+			  "cms.login"
+			, "assetmanager.blah.test.blah"
 			, "assetmanager.blah.test.doh"
 			, "assetmanager.blah.test.meh"
-			, "cms.login"
 			, "sitetree.navigate"
 		];
 		var actual   = _getPermissionService( permissions=testPerms, roles=testRoles ).listPermissionKeys( role="user" );

@@ -30,16 +30,19 @@ component displayName="System configuration service" {
 	 * See [[editablesystemsettings]] for a full guide.
 	 *
 	 * @autodoc
-	 * @category.hint  Category name of the setting to get
-	 * @setting.hint   Name of the setting to get
-	 * @default.hint   A default value to return should no value be saved for the setting
+	 * @category.hint    Category name of the setting to get
+	 * @setting.hint     Name of the setting to get
+	 * @defaultStr.hint  A default value to return should no value be saved for the setting
 	 *
 	 */
-	public string function getSetting( required string category, required string setting, string default="" ) {
+	public string function getSetting( required string category, required string setting, string defaultStr="" ) {
 		_reloadCheck();
 
-		var injected = _getInjectedConfig();
-		var result   = _getDao().selectData(
+		var injected     = _getInjectedConfig();
+		var categoryName = arguments.category;
+		var settingName  = arguments.setting;
+		var defaultName  = arguments.defaultStr;
+		var result       = _getDao().selectData(
 			  selectFields = [ "value" ]
 			, filter       = { category = arguments.category, setting = arguments.setting }
 		);
@@ -48,7 +51,7 @@ component displayName="System configuration service" {
 			return result.value;
 		}
 
-		return injected[ "#arguments.category#.#arguments.setting#" ] ?: arguments.default;
+		return injected[ "#categoryName#.#settingName#" ] ?: defaultName;
 	}
 
 	/**

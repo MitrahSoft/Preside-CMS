@@ -236,7 +236,7 @@ component displayName="Admin permissions service" {
 	private array function _getRolePermissions( required string role ) {
 		var roles = _getRoles();
 
-		return roles[ arguments.role ] ?: [];
+		return roles[ arguments.role ?: "" ] ?: [];
 	}
 
 	private array function _getGroupPermissions( required string group ) {
@@ -374,7 +374,7 @@ component displayName="Admin permissions service" {
 	}
 
 	private struct function _expandRoles( required struct roles ) {
-		var expandedRoles = StructNew( "linked" );
+		var expandedRoles = createObject("java", "java.util.LinkedHashMap").init();
 
 		for( var roleName in arguments.roles ){
 			var role = arguments.roles[ roleName ];

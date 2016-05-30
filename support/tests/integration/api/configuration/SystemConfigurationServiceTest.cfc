@@ -3,7 +3,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 // SETUP, TEARDOWN, ETC.
 	function setup() {
 		mockDao  = getMockbox().createEmptyMock( object=_getPresideObjectService().getObject( "system_config" ) );
-		testDirs = [ "/tests/resources/systemConfiguration/dir1", "/tests/resources/systemConfiguration/dir2", "/tests/resources/systemConfiguration/dir3" ];
+		testDirs = [ expandPath( "/tests/resources/systemConfiguration/dir1" ), expandPath( "/tests/resources/systemConfiguration/dir2" ), expandPath( "/tests/resources/systemConfiguration/dir3" ) ];
 	}
 
 // TESTS
@@ -103,9 +103,9 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 			.$results( QueryNew('value') );
 
 		super.assertEquals( "defaultResult", _getConfigSvc( testDirs ).getSetting(
-			  category = "somecategory"
-			, setting  = "asetting"
-			, default  = "defaultResult"
+			  category   = "somecategory"
+			, setting    = "asetting"
+			, defaultStr = "defaultResult"
 		) );
 	}
 

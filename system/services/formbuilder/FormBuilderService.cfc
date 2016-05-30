@@ -433,11 +433,10 @@ component {
 					, data = validationResult.listErrorParameterValues( fieldName )
 				);
 			}
-			var renderFormItem = renderFormItem(
+			renderedItems.append( renderFormItem(
 				  itemType      = item.type.id
 				, configuration = config
-			);
-			renderedItems.append( renderFormItem );
+			) );
 		}
 
 		coreLayoutArgs.renderedItems = renderedItems.toString();

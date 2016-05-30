@@ -236,7 +236,7 @@ component displayName="Admin permissions service" {
 	private array function _getRolePermissions( required string role ) {
 		var roles = _getRoles();
 
-		return roles[ arguments.role ?: "" ] ?: [];
+		return arrayLen(roles[ arguments.role ]) ? roles[ arguments.role ] : [];
 	}
 
 	private array function _getGroupPermissions( required string group ) {

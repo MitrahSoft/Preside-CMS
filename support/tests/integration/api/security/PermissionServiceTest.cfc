@@ -84,15 +84,16 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 	function test05_listPermissionKeys_shouldReturnPermissionsThatHaveBeenExplicitlyConfiguredOnPassedRole(){
 		var expected = [
-			  "cms.login"
-			, "assetmanager.blah.test.blah"
+			  "assetmanager.blah.test.blah"
 			, "assetmanager.blah.test.doh"
 			, "assetmanager.blah.test.meh"
+			, "cms.login"
 			, "sitetree.navigate"
 		];
 		var actual   = _getPermissionService( permissions=testPerms, roles=testRoles ).listPermissionKeys( role="user" );
+		arraySort( actual, "textnocase" );
 
-		super.assertEquals( expected, actual.sort( "textnocase" ) );
+		super.assertEquals( expected, actual );
 	}
 
 	function test06_listPermissionKeys_shouldReturnExpandedPermissions_whereSuppliedRoleHasPermissionsConfiguredWithWildCardsAndExclusions(){

@@ -108,8 +108,8 @@ component {
 			, tablePrefix = sourceObject.tablePrefix
 			, versioned   = ( ( sourceObject.versioned ?: false ) || ( targetObject.versioned ?: false ) )
 			, properties  = {
-				  "#sourcePropertyName#" = { name=sourcePropertyName, control="auto", type=sourceObject.properties.id.type ?: "", dbtype=sourceObject.properties.id.dbtype ?: "", maxLength=sourceObject.properties.id.maxLength ?: "", generator="none", relationship="many-to-one", relatedTo=objAName, required=true, onDelete="cascade" }
-				, "#targetPropertyName#" = { name=targetPropertyName, control="auto", type=targetObject.properties.id.type ?: "", dbtype=targetObject.properties.id.dbtype ?: "", maxLength=targetObject.properties.id.maxLength ?: "", generator="none", relationship="many-to-one", relatedTo=objBName, required=true, onDelete="cascade" }
+				  "#sourcePropertyName#" = { name=sourcePropertyName, control="auto", type=sourceObject.properties["id"]["type"], dbtype=sourceObject.properties["id"]["dbtype"], maxLength=sourceObject.properties["id"]["maxLength"], generator="none", relationship="many-to-one", relatedTo=objAName, required=true, onDelete="cascade" }
+				, "#targetPropertyName#" = { name=targetPropertyName, control="auto", type=targetObject.properties["id"]["type"], dbtype=targetObject.properties["id"]["dbtype"], maxLength=targetObject.properties["id"]["maxLength"], generator="none", relationship="many-to-one", relatedTo=objBName, required=true, onDelete="cascade" }
 				, "sort_order"           = { name="sort_order"      , control="auto", type="numeric"                      , dbtype="int"                            , maxLength=0                                   , generator="none", relationship="none"                           , required=false }
 			  }
 		};

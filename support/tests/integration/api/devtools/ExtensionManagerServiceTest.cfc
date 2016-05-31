@@ -104,10 +104,13 @@ component output="false" extends="mxunit.framework.TestCase" {
 	}
 
 	function test08_uninstallExtension_shouldRemoveTrackingInfoAndFiles() output=false {
-		DirectoryCreate( "/tests/resources/extensionManager/extensions/testExtension" );
-		FileWrite( "/tests/resources/extensionManager/extensions/testExtension/manifest.json", '{ "id" : "test", "title" : "test extension", "author" : "Test author", "version" : "2.5.5524", "changelog" : "Things change man" }' );
-		manager.activateExtension( "testExtension" );
+		var testExtensionPath = expandpath("/tests/resources/extensionManager/extensions/testExtension");
 
+		if(!directoryExists(testExtensionPath)){
+			DirectoryCreate( testExtensionPath );
+		}
+		FileWrite( expandpath("/tests/resources/extensionManager/extensions/testExtension/manifest.json"), '{ "id" : "test", "title" : "test extension", "author" : "Test author", "version" : "2.5.5524", "changelog" : "Things change man" }' );
+		manager.activateExtension( "testExtension" );		
 		super.assertEquals([
 			  { name="anotherExtension"   , priority=200, installed=true , active=false, directory="/tests/resources/extensionManager/extensions/anotherExtension" }
 			, { name="someExtension"      , priority=100, installed=true , active=true , directory="/tests/resources/extensionManager/extensions/someExtension" }
@@ -115,7 +118,6 @@ component output="false" extends="mxunit.framework.TestCase" {
 			, { name="testExtension"      , priority=0  , installed=true , active=true , directory="/tests/resources/extensionManager/extensions/testExtension" }
 			, { name="untracked"          , priority=0  , installed=true , active=false, directory="/tests/resources/extensionManager/extensions/untracked" }
 		], manager.listExtensions() );
-
 		manager.uninstallExtension( "testExtension" );
 
 		super.assertEquals([
@@ -125,7 +127,7 @@ component output="false" extends="mxunit.framework.TestCase" {
 			, { name="untracked"          , priority=0  , installed=true , active=false, directory="/tests/resources/extensionManager/extensions/untracked" }
 		], manager.listExtensions() );
 
-		super.assertFalse( DirectoryExists( "/tests/resources/extensionManager/extensions/testExtension" ) );
+		super.assertFalse( DirectoryExists( expandpath("/tests/resources/extensionManager/extensions/testExtension") ) );
 	}
 
 	function test09_getExtensionInfo_shouldReadExtensionManifestFileAndReturnExtensionDetails() output=false {
@@ -221,7 +223,6 @@ component output="false" extends="mxunit.framework.TestCase" {
 		];
 
 		manager.installExtension( "#expandPath('/tests/resources/extensionManager/notYetInstalledExtensions/extensionWithDiffIdFromFolder/')#" );
-
 		super.assertEquals( expected, manager.listExtensions() );
 	}
 

@@ -1,6 +1,6 @@
 <cfcomponent output="false" extends="tests.resources.HelperObjects.PresideTestCase">
 
-<!--- tests --->
+	<!--- tests --->
 	<cffunction name="test01_formExists_shouldReturnTrue_whenPassedFormId_matchesFileNameOfAFormInTheConfiguredFormDirectories_minusTheFileExtension" returntype="void">
 		<cfscript>
 			var formsSvc = _getFormsService( "/tests/resources/formsService/forms1" );
@@ -98,7 +98,7 @@
 				_getFormsService( "/tests/resources/formsService/forms1,/tests/resources/formsService/forms3,/tests/resources/formsService/badForm" );
 			} catch ( "FormsService.BadFormXml" e ) {
 				super.assertEquals( "The form definition file, [bad.form.xml], does not contain valid XML", e.message );
-				super.assertEquals( "XML document structures must start and end within the same entity.", e.detail );
+				super.assertEquals( "An error occurred while Parsing an XML document.", e.detail );
 				errorThrown = true;
 			}
 
@@ -565,7 +565,7 @@
 		</cfscript>
 	</cffunction>
 
-<!--- private --->
+	<!--- private --->
 	<cffunction name="_getFormsService" access="private" returntype="any" output="false">
 		<cfargument name="formDirectories"    type="string" required="true" />
 		<cfargument name="activeSiteTemplate" type="string" required="false" default="" />

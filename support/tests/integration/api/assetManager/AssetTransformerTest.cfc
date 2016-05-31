@@ -34,7 +34,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		var imgInfo     = ImageInfo( ImageNew( resized ) );
 
 		super.assertEquals( 100, imgInfo.width );
-		super.assertEquals( 70 , imgInfo.height );
+		super.assertEquals( 71 , imgInfo.height );
 	}
 
 	function test03_resize_shouldReturnResizedBinaryImage_withSpecifiedHeight_whenNoWidthSpecified() output=false {
@@ -46,7 +46,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		var imgInfo     = ImageInfo( ImageNew( resized ) );
 
 		super.assertEquals( 200, imgInfo.height );
-		super.assertEquals( 282, imgInfo.width );
+		super.assertEquals( 283, imgInfo.width );
 	}
 
 	function test04_resize_shouldReturnResizedBinaryImage_withSpecifiedHeightAndWidth() output=false {

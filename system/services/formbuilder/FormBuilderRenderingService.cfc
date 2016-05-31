@@ -165,8 +165,7 @@
 				, eventArguments = { args=arguments.configuration }
 			);
 		}
-
-		return [ ( arguments.configuration.label ?: "" ) ];
+		return [ arguments.configuration.label ];
 	}
 
 

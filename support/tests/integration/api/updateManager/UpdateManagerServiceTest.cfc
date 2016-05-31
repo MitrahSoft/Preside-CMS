@@ -9,8 +9,8 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 	function test01_listAvailableVersions_shouldReturnVersionsOfPresideBasedOnContentsOfS3BucketForGivenCurrentBranch() output=false {
 		var adapter  = _getAdapter();
 		var expected = [
-			  { version="0.1.1.00089", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.1.zip" }
-			, { version="0.1.2.00345", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.2.zip" }
+			  { version="0.1.2.00345", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.2.zip" }
+			, { version="0.1.1.00089", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.1.zip" }
 		];
 
 		mockSettingsService.$( "getSetting" ).$args( category="updatemanager", setting="branch", default="release" ).$results( "bleedingEdge" );

@@ -77,14 +77,14 @@ component displayName="Multilingual Preside Object Service" {
 		var translationProperties = translationObject.properties ?: {};
 		var dbFieldList           = ListToArray( translationObject.dbFieldList ?: "" );
 		var propertyNames         = translationObject.propertyNames ?: [];
-		var validProperties       = _listMultilingualObjectProperties( arguments.sourceObject.meta ?: {} );
+		var validProperties       = _listMultilingualObjectProperties( arguments.sourceObject.meta );
 		var extraLanguageIndexes  = "";
-
+		var tableName             = translationObject["tableName"] ?: "";
 		validProperties.append( "id" );
 		validProperties.append( "datecreated" );
 		validProperties.append( "datemodified" );
 
-		translationObject.tableName    = _getTranslationObjectPrefix() & ( arguments.sourceObject.meta.tableName ?: "" );
+		translationObject.tableName    = _getTranslationObjectPrefix() & tableName;
 		translationObject.derivedFrom  = arguments.objectName;
 		translationObject.siteFiltered = false;
 		translationObject.isPageType   = false;
@@ -92,7 +92,7 @@ component displayName="Multilingual Preside Object Service" {
 		for( var propertyName in translationProperties ) {
 			if ( !validProperties.find( propertyName ) ) {
 				translationProperties.delete( propertyName );
-				dbFieldList.delete( propertyName );
+				dbFieldList.delete( lcase(propertyName) );
 				propertyNames.delete( propertyName );
 				continue;
 			}
@@ -454,8 +454,7 @@ component displayName="Multilingual Preside Object Service" {
 
 	private array function _listMultilingualObjectProperties( required struct objectMeta ) {
 		var multilingualProperties = [];
-		var objectProperties       = arguments.objectMeta.properties ?: {};
-
+		var objectProperties       = arguments.objectMeta.properties;
 		for( var propertyName in objectProperties ) {
 			var property = objectProperties[ propertyName ];
 			if ( IsBoolean( property.multilingual ?: "" ) && property.multilingual ) {

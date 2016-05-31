@@ -146,7 +146,7 @@ component singleton=true {
 
 		for( var extension in presentExtensions ) {
 			if ( extension EQ arguments.extensionName ) {
-				DirectoryDelete( _getExtensionsDirectory() & "/" & extension, true );
+				DirectoryDelete( expandpath(_getExtensionsDirectory()) & "/" & extension, true );
 				break;
 			}
 		}
@@ -221,7 +221,7 @@ component singleton=true {
 	}
 
 	private array function _listPresentExtensions() {
-		var dirs       = DirectoryList( _getExtensionsDirectory(), false, "query" );
+		var dirs       = DirectoryList( expandpath( _getExtensionsDirectory() ), false, "query" );
 		var extensions = [];
 
 		for( var dir in dirs ) {
@@ -234,7 +234,7 @@ component singleton=true {
 	}
 
 	private void function _writeExtensionsToFile( required array extensions ) {
-		var extensionsFile = _getExtensionsListFilePath();
+		var extensionsFile = expandpath( _getExtensionsListFilePath() );
 
 		lock name="extfileop-#extensionsFile#" type="exclusive" timeout="10" {
 			FileWrite( extensionsFile, SerializeJson( arguments.extensions ) );

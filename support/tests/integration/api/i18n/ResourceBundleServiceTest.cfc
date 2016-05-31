@@ -13,7 +13,7 @@
 
 	<cffunction name="test02_getResource_shouldLookupAndReturnResourceFromBaseBundle_whenNoLocaleInfoIsPassed" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "test resource value";
 			var result     = rbService.getResource( "core.master:test.resource.key" );
@@ -24,7 +24,7 @@
 
 	<cffunction name="test03_getResource_shouldReturnEmptyString_whenKeyDoesNotExistInBundles" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var result     = rbService.getResource( "secondary:non.existant.key" );
 
@@ -34,7 +34,7 @@
 
 	<cffunction name="test04_getResource_shouldReturnPassedDefaultValue_whenKeyDoesNotExistInBundles" returntype="void">
 		<cfscript>
-			var bundleDirs   = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs   = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService    = _getRBService( bundleDirs );
 			var defaultValue = "some default";
 			var result       = rbService.getResource( "secondary:non.existant.key", defaultValue );
@@ -45,7 +45,7 @@
 
 	<cffunction name="test05_getResource_shouldReturnLanguageSpecificValue_whenLanguageSupplied" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "test resource value en";
 			var result     = rbService.getResource( uri="core.master:test.resource.key", language="en" );
@@ -56,7 +56,7 @@
 
 	<cffunction name="test06_getResource_shouldReturnLocaleSpecificValue_whenLocaleSupplied" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "test resource value en uk";
 			var result     = rbService.getResource( uri="core.master:test.resource.key", language="en", country="uk" );
@@ -67,7 +67,7 @@
 
 	<cffunction name="test07_getResource_shouldReturnKeyFromCoreBundle_whenKeyDoesNotExistInEitherCountryOrLanguageBundle" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "core bundle only";
 			var result     = rbService.getResource( uri="core.master:core.only.key", language="en", country="US" );
@@ -78,7 +78,7 @@
 
 	<cffunction name="test08_getResource_shouldReturnKeyFromLanguageBundle_whenKeyDoesNotExistInCountryBundleButDoesExistInBothCoreAndLanguageBundles" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "I am from language";
 			var result     = rbService.getResource( uri="core.master:core.and.language.only", language="en", country="US" );
@@ -89,7 +89,7 @@
 
 	<cffunction name="test09_getResource_shouldReturnKeyFromMaster_whenLanguageDoesNotExistAtAll" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "I am a value";
 			var result     = rbService.getResource( uri="secondary:i.am.a.property", language="ar" );
@@ -100,7 +100,7 @@
 
 	<cffunction name="test10_getResource_shouldReturnKeyFromMaster_whenLanguageAndCountryDoNotExistAtAll" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "I am a value";
 			var result     = rbService.getResource( uri="secondary:i.am.a.property", language="af", country="ZA" );
@@ -111,7 +111,7 @@
 
 	<cffunction name="test11_getResource_shouldReturnKeyFromLanguage_whenLanguageExistsButCountryDoesNot" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "Ceci n'est pas une pipe";
 			var result     = rbService.getResource( uri="secondary:some.key", language="fr", country="CA" );
@@ -122,7 +122,7 @@
 
 	<cffunction name="test12_getResource_shouldGetResourcesMergedFromMultipleInputDirectories" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/", "/tests/resources/ResourceBundleService/testBundles2/", "/tests/resources/ResourceBundleService/testBundles3/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ), expandPath( "/tests/resources/ResourceBundleService/testBundles2/" ), expandPath( "/tests/resources/ResourceBundleService/testBundles3/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var result     = "";
 			var expected   = "";
@@ -151,7 +151,7 @@
 
 	<cffunction name="test13_getResource_shouldThrowInformativeError_whenMalformedResourceUriPassed" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var errorThrown = false;
 
@@ -169,7 +169,7 @@
 
 	<cffunction name="test14_getResource_shouldReturnDefaultValue_whenBundleDoesNotExist" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles3/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles3/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "some default value here.";
 			var result     = rbService.getResource( uri="nonExistantBundle:btn.ok", defaultValue=expected );
@@ -202,7 +202,7 @@
 
 	<cffunction name="test17_listLocales_shouldReturnEmptyList_whenProvidedBundleDoesNotExist" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles3/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles3/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = [];
 			var result     = rbService.listLocales( bundle="someBundleThatDoesNotExist" );
@@ -213,9 +213,9 @@
 
 	<cffunction name="test18_getBundleAsJson_shouldReturnJsonRepresentationOfBundleForGivenLocale" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles3/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles3/" ) ];
 			var rbService  = _getRBService( bundleDirs );
-			var expected   = '{"core.master:core.only.key":"core bundle only (dir 3)","core.master:test.resource.key":"test resource value en (dir 3)","core.master:core.and.language.only":"i am from language (dir 3)"}';
+			var expected   = '{"core.master:test.resource.key":"test resource value en (dir 3)","core.master:core.only.key":"core bundle only (dir 3)","core.master:core.and.language.only":"i am from language (dir 3)"}';
 			var result     = rbService.getBundleAsJson( bundle="core.master", language="en", country="US" );
 
 			super.assertEquals( expected, result );
@@ -235,7 +235,7 @@
 
 	<cffunction name="test20_getResource_shouldReturnSiteTemplateSpecificValue_whenSiteTemplateIsActive" returntype="void">
 		<cfscript>
-			var bundleDirs = [ "/tests/resources/ResourceBundleService/testBundles/", "/tests/resources/ResourceBundleService/site-templates/test-template/i18n/" ];
+			var bundleDirs = [ expandPath( "/tests/resources/ResourceBundleService/testBundles/" ), expandPath( "/tests/resources/ResourceBundleService/site-templates/test-template/i18n/" ) ];
 			var rbService  = _getRBService( bundleDirs );
 			var expected   = "Specific to site template";
 

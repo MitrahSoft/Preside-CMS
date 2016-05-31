@@ -33,12 +33,12 @@ component output=false singleton=true {
 		return locales._all;
 	}
 
-	public string function getResource( required string uri, string defaultValue="", string language, string country ) output=false {
+	public string function getResource( required string uri, string defaultValue="", string language="", string country="" ) output=false {
 		var bundle      = "";
 		var resourceKey = "";
 		var bundleData  = "";
-		var languages   = arguments.language ?: "";
-		var countries   = arguments.country  ?: "";
+		var languages   = arguments.language;
+		var countries   = arguments.country;
 		_validateUri( arguments.uri );
 
 		bundle      = ListFirst( arguments.uri, ":" );

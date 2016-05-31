@@ -39,7 +39,8 @@ component displayname="Image Manipulation Service" {
 
 		try {
 			image = ImageNew( arguments.asset );
-		} catch ( "java.io.IOException" e ) {
+		} catch ( any e ) {
+			if( e.type == "java.io.IOException" OR e.type == "Application" )
 			throw( type="AssetTransformer.resize.notAnImage" );
 		}
 

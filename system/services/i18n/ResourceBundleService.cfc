@@ -140,12 +140,11 @@ component output=false singleton=true {
 		var activeSiteTemplate = _getSiteService().getActiveSiteTemplate();
 		var bundleCacheKey     = activeSiteTemplate & arguments.bundleName;
 		var languageCacheKey   = "";
-		var countryCacheKey    =  "";
+		var countryCacheKey    = "";
 
 		if ( not StructKeyExists( bundleDataCache, bundleCacheKey  ) ) {
 			bundleDataCache[ bundleCacheKey ] = _readBundleData( arguments.bundleName );
 		}
-
 		if ( StructKeyExists( arguments, "language" ) ) {
 			languageCacheKey =  bundleCacheKey & "_" & arguments.language;
 			if ( not StructKeyExists( bundleDataCache,  languageCacheKey ) ) {
@@ -201,7 +200,7 @@ component output=false singleton=true {
 			siteTemplate = _getSiteTemplateFromPath( directory );
 
 			if ( siteTemplate == "*" || siteTemplate == activeSiteTemplate ) {
-				files = DirectoryList( directory & subDirectory, false, "path", filePattern & ".properties" );
+				files = DirectoryList( ExpandPath( directory & subDirectory ), false, "path", filePattern & ".properties" );
 
 				for( file in files ){
 					StructAppend( bundleData, _propertiesFileToStruct( file ) );

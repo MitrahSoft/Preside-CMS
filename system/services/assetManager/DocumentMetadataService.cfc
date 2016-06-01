@@ -52,10 +52,8 @@ component displayName="Document metadata service" {
 	private struct function _parse( required any fileContent, boolean includeText=true ) {
 		try {
 			var meta = _getXmpMetaReader().readMeta( arguments.fileContent );
-			var exif = ImageGetEXIFMetadata( ImageReadBase64( ToBase64( arguments.fileContent ) ) );
-
-			meta.append( exif, false );
-
+			var exif = ImageReadBase64( ToBase64( arguments.fileContent ) );
+			structAppend( meta,exif );
 			return { metadata=meta };
 		} catch( any e ) {}
 

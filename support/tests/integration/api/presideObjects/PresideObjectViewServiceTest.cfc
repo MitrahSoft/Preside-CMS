@@ -22,7 +22,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		mockPresideObjectService.$( "selectData", QueryNew('') );
 		mockRendererPlugin.$( "renderView", "" );
-		mockRendererPlugin.$( "locateView", "/tests/resources/presideObjectService/_dataViews/views3/preside-objects/object_b/index" );
+		mockRendererPlugin.$( "locateView", expandPath("/tests/resources/presideObjectService/_dataViews/views3/preside-objects/object_b/index" ));
 
 		svc.renderView( presideObject = "object_b", view="preside-objects/object_b/index" );
 
@@ -62,7 +62,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		mockPresideObjectService.$( "selectData", QueryNew('') );
 		mockRendererPlugin.$( "renderView", "" );
-		mockRendererPlugin.$( "locateView", "/tests/resources/presideObjectService/_dataViews/views1/preside-objects/object_b/full" );
+		mockRendererPlugin.$( "locateView", expandPath("/tests/resources/presideObjectService/_dataViews/views1/preside-objects/object_b/full" ));
 
 		svc.renderView( argumentCollection = passedArgs );
 
@@ -95,7 +95,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		mockPresideObjectService.$( "selectData", mockData );
 		mockRendererPlugin.$( "renderView" ).$results( "1", "-two", "-thr33" );
-		mockRendererPlugin.$( "locateView", "/tests/resources/presideObjectService/_dataViews/views1/preside-objects/object_b/full" );
+		mockRendererPlugin.$( "locateView", expandPath("/tests/resources/presideObjectService/_dataViews/views1/preside-objects/object_b/full" ));
 
 		actualResult = svc.renderView(
 			  presideObject = "object_b"

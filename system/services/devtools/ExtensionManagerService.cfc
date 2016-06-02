@@ -153,21 +153,20 @@ component singleton=true {
 	}
 
 	public struct function getExtensionInfo( required string extensionNameOrDirectory ) {
-		var manifestDir      = DirectoryExists( extensionNameOrDirectory ) ? extensionNameOrDirectory : _getExtensionsDirectory() & "/" & arguments.extensionNameOrDirectory;
+		var manifestDir      = DirectoryExists( expandpath( extensionNameOrDirectory ) ) ? extensionNameOrDirectory : _getExtensionsDirectory() & "/" & arguments.extensionNameOrDirectory;
 		var manifestFilePath = manifestDir & "/manifest.json";
 		var fileContent      = "";
 		var parsed           = {};
 
-		if ( !DirectoryExists( manifestDir ) ) {
+		if ( !DirectoryExists( expandpath( manifestDir ) ) ) {
 			throw( type="ExtensionManager.missingExtension", message="The extension, [#arguments.extensionNameOrDirectory#], could not be found" );
 		}
-
-		if ( !FileExists( manifestFilePath ) ) {
+		if ( !FileExists( expandpath( manifestFilePath ) ) ) {
 			throw( type="ExtensionManager.missingManifest", message="The extension, [#arguments.extensionNameOrDirectory#], does not have a manifest file" );
 		}
 
 		lock name="manifestfileop-#manifestFilePath#" type="exclusive" timeout="10" {
-			fileContent = FileRead( manifestFilePath );
+			fileContent = FileRead( expandpath ( manifestFilePath ) );
 		}
 
 		try {
@@ -195,8 +194,7 @@ component singleton=true {
 		if ( DirectoryExists( destinationPath ) ) {
 			throw( type="ExtensionManager.manifestExists", message="The extension, [#extensionInfo.id#], is already installed" );
 		}
-
-		DirectoryCopy( arguments.extensionDirectory, destinationPath, true );
+		DirectoryCopy( expandpath( arguments.extensionDirectory ), expandpath( destinationPath ), true );
 
 		for( var ext in extensionList ) {
 			if ( ext.name eq extensionInfo.id ) {

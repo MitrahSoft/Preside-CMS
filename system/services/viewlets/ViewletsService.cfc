@@ -59,21 +59,25 @@ component {
 			  core          = {}
 			, sitetemplates = {}
 		};
+		var _siteTemplate   = "";
 		var registerViewlet = function( viewletName, siteTemplate ){
-			if ( arguments.siteTemplate == "" ) {
+			if( structKeyExists( arguments,"siteTemplate" ) ){
+				_siteTemplate = arguments.siteTemplate;
+			}
+			if ( _siteTemplate == "" ) {
 				viewlets.core[ arguments.viewletName ] = true;
 			} else {
-				viewlets.sitetemplates[ arguments.siteTemplate ] = viewlets.sitetemplates[ arguments.siteTemplate ] ?: {};
-				viewlets.sitetemplates[ arguments.siteTemplate ][ arguments.viewletName ] = true;
+				viewlets.sitetemplates[ _siteTemplate ] = viewlets.sitetemplates[ _siteTemplate ] ?: {};
+				viewlets.sitetemplates[ _siteTemplate ][ arguments.viewletName ] = true;
 			}
 
 			if ( arguments.viewletName.reFindNoCase( "\.index$" ) ) {
 				arguments.viewletName = arguments.viewletName.reReplaceNoCase( "\.index$", "" );
 
-				if ( arguments.siteTemplate == "" ) {
+				if ( _siteTemplate == "" ) {
 					viewlets.core[ arguments.viewletName ] = true;
 				} else {
-					viewlets.sitetemplates[ arguments.siteTemplate ][ arguments.viewletName ] = true;
+					viewlets.sitetemplates[ _siteTemplate ][ arguments.viewletName ] = true;
 				}
 			}
 		};
@@ -82,12 +86,9 @@ component {
 			var viewsDirectory    = directory & "/views";
 			var handlersDirectory = directory & "/handlers";
 			var siteTemplate   = _getSiteTemplateFromDirectory( directory );
-
-
-			if ( DirectoryExists( viewsDirectory ) ) {
+			if ( DirectoryExists( expandpath( viewsDirectory ) ) ) {
 				var expandedDirPath = ExpandPath( viewsDirectory );
-				var viewFiles       = DirectoryList( viewsDirectory, true, "path", "*.cfm" );
-
+				var viewFiles       = DirectoryList( ExpandPath( viewsDirectory ), true, "path", "*.cfm" );
 				for( var viewFile in viewFiles ) {
 					var viewletName = viewFile.replace( expandedDirPath, "" );
 
@@ -98,11 +99,9 @@ component {
 					registerViewlet( viewletName, siteTemplate );
 				}
 			}
-
-			if ( DirectoryExists( handlersDirectory ) ) {
+			if ( DirectoryExists( expandpath( handlersDirectory ) ) ) {
 				var expandedDirPath = ExpandPath( handlersDirectory );
-				var handlerFiles    = DirectoryList( handlersDirectory, true, "path", "*.cfc" );
-
+				var handlerFiles    = DirectoryList( ExpandPath( handlersDirectory ), true, "path", "*.cfc" );
 				for( var handlerFile in handlerFiles ) {
 					var viewletNameBase = handlerFile.replace( expandedDirPath, "" ).reReplaceNoCase( "\.cfc$" , "" );
 					var handlerCfcPath  = handlersDirectory & viewletNameBase;
@@ -147,11 +146,11 @@ component {
 	}
 
 	private array function _readActionsFromHandler( required string handlerCfcPath ) {
-		var actions                    = {};
-		var lifeCycleRegex             = "^(pre|post|around)";
-		var readNonLifeCycleFunctions = function( meta ){
-			var functions = arguments.meta.functions ?: [];
-
+		var actions                   = {};
+		var lifeCycleRegex            = "^(pre|post|around)";
+		
+		var readNonLifeCycleFunctions = function( meta ){			
+			var functions = structKeyExists( arguments.meta, "functions" ) ? arguments.meta.functions : [];
 			if ( arguments.meta.keyExists( "extends" ) ) {
 				readNonLifeCycleFunctions( arguments.meta.extends );
 			}

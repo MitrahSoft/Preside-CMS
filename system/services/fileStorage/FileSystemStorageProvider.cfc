@@ -75,7 +75,7 @@ component implements="preside.system.services.fileStorage.StorageProvider" displ
 	public binary function getObject( required string path, boolean trashed=false ){
 		try {
 			return FileReadBinary( _expandPath( arguments.path, arguments.trashed ) );
-		} catch ( java.io.FileNotFoundException e ) {
+		} catch ( Application e ) {
 			throw(
 				  type    = "storageProvider.objectNotFound"
 				, message = "The object, [#arguments.path#], could not be found or is not accessible"

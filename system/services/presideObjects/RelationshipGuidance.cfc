@@ -31,9 +31,13 @@ component output=false singleton=true {
 		var backtraceNode         = "";
 		var i                     = 0;
 		var n                     = 0;
+		var _forceJoins           = "";
 
+		if( structKeyExists( arguments,"forceJoins" ) ){
+			var _forceJoins = arguments.forceJoins;
+		}
 		for( target in arguments.joinTargets ){
-			columnJoins = _calculateColumnJoins( objectName, target, joins, arguments.forceJoins ?: "" );
+			columnJoins = _calculateColumnJoins( objectName, target, joins, _forceJoins );
 
 			if ( ArrayLen( columnJoins ) ) {
 				discoveredJoins[ target ] = 1;
@@ -92,7 +96,7 @@ component output=false singleton=true {
 							discoveredJoins[ backtraceNode.name ] = 1;
 							relationship = backtraceNode.relationship;
 							join = {
-								  type           = ( Len( Trim ( arguments.forceJoins ?: "" ) ) ? arguments.forceJoins : ( relationship.required ? 'inner' : 'left' ) )
+								  type           = ( Len( Trim ( _forceJoins ) ) ? arguments.forceJoins : ( relationship.required ? 'inner' : 'left' ) )
 								, joinToObject   = backtraceNode.name
 								, joinFromObject = backtraceNode.parent
 								, joinFromAlias  = backtraceNode.parent

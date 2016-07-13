@@ -79,6 +79,16 @@ component validationProvider=true {
 		return "function( value, el, params ) { var parts = value.split( ' ' ); return !value.length || ( !/Invalid|NaN/.test(new Date( parts[0] ).toString()) && ( parts.length == 1 || ( parts.length == 2 && /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/i.test( parts[1] ) ) ) ); }";
 	}
 
+	public boolean function languageCode( required string fieldName, string value="" ) validatorMessage="cms:validation.languageCode.default" {
+		if ( not Len( Trim( arguments.value ) ) ) {
+			return true;
+		}
+		return ReFind( "^[a-zA-Z]{2}([_][a-zA-Z]{2})?$", arguments.value );
+	}
+	public string function languageCode_js() {
+		return "function( value, el, params ){ return !value.length || value.match( /^[a-zA-Z]{2}([_][a-zA-Z]{2})?$/ ) !== null }";
+	}
+
 	public boolean function match( required string fieldName, string value="", required string regex ) validatorMessage="cms:validation.match.default" {
 		if ( not Len( Trim( arguments.value ) ) ) {
 			return true;
@@ -141,7 +151,7 @@ component validationProvider=true {
 		return ( arguments.value >= arguments.minimumDate );
 	}
 	public string function minimumDate_js() {
-		return true;
+		return "function( value, el, params ){ return value >= params[0]; }";
 	}
 
 	public boolean function maximumDate( required string value, required date maximumDate ) validatorMessage="cms:validation.maximumDate.default" {
@@ -152,50 +162,50 @@ component validationProvider=true {
 		return ( arguments.value <= arguments.maximumDate );
 	}
 	public string function maximumDate_js() {
-		return true;
+		return "function( value, el, params ){ return value <= params[0]; }";
 	}
 
 	public boolean function laterThanField( required string value, required struct data, required string field ) validatorMessage="cms:validation.laterThanField.default" {
-		if ( !IsDate( arguments.value ) || !IsDate( argments.data[ arguments.field ] ?: "" ) ) {
+		if ( !IsDate( arguments.value ) || !IsDate( arguments.data[ arguments.field ] ?: "" ) ) {
 			return true;
 		}
 
 		return ( arguments.value > arguments.data[ arguments.field ] );
 	}
 	public string function laterThanField_js() {
-		return true;
+		return "function( value, el, params ){ var $field = $( '[name=' + params[0] + ']' ); return $field.length && value > $field.val(); }";
 	}
 
 	public boolean function laterThanOrSameAsField( required string value, required struct data, required string field ) validatorMessage="cms:validation.laterThanOrSameAsField.default" {
-		if ( !IsDate( arguments.value ) || !IsDate( argments.data[ arguments.field ] ?: "" ) ) {
+		if ( !IsDate( arguments.value ) || !IsDate( arguments.data[ arguments.field ] ?: "" ) ) {
 			return true;
 		}
 
 		return ( arguments.value >= arguments.data[ arguments.field ] );
 	}
 	public string function laterThanOrSameAsField_js() {
-		return true;
+		return "function( value, el, params ){ var $field = $( '[name=' + params[0] + ']' ); return $field.length && value >= $field.val(); }";
 	}
 
 	public boolean function earlierThanField( required string value, required struct data, required string field ) validatorMessage="cms:validation.earlierThanField.default" {
-		if ( !IsDate( arguments.value ) || !IsDate( argments.data[ arguments.field ] ?: "" ) ) {
+		if ( !IsDate( arguments.value ) || !IsDate( arguments.data[ arguments.field ] ?: "" ) ) {
 			return true;
 		}
 
 		return ( arguments.value < arguments.data[ arguments.field ] );
 	}
 	public string function earlierThanField_js() {
-		return true;
+		return "function( value, el, params ){ var $field = $( '[name=' + params[0] + ']' ); return $field.length && value < $field.val(); }";
 	}
 
 	public boolean function earlierThanOrSameAsField( required string value, required struct data, required string field ) validatorMessage="cms:validation.earlierThanOrSameAsField.default" {
-		if ( !IsDate( arguments.value ) || !IsDate( argments.data[ arguments.field ] ?: "" ) ) {
+		if ( !IsDate( arguments.value ) || !IsDate( arguments.data[ arguments.field ] ?: "" ) ) {
 			return true;
 		}
 
 		return ( arguments.value <= arguments.data[ arguments.field ] );
 	}
 	public string function earlierThanOrSameAsField_js() {
-		return true;
+		return "function( value, el, params ){ var $field = $( '[name=' + params[0] + ']' ); return $field.length && value <= $field.val(); }";
 	}
 }

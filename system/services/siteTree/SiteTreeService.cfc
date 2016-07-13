@@ -336,6 +336,15 @@ component singleton=true {
 			args.filterParams[ "page.title" ] = "%" & arguments.searchQuery & "%";
 		}
 
+		if ( ListLen( args.orderBy, "." ) == 1 ) {
+			var col = ListFirst( args.orderBy, " " );
+			if ( _getPresideObjectService().getObjectProperties( arguments.pageType ).keyExists( col ) ) {
+				args.orderBy = "#arguments.pageType#.#args.orderBy#";
+			} else {
+				args.orderBy = "page.#args.orderBy#";
+			}
+		}
+
 		result.records = _getPresideObjectService().selectData( argumentCollection = args );
 
 		if ( arguments.startRow eq 1 and result.records.recordCount lt arguments.maxRows ) {
@@ -581,15 +590,14 @@ component singleton=true {
 			data._hierarchy_child_selector = "#data._hierarchy_lineage##data._hierarchy_id#/%";
 
 			versionNumber = _getPresideObjectService().getNextVersionNumber();
-			pageId = pobj.insertData( data=data, versionNumber=versionNumber, insertManyToManyRecords=true );
+			pageId = pobj.insertData( data=data, versionNumber=versionNumber, insertManyToManyRecords=true, skipTrivialInterceptors=pageType.isSystemPageType() );
 			if ( not Len( pageId ) and StructKeyExists( arguments, "id" ) ) {
 				pageId = arguments.id;
 			}
 
-
 			pageTypeObjData = Duplicate( arguments );
 			pageTypeObjData.page = pageTypeObjData.id = pageId;
-			_getPresideObject( pageType.getPresideObject() ).insertData( data=pageTypeObjData, versionNumber=versionNumber, insertManyToManyRecords=true );
+			_getPresideObject( pageType.getPresideObject() ).insertData( data=pageTypeObjData, versionNumber=versionNumber, insertManyToManyRecords=true, skipTrivialInterceptors=pageType.isSystemPageType() );
 		}
 
 		return pageId;

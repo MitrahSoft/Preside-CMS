@@ -38,10 +38,10 @@ component singleton=true output="false" {
 		}
 	}
 
-	public string function renderLabel( required string objectName, required string recordId ) {
+	public string function renderLabel( required string objectName, required string recordId, string keyField="id" ) {
 		var record = _getPresideObjectService().selectData(
 			  objectName   = arguments.objectName
-			, filter       = { id=arguments.recordId }
+			, filter       = { "#keyField#"=arguments.recordId }
 			, selectFields = [ "${labelfield} as label" ]
 		);
 
@@ -379,7 +379,7 @@ component singleton=true output="false" {
 	}
 
 	private any function _registerRendererByConvention( required string renderer, required string context ) output=false {
-		conventionsBasedName = _getConventionBasedViewletName( arguments.renderer, arguments.context );
+		var conventionsBasedName = _getConventionBasedViewletName( arguments.renderer, arguments.context );
 		if ( _getColdbox().viewletExists( conventionsBasedName ) ) {
 			registerRenderer( arguments.renderer, arguments.context, conventionsBasedName );
 			return new ContentRenderer( viewlet=conventionsBasedName, chain=[] );

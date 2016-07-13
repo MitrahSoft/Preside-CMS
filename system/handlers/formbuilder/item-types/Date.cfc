@@ -13,13 +13,15 @@ component {
 
 			switch( args.relativeOperator ) {
 				case "lt":
-					args.maxDate = DateAdd( 'd', -1, Now() );
+					var diff = val(args.offset) ? val(-args.offset) : -1;
+					args.maxDate = DateAdd( 'd', diff, Now() );
 				break;
 				case "lte":
 					args.maxDate = Now();
 				break;
 				case "gt":
-					args.minDate = DateAdd( 'd', 1, Now() );
+					var diff = val(args.offset) ? val(args.offset) : 1;
+					args.minDate = DateAdd( 'd', diff, Now() );
 				break;
 				case "gte":
 					args.minDate = Now();
@@ -66,30 +68,29 @@ component {
 						validator = "minimumDate";
 					break;
 				}
-
-
 				rules.append( { fieldname=args.name, validator=validator, params={ "#validator#"=DateFormat( theDate, "yyyy-mm-dd" ) } } );
-			}
-		} else if ( Len( Trim( args.relativeToField ?: "" ) ) ) {
-			var validator = "";
-			switch( args.relativeOperator ) {
-				case "lt":
-					validator = "earlierThanField";
-				break;
-				case "lte":
-					validator = "earlierThanOrSameAsField";
-				break;
-				case "gt":
-					validator = "laterThanField";
-				break;
-				case "gte":
-					validator = "laterThanOrSameAsField";
-				break;
-			}
 
-			rules.append( { fieldname=args.name, validator=validator, params={ field=args.relativeToField } } );
+			}
+			if ( Len( Trim( args.relativeToField ?: "" ) ) ) {
+				var validator = "";
+				switch( args.relativeOperator ) {
+					case "lt":
+						validator = "earlierThanField";
+					break;
+					case "lte":
+						validator = "earlierThanOrSameAsField";
+					break;
+					case "gt":
+						validator = "laterThanField";
+					break;
+					case "gte":
+						validator = "laterThanOrSameAsField";
+					break;
+				}
+
+				rules.append( { fieldname=args.name, validator=validator, params={ field=args.relativeToField } } );
+			}
 		}
-
 		return rules;
 	}
 }

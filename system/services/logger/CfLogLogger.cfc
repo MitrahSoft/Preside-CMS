@@ -21,13 +21,13 @@
 	<cffunction name="_log" access="private" returntype="void" output="false">
 		<cfargument name="type" type="string" required="true">
 		<cfargument name="text" type="string" required="true">
+
 		 
 		<!--- thread attribute is deprecated in Railo, Lucee & ACF. No need of If else here --->
 	   	<cflog type        = "#arguments.type#"
 		       text        = "#arguments.text#"
 		       file        = "#_getDefaultLog()#_#DateFormat( Now(), 'yyyy-mm-dd' )#"
 		       application = "#_getLogApplicationName()#"/>
-
 	</cffunction>
 
 <!--- getters and setters --->

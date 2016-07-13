@@ -5,21 +5,27 @@ component {
 		, string  name                         = arguments.id & ExpandPath( "/" )
 		, array   statelessUrlPatterns         = [ "^https?://(.*?)/api/.*" ]
 		, array   statelessUserAgentPatterns   = [ "CFSCHEDULE", "(bot\b|crawler\b|baiduspider|80legs|ia_archiver|voyager|curl|wget|yahoo! slurp|mediapartners-google)" ]
-		, boolean sessionManagement            = !isStatelessRequest( _getUrl() )
+		, boolean sessionManagement
 		, any     sessionTimeout               = CreateTimeSpan( 0, 0, 40, 0 )
 		, numeric applicationReloadTimeout     = 1200
-		, numeric applicationReloadLockTimeout = 15
+		, numeric applicationReloadLockTimeout = 0
 		, string  scriptProtect                = "none"
+		, string  reloadPassword               = "true"
+		, boolean showDbSyncScripts            = false
 	)  {
 		this.PRESIDE_APPLICATION_ID                  = arguments.id;
 		this.PRESIDE_APPLICATION_RELOAD_LOCK_TIMEOUT = arguments.applicationReloadLockTimeout;
 		this.PRESIDE_APPLICATION_RELOAD_TIMEOUT      = arguments.applicationReloadTimeout;
+
 		this.name                                    = arguments.name;
-		this.sessionManagement                       = arguments.sessionManagement;
-		this.sessionTimeout                          = arguments.sessionTimeout;
+		this.COLDBOX_RELOAD_PASSWORD                 = arguments.reloadPassword;
 		this.scriptProtect                           = arguments.scriptProtect;
 		this.statelessUrlPatterns                    = arguments.statelessUrlPatterns;
 		this.statelessUserAgentPatterns              = arguments.statelessUserAgentPatterns;
+		this.statelessRequest                        = isStatelessRequest( _getUrl() );
+		this.sessionManagement                       = arguments.sessionManagement ?: !this.statelessRequest;
+		this.sessionTimeout                          = arguments.sessionTimeout;
+		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
 
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
@@ -191,7 +197,11 @@ component {
 	}
 
 	private boolean function _reloadRequired() {
-		return !application.keyExists( "cbBootstrap" ) || application.cbBootStrap.isfwReinit();
+		if ( !application.keyExists( "cbBootstrap" ) ) {
+			return _preventReloadsWhenExistingUpgradeScriptGenerated();
+		}
+
+		return application.cbBootStrap.isfwReinit();
 	}
 
 	private void function _fetchInjectedSettings() {
@@ -293,12 +303,38 @@ component {
 				).raiseError( attributes.e );
 			}
 
+
+			try {
+				FileWrite( _getSqlUpgradeScriptFilePath(), exception.detail ?: "" );
+			} catch( any e ) {}
+
+			var showScript = IsBoolean( this.showDbSyncScripts ?: "" ) && this.showDbSyncScripts;
 			cfheader( statuscode=500 );cfcontent( reset=true );
 			cfinclude( template="/preside/system/views/errors/sqlRebuild.cfm" );
 			return true;
 		}
 
 		return false;
+	}
+
+	private boolean function _preventReloadsWhenExistingUpgradeScriptGenerated() {
+		var reloadDemanded = ( url.fwreinit ?: "" ) == this.COLDBOX_RELOAD_PASSWORD;
+		var sqlUpgradeFile = _getSqlUpgradeScriptFilePath();
+
+		if ( FileExists( sqlUpgradeFile ) ) {
+			if ( reloadDemanded ) {
+				FileDelete( sqlUpgradeFile );
+				return true;
+			}
+
+			var exception  = { detail=FileRead( sqlUpgradeFile ) };
+			var showScript = false;
+			cfheader( statuscode=503);cfcontent( reset=true ) ;
+			cfinclude( template="/preside/system/views/errors/sqlRebuild.cfm" );
+			abort;
+		}
+
+		return true;
 	}
 
 	private void function _maintenanceModeCheck() {
@@ -532,6 +568,10 @@ component {
 		}
 
 		return requestUrl;
+	}
+
+	private string function _getSqlUpgradeScriptFilePath() {
+		return ExpandPath( request._presideMappings.logsMapping ?: "/logs" ) & "/sqlupgrade.sql";
 	}
 
 }

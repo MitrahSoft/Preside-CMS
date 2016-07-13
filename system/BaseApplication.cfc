@@ -12,9 +12,12 @@ component extends="Bootstrap" {
 	this.sessionTimeout    = CreateTimeSpan( 0, 0, 40, 0 );
 	this.scriptProtect     = "none";
 
-	this.PRESIDE_APPLICATION_RELOAD_LOCK_TIMEOUT = 15;
+	this.PRESIDE_APPLICATION_RELOAD_LOCK_TIMEOUT = 0;
 	this.PRESIDE_APPLICATION_RELOAD_TIMEOUT      = 1200;
 	this.javaSettings = {LoadPaths = [expandPath(".\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar")], loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml"};
+	
+	this.COLDBOX_RELOAD_PASSWORD                 = true;
+
 	_setupMappings();
 	_setupDefaultTagAttributes();
 }

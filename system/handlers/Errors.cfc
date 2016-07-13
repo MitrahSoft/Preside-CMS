@@ -6,12 +6,10 @@ component {
 		event.setHTTPHeader( statusCode="404" );
 		event.setHTTPHeader( name="X-Robots-Tag", value="noindex" );
 
-
 		if ( event.isAdminRequest() ){
 			if ( !event.isAdminUser() ) {
 				setNextEvent( url=event.buildAdminLink( "login" ) );
 			}
-			event.setLayout( "admin" );
 			return renderView( view="/admin/errorPages/notFound" );
 		}
 		event.initializePresideSiteteePage( systemPage="notFound" );

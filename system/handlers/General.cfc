@@ -1,5 +1,6 @@
 component {
 	property name="applicationReloadService"  inject="applicationReloadService";
+	property name="applicationsService"       inject="applicationsService";
 	property name="websiteLoginService"       inject="websiteLoginService";
 	property name="adminLoginService"         inject="loginService";
 	property name="antiSamySettings"          inject="coldbox:setting:antiSamy";
@@ -11,7 +12,6 @@ component {
 	}
 
 	public void function requestStart( event, rc, prc ) {
-		_setSecurityHeaders( argumentCollection = arguments );
 		_xssProtect( argumentCollection = arguments );
 		_reloadChecks( argumentCollection = arguments );
 		_recordUserVisits( argumentCollection = arguments );
@@ -19,7 +19,15 @@ component {
 
 	public void function notFound( event, rc, prc ) {
 		var notFoundViewlet = getSetting( name="notFoundViewlet", defaultValue="errors.notFound" );
-		var notFoundLayout  = getSetting( name="notFoundLayout" , defaultValue="Main" );
+		var notFoundLayout  = "";
+
+		if ( event.isAdminRequest() ) {
+			var activeApplication = applicationsService.getActiveApplication( event.getCurrentEvent() );
+
+			notFoundLayout = applicationsService.getLayout( activeApplication );
+		} else {
+			notFoundLayout  = getSetting( name="notFoundLayout" , defaultValue="Main" );
+		}
 
 		event.setLayout( notFoundLayout );
 		event.setView( view="/core/simpleBodyRenderer" );
@@ -38,12 +46,6 @@ component {
 	}
 
 // private helpers
-	private void function _setSecurityHeaders( event, rc, prc ) {
-		event.setXFrameOptionsHeader(
-			value = event.isAdminRequest() ? "SAMEORIGIN" : "DENY"
-		);
-	}
-
 	private void function _xssProtect( event, rc, prc ) {
 		if ( IsTrue( antiSamySettings.enabled ?: "" ) ) {
 			if ( IsFalse( antiSamySettings.bypassForAdministrators ?: "" ) || !event.isAdminUser() ) {

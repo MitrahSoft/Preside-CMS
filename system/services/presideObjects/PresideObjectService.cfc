@@ -1355,7 +1355,7 @@ component singleton=true autodoc=true displayName="Preside Object Service" {
 		var filter     = arguments.preparedFilter.filter ?: "";
 		var key        = "";
 		var cache      = _getCache();
-		var cacheKey   = "Detected foreign objects for generated SQL. Obj: #arguments.objectName#. Data: #StructKeyList( arguments.data )#. Fields: #ArrayToList( arguments.selectFields )#. Order by: #arguments.orderBy#. Filter: #IsStruct( filter ) ? StructKeyList( filter ) : filter#"
+		var cacheKey   = "Detected foreign objects for generated SQL. Obj: #arguments.objectName#. Data: #StructKeyList( arguments.data )#. Fields: #ArrayToList( arguments.selectFields )#. Order by: #arguments.orderBy#. Filter: #IsStruct( filter ) ? StructKeyList( filter ) : filter#";
 
 		var objects    = cache.get( cacheKey );
 

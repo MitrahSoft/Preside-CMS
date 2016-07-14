@@ -302,7 +302,7 @@ component displayName="Preside Object View Service" {
 		keyArgs.delete( "value"                  );
 
 
-		selectDataArgs.objectName   = arguments.presideObject
+		selectDataArgs.objectName   = arguments.presideObject;
 		selectDataArgs.selectFields = [ "Max( #arguments.presideobject#.datemodified ) as datemodified" ];
 
 		var lastRecordModified = _getPresideObjectService().selectData( argumentCollection=selectDataArgs );

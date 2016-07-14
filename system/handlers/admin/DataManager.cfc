@@ -1167,8 +1167,8 @@
 		<cfargument name="event"               type="any"     required="true" />
 		<cfargument name="rc"                  type="struct"  required="true" />
 		<cfargument name="prc"                 type="struct"  required="true" />
-		<cfargument name="object"              type="string"  required="false" default="#( rc.id ?: '' )#" />
-		<cfargument name="gridFields"          type="string"  required="false" default="#( rc.gridFields ?: 'label,datecreated,_version_author' )#" />
+		<cfargument name="object"              type="string"  required="false" default="" />
+		<cfargument name="gridFields"          type="string"  required="false" default="" />
 		<cfargument name="actionsView"         type="string"  required="false" default="" />
 		<cfargument name="filter"              type="struct"  required="false" default="#StructNew()#" />
 		<cfargument name="useMultiActions"     type="boolean" required="false" default="true" />

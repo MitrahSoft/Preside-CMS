@@ -76,10 +76,10 @@ component {
 	 *
 	 */
 	public any function deleteTab( required string id ) {
-		var raw  = _getRawDefinition();
-		var args = arguments;
-
-		raw.tabs = ( raw.tabs ?: [] ).filter( function( tab ){
+		var raw     = _getRawDefinition();
+		var args    = arguments;
+		var rawTabs = raw.tabs ?: [];
+		raw.tabs = rawTabs.filter( function( tab ){
 			return ( tab.id ?: "" ) != args.id;
 		} );
 
@@ -193,7 +193,7 @@ component {
 		fieldset.fields = fieldset.fields ?: [];
 
 		for( var key in arguments ) {
-			if ( ![ "fieldset", "tab" ].findNoCase( key ) ) {
+			if ( !ArrayFindNoCase( [ "fieldset", "tab" ], key ) ) {
 				field[ key ] = IsSimpleValue( arguments[ key ] ) ? arguments[ key ] : Duplicate( arguments[ key ] );
 			}
 		}
@@ -201,7 +201,7 @@ component {
 		fieldset.fields.append( field );
 
 		return this;
-	}
+	} 
 
 	/**
 	 * Deletes the given field. Does nothing if the field does not exist.
@@ -240,7 +240,7 @@ component {
 		var args   = {};
 
 		for( var key in arguments ) {
-			if ( ![ "tab", "fieldset" ].findNoCase( key ) ) {
+			if ( !ArrayFindNoCase( [ "tab", "fieldset" ], key ) ) {
 				args[ key ] = IsSimpleValue( arguments[ key ] ) ? arguments[ key ] : Duplicate( arguments[ key ] );
 			}
 		}

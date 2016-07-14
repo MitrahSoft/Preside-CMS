@@ -1317,8 +1317,9 @@ component displayName="AssetManager Service" {
 		var args        = Duplicate( arguments.transformationArgs );
 
 		// todo, sanity check the input
-		args.asset    = arguments.assetBinary;
-		return _getAssetTransformer()[ arguments.transformationMethod ]( argumentCollection = args );
+		args.asset              = arguments.assetBinary;
+		var getAssetTransformer = _getAssetTransformer()[ arguments.transformationMethod ];
+		return getAssetTransformer( argumentCollection = args );
 
 	}
 

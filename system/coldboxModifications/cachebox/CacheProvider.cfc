@@ -17,7 +17,7 @@ component output=false extends="coldbox.system.cache.providers.CacheBoxColdBoxPr
 		return result;
 	}
 
-	public any function get( required string objectKey ) output=false {
+	public any function get( required any objectKey ) output=false {
 		request[ _requestKey ] = request[ _requestKey ] ?: {};
 
 		if ( !request[ _requestKey ].keyExists( arguments.objectKey ) ) {

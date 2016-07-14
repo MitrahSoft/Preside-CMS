@@ -75,7 +75,7 @@ component output=false singleton=true {
 		postClause = postClause.reReplaceNoCase("\s!= :#arguments.paramName#", " is not :#arguments.paramName#", "all" );
 		postClause = postClause.reReplaceNoCase("\s= :#arguments.paramName#", " is :#arguments.paramName#", "all" );
 
-		return preClause & postClause
+		return preClause & postClause;
 	}
 
 // GETTERS AND SETTERS

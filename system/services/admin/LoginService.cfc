@@ -38,7 +38,7 @@ component displayName="Admin login service" {
 		_setTwoFaSessionKey( arguments.twoFaSessionKey );
 		_setGoogleAuthenticator( arguments.googleAuthenticator );
 		_setEmailService( arguments.emailService );
-		_setQrCodeGenerator( arguments.qrCodeGenerator )
+		_setQrCodeGenerator( arguments.qrCodeGenerator );
 
 		return this;
 	}
@@ -516,7 +516,7 @@ component displayName="Admin login service" {
 	 * @size.hint Size of the image (pixels)
 	 */
 	public string function getTwoFactorAuthenticationQrCodeImage( required string key, numeric size=125 ) {
-		var userDetails     = getLoggedInUserDetails()
+		var userDetails     = getLoggedInUserDetails();
 		var applicationName = $getPresideSetting( "two-factor-auth", "admin_app_name" );
 
 		if ( !Len( Trim( applicationName ) ) ) {

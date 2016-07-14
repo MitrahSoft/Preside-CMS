@@ -1,6 +1,6 @@
 component {
 	public void function configure() {
-		var applicationSettings = getApplicationSettings();
+		var applicationSettings = getApplicationMetadata();
 		settings = {};
 
 		settings.appMapping    = request._presideMappings.appMapping    ?: "/app";

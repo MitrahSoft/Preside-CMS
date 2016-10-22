@@ -852,7 +852,7 @@ component displayName="AssetManager Service" {
 
 	public binary function getAssetBinary( required string id, string versionId="", boolean throwOnMissing=false, boolean isTrashed=false ) {
 		var assetBinary = "";
-		var isPrivate   = isAssetAccessRestricted( arguments.id )
+		var isPrivate   = isAssetAccessRestricted( arguments.id );
 		var storagePathField = arguments.isTrashed ? "trashed_path as storage_path" : "storage_path";
 		var asset       = Len( Trim( arguments.versionId ) )
 			? getAssetVersion( assetId=arguments.id, versionId=arguments.versionId, throwOnMissing=arguments.throwOnMissing, selectFields=[ "asset_version.#storagePathField#", "asset.asset_folder" ] )
@@ -887,7 +887,7 @@ component displayName="AssetManager Service" {
 
 		if ( asset.recordCount ) {
 
-			var private   = Len( Trim( arguments.derivativeName ) ) ? ( !isDerivativePubliclyAccessible( arguments.derivativeName ) && isAssetAccessRestricted( arguments.id ) ) : isAssetAccessRestricted( arguments.id )
+			var private   = Len( Trim( arguments.derivativeName ) ) ? ( !isDerivativePubliclyAccessible( arguments.derivativeName ) && isAssetAccessRestricted( arguments.id ) ) : isAssetAccessRestricted( arguments.id );
 			var assetInfo = _getStorageProviderForFolder( asset.asset_folder ).getObjectInfo(
 				  path    = asset.storage_path
 				, trashed = arguments.isTrashed
@@ -995,7 +995,7 @@ component displayName="AssetManager Service" {
 	) {
 		if ( !arguments.trashed ) {
 			if ( Len( Trim( arguments.derivative ) ) && isDerivativePubliclyAccessible( arguments.derivative ) ) {
-				var permissions = { restricted = false }
+				var permissions = { restricted = false };
 			} else {
 				var permissions = getAssetPermissioningSettings( arguments.id );
 			}
@@ -1248,12 +1248,8 @@ component displayName="AssetManager Service" {
 			, restricted                         = false
 			, fullLoginRequired                  = false
 			, grantAcessToAllLoggedInUsers       = false
-<<<<<<< HEAD
-		};
-=======
 			, conditionId                        = ""
-		}
->>>>>>> 5bd62837a4dd85140c0093a3016f720ea6f91b7f
+		};
 
 		if ( !asset.recordCount ){ return settings; }
 
@@ -1533,7 +1529,7 @@ component displayName="AssetManager Service" {
 				}
 			}
 			return false;
-		}
+		};
 
 		if ( moveToCorrect( arguments.storagePath ) ) {
 			_getAssetDao().updateData( id=arguments.assetId, data={ asset_url="" } );
@@ -1567,7 +1563,7 @@ component displayName="AssetManager Service" {
 		var childRecords = _getFolderDao().selectData( filter={ parent_folder=arguments.parent }, selectFields=[ "id" ] );
 
 		if ( childRecords.recordCount ) {
-			childFolders = ValueArray( childRecords.id );
+			childFolders = ValueArray( childRecords, "id" );
 			for( var folder in childRecords ) {
 				childFolders.append( getChildFolders( childRecords.id ), true );
 			}

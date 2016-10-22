@@ -16,9 +16,8 @@ component {
 		this.PRESIDE_APPLICATION_ID                  = arguments.id;
 		this.PRESIDE_APPLICATION_RELOAD_LOCK_TIMEOUT = arguments.applicationReloadLockTimeout;
 		this.PRESIDE_APPLICATION_RELOAD_TIMEOUT      = arguments.applicationReloadTimeout;
-
-		this.name                                    = arguments.name;
 		this.COLDBOX_RELOAD_PASSWORD                 = arguments.reloadPassword;
+		this.name                                    = arguments.name;
 		this.scriptProtect                           = arguments.scriptProtect;
 		this.statelessUrlPatterns                    = arguments.statelessUrlPatterns;
 		this.statelessUserAgentPatterns              = arguments.statelessUserAgentPatterns;
@@ -223,8 +222,6 @@ component {
 					  templateCharset      = luceeCompilerSettings.templateCharset;
 			} catch( security e ) {
 				throw( type="security", message="PresideCMS could not automatically update Lucee settings to ensure dot notation for structs preserves case (rather than the default behaviour of converting to uppercase). Please either allow open access to admin APIs or change the setting in Lucee server settings." );
-			}
-		}
 	}
 
 	private void function _fetchInjectedSettings() {

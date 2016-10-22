@@ -88,7 +88,6 @@
 	}
 
 	private void function _injectPresideSuperClass( required any mapping, required string objectPath ) {
-			
 		if ( _wantsPresideInjection( getComponentMetaData( arguments.objectPath ) ) ) {
 			arguments.mapping.virtualInheritance( "presideSuperClass" );
 		}

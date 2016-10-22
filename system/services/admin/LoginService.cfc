@@ -776,8 +776,8 @@ component displayName="Admin login service" {
 		var cookieValue = _getCookieService().getVar( _getRememberMeCookieKey(), {} );
 
 		if ( IsStruct( cookieValue ) ) {
-			var keys = cookieValue.keyArray()
-			keys.sort( "textNoCase" );
+			var keys = structkeyArray( cookieValue );
+			arraySort( keys, "textNoCase" );
 
 			if ( keys.toList() == "expiry,loginId,series,token" ) {
 				return cookieValue;

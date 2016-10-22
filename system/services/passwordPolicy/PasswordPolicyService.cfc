@@ -1,7 +1,8 @@
 /**
  * A class that provides methods for dealing with all aspects of password policies
  *
- * @singleton   true
+ * @singleton
+ * @presideService
  */
 component displayName="Password Policy Service" {
 
@@ -90,6 +91,13 @@ component displayName="Password Policy Service" {
 		} else {
 			dao.insertData( data=arguments );
 		}
+
+		$audit(
+			  action   = "password_policy_saved"
+			, type     = "passwordpolicies"
+			, detail   = arguments
+			, recordId = arguments.context
+		);
 	}
 
 	public boolean function passwordMeetsPolicy( required string context, required string password ) {

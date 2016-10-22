@@ -663,6 +663,13 @@ component {
 				, submissionData = submission
 			);
 
+			$recordWebsiteUserAction(
+				  type       = "formbuilder"
+				, action     = "submitform"
+				, identifier = arguments.formId
+				, detail     = submission
+			);
+
 			$announceInterception( "postFormBuilderFormSubmission", {
 				  formData          = formData
 				, requestData       = arguments.requestData

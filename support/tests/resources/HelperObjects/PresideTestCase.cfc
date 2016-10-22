@@ -88,13 +88,8 @@
 					  objectReader = objReader
 				);
 				var presideObjectDecorator = new preside.system.services.presideObjects.presideObjectDecorator();
-
-<<<<<<< HEAD
-				var localColdbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
-=======
 				var localColdbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
 				var versioningService = getMockBox().createMock( object=new preside.system.services.presideObjects.VersioningService() );
->>>>>>> 5bd62837a4dd85140c0093a3016f720ea6f91b7f
 
 				mockFilterService = getMockBox().createStub();
 				mockFilterService.$( "getFilter", {} );

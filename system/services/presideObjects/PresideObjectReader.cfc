@@ -199,7 +199,7 @@ component {
 	private struct function _readProperty( required struct property, required struct inheritedProperty ) {
 		var prop = Duplicate( arguments.property );
 
-		if ( prop.type == "any" ) {
+		if ( structKeyExists( prop, "type" ) && prop.type == "any" ) {
 			prop.delete( "type" );
 		}
 

@@ -2010,7 +2010,7 @@ component displayName="Preside Object Service" {
 		_announceInterception( "prePrepareObjectFilter", arguments );
 
 		var result = {
-			  filter       = arguments.keyExists( "id" ) ? { id = arguments.id } : arguments.filter
+			  filter       = structkeyExists( arguments, "id" ) ? { id = arguments.id } : arguments.filter
 			, filterParams = arguments.filterParams
 		};
 

@@ -18,7 +18,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var fieldType     = "mytype";
 				var rendered      = CreateUUId();
 				var inputValue    = CreateUUId();
-				var configOptions = { test=CreateUUId() }
+				var configOptions = { test=CreateUUId() };
 
 				service.$( "getHandlerForFieldType" ).$args( fieldType ).$results( handler );
 				mockColdbox.$( "handlerExists" ).$args( action ).$results( true );
@@ -40,7 +40,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var fieldType     = "mytype";
 				var rendered      = CreateUUId();
 				var inputValue    = CreateUUId();
-				var configOptions = { test=CreateUUId() }
+				var configOptions = { test=CreateUUId() };
 
 				service.$( "getHandlerForFieldType" ).$args( fieldType ).$results( handler );
 				mockColdbox.$( "handlerExists" ).$args( action ).$results( false );
@@ -57,7 +57,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var fieldType     = "mytype";
 				var rendered      = CreateUUId();
 				var savedValue    = CreateUUId();
-				var configOptions = { test=CreateUUId() }
+				var configOptions = { test=CreateUUId() };
 
 				service.$( "getHandlerForFieldType" ).$args( fieldType ).$results( handler );
 				mockColdbox.$( "handlerExists" ).$args( action ).$results( true );

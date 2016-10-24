@@ -59,7 +59,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var expressionId = "some.expression.here";
 				var label        = CreateUUId();
 
-				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:label", defaultValue=expressionId ).$results( label )
+				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:label", defaultValue=expressionId ).$results( label );
 
 				expect( service.getExpressionLabel( expressionId ) ).toBe( label );
 			} );
@@ -71,7 +71,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var expressionId = "some.expression.here";
 				var text        = CreateUUId();
 
-				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:text", defaultValue=expressionId ).$results( text )
+				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:text", defaultValue=expressionId ).$results( text );
 
 				expect( service.getExpressionText( expressionId ) ).toBe( text );
 			} );

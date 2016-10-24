@@ -115,7 +115,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 							description="{test:test.fieldset2.description}",
 							id="",
 							fields=[{
-								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default"="10", rules=[
 									  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 									, { validator="sameAs", params={field="somefield1"} }
 								]
@@ -128,7 +128,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 			} );
 
 			it( "should return default form for preside object when form does not exist and first part of form name is a valid preside object", function(){
-				var formsSvc = _getFormsService( "/tests/resources/formsService/forms1" );
+ 				var formsSvc = _getFormsService( "/tests/resources/formsService/forms1" );
 				var result   = formsSvc.getForm( "preside-objects.security_group.add.form" );
 				var expected = {
 					tabs = [{
@@ -166,7 +166,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 					expect( e.message, "The form, [someform.that.does.not.exist], could not be found" );
 					errorThrown = true;
 				} catch( any e ) {
-					fail( "The wrong kind of error was thrown. Expected [FormsService.MissingForm], but received, [#e.type#]")
+					fail( "The wrong kind of error was thrown. Expected [FormsService.MissingForm], but received, [#e.type#]");
 				}
 
 				expect( errorThrown ).toBeTrue();
@@ -268,7 +268,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 							description="{test:test.fieldset2.description}",
 							id="",
 							fields=[{
-								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default"="10", rules=[
 									  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 									, { validator="sameAs", params={field="somefield1"} }
 								]
@@ -315,7 +315,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 							description="{test:test.fieldset2.description}",
 							id="",
 							fields=[{
-								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default"="10", rules=[
 									  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 									, { validator="sameAs", params={field="somefield1"} }
 								]
@@ -483,7 +483,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 					expect( e.message ).toBe( "The form field, [Does not exist], could not be found in the form, [test.form]" );
 					errorThrown = true;
 				} catch( any e ) {
-					fail( "The wrong kind of error was thrown. Expected [FormsService.MissingField], but received, [#e.type#]" )
+					fail( "The wrong kind of error was thrown. Expected [FormsService.MissingField], but received, [#e.type#]" );
 				}
 
 				expect( errorThrown ).toBe( true );
@@ -620,7 +620,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 							description="{test:test.fieldset2.description}",
 							id="",
 							fields=[{
-								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", default="10", rules=[
+								name="somefield4", control="spinner", step="5", minValue="0", maxValue="100", required="false", "default"="10", rules=[
 									  { validator="required", serverCondition="${somefield3} gt 10", clientCondition="${somefield3}.val() > 10", params={} }
 									, { validator="sameAs", params={field="somefield1"} }
 								]

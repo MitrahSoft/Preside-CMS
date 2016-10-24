@@ -27,7 +27,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, identifier = identifier
 				} ).$results( dbId );
 
-				service.$( "_getSessionId", sessionId )
+				service.$( "_getSessionId", sessionId );
 
 				var actionId = service.recordAction(
 					  userId     = userId
@@ -51,7 +51,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				mockVisitorService.$( "getVisitorId", "" );
 				mockActionDao.$( "insertData" );
 
-				service.$( "_getSessionId", sessionId )
+				service.$( "_getSessionId", sessionId );
 
 				var actionId = service.recordAction(
 					  action     = action
@@ -382,7 +382,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 		configuredActions = {
 			  login = [ "test", "this", "stuff" ]
 			, test  = [ "this", "stuff" ]
-		}
+		};
 
 		var service = createMock( object=new preside.system.services.websiteUsers.WebsiteUserActionService(
 			  configuredActions     = configuredActions

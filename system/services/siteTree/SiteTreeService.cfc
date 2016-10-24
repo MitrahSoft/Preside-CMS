@@ -150,9 +150,9 @@ component {
 
 		if ( arguments.version ) {
 			args.fromVersionTable = true;
-			args.specificVersion  = arguments.version
+			args.specificVersion  = arguments.version;
 		} else if ( arguments.getLatest ) {
-			args.fromVersionTable = true
+			args.fromVersionTable = true;
 		}
 
 		return _getPObj().selectData( argumentCollection = args );
@@ -201,7 +201,7 @@ component {
 		var pobj   = _getPresideObject( pt.getPresideObject() );
 		var args  = { filter={ page=arguments.id }, allowDraftVersions=arguments.allowDrafts };
 		if ( arguments.getLatest ) {
-			args.fromVersionTable = true
+			args.fromVersionTable = true;
 		}
 		var record = pobj.selectData( argumentCollection=args );
 
@@ -443,7 +443,7 @@ component {
 				, active           = true
 				, trashed          = false
 			  }
-		}
+		};
 
 		if ( arguments.version ) {
 			homepageArgs.fromVersionTable = true;
@@ -815,7 +815,7 @@ component {
 		}
 
 		if ( updated && !arguments.skipAudit ) {
-			for( var p in existingPage ) { existingPage = p };
+			for( var p in existingPage ) { existingPage = p; };
 			$audit(
 				  action   = arguments.isDraft ? "save_draft_page" : "edit_page"
 				, type     = "sitetree"
@@ -1436,7 +1436,7 @@ component {
 		var currentLanguage = $getColdbox().getRequestContext().getLanguage();
 
 		for( var i=1; i<=slugPieces.len(); i++ ) {
-			args.filter       = "( IfNull( _translations.slug, page.slug ) = :page.slug and ( _translations.slug is null or _translations._translation_language = :_translations._translation_language ) ) and page.parent_page = :page.parent_page"
+			args.filter       = "( IfNull( _translations.slug, page.slug ) = :page.slug and ( _translations.slug is null or _translations._translation_language = :_translations._translation_language ) ) and page.parent_page = :page.parent_page";
 			args.filterParams = {
 				  "page.slug"                           = slugPieces[ i ]
 				, "_translations._translation_language" = currentLanguage

@@ -29,9 +29,9 @@ component {
 // PUBLIC API METHODS
 	public string function render( required string renderer, required any data, any context="default" ) {
 		var localRenderer = _getRenderer( name=arguments.renderer, context=arguments.context );
-		var renderer = _getRenderer( name=arguments.renderer, context=arguments.context );
-		var r        = "";
-		var rendered = arguments.data;
+		var _renderer     = _getRenderer( name=arguments.renderer, context=arguments.context );
+		var r             = "";
+		var rendered      = arguments.data;
 
 		if ( localRenderer.isChain() ) {
 			for( r in localRenderer.getChain() ){
@@ -41,7 +41,7 @@ component {
 			return rendered;
 		} else {
 			var args = IsStruct( arguments.data ) ? arguments.data : { data=arguments.data };
-			return _getColdbox().renderViewlet( event=renderer.getViewlet(), args=args );
+			return _getColdbox().renderViewlet( event=_renderer.getViewlet(), args=args );
 		}
 	}
 

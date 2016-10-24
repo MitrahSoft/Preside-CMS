@@ -154,7 +154,7 @@ component autodoc=true displayName="Notification Service" {
 		var filter         = { "admin_notification_consumer.security_user" = arguments.userId };
 		var extraFilters   = [];
 		var sortableFields = [ "topic", "datecreated" ];
-		var sortableTables = { topic="admin_notification", datecreated="admin_notification_consumer" }
+		var sortableTables = { topic="admin_notification", datecreated="admin_notification_consumer" };
 
 		if ( Len( Trim( arguments.topic ) ) ) {
 			filter[ "admin_notification.topic" ] = arguments.topic;

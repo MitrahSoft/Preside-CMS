@@ -190,7 +190,6 @@
 		public string function scaffoldFormControlViewletHandler( required string formControl, required array contexts, string extension="" ) {
 			var root            = _getScaffoldRoot( arguments.extension );
 			var filePath        = root & "handlers/formcontrols/" & formControl & ".cfc";
-			var viewPath         =
 			var fileContent     = "component {" & _nl() & _nl();
 
 			for( var context in contexts ) {

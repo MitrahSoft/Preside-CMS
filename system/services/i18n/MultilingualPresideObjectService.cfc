@@ -511,7 +511,7 @@ component displayName="Multilingual Preside Object Service" {
 			var configuredLanguages  = ListToArray( ListAppend( multilingualSettings.additional_languages ?: "", multilingualSettings.default_language ?: "" ) );
 
 			return configuredLanguages.findNoCase( lang.id ) ? lang : QueryNew( 'id,slug' );
-		}
+		};
 
 		if ( Len( Trim( arguments.localeSlug ) ) ) {
 			var languageFromSlug = languageObj.selectData( filter={ slug=arguments.localeSlug } );

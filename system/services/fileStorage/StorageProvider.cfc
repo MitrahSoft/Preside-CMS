@@ -18,7 +18,7 @@ interface displayname="Storage provider" {
 	 * @validationResult.hint A [[api-validationresult]] object with which problems can be reported.
 	 *
 	 */
-	public any function validate( required struct configuration, required any validationResult );
+	public any function validate( required struct configuration, required any validationResult ) {}
 
 	/**
 	 * Returns whether or not an object exists for the passed path.

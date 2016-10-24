@@ -55,7 +55,7 @@ component displayName="Task Manager Service" {
 	public struct function getTask( required string taskKey ) {
 		var tasks = _getConfiguredTasks();
 
-		return tasks[ arguments.taskKey ] ?: throw( type="TaskManager.missing.task", message="Task [#arguments.taskKey#] does not exist. Existing tasks are: #SerializeJson( listTasks() )#" );
+		return tasks[ arguments.taskKey ] ?: cfthrow( type="TaskManager.missing.task", message="Task [#arguments.taskKey#] does not exist. Existing tasks are: #SerializeJson( listTasks() )#" );
 	}
 
 	public struct function getTaskConfiguration( required string taskKey ) {
@@ -119,7 +119,7 @@ component displayName="Task Manager Service" {
 				var logger = _getLogger( taskKey=arguments.taskKey );
 
 				if ( logger.canError() ) {
-					logger.error( "Task run has expired for task [#arguments.taskKey#]." )
+					logger.error( "Task run has expired for task [#arguments.taskKey#]." );
 				}
 
 				markTaskAsCompleted(
@@ -187,7 +187,7 @@ component displayName="Task Manager Service" {
 			, maxRows      = 1
 		);
 
-		return runnableTasks.recordCount ? ValueArray( runnableTasks.task_key ) : [];
+		return runnableTasks.recordCount ? ValueArray( runnableTasks, task_key ) : [];
 	}
 
 	/**
@@ -307,7 +307,7 @@ component displayName="Task Manager Service" {
 	public array function listTasksStoredInStatusDb() {
 		var taskRecords = _getTaskDao().selectData( selectFields=[ "task_key" ] );
 
-		return taskRecords.recordCount ? ValueArray( taskRecords.task_key ) : [];
+		return taskRecords.recordCount ? ValueArray( taskRecords, task_key ) : [];
 	}
 
 	public void function ensureTasksExistInStatusDb() {
@@ -475,7 +475,7 @@ component displayName="Task Manager Service" {
 			}
 		};
 
-		schedule action=action attributeCollection=args;
+		cfschedule ( action=action, attributeCollection=args );
 	}
 
 	public array function getAllTaskDetails() {

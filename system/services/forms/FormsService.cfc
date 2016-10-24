@@ -177,7 +177,7 @@ component displayName="Forms service" {
 	 */
 	public array function listFields( required string formName ) {
 		var frm            = getForm( arguments.formName );
-		var ignoreControls = [ "readonly", "oneToManyManager" ]
+		var ignoreControls = [ "readonly", "oneToManyManager" ];
 		var fields         = [];
 
 

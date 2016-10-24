@@ -146,19 +146,19 @@ component implements="iRouteHandler" output=false singleton=true {
 
 		if ( siteTreeService.arePageSlugsMultilingual() ) {
 			getPageArgs.selectFields = [ "page.id", "page.slug", "page.site" ];
-			var page = Duplicate( siteTreeService.getPage( argumentCollection=getPageArgs ) );
+			var _page = Duplicate( siteTreeService.getPage( argumentCollection=getPageArgs ) );
 
-			if ( page.recordCount ) {
-				var ancestors = siteTreeService.getAncestors( id=page.id, selectFields=[ "slug" ] );
+			if ( _page.recordCount ) {
+				var ancestors = siteTreeService.getAncestors( id=_page.id, selectFields=[ "slug" ] );
 
 				if ( ancestors.recordCount ) {
-					var newSlug = "/" & ValueList( ancestors.slug, "/" ) & "/" & page.slug & "/";
+					var newSlug = "/" & ValueList( ancestors.slug, "/" ) & "/" & _page.slug & "/";
 					newSlug = newSlug.reReplace( "/+", "/", "all" );
-					page.slug[ 1 ] = newSlug;
+					_page.slug[ 1 ] = newSlug;
 				}
 			}
 
-			return page;
+			return _page;
 		}
 
 		return siteTreeService.getPage( argumentCollection=getPageArgs );

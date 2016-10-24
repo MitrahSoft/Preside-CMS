@@ -1334,7 +1334,7 @@ component displayName="Preside Object Service" {
 
 					if ( IsStruct( arguments.filter ) and StructKeyExists( arguments.filter, "id" ) ) {
 						objIds = arguments.filter.id;
-					} elseif ( StructKeyExists( arguments.filterParams, "id" ) ) {
+					} else if ( StructKeyExists( arguments.filterParams, "id" ) ) {
 						objIds = arguments.filterParams.id;
 					}
 
@@ -1350,7 +1350,7 @@ component displayName="Preside Object Service" {
 							}
 						}
 						StructClear( cacheMaps[ arguments.objectName ].__complexFilter );
-					} elseif ( arguments.clearSingleRecordCaches ) {
+					} else if ( arguments.clearSingleRecordCaches ) {
 						for( objId in cacheMaps[ arguments.objectName ] ) {
 							if ( objId neq "__complexFilter" ) {
 								keysToClear = ListAppend( keysToClear, StructKeyList( cacheMaps[ arguments.objectName ][ objId ] ) );
@@ -1905,7 +1905,7 @@ component displayName="Preside Object Service" {
 				for( id in objId ){
 					cacheMaps[ arguments.objectName ][ id ][ arguments.cacheKey ] = 1;
 				}
-			} elseif ( IsSimpleValue( objId ) and Len( Trim( objId) ) ) {
+			} else if ( IsSimpleValue( objId ) and Len( Trim( objId) ) ) {
 				cacheMaps[ arguments.objectName ][ objId ][ arguments.cacheKey ] = 1;
 			} else {
 				cacheMaps[ arguments.objectName ].__complexFilter[ arguments.cacheKey ] = 1;

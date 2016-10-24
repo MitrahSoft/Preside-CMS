@@ -446,7 +446,7 @@ component {
 			, relationship = "none"
 			, relatedto    = "none"
 			, generator    = "none"
-			, default      = false
+			, "default"    = false
 		};
 
 		objMeta.properties[ "_version_has_drafts" ] = {
@@ -460,7 +460,7 @@ component {
 			, relationship = "none"
 			, relatedto    = "none"
 			, generator    = "none"
-			, default      = false
+			, "default"    = false
 		};
 
 		objMeta.properties[ "_version_is_latest" ] = {
@@ -474,7 +474,7 @@ component {
 			, relationship = "none"
 			, relatedto    = "none"
 			, generator    = "none"
-			, default      = false
+			, "default"    = false
 		};
 
 		objMeta.properties[ "_version_is_latest_draft" ] = {
@@ -488,7 +488,7 @@ component {
 			, relationship = "none"
 			, relatedto    = "none"
 			, generator    = "none"
-			, default      = false
+			, "default"    = false
 		};
 
 		objMeta.dbFieldList = ListAppend( objMeta.dbFieldList, "_version_number,_version_author,_version_changed_fields,_version_is_draft,_version_has_drafts,_version_is_latest,_version_is_latest_draft" );
@@ -520,7 +520,7 @@ component {
 			, relationship = "none"
 			, relatedto    = "none"
 			, generator    = "none"
-			, default      = false
+			, "default"    = false
 		};
 		objMeta.properties[ "_version_has_drafts" ] = {
 			  name         = "_version_has_drafts"
@@ -533,7 +533,7 @@ component {
 			, relationship = "none"
 			, relatedto    = "none"
 			, generator    = "none"
-			, default      = false
+			, "default"    = false
 		};
 
 		objMeta.dbFieldList = ListAppend( objMeta.dbFieldList, "_version_is_draft,_version_has_drafts" );

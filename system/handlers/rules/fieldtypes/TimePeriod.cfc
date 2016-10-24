@@ -10,13 +10,13 @@ component {
 	private string function renderConfiguredField( string value="", struct config={} ) {
 		var timePeriod = {};
 		var data       = [];
-		var type       = "alltime"
+		var type       = "alltime";
 
 		try {
 			timePeriod = DeserializeJson( arguments.value );
 		} catch( any e ){
 			timePeriod = { type="alltime" };
-		};
+		}
 
 		switch( timePeriod.type ?: "alltime" ){
 			case "between":

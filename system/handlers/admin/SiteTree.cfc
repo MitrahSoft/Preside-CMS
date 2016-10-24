@@ -616,7 +616,7 @@ component extends="preside.system.base.AdminHandler" {
 		}
 
 		formData = event.getCollectionForForm( formName );
-		formData._translation_language = languageId
+		formData._translation_language = languageId;
 		formData.id = multilingualPresideObjectService.getExistingTranslationId(
 			  objectName = "page"
 			, id         = pageId
@@ -653,7 +653,7 @@ component extends="preside.system.base.AdminHandler" {
 		}
 
 		var auditDetail = QueryRowToStruct( page );
-		auditDetail.languageId = languageId
+		auditDetail.languageId = languageId;
 		event.audit(
 			  action   = "translate_page"
 			, type     = "sitetree"

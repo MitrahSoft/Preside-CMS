@@ -385,7 +385,7 @@ component hint="Create various preside system entities such as widgets and page 
 			ArrayAppend( userInputPrompts, { prompt="Expression text (e.g. 'User {_is} logged in'): ", required=true, paramName="text" } );
 		}
 		if ( !StructKeyExists( params, "context" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Context (e.g. webrequest):", required=false, default="webrequest", paramName="context" } );
+			ArrayAppend( userInputPrompts, { prompt="Context (e.g. webrequest):", required=false, "default"="webrequest", paramName="context" } );
 		}
 		if ( !StructKeyExists( params, "extension" ) ) {
 			ArrayAppend( userInputPrompts, { prompt="Extension name, leave blank for no extension: ", required=false, paramName="extension"} );

@@ -53,7 +53,7 @@ component {
 	}
 
 	private any function _getInstance() {
-		return _instance ?: NullValue();
+		return _instance ?: javaCast( "null", "" );
 	}
 	private void function _setInstance( required any instance ) {
 		_instance = arguments.instance;

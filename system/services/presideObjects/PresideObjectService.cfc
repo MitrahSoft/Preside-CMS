@@ -1415,7 +1415,7 @@ component displayName="Preside Object Service" {
 		var paths       = [];
 		var path        = "";
 		for( dir in dirs ) {
-			files = DirectoryList( ExpandPath(dir), true, "*.cfc" );
+			files = DirectoryList( ExpandPath(dir), true, 'path', "*.cfc" );
 			dirExpanded = ExpandPath( dir );
 
 			for( file in files ) {

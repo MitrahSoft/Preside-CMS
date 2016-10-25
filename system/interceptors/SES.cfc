@@ -59,16 +59,12 @@ component extends="coldbox.system.interceptors.SES" output=false {
 
 // overriding getModel() to ensure we always use delayed injector in our Routes.cfm which loads while the interceptors are loading
 	public any function getModel( string name, string dsl, struct initArguments={} ) {
-		if ( arguments.keyExists( "name" ) ) {
+		if ( structkeyExists(arguments, "name" ) ) {
 			arguments.dsl = "delayedInjector:" & arguments.name;
-		} else if ( arguments.keyExists( "dsl" ) && !arguments.dsl.startsWith( "delayedInjector:" ) && !arguments.dsl.startsWith( "provider:" ) ) {
+		} else if ( structkeyExists( arguments, "dsl" ) && !arguments.dsl.startsWith( "delayedInjector:" ) && !arguments.dsl.startsWith( "provider:" ) ) {
 			arguments.dsl = "delayedInjector:" & arguments.dsl;
 		}
-
-		return super.getModel(
-			  dsl           = arguments.dsl ?: NullValue()
-			, initArguments = arguments.initArguments
-		);
+		return super.getModel( argumentcollection = arguments );
 	}
 
 // private utility methods

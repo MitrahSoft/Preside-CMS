@@ -382,7 +382,7 @@ component {
 	}
 
 	private void function _removeRelationships( required struct objMeta ) {
-		objMeta.relationships = objMeta.relationships ?: {};
+		objMeta.relationships = objMeta.relationships ?: structNew();
 
 		StructClear( objMeta.relationships );
 	}

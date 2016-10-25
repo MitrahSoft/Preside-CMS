@@ -72,8 +72,8 @@ component {
 		meta.tablePrefix   = meta.tablePrefix   ?: _getTablePrefix();
 		meta.tableName     = meta.tableName     ?: componentName;
 		meta.dsn           = meta.dsn           ?: _getDsn();
-		meta.propertyNames = meta.propertyNames ?: [];
-		meta.properties    = meta.properties    ?: {};
+		meta.propertyNames = meta.propertyNames ?: ArrayNew(1);
+		meta.properties    = meta.properties    ?: StructNew();
 
 		if(!structKeyExists(meta, "versioned")){
 			meta.versioned = true;

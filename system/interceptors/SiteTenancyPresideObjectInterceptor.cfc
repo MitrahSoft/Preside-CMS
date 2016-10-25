@@ -106,7 +106,7 @@ component extends="coldbox.system.Interceptor" {
 			}
 		}
 
-		arguments.meta.properties.site = arguments.meta.properties.site ?: {};
+		arguments.meta.properties.site = arguments.meta.properties.site ?: structNew();
 
 		StructAppend( arguments.meta.properties.site, defaultConfiguration, false );
 

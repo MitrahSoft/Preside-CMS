@@ -34,7 +34,7 @@ component {
 			obj.instance = CreateObject( "component", objPath );
 			obj.meta     = readObject( obj.instance );
 
-			objects[ objName ] = objects[ objName ] ?: [];
+			objects[ objName ] = objects[ objName ] ?: Arraynew(1);
 			objects[ objName ].append( obj );
 
 			_announceInterception( state="postLoadPresideObject", interceptData={ objectName=objName, object=obj } );
@@ -56,7 +56,7 @@ component {
 		var key           = "";
 
 		meta.properties    = meta.properties ?: StructNew();
-		meta.propertyNames = meta.propertyNames ?: [];
+		meta.propertyNames = meta.propertyNames ?: ArrayNew(1);
 
 
 		return meta;

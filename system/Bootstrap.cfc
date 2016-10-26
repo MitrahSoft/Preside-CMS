@@ -25,7 +25,9 @@ component {
 		this.sessionManagement                       = arguments.sessionManagement ?: !this.statelessRequest;
 		this.sessionTimeout                          = arguments.sessionTimeout;
 		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
-
+		this.passArrayByReference                    = true;
+		this.serialization.preservecaseforstructKey  = true;
+		this.javaSettings = {LoadPaths = [ExpandPath( "/preside" ) & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar"],loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml"};
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
 	}
@@ -110,7 +112,6 @@ component {
 		, string logsPath       = _getApplicationRoot() & "/logs"
 	) {
 		var presideroot = _getPresideRoot();
-
 		this.mappings[ "/preside"        ] = presideroot;
 		this.mappings[ "/coldbox"        ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox";
 		this.mappings[ "/sticker"        ] = presideroot & "/system/externals/sticker";

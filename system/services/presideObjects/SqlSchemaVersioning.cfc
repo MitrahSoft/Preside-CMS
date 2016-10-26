@@ -143,8 +143,8 @@ component singleton=true {
 		var tablesToDelete  = [];
 		var columnsToDelete = [];
 		var sqlScripts      = [];
-		var tables          = versionEntries.table  ?: {};
-		var columns         = versionEntries.column ?: {};
+		var tables          = versionEntries.table  ?: structNew();
+		var columns         = versionEntries.column ?: structNew();
 
 
 		for( var objectName in arguments.objects ) {

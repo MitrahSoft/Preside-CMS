@@ -187,7 +187,7 @@ component displayName="Task Manager Service" {
 			, maxRows      = 1
 		);
 
-		return runnableTasks.recordCount ? ValueArray( runnableTasks, task_key ) : [];
+		return runnableTasks.recordCount ? listToArray( valueList( runnableTasks.task_key ) ) : ArrayNew(1);
 	}
 
 	/**
@@ -307,7 +307,7 @@ component displayName="Task Manager Service" {
 	public array function listTasksStoredInStatusDb() {
 		var taskRecords = _getTaskDao().selectData( selectFields=[ "task_key" ] );
 
-		return taskRecords.recordCount ? ValueArray( taskRecords, task_key ) : [];
+		return taskRecords.recordCount ? listToArray( valueList( taskRecords.task_key ) ) : ArrayNew(1);
 	}
 
 	public void function ensureTasksExistInStatusDb() {

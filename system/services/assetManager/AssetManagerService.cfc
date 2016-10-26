@@ -1563,7 +1563,7 @@ component displayName="AssetManager Service" {
 		var childRecords = _getFolderDao().selectData( filter={ parent_folder=arguments.parent }, selectFields=[ "id" ] );
 
 		if ( childRecords.recordCount ) {
-			childFolders = ValueArray( childRecords, "id" );
+			childFolders = listToArray( ValueList( childRecords.id ) );
 			for( var folder in childRecords ) {
 				childFolders.append( getChildFolders( childRecords.id ), true );
 			}

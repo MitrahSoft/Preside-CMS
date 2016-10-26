@@ -1,4 +1,4 @@
-<cfif thisTag.executionMode == "start">
+<cfif thisTag.executionMode eq "start">
 	<cfparam name="attributes.name"     type="string" />
 	<cfparam name="attributes.type"     type="string"  default="any" />
 	<cfparam name="attributes.field"    type="string"  default="" />

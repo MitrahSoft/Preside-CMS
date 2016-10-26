@@ -46,7 +46,7 @@
 						<input type="hidden" name="recordId" value="#recordId#" />
 						<input type="hidden" name="renderer" value="#renderer#" />
 
-						<cfif control == "richeditor">
+						<cfif control eq "richeditor">
 							#renderFormControl(
 								  name         = "content"
 								, type         = "richeditor"

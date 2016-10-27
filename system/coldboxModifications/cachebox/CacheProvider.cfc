@@ -20,7 +20,7 @@ component output=false extends="coldbox.system.cache.providers.CacheBoxColdBoxPr
 	public any function get( required any objectKey ) output=false {
 		request[ _requestKey ] = request[ _requestKey ] ?: structNew();
 
-		if ( !request[ _requestKey ].keyExists( arguments.objectKey ) ) {
+		if ( !structkeyExists( request[ _requestKey ], arguments.objectKey ) ) {
 			var fromSharedCache = super.get( argumentCollection=arguments );
 
 			if ( !IsNull( fromSharedCache ) ) {
@@ -28,6 +28,6 @@ component output=false extends="coldbox.system.cache.providers.CacheBoxColdBoxPr
 			}
 		}
 
-		return request[ _requestKey ][ arguments.objectKey ] ?: javaCast( "null", 0 );
+		return structkeyExists( request[ _requestKey ], arguments["objectKey"] ) ?: javaCast( "null", 0 );
 	}
 }

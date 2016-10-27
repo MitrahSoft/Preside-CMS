@@ -692,7 +692,7 @@ component displayName="Forms service" {
 					formName = ListPrepend( formName, prefix, "." );
 				}
 
-				forms[ formName ] = forms[ formName ] ?: [];
+				forms[ formName ] = forms[ formName ] ?: arrayNew(1);
 				forms[ formName ].append( _readForm( filePath=file ) );
 			}
 		}

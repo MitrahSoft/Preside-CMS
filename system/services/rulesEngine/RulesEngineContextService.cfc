@@ -79,7 +79,7 @@ component displayName="RulesEngine Context Service" {
 
 		for( var sourceContext in arguments.contexts ) {
 			for ( var contextName in configuredContexts ) {
-				var subContexts = configuredContexts[ contextName ].subcontexts ?: [];
+				var subContexts = configuredContexts[ contextName ].subcontexts ?: arrayNew(1);
 
 				if ( subContexts.findNoCase( sourceContext ) && !expanded.findNoCase( contextName ) ) {
 					expanded.append(  expandContexts( [ contextName ] ), true );

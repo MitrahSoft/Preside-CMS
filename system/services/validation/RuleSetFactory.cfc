@@ -28,7 +28,7 @@ component {
 				ruleset.append( {
 					  fieldName       = rule.fieldName
 					, validator       = rule.validator
-					, params          = rule.params          ?: {}
+					, params          = rule.params          ?: structNew()
 					, message         = rule.message         ?: ""
 					, serverCondition = rule.serverCondition ?: ""
 					, clientCondition = rule.clientCondition ?: ""

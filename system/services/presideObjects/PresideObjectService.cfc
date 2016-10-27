@@ -1454,7 +1454,7 @@ component displayName="Preside Object Service" {
 			}
 
 			paramName = arguments.prefix & ReReplace( key, "[\.\$]", "__", "all" );
-			dataType  = arguments.dbAdapter.sqlDataTypeToCfSqlDatatype( cols[ ListLast( key, "." ) ].dbType );
+			dataType  = arguments.dbAdapter.sqlDataTypeToCfSqlDatatype( cols[ ListLast( lcase( key ), "." ) ].dbType );
 
 			if ( not StructKeyExists( arguments.data, key ) ) { // should use IsNull() arguments.data[key] but bug in Railo prevents this
 				param = {

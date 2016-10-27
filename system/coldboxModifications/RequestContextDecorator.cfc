@@ -279,7 +279,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 
 // private helpers
 	private any function _simpleRequestCache( required string key, required any generator ) output=false {
-		request._simpleRequestCache = request._simpleRequestCache ?: {};
+		request._simpleRequestCache = request._simpleRequestCache ?: structNew();
 
 		if ( !request._simpleRequestCache.keyExists( arguments.key ) ) {
 			request._simpleRequestCache[ arguments.key ] = arguments.generator();

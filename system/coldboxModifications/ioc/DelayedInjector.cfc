@@ -33,8 +33,8 @@ component {
 
 	public any function onMissingMethod( required string missingMethodName, struct missingmethodArguments={} ) output=false {
 		var instance      = get();
-		var missingMethod = instance[ arguments.missingMethodName ];
-		return missingMethod( argumentCollection=arguments.missingMethodArguments );
+
+		return invoke( instance, arguments.missingMethodName, arguments.missingMethodArguments);
 	}
 
 // GETTERS AND SETTERS

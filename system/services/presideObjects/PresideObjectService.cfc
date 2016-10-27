@@ -710,7 +710,7 @@ component displayName="Preside Object Service" {
 		args.useCache     = false;
 		args.selectFields = [ "1" ];
 
-		return this.selectData( argumentCollection=args ).recordCount;
+		return selectData( argumentCollection=args ).recordCount;
 	}
 
 	/**
@@ -1499,8 +1499,8 @@ component displayName="Preside Object Service" {
 		var paramName  = "";
 		var dataType   = "";
 
-		for( key in arguments.params ){
-			param     = arguments.params[ key ];
+		for( key in arguments.parameters ){
+			param     = arguments.parameters[ key ];
 			paramName = ReReplace( key, "[\.\$]", "__", "all" );
 
 			if ( IsStruct( param ) ) {
@@ -2010,7 +2010,7 @@ component displayName="Preside Object Service" {
 		_announceInterception( "prePrepareObjectFilter", arguments );
 
 		var result = {
-			  filter       = structkeyExists( arguments, "id" ) ? { id = arguments.id } : arguments.filter
+			  filter       = structkeyExists( arguments, "id" ) ? { id = arguments.id ?: "" } : arguments.filter
 			, filterParams = arguments.filterParams
 		};
 

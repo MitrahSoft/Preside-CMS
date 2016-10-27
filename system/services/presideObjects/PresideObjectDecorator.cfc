@@ -50,7 +50,9 @@ component output=false singleton=true {
 				missingMethodArguments.objectName = this._objectName;
 			}
 			var missingMethod = this._presideObjectService[ missingMethodName ];
-			return missingMethod( argumentCollection = missingMethodArguments );
+
+			return invoke( this._presideObjectService, missingMethodName, missingMethodArguments);
+
 		}
 
 		throw( type="PresideObject.MissingMethod", message="The preside object, [#this._objectName#], has no method with name, [#missingMethodName#]" );

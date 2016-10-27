@@ -66,7 +66,6 @@ component {
 		arguments.object.meta = structKeyExists( arguments.object,"meta") ? arguments.object.meta : {};
 		var meta = arguments.object.meta;
 		var componentName = ListLast( meta.name, "." );
-
 		_announceInterception( "postReadPresideObject", { objectMeta=meta } );
 
 		meta.tablePrefix   = meta.tablePrefix   ?: _getTablePrefix();
@@ -350,11 +349,12 @@ component {
 
 		var propName     = "";
 		var orderedProps = createObject("java", "java.util.LinkedHashMap").init();
+	
 
-		for( propName in arguments.meta.propertyNames ){
-			orderedProps[ propName ] = arguments.meta.properties[ propName ];
-		}
-
+			for( propName in arguments.meta.propertyNames ){
+				orderedProps[ propName ] = arguments.meta.properties[ propName ];
+			}
+		
 		arguments.meta.properties = orderedProps;
 	}
 

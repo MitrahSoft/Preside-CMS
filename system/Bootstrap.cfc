@@ -27,7 +27,7 @@ component {
 		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
 		this.passArrayByReference                    = true;
 		this.serialization.preservecaseforstructKey  = true;
-		this.javaSettings = {LoadPaths = [ExpandPath( "/preside" ) & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar"],loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml"};
+		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar" ],loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml" };
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
 	}
@@ -179,10 +179,12 @@ component {
 	private void function _clearExistingApplication() {
 		onApplicationEnd( application );
 		application.clear();
-		cacheRemove( "template" );
 
 		if ( ( server.coldfusion.productName ?: "" ) == "Lucee" ) {
+			systemCacheClear( "template" );
 			getPageContext().getCFMLFactory().resetPageContext();
+		}else {
+			cacheRemove( "template" );
 		}
 	}
 

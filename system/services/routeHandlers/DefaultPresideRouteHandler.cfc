@@ -17,7 +17,7 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // route handler methods
-	public boolean function match( required string path, required any event ) output=false {
+	public boolean function match( required string path, required any event ) {
 		if ( Len( Trim( event.getValue( "event", "" ) ) ) ) {
 			return false;
 		}
@@ -41,7 +41,7 @@ component implements="iRouteHandler" output=false singleton=true {
 		return false;
 	}
 
-	public void function translate( required string path, required any event ) output=false {
+	public void function translate( required string path, required any event ) {
 		var slug          = "";
 		var id            = "";
 		var subaction     = "";
@@ -83,11 +83,11 @@ component implements="iRouteHandler" output=false singleton=true {
 		event.setValue( _getEventName(), "core.SiteTreePageRequestHandler" );
 	}
 
-	public boolean function reverseMatch( required struct buildArgs, required any event ) output=false {
+	public boolean function reverseMatch( required struct buildArgs, required any event ) {
 		return Len( Trim( buildArgs.page ?: "" ) );
 	}
 
-	public string function build( required struct buildArgs, required any event ) output=false {
+	public string function build( required struct buildArgs, required any event ) {
 		var treeSvc  = _getSiteTreeService();
 		var homepage = treeSvc.getSiteHomepage();
 		var page     = _getPageByIdOrPageType( arguments.buildArgs.page );

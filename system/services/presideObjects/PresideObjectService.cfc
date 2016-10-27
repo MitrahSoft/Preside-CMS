@@ -710,7 +710,7 @@ component displayName="Preside Object Service" {
 		args.useCache     = false;
 		args.selectFields = [ "1" ];
 
-		return selectData( argumentCollection=args ).recordCount;
+		return this.selectData( argumentCollection=args ).recordCount;
 	}
 
 	/**

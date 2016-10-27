@@ -23,11 +23,11 @@ component implements="iRouteHandler" output=false {
 	}
 
 // route handler methods
-	public boolean function match( required string path, required any event ) output=false {
+	public boolean function match( required string path, required any event ) {
 		return ReFindNoCase( "^/#_getAdminPath()#/", arguments.path );
 	}
 
-	public void function translate( required string path, required any event ) output=false {
+	public void function translate( required string path, required any event ) {
 		var translated = ReReplace( arguments.path, "^/#_getAdminPath()#/", "admin/" );
 
 		translated = ListChangeDelims( translated, ".", "/" );
@@ -42,11 +42,11 @@ component implements="iRouteHandler" output=false {
 		event.setValue( _getEventName(), translated );
 	}
 
-	public boolean function reverseMatch( required struct buildArgs, required any event ) output=false {
+	public boolean function reverseMatch( required struct buildArgs, required any event ) {
 		return Len( Trim( buildArgs.linkTo ?: "" ) ) and ListFirst( buildArgs.linkTo, "." ) eq "admin";
 	}
 
-	public string function build( required struct buildArgs, required any event ) output=false {
+	public string function build( required struct buildArgs, required any event ) {
 		var link = "/#_getAdminPath()#/#ListChangeDelims( ListRest( buildArgs.linkTo, "." ), "/", "." )#/";
 
 		if ( Len( Trim( buildArgs.queryString ?: "" ) ) ) {

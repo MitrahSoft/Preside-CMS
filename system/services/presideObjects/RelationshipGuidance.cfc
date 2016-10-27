@@ -307,7 +307,7 @@ component output=false singleton=true {
 					}
 					var relationshipKey = property.relationshipKey ?: objectName;
 
-					if ( ! objects[ property.relatedTo ].meta.properties.keyExists( relationshipKey ) ) {
+					if ( ! structkeyExists( objects[ property.relatedTo ].meta.properties, relationshipKey ) ) {
 						throw(
 							  type    = "RelationshipGuidance.BadRelationship"
 							, message = "Object property, [#property.relatedTo#.#relationshipKey#], could not be found"

@@ -578,7 +578,7 @@
 			var viewMappings = _getViewMappings();
 			var viewMapping  = ReReplace( arguments.view, "^/", "" );
 
-			return viewMappings[ viewMapping ] ?: "/#instance.appMapping#/#instance.viewsConvention#/#arguments.view#";
+			return structKeyExists( viewMappings, viewMapping ) ? viewMappings[ viewMapping ] : expandPath( "/#instance.appMapping#/#instance.viewsConvention#/#arguments.view#" );
 		</cfscript>
 	</cffunction>
 

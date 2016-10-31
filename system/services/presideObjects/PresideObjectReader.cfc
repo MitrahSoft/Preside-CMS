@@ -393,12 +393,12 @@ component {
 		// if ( arguments.objectMeta.isPageType ) {
 		// 	arguments.objectMeta.labelfield = arguments.objectMeta.labelfield ?: "page.title";
 		// }
-		if ( IsBoolean ( arguments.objectMeta.nolabel ?: "" ) && arguments.objectMeta.nolabel ) {
+		if ( structKeyExists( arguments.objectMeta, "nolabel" ) && IsBoolean( arguments.objectMeta.nolabel ) && arguments.objectMeta.nolabel ) {
 			arguments.objectMeta.labelfield = arguments.objectMeta.labelfield ?: "";
 		} else {
-			arguments.objectMeta.labelfield = arguments.objectMeta.labelfield ?: "label";
+			arguments.objectMeta.labelfield = structKeyExists( arguments.objectMeta, "labelfield") && len( trim( arguments.objectMeta.labelfield ) ) ? arguments.objectMeta.labelfield : "label";
 		}
-		arguments.objectMeta.noLabel = arguments.objectMeta.noLabel ?: structKeyExists(arguments, "objectMeta") AND arguments.objectMeta.labelfield NEQ "label";
+		arguments.objectMeta.noLabel = structKeyExists( arguments.objectMeta,"noLabel" ) && arguments.objectMeta.noLabel ? arguments.objectMeta.noLabel : structKeyExists(arguments, "objectMeta") AND arguments.objectMeta.labelfield NEQ "label";
 	}
 
 	private void function _removeObjectsUsedInDisabledFeatures( required struct objects ) {

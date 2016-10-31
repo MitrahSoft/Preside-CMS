@@ -28,6 +28,6 @@ component output=false extends="coldbox.system.cache.providers.CacheBoxColdBoxPr
 			}
 		}
 
-		return structkeyExists( request[ _requestKey ], arguments["objectKey"] ) ?: javaCast( "null", 0 );
+		return structkeyExists( request[ _requestKey ], arguments["objectKey"] ) ? request[ _requestKey ][ arguments.objectKey ] : javaCast( "null", '' );
 	}
 }

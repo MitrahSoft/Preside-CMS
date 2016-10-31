@@ -1543,7 +1543,7 @@ component displayName="Preside Object Service" {
 		,          string orderBy        = ""
 
 	) {
-		var filter     = arguments.preparedFilter.filter ?: "";
+		var filter     = StructKeyExists( arguments.preparedFilter, "filter" ) ? arguments.preparedFilter.filter : "";
 		var key        = "";
 		var cache      = _getCache();
 		var cacheKey   = "Detected foreign objects for generated SQL. Obj: #arguments.objectName#. Data: #StructKeyList( arguments.data )#. Fields: #ArrayToList( arguments.selectFields )#. Order by: #arguments.orderBy#. Filter: #IsStruct( filter ) ? StructKeyList( filter ) : filter#";

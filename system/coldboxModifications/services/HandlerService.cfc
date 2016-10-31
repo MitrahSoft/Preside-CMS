@@ -182,13 +182,14 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 
 	private array function _getCfcMethods( required struct meta ) output=false {
 		var methods = {};
-		var metaextends = arguments.meta.extends ?: StructNew();
-		if ( metaextends.count() ) {
-			_getCfcMethods( metaextends ).each( function( method ){
+		var metaextends = structKeyExists( arguments.meta, "extends" ) ? arguments.meta.extends : StructNew();
+		if ( structCount( metaextends ) ) {
+			for( var method in _getCfcMethods( metaextends ) ){
 				methods[ method ] = true;
-			} );
+			}
 		}
-		var metaMethods = arguments.meta.functions ?: arrayNew(1);
+
+		var metaMethods = structKeyExists( arguments.meta, "functions" ) ? arguments.meta.functions : ArrayNew(1);
 		for( var method in metaMethods ) {
 			methods[ method.name ] = true;
 		}

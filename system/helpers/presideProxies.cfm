@@ -152,7 +152,7 @@
 				translated[ field ] = translateResource(
 					  uri          = messages[field].message ?: ""
 					, defaultValue = messages[field].message ?: ""
-					, data         = messages[field].params  ?: []
+					, data         = messages[field].params  ?: arrayNew(1)
 				);
 			}
 
@@ -208,7 +208,7 @@
 		<cfargument name="generator" type="any" required="true" />
 
 		<cfscript>
-			request._simpleRequestCache = request._simpleRequestCache ?: {};
+			request._simpleRequestCache = request._simpleRequestCache ?: structNew();
 
 			if ( !request._simpleRequestCache.keyExists( arguments.key ) ) {
 				request._simpleRequestCache[ arguments.key ] = arguments.generator();

@@ -37,7 +37,7 @@ component displayName="RulesEngine Expression Service" {
 		var filterOnContext = arguments.context.len() > 0;
 
 		for( var expressionId in allExpressions ) {
-			var contexts = allExpressions[ expressionId ].contexts ?: [];
+			var contexts = allExpressions[ expressionId ].contexts ?: arrayNew(1);
 
 			if ( !filterOnContext || contexts.findNoCase( arguments.context ) || contexts.findNoCase( "global" ) ) {
 				list.append( getExpression( expressionId ) );
@@ -70,7 +70,7 @@ component displayName="RulesEngine Expression Service" {
 		expression.id     = expressionId;
 		expression.label  = getExpressionLabel( expressionId );
 		expression.text   = getExpressionText( expressionId );
-		expression.fields = expression.fields ?: {};
+		expression.fields = expression.fields ?: structNew();
 
 		for( var fieldName in expression.fields ) {
 			expression.fields[ fieldName ].defaultLabel = getDefaultFieldLabel( expressionId, fieldName );
@@ -147,7 +147,7 @@ component displayName="RulesEngine Expression Service" {
 		, required struct configuredFields
 	) {
 		var expression = _getRawExpression( expressionId );
-		var contexts   = expression.contexts ?: [];
+		var contexts   = expression.contexts ?: arrayNew(1);
 
 		if ( !contexts.findNoCase( arguments.context ) && !contexts.findNoCase( "global" ) ) {
 			throw(
@@ -225,7 +225,7 @@ component displayName="RulesEngine Expression Service" {
 	 */
 	public struct function preProcessConfiguredFields( required string expressionId, required struct configuredFields ) {
 		var expression       = _getRawExpression( arguments.expressionId );
-		var expressionFields = expression.fields ?: {};
+		var expressionFields = expression.fields ?: structNew();
 		var fieldTypeService = _getFieldTypeService();
 		var processed        = {};
 

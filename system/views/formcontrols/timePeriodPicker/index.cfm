@@ -11,7 +11,7 @@
 		value = "";
 	}
 
-	timePeriod = args.timePeriod ?: {};
+	timePeriod = args.timePeriod ?: structNew();
 </cfscript>
 
 <cfoutput>

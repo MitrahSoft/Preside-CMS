@@ -71,7 +71,7 @@ component singleton=true autodoc=true displayName="Feature service" {
 		var features = _getConfiguredFeatures();
 
 		for( var featureName in features ) {
-			var widgets = features[ featureName ].widgets ?: [];
+			var widgets = features[ featureName ].widgets ?: arrayNew(1);
 
 			if ( IsArray( widgets ) && widgets.findNoCase( arguments.widget ) ) {
 				return featureName;

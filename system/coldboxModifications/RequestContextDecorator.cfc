@@ -256,7 +256,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 
 		if ( !arguments.keyExists( "type" ) || arguments.type == "js" ) {
 			var inlineJs = getRequestContext().getValue( name="__presideInlineJs", defaultValue={}, private=true );
-			var stack    = inlineJs[ arguments.group ] ?: [];
+			var stack    = inlineJs[ arguments.group ] ?: arrayNew(1);
 
 			rendered &= ArrayToList( stack, Chr(10) );
 
@@ -271,7 +271,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 	public void function includeInlineJs( required string js, string group="default" ) output=false {
 		var inlineJs = getRequestContext().getValue( name="__presideInlineJs", defaultValue={}, private=true );
 
-		inlineJs[ arguments.group ] = inlineJs[ arguments.group ] ?: [];
+		inlineJs[ arguments.group ] = inlineJs[ arguments.group ] ?: arrayNew(1);
 		inlineJs[ arguments.group ].append( "<script type=""text/javascript"">" & Chr(10) & arguments.js & Chr(10) & "</script>" );
 
 		getRequestContext().setValue( name="__presideInlineJs", value=inlineJs, private=true );
@@ -544,7 +544,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 
 		if ( IsBoolean( page.isApplicationPage ?: "" ) && page.isApplicationPage ) {
 			if ( arguments.cascading ) {
-				var cascadeSearch = Duplicate( page.ancestors ?: [] );
+				var cascadeSearch = Duplicate( page.ancestors ?: arrayNew(1) );
 				cascadeSearch.prepend( page );
 
 				if ( arguments.cascadeMethod == "collect" ) {
@@ -572,7 +572,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		return getModel( "sitetreeService" ).getPageProperty(
 			  propertyName  = arguments.propertyName
 			, page          = page
-			, ancestors     = page.ancestors ?: []
+			, ancestors     = page.ancestors ?: arrayNew(1)
 			, defaultValue  = arguments.defaultValue
 			, cascading     = arguments.cascading
 			, cascadeMethod = arguments.cascadeMethod

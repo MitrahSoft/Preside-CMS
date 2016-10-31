@@ -1,6 +1,6 @@
 <cfcomponent output=false accessors=true> 
     <cfproperty name="viewlet" type="string" default=""> 
-    <cfproperty name="chain"   type="array"  default=ArrayNew(1)> 
+    <cfproperty name="chain"   type="array"  default=arrayNew(1)> 
 
     <cfscript>
     	public boolean function isChain(){

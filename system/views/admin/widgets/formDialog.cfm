@@ -1,5 +1,5 @@
 <cfscript>
-	widget = prc.widget ?: {};
+	widget = prc.widget ?: structNew();
 
 	prc.pageTitle    = translateResource( widget.title       ?: "cms:widget.not.found" );
 	prc.pageSubTitle = translateResource( widget.description ?: "cms:widget.not.found" );

@@ -1,5 +1,5 @@
 <cfscript>
-	log = prc.log ?: {};
+	log = prc.log ?: structNew();
 	canRunTasks = hasCmsPermission( "taskmanager.run" );
 </cfscript>
 

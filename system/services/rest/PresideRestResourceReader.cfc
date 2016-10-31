@@ -41,7 +41,7 @@ component displayName="Preside REST Resource Reader" {
 
 
 				if ( isValidResource( mappedPath ) ) {
-					apis[ apiPath ] = apis[ apiPath ] ?: [];
+					apis[ apiPath ] = apis[ apiPath ] ?: arrayNew(1);
 
 					var resourceHandlerResources = readResource( mappedPath, apiPath );
 					for( var newResource in resourceHandlerResources ) {

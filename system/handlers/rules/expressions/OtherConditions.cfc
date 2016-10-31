@@ -20,7 +20,7 @@ component {
 			var evaluation = rulesEngineConditionService.evaluateCondition(
 				  conditionId = condition
 				, context     = context ?: "global"
-				, payload     = payload ?: {}
+				, payload     = payload ?: structNew()
 			);
 
 			if ( _all ) {

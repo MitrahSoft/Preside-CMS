@@ -2,7 +2,7 @@
 	folder             = rc.folder ?: "";
 	folderTitle        = prc.folder.label ?: translateResource( "cms:assetmanager.root.folder" );
 	isSystemFolder     = IsTrue( prc.folder.is_system_folder ?: "" );
-	folderTree         = prc.folderTree ?: [];
+	folderTree         = prc.folderTree ?: arrayNew(1);
 	trashCount         = Val( prc.trashCount ?: "" );
 	isTrashFolder      = folder == "trash";
 

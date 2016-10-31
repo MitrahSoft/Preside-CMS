@@ -4,7 +4,7 @@
 	prc.pageIcon  = "sitemap";
 	prc.pageTitle = site.name ?: translateResource( "cms:sitetree" );
 
-	activeTree          = prc.activeTree ?: [];
+	activeTree          = prc.activeTree ?: arrayNew(1);
 	trashCount          = prc.trashCount ?: 0;
 </cfscript>
 

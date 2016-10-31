@@ -528,7 +528,7 @@ component {
 				var page = {
 					  id       = child.id
 					, title    = Len( Trim( child.navigation_title ?: "" ) ) ? child.navigation_title : child.title
-					, children = child.children ?: []
+					, children = child.children ?: arrayNew(1)
 					, active   = ( activeTree.find( child.id ) > 0 )
 				};
 

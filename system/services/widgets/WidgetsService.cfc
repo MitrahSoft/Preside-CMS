@@ -57,7 +57,7 @@ component {
 	public struct function getWidget( required string widgetId ) {
 		var widgets = _getWidgets();
 
-		return widgets[ arguments.widgetId ] ?: {};
+		return widgets[ arguments.widgetId ] ?: structNew();
 	}
 
 	public string function renderWidget( required string widgetId, string configJson="", string context="", struct config={} ) {
@@ -199,7 +199,7 @@ component {
 				}
 
 				ids[ id ] = 1;
-				siteTemplateMap[ id ] = siteTemplateMap[ id ] ?: [];
+				siteTemplateMap[ id ] = siteTemplateMap[ id ] ?: arrayNew(1);
 				siteTemplateMap[ id ].append( siteTemplate );
 			}
 
@@ -208,7 +208,7 @@ component {
 					var id = ReReplace( handlers.name, "\.cfc$", "" );
 					ids[ id ] = 1;
 
-					siteTemplateMap[ id ] = siteTemplateMap[ id ] ?: [];
+					siteTemplateMap[ id ] = siteTemplateMap[ id ] ?: arrayNew(1);
 					siteTemplateMap[ id ].append( siteTemplate );
 				}
 			}
@@ -335,7 +335,7 @@ component {
 	}
 
 	private boolean function _isWidgetInCategories( required string widgetId, required array categories ) {
-		var widgetCategories = getWidget( arguments.widgetId ).categories ?: [];
+		var widgetCategories = getWidget( arguments.widgetId ).categories ?: arrayNew(1);
 
 		if ( !widgetCategories.len() ) {
 			widgetCategories = [ "default" ];

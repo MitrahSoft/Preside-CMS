@@ -11,7 +11,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		);
 		args.inheritedPermissions = permissionService.getContextPermissions(
 			  context        = args.context ?: ""
-			, contextKeys    = args.inheritedContextKeys ?: []
+			, contextKeys    = args.inheritedContextKeys ?: arrayNew(1)
 			, permissionKeys = args.permissionKeys
 			, includeDefaults = true
 		);

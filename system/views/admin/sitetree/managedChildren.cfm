@@ -2,9 +2,9 @@
 	pageType        = rc.pageType         ?: "";
 	parentId        = rc.parent           ?: "";
 	canAddChildren  = prc.canAddChildren  ?: false;
-	gridFields      = prc.gridFields      ?: [];
-	cleanGridFields = prc.cleanGridFields ?: [];
-	gridFieldTitles = prc.gridFieldTitles ?: [];
+	gridFields      = prc.gridFields      ?: arrayNew(1);
+	cleanGridFields = prc.cleanGridFields ?: arrayNew(1);
+	gridFieldTitles = prc.gridFieldTitles ?: arrayNew(1);
 
 	objectTitle    = translateResource( uri="page-types.#pageType#:name", defaultValue=pageType );
 	addRecordTitle = translateResource( uri="cms:datamanager.addrecord.title", data=[ LCase( objectTitle ) ] );

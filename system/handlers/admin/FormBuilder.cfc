@@ -126,7 +126,7 @@ component extends="preside.system.base.AdminHandler" {
 			var messages = validationResult.getMessages();
 
 			for( var fieldName in messages ){
-				errors[ fieldName ] = translateResource( uri=messages[ fieldName ].message, defaultValue=messages[ fieldName ].message, data=messages[ fieldName ].params ?: [] );
+				errors[ fieldName ] = translateResource( uri=messages[ fieldName ].message, defaultValue=messages[ fieldName ].message, data=messages[ fieldName ].params ?: arrayNew(1) );
 			}
 			event.renderData( data=errors, type="json" );
 		}
@@ -218,7 +218,7 @@ component extends="preside.system.base.AdminHandler" {
 			var messages = validationResult.getMessages();
 
 			for( var fieldName in messages ){
-				errors[ fieldName ] = translateResource( uri=messages[ fieldName ].message, defaultValue=messages[ fieldName ].message, data=messages[ fieldName ].params ?: [] );
+				errors[ fieldName ] = translateResource( uri=messages[ fieldName ].message, defaultValue=messages[ fieldName ].message, data=messages[ fieldName ].params ?: arrayNew(1) );
 			}
 			event.renderData( data=errors, type="json" );
 		}

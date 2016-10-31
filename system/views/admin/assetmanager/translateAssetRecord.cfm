@@ -1,11 +1,11 @@
 <cfscript>
 	object              = rc.object        ?: "";
-	currentLanguage     = prc.language     ?: {};
+	currentLanguage     = prc.language     ?: structNew();
 	currentLanguageId   = rc.language      ?: "";
 	id                  = rc.id            ?: "";
 	recordLabel         = prc.recordLabel  ?: "";
 	formName            = prc.formName     ?: "";
-	translations        = prc.translations ?: [];
+	translations        = prc.translations ?: arrayNew(1);
 	formId              = "assetTranslate-record-form";
 	translateUrlBase    = event.buildAdminLink( linkTo="assetManager.translateAssetRecord", queryString="object=#object#&id=#id#&language=" );
 </cfscript>
@@ -40,7 +40,7 @@
 			  formName           = formName
 			, context            = "admin"
 			, formId             = formId
-			, savedData          = prc.record ?: {}
+			, savedData          = prc.record ?: structNew()
 			, validationResult   = rc.validationResult ?: ""
 		)#
 
@@ -51,7 +51,7 @@
 				, name         = "_translation_active"
 				, id           = "_translation_active"
 				, label        = translateResource( uri="cms:assetManager.translation.active" )
-				, savedData    = prc.record ?: {}
+				, savedData    = prc.record ?: structNew()
 				, defaultValue = IsTrue( prc.record._translation_active ?: "" )
 			)#
 

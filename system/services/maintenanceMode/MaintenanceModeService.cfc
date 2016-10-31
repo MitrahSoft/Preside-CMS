@@ -54,7 +54,7 @@ component {
 
 	public boolean function canRequestBypassMaintenanceMode() {
 		var settings       = getMaintenanceModeSettings();
-		var safeIps        = settings.allowedIps ?: [];
+		var safeIps        = settings.allowedIps ?: arrayNew(1);
 		var bypassPassword = settings.bypassPassword;
 		var clientIp       = cgi.remote_addr;
 

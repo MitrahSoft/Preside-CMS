@@ -28,7 +28,7 @@ component {
 
 	private string function renderResponse( event, rc, prc, args={} ) {
 		var responses = ListToArray( args.response ?: "" );
-		var itemConfig = args.itemConfiguration    ?: {};
+		var itemConfig = args.itemConfiguration    ?: structNew();
 
 		if ( !IsEmpty( itemConfig.datamanagerObject ?: "" ) ) {
 			var objectName = itemConfig.datamanagerObject;

@@ -3,9 +3,9 @@
 	inputId          = args.id           ?: "";
 	inputClass       = args.class        ?: "";
 	defaultValue     = args.defaultValue ?: "";
-	rows             = args.rows         ?: [];
-	columns          = args.columns      ?: [];
-	questionInputIds = args.questionInputIds ?: [];
+	rows             = args.rows         ?: arrayNew(1);
+	columns          = args.columns      ?: arrayNew(1);
+	questionInputIds = args.questionInputIds ?: arrayNew(1);
 	multiple     = IsTrue( args.multiple ?: "" );
 
 	value = event.getValue( name=inputName, defaultValue=defaultValue );

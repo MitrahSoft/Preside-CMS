@@ -1,9 +1,9 @@
 <cfscript>
 	formId  = "password-policy-form";
 
-	policyContexts = prc.policyContexts ?: [];
+	policyContexts = prc.policyContexts ?: arrayNew(1);
 	currentContext = prc.currentContext ?: "cms";
-	savedPolicy    = prc.savedPolicy    ?: {};
+	savedPolicy    = prc.savedPolicy    ?: structNew();
 </cfscript>
 
 <cfoutput>

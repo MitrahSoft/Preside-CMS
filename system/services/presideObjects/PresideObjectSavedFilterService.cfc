@@ -16,7 +16,7 @@ component output=false singleton=true {
 // PUBLIC API METHODS
 	public struct function getFilter( required string filterName, struct args={} ) output=false {
 		var configuredFilters = _getConfiguredFilters();
-		var filter            = configuredFilters[ arguments.filterName ] ?: {};
+		var filter            = configuredFilters[ arguments.filterName ] ?: structNew();
 
 		if ( IsValid( "function", filter ) ) {
 			filter = filter( arguments.args, _getColdboxController() );
@@ -28,8 +28,8 @@ component output=false singleton=true {
 			}
 
 			return {
-				  filter       = filter.filter       ?: {}
-				, filterParams = filter.filterParams ?: {}
+				  filter       = filter.filter       ?: structNew()
+				, filterParams = filter.filterParams ?: structNew()
 			};
 		}
 

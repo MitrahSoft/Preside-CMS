@@ -4,11 +4,11 @@
 	latestVersion           = prc.latestVersion           ?: { version = "unknown" };
 	versionUpToDate         = prc.versionUpToDate         ?: false;
 	latestVersionDownloaded = prc.latestVersionDownloaded ?: false;
-	downloadedVersions      = prc.downloadedVersions      ?: [];
-	availableVersions       = prc.availableVersions       ?: [];
-	downloadingVersions     = prc.downloadingVersions     ?: {};
-	completeDownloads       = prc.completeDownloads       ?: [];
-	erroredDownloads        = prc.erroredDownloads        ?: [];
+	downloadedVersions      = prc.downloadedVersions      ?: arrayNew(1);
+	availableVersions       = prc.availableVersions       ?: arrayNew(1);
+	downloadingVersions     = prc.downloadingVersions     ?: structNew();
+	completeDownloads       = prc.completeDownloads       ?: arrayNew(1);
+	erroredDownloads        = prc.erroredDownloads        ?: arrayNew(1);
 </cfscript>
 
 <cfoutput>

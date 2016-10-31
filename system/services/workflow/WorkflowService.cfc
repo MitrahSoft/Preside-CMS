@@ -64,7 +64,7 @@ component {
 
 	) {
 		var existingWf = getState( argumentCollection=arguments );
-		var newState   = existingWf.state ?: {};
+		var newState   = existingWf.state ?: structNew();
 
 		newState.append( arguments.state );
 

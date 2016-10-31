@@ -10,7 +10,7 @@
 			  formName          = "taskmanager.task_configuration"
 			, context           = "admin"
 			, formId            = formId
-			, savedData         = prc.taskConfiguration ?: {}
+			, savedData         = prc.taskConfiguration ?: structNew()
 			, validationResult  = rc.validationResult ?: ""
 		)#
 

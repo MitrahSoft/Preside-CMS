@@ -1,5 +1,5 @@
 <cfscript>
-	settings = prc.settings ?: {};
+	settings = prc.settings ?: structNew();
 	formId   = "edit-update-manager-settings-form";
 </cfscript>
 

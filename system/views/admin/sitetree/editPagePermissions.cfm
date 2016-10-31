@@ -12,7 +12,7 @@
 		  permissionKeys       = [ "sitetree.*", "!sitetree.viewtrash", "!sitetree.emptytrash", "!sitetree.restore", "!sitetree.delete" ]
 		, context              = "page"
 		, contextKey           = pageId
-		, inheritedContextKeys = prc.inheritedPermissionContext ?: []
+		, inheritedContextKeys = prc.inheritedPermissionContext ?: arrayNew(1)
 		, saveAction           = event.buildAdminLink( linkTo="sitetree.editPagePermissionsAction", queryString="id=#pageId#" )
 		, cancelAction         = event.buildAdminLink( linkTo="sitetree.index", queryString="selected=#pageId#" )
 	} )#

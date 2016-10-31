@@ -15,7 +15,7 @@
 
 	canDelete        = prc.canDelete;
 	canTranslate     = prc.canTranslate;
-	translations     = prc.translations ?: [];
+	translations     = prc.translations ?: arrayNew(1);
 	translateUrlBase = event.buildAdminLink( linkTo="datamanager.translateRecord", queryString="object=#object#&id=#id#&language=" );
 </cfscript>
 
@@ -62,7 +62,7 @@
 		  object        = ( rc.object  ?: "" )
 		, id            = ( rc.id      ?: "" )
 		, version       = ( rc.version ?: "" )
-		, record        = ( prc.record ?: {} )
+		, record        = ( prc.record ?: structNew() )
 		, useVersioning = IsTrue( prc.useVersioning ?: "" )
 		, draftsEnabled = IsTrue( prc.draftsEnabled ?: "" )
 		, canSaveDraft  = IsTrue( prc.canSaveDraft  ?: "" )

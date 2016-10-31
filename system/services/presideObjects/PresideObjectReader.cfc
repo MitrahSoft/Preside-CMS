@@ -34,7 +34,7 @@ component {
 			obj.instance = CreateObject( "component", objPath );
 			obj.meta     = readObject( obj.instance );
 
-			objects[ objName ] = objects[ objName ] ?: Arraynew(1);
+			objects[ objName ] = objects[ objName ] ?: arraynew(1);
 			objects[ objName ].append( obj );
 
 			_announceInterception( state="postLoadPresideObject", interceptData={ objectName=objName, object=obj } );
@@ -56,7 +56,7 @@ component {
 		var key           = "";
 
 		meta.properties    = meta.properties ?: StructNew();
-		meta.propertyNames = meta.propertyNames ?: ArrayNew(1);
+		meta.propertyNames = meta.propertyNames ?: arrayNew(1);
 
 
 		return meta;
@@ -71,7 +71,7 @@ component {
 		meta.tablePrefix   = meta.tablePrefix   ?: _getTablePrefix();
 		meta.tableName     = meta.tableName     ?: componentName;
 		meta.dsn           = meta.dsn           ?: _getDsn();
-		meta.propertyNames = meta.propertyNames ?: ArrayNew(1);
+		meta.propertyNames = meta.propertyNames ?: arrayNew(1);
 		meta.properties    = meta.properties    ?: StructNew();
 
 		if(!structKeyExists(meta, "versioned")){
@@ -161,7 +161,7 @@ component {
 		var orderedProps = _getOrderedPropertiesInAHackyWayBecauseRailoGivesThemInRandomOrder( pathToCfc = arguments.pathToCfc );
 
 		param name="arguments.meta.properties"    default=createObject("java", "java.util.LinkedHashMap").init();
-		param name="arguments.meta.propertyNames" default=ArrayNew(1);
+		param name="arguments.meta.propertyNames" default=arrayNew(1);
 
 		for( propName in orderedProps ){
 			for( prop in arguments.properties ) {
@@ -253,7 +253,7 @@ component {
 	}
 
 	private void function _mergeSystemPropertyDefaults( required struct meta ) {
-		param name="arguments.meta.propertyNames" default=ArrayNew(1);
+		param name="arguments.meta.propertyNames" default=arrayNew(1);
 
 		var defaults = {
 			  id            = { type="string", dbtype="varchar" , control="none"     , maxLength="35", relationship="none", relatedto="none", generator="UUID", required="true", pk="true" }
@@ -344,7 +344,7 @@ component {
 	}
 
 	private void function _fixOrderOfProperties( required struct meta ) {
-		param name="arguments.meta.propertyNames" default=ArrayNew(1);
+		param name="arguments.meta.propertyNames" default=arrayNew(1);
 		param name="arguments.meta.properties"    default=createObject("java", "java.util.LinkedHashMap").init();
 
 		var propName     = "";
@@ -378,7 +378,7 @@ component {
 		while( ArrayLen(result.pos) GT 1 ) {
 			for(i=2; i LTE ArrayLen(result.pos); i++){
 				if(not StructKeyExists(final, '$#i-1#')){
-					final['$#i-1#'] = ArrayNew(1);
+					final['$#i-1#'] = arrayNew(1);
 				}
 				ArrayAppend(final['$#i-1#'], Mid(arguments.text, result.pos[i], result.len[i]));
 			}

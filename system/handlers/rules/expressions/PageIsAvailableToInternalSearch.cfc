@@ -10,8 +10,8 @@ component {
 	private boolean function evaluateExpression( boolean _is = true ) {
 		var availability = siteTreeService.getPageProperty(
 			  propertyName = "internal_search_access"
-			, page         = payload.page           ?: {}
-			, ancestors    = payload.page.ancestors ?: []
+			, page         = payload.page           ?: structNew()
+			, ancestors    = payload.page.ancestors ?: arrayNew(1)
 			, defaultValue = "inherit"
 			, cascading    = true
 		);

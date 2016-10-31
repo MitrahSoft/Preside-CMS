@@ -25,7 +25,7 @@ component {
 
 	private string function getItemDataFromRequest( event, rc, prc, args={} ) {
 		var inputName   = args.inputName         ?: "";
-		var itemConfig  = args.itemConfiguration ?: {};
+		var itemConfig  = args.itemConfiguration ?: structNew();
 		var formFields  = getFormFields( event, rc, prc, itemConfig );
 		var rows        = ListToArray( itemConfig.rows ?: "", Chr(10) & Chr(13) );
 		var isMandatory = IsTrue( itemConfig.mandatory ?: "" );
@@ -90,7 +90,7 @@ component {
 // private helpers
 	private array function _getQuestionsAndAnswers( event, rc, prc, args={} ) {
 		var response   = IsJson( args.response ?: "" ) ? DeserializeJson( args.response ) : {};
-		var itemConfig = args.itemConfiguration ?: {};
+		var itemConfig = args.itemConfiguration ?: structNew();
 		var rows       = ListToArray( Trim( itemConfig.rows ?: "" ), Chr(10) & Chr(13) );
 		var answers    = [];
 

@@ -237,7 +237,7 @@ component {
 	}
 
 	private void function _setupInjectedDatasource() {
-		var config      = application.injectedConfig ?: {};
+		var config      = application.injectedConfig ?: structNew();
 		var dsnInjected = Len( Trim( config[ "datasource.user" ] ?: "" ) ) && Len( Trim( config[ "datasource.database_name" ] ?: "" ) ) && Len( Trim( config[ "datasource.host" ] ?: "" ) );
 
 		if ( dsnInjected ) {
@@ -553,8 +553,8 @@ component {
 	}
 
 	private boolean function isStatelessRequest( required string fullUrl ) {
-		var urlPatterns   = this.statelessUrlPatterns       ?: [];
-		var agentPatterns = this.statelessUserAgentPatterns ?: [];
+		var urlPatterns   = this.statelessUrlPatterns       ?: arrayNew(1);
+		var agentPatterns = this.statelessUserAgentPatterns ?: arrayNew(1);
 		var userAgent     = cgi.http_user_agent             ?: "";
 
 		for( var pattern in urlPatterns ) {

@@ -3,7 +3,7 @@
 	inputId      = args.id           ?: "";
 	inputClass   = args.class        ?: "";
 	defaultValue = args.defaultValue ?: "";
-	topics       = args.topics  ?: ArrayNew(1);
+	topics       = args.topics  ?: arrayNew(1);
 
 	value  = event.getValue( name=inputName, defaultValue=defaultValue );
 	if ( not IsSimpleValue( value ) ) {

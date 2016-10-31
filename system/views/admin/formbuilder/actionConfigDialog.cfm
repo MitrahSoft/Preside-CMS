@@ -1,6 +1,6 @@
 <cfscript>
 	configFormName = prc.actionConfig.configFormName ?: "";
-	savedData      = prc.savedData ?: {};
+	savedData      = prc.savedData ?: structNew();
 	action         = rc.action   ?: "";
 	formId         = "configform-" & CreateUUId();
 </cfscript>

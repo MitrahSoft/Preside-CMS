@@ -1,7 +1,7 @@
 <cfscript>
 	object              = rc.object ?: "";
 	objectTitleSingular = translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object );
-	currentLanguage     = prc.language ?: {};
+	currentLanguage     = prc.language ?: structNew();
 	currentLanguageId   = rc.language ?: "";
 	id                  = rc.id ?: "";
 	version             = rc.version ?: "";
@@ -14,7 +14,7 @@
 	deleteRecordTitle   = translateResource( uri="cms:datamanager.deleteRecord.btn" );
 
 	canDelete           = prc.canDelete;
-	translations        = prc.translations     ?: [];
+	translations        = prc.translations     ?: arrayNew(1);
 	translateUrlBase    = prc.translateUrlBase ?: event.buildAdminLink( linkTo="datamanager.translateRecord", queryString="object=#object#&id=#id#&language=" );
 	cancelAction        = prc.cancelAction     ?: event.buildAdminLink( linkTo="datamanager.editRecord", querystring='object=#object#&id=#id#' );
 	formAction          = prc.formAction       ?: event.buildAdminLink( linkTo='datamanager.translateRecordAction');
@@ -71,7 +71,7 @@
 			  formName           = formName
 			, context            = "admin"
 			, formId             = formId
-			, savedData          = prc.record ?: {}
+			, savedData          = prc.record ?: structNew()
 			, validationResult   = rc.validationResult ?: ""
 		)#
 

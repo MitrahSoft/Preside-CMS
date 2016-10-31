@@ -57,7 +57,7 @@ component accessors=true displayName="Preside REST Response" {
 	 * @autodoc true
 	 */
 	public any function setHeaders( required struct headers ) {
-		variables.headers = variables.headers ?: {};
+		variables.headers = variables.headers ?: structNew();
 		variables.headers.append( arguments.headers );
 
 		return this;
@@ -71,7 +71,7 @@ component accessors=true displayName="Preside REST Response" {
 	 * @autodoc
 	 */
 	public any function setHeader( required string name, required string value ) {
-		variables.headers = variables.headers ?: {};
+		variables.headers = variables.headers ?: structNew();
 		variables.headers[ arguments.name ] = arguments.value;
 
 		return;

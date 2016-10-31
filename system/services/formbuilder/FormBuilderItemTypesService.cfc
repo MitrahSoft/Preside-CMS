@@ -36,7 +36,7 @@ component {
 			var found                     = false;
 
 			for( var categoryId in configured ) {
-				var types = configured[ categoryId ].types ?: {};
+				var types = configured[ categoryId ].types ?: structNew();
 
 				for( var typeId in types ) {
 					if ( typeId == itemType ) {
@@ -106,7 +106,7 @@ component {
 				, title     = $translateResource( uri="formbuilder.item-categories:#categoryId#.title", defaultValue=categoryId )
 				, types     = []
 			};
-			var types = configured[ categoryId ].types ?: {};
+			var types = configured[ categoryId ].types ?: structNew();
 
 			for( var typeId in types ) {
 				var type = getItemTypeConfig( typeId );
@@ -165,7 +165,7 @@ component {
 	}
 
 	private struct function _getCachedItemTypeConfiguration() {
-		return _cachedItemTypeConfiguration ?: {};
+		return _cachedItemTypeConfiguration ?: structNew();
 	}
 	private void function _setCachedItemTypeConfiguration( required struct cachedItemTypeConfiguration ) {
 		_cachedItemTypeConfiguration = arguments.cachedItemTypeConfiguration;

@@ -493,7 +493,7 @@ component {
 
 		objMeta.dbFieldList = ListAppend( objMeta.dbFieldList, "_version_number,_version_author,_version_changed_fields,_version_is_draft,_version_has_drafts,_version_is_latest,_version_is_latest_draft" );
 
-		objMeta.indexes = objMeta.indexes ?: {};
+		objMeta.indexes = objMeta.indexes ?: structNew();
 		for(indexKey in objMeta.indexes){
 			objMeta.indexes[ _renameTableIndexes(indexKey, arguments.originalObjectName, arguments.versionedObjectName ) ] = duplicate( objMeta.indexes[indexKey]);
 			structDelete(objMeta.indexes, indexKey);

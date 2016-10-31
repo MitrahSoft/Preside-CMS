@@ -29,7 +29,7 @@
 			  formName          = "preside-objects.asset_folder.admin.setlocation"
 			, context           = "admin"
 			, formId            = formId
-			, savedData         = prc.record ?: {}
+			, savedData         = prc.record ?: structNew()
 			, validationResult  = rc.validationResult ?: ""
 		)#
 

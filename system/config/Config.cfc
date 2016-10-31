@@ -159,7 +159,7 @@ component {
 		settings.serverErrorLayout           = "Main";
 		settings.serverErrorViewlet          = "errors.serverError";
 		settings.maintenanceModeViewlet      = "errors.maintenanceMode";
-		settings.injectedConfig              = Duplicate( application.injectedConfig ?: {} );
+		settings.injectedConfig              = Duplicate( application.injectedConfig ?: structNew() );
 		settings.notificationTopics          = [];
 		settings.autoSyncDb                  = IsBoolean( settings.injectedConfig.autoSyncDb ?: ""  ) && settings.injectedConfig.autoSyncDb;
 		settings.autoRestoreDeprecatedFields = true;
@@ -370,7 +370,7 @@ component {
 // PRIVATE UTILITY
 	private array function _getUdfFiles() {
 		var udfs     = DirectoryList( "/preside/system/helpers", true, false, "*.cfm" );
-		var siteUdfs = ArrayNew(1);
+		var siteUdfs = arrayNew(1);
 		var udf      = "";
 		var i        = 0;
 

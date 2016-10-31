@@ -6,7 +6,7 @@
 	placeholder  = HtmlEditFormat( translateResource( uri=placeholder, defaultValue=placeholder ) );
 	defaultValue = args.defaultValue ?: "";
 	maxLength    = Val( args.maxLength ?: 0 );
-	expressions  = args.expressions  ?: [];
+	expressions  = args.expressions  ?: arrayNew(1);
 
 	value  = event.getValue( name=inputName, defaultValue=defaultValue );
 	if ( !IsSimpleValue( value ) ) {

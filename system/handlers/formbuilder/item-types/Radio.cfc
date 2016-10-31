@@ -17,7 +17,7 @@ component {
 	}
 
 	private string function renderResponse( event, rc, prc, args={} ) {
-		var itemConfig = args.itemConfiguration ?: {};
+		var itemConfig = args.itemConfiguration ?: structNew();
 		var response   = args.response;
 		var values     = ListToArray( itemConfig.values ?: "", Chr( 10 ) & Chr( 13 ) );
 		var labels     = ListToArray( itemConfig.labels ?: "", Chr( 10 ) & Chr( 13 ) );

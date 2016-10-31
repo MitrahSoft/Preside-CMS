@@ -187,7 +187,7 @@ component displayName="Task Manager Service" {
 			, maxRows      = 1
 		);
 
-		return runnableTasks.recordCount ? listToArray( valueList( runnableTasks.task_key ) ) : ArrayNew(1);
+		return runnableTasks.recordCount ? listToArray( valueList( runnableTasks.task_key ) ) : arrayNew(1);
 	}
 
 	/**
@@ -307,7 +307,7 @@ component displayName="Task Manager Service" {
 	public array function listTasksStoredInStatusDb() {
 		var taskRecords = _getTaskDao().selectData( selectFields=[ "task_key" ] );
 
-		return taskRecords.recordCount ? listToArray( valueList( taskRecords.task_key ) ) : ArrayNew(1);
+		return taskRecords.recordCount ? listToArray( valueList( taskRecords.task_key ) ) : arrayNew(1);
 	}
 
 	public void function ensureTasksExistInStatusDb() {
@@ -488,7 +488,7 @@ component displayName="Task Manager Service" {
 
 		for( var dbRecord in dbTaskInfo ){
 			var detail = dbRecord;
-			detail.append( tasks[ detail.task_key ] ?: {} );
+			detail.append( tasks[ detail.task_key ] ?: structNew() );
 			detail.schedule = _cronTabExpressionToHuman( Len( Trim( detail.crontab_definition ) ) ? detail.crontab_definition : detail.schedule );
 			detail.is_running = taskIsRunning( detail.task_key );
 			if( detail.is_running ){

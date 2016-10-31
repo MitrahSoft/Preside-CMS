@@ -12,7 +12,7 @@
 		  permissionKeys       = [ "assetmanager.general.*", "assetmanager.folders.*", "assetmanager.assets.*" ]
 		, context              = "assetmanagerfolder"
 		, contextKey           = folderId
-		, inheritedContextKeys = prc.inheritedPermissionContext ?: []
+		, inheritedContextKeys = prc.inheritedPermissionContext ?: arrayNew(1)
 		, saveAction           = event.buildAdminLink( linkTo="assetmanager.savePermsAction", queryString="folder=#folderId#" )
 		, cancelAction         = event.buildAdminLink( linkTo="assetmanager.index"          , queryString="folder=#folderId#" )
 	} )#

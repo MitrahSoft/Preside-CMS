@@ -8,7 +8,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		var widget            = rc.widget            ?: "";
 		var configJson        = rc.configJson        ?: "";
 		var widgetConfigSaved = rc.widgetConfigSaved ?: false;
-		var savedConfig       = rc.savedConfig       ?: {};
+		var savedConfig       = rc.savedConfig       ?: structNew();
 
 		event.setLayout( "adminModalDialog" );
 

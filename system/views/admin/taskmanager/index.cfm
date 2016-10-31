@@ -1,5 +1,5 @@
 <cfscript>
-	taskGroups = prc.taskGroups ?: [];
+	taskGroups = prc.taskGroups ?: arrayNew(1);
 
 	tasksEnabled = IsTrue( prc.autoRunningEnabled ?: false );
 

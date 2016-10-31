@@ -1,4 +1,4 @@
-<cfset actions = args.actions ?: [] />
+<cfset actions = args.actions ?: arrayNew(1) />
 
 <cfoutput>
 	<div class="accordion-style2 formbuilder-item-type-picker">

@@ -613,13 +613,13 @@ component {
 	}
 
 	private array function _getBuiltSqlScriptArray() {
-		request._sqlSchemaSynchronizerSqlArray = request._sqlSchemaSynchronizerSqlArray ?: [];
+		request._sqlSchemaSynchronizerSqlArray = request._sqlSchemaSynchronizerSqlArray ?: arrayNew(1);
 
 		return request._sqlSchemaSynchronizerSqlArray;
 	}
 
 	private array function _getVersionTableScriptArray() {
-		request._sqlSchemaSynchronizerVersionSqlArray = request._sqlSchemaSynchronizerVersionSqlArray ?: [];
+		request._sqlSchemaSynchronizerVersionSqlArray = request._sqlSchemaSynchronizerVersionSqlArray ?: arrayNew(1);
 
 		return request._sqlSchemaSynchronizerVersionSqlArray;
 	}
@@ -699,7 +699,7 @@ component {
 	private void function _ensureValidDbEntityNames( required struct objects ) {
 		var presideObjects = arguments.objects;
 		for( var objectName in presideObjects ) {
-			var objMeta = presideObjects[ objectName ].meta ?: {};
+			var objMeta = presideObjects[ objectName ].meta ?: structNew();
 			var adapter = _getAdapterFactory().getAdapter( objMeta.dsn ?: "" );
 			var maxTableNameLength = adapter.getTableNameMaxLength();
 

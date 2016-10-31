@@ -1,4 +1,4 @@
-<cfset itemTypesByCategory = args.itemTypesByCategory ?: [] />
+<cfset itemTypesByCategory = args.itemTypesByCategory ?: arrayNew(1) />
 
 <cfoutput>
 	<div class="accordion-style2 formbuilder-item-type-picker">

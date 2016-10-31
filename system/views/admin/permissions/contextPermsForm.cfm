@@ -23,10 +23,10 @@
 		<table class="table">
 			<tbody>
 				<cfloop array="#args.permissionKeys#" index="i" item="key">
-					<cfset savedGrants      = args.savedPermissions[ key ].granted     ?: [] />
-					<cfset inheritedGrants  = args.inheritedPermissions[ key ].granted ?: [] />
-					<cfset savedDenials     = args.savedPermissions[ key ].denied      ?: [] />
-					<cfset inheritedDenials = args.inheritedPermissions[ key ].denied  ?: [] />
+					<cfset savedGrants      = args.savedPermissions[ key ].granted     ?: arrayNew(1) />
+					<cfset inheritedGrants  = args.inheritedPermissions[ key ].granted ?: arrayNew(1) />
+					<cfset savedDenials     = args.savedPermissions[ key ].denied      ?: arrayNew(1) />
+					<cfset inheritedDenials = args.inheritedPermissions[ key ].denied  ?: arrayNew(1) />
 
 					<tr>
 						<td class="permission-col">

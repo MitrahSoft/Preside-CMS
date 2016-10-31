@@ -12,11 +12,11 @@ component {
 
 		var message = {
 			  subject  = args.subject ?: ""
-			, to       = args.to ?: [] // should be an array of email addresses
+			, to       = args.to ?: arrayNew(1) // should be an array of email addresses
 			, from     = getSystemSetting( "email", "default_from_address", "" )
 			, textBody = args.textBody ?: ""
 			, htmlBody = args.htmlBody ?: ""
-			, params   = args.params   ?: {}
+			, params   = args.params   ?: structNew()
 		};
 
 		return message;

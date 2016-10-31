@@ -55,7 +55,7 @@ component displayName="Multilingual Preside Object Service" {
 		for( var objectName in arguments.objects ){
 			var object = arguments.objects[ objectName ];
 
-			if ( _isObjectMultilingual( object.meta ?: {} ) ) {
+			if ( _isObjectMultilingual( object.meta ?: structNew() ) ) {
 
 				arguments.objects[ _getTranslationObjectPrefix() & objectName ] = createTranslationObject( objectName, object );
 				decorateMultilingualObject( objectName, object );
@@ -76,9 +76,9 @@ component displayName="Multilingual Preside Object Service" {
 	 */
 	public struct function createTranslationObject( required string objectName, required struct sourceObject ) {
 		var translationObject     = Duplicate( arguments.sourceObject.meta );
-		var translationProperties = translationObject.properties ?: {};
+		var translationProperties = translationObject.properties ?: structNew();
 		var dbFieldList           = ListToArray( translationObject.dbFieldList ?: "" );
-		var propertyNames         = translationObject.propertyNames ?: [];
+		var propertyNames         = translationObject.propertyNames ?: arrayNew(1);
 		var validProperties       = _listMultilingualObjectProperties( arguments.sourceObject.meta );
 		var extraLanguageIndexes  = "";
 		var tableName             = translationObject["tableName"] ?: "";
@@ -158,7 +158,7 @@ component displayName="Multilingual Preside Object Service" {
 		translationObject.dbFieldList   = dbFieldList.toList();
 		translationObject.propertyNames = propertyNames;
 
-		translationObject.indexes       = translationObject.indexes ?: {};
+		translationObject.indexes       = translationObject.indexes ?: structNew();
 		for( var indexName in translationObject.indexes ) {
 			for( var indexField in translationObject.indexes[ indexName ].fields.listToArray() ) {
 				if ( !dbFieldList.findNoCase( indexField ) ) {
@@ -185,7 +185,7 @@ component displayName="Multilingual Preside Object Service" {
 	 * @object.hint     The metadata of the source object
 	 */
 	public void function decorateMultilingualObject( required string objectName, required struct object ) {
-		arguments.object.meta.properties = arguments.object.meta.properties ?: {};
+		arguments.object.meta.properties = arguments.object.meta.properties ?: structNew();
 
 		arguments.object.meta.properties._translations = {
 			  name            = "_translations"

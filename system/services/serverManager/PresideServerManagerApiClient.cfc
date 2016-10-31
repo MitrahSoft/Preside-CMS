@@ -26,7 +26,7 @@ component output=false singleton=true {
 			return {};
 		}
 
-		var config = result.config ?: {};
+		var config = result.config ?: structNew();
 
 		return IsStruct( config ) ? config : {};
 	}

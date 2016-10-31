@@ -4,7 +4,7 @@ component extends="coldbox.system.Interceptor" output=false {
 	public void function configure() output=false {}
 
 	public void function postReadPresideObject( event, interceptData ) output=false {
-		var objectMeta = interceptData.objectMeta ?: {};
+		var objectMeta = interceptData.objectMeta ?: structNew();
 
 		objectMeta.isPageType = objectMeta.isPageType ?: _isPageTypeObject( objectMeta );
 

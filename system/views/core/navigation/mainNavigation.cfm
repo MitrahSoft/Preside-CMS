@@ -1,5 +1,5 @@
 <cfscript>
-	menuItems = args.menuItems ?: [];
+	menuItems = args.menuItems ?: arrayNew(1);
 
 	ulNestedClass           = args.ulNestedClass           ?: 'dropdown-menu';
 	liCurrentClass          = args.liCurrentClass          ?: 'active';

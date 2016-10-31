@@ -1,7 +1,7 @@
 <cfscript>
-	topics             = prc.topics             ?: [];
+	topics             = prc.topics             ?: arrayNew(1);
 	selectedTopic      = prc.selectedTopic      ?: "";
-	savedConfiguration = prc.topicConfiguration ?: {};
+	savedConfiguration = prc.topicConfiguration ?: structNew();
 	formId             = "configure-form";
 	formAction         = event.buildAdminLink( linkTo="notifications.saveTopicConfigurationAction" );
 </cfscript>

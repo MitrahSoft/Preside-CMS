@@ -4,7 +4,7 @@
 
 	currentParentFolder = rc.folder ?: "";
 
-	permissionContext = Duplicate( prc.permissionContext ?: [] );
+	permissionContext = Duplicate( prc.permissionContext ?: arrayNew(1) );
 	permissionContext.prepend( args.id );
 </cfscript>
 

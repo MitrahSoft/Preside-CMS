@@ -96,7 +96,7 @@ component displayName="RulesEngine Expression Reader Service" {
 			return {};
 		}
 
-		var functions   = meta.functions ?: [];
+		var functions   = meta.functions ?: arrayNew(1);
 		var baseId      = arguments.componentPath.replaceNoCase( rootPath, "" ).reReplace( "^\.", "" );
 		var expressions = {};
 
@@ -123,7 +123,7 @@ component displayName="RulesEngine Expression Reader Service" {
 	 *
 	 */
 	public struct function getExpressionFieldsFromFunctionDefinition( required any functionMeta ) {
-		var params                 = functionMeta.parameters ?: [];
+		var params                 = functionMeta.parameters ?: arrayNew(1);
 		var standardParamsToIgnore = [ "event", "rc", "prc", "args", "payload", "context" ];
 		var fields                 = {};
 

@@ -7,7 +7,7 @@ component extends="coldbox.system.Interceptor" {
 
 	public void function preSaveSystemConfig( event, interceptData ) {
 		var category      = interceptData.category ?: "";
-		var configuration = interceptData.configuration ?: {};
+		var configuration = interceptData.configuration ?: structNew();
 
 		if ( category == "email" && configuration.keyExists( "server" ) && configuration.keyExists( "port" ) && configuration.keyExists( "username" ) && configuration.keyExists( "password" ) ) {
 			var errorMessage = emailService.validateConnectionSettings(

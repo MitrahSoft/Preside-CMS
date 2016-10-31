@@ -1,6 +1,6 @@
 <cfscript>
 	objectName = "rules_engine_condition";
-	contexts   = prc.contexts ?: [];
+	contexts   = prc.contexts ?: arrayNew(1);
 </cfscript>
 
 

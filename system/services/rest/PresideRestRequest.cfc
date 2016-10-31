@@ -74,7 +74,7 @@ component accessors=true displayName="Preside REST Request" {
 	 *
 	 */
 	public struct function getResource() {
-		return variables.resource ?: {};
+		return variables.resource ?: structNew();
 	}
 
 }

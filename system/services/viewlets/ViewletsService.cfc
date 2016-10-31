@@ -50,7 +50,7 @@ component {
 			cachedResults[ cacheKey ] = viewlets;
 		}
 
-		return cachedResults[ cacheKey ] ?: [];
+		return cachedResults[ cacheKey ] ?: arrayNew(1);
 	}
 
 // PRIVATE HELPERS
@@ -67,7 +67,7 @@ component {
 			if ( _siteTemplate == "" ) {
 				viewlets.core[ arguments.viewletName ] = true;
 			} else {
-				viewlets.sitetemplates[ _siteTemplate ] = viewlets.sitetemplates[ _siteTemplate ] ?: {};
+				viewlets.sitetemplates[ _siteTemplate ] = viewlets.sitetemplates[ _siteTemplate ] ?: structNew();
 				viewlets.sitetemplates[ _siteTemplate ][ arguments.viewletName ] = true;
 			}
 
@@ -178,7 +178,7 @@ component {
 	}
 
 	private array function _getSiteTemplateViewlets() {
-		return _siteTemplateViewlets[ _getSiteService().getActiveSiteTemplate() ] ?: [];
+		return _siteTemplateViewlets[ _getSiteService().getActiveSiteTemplate() ] ?: arrayNew(1);
 	}
 	private void function _setSiteTemplateViewlets( required struct siteTemplateViewlets ) {
 		_siteTemplateViewlets = arguments.siteTemplateViewlets;

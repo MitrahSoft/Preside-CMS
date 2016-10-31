@@ -3,7 +3,7 @@
 	inputId      = args.id           ?: "";
 	inputClass   = args.class        ?: "";
 	defaultValue = args.defaultValue ?: "";
-	strengths    = args.strengths    ?: [];
+	strengths    = args.strengths    ?: arrayNew(1);
 
 	value  = event.getValue( name=inputName, defaultValue=defaultValue );
 	if ( not IsSimpleValue( value ) ) {

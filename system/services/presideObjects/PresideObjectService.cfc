@@ -1832,7 +1832,7 @@ component displayName="Preside Object Service" {
 		while( ArrayLen(result.pos) GT 1 ) {
 			for(i=2; i LTE ArrayLen(result.pos); i++){
 				if(not StructKeyExists(final, '$#i-1#')){
-					final['$#i-1#'] = ArrayNew(1);
+					final['$#i-1#'] = arrayNew(1);
 				}
 
 				if ( result.pos[i] ) {
@@ -2021,8 +2021,8 @@ component displayName="Preside Object Service" {
 		for( var savedFilter in arguments.savedFilters ){
 			savedFilter = _getFilterService().getFilter( savedFilter );
 
-			savedFilter.filter       = savedFilter.filter       ?: {};
-			savedFilter.filterParams = savedFilter.filterParams ?: {};
+			savedFilter.filter       = savedFilter.filter       ?: structNew();
+			savedFilter.filterParams = savedFilter.filterParams ?: structNew();
 
 			result.filterParams.append( IsStruct( savedFilter.filter ) ? savedFilter.filter : savedFilter.filterParams );
 			result.filter = mergeFilters(
@@ -2034,8 +2034,8 @@ component displayName="Preside Object Service" {
 		}
 
 		for( var extraFilter in arguments.extraFilters ){
-			extraFilter.filter       = extraFilter.filter       ?: {};
-			extraFilter.filterParams = extraFilter.filterParams ?: {};
+			extraFilter.filter       = extraFilter.filter       ?: structNew();
+			extraFilter.filterParams = extraFilter.filterParams ?: structNew();
 
 			result.filterParams.append( IsStruct( extraFilter.filter ) ? extraFilter.filter : extraFilter.filterParams );
 			result.filter = mergeFilters(

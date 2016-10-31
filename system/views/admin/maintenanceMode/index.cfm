@@ -1,6 +1,6 @@
 <cfscript>
 	formId        = "maintenance-mode-settings";
-	savedSettings = prc.settings ?: {};
+	savedSettings = prc.settings ?: structNew();
 </cfscript>
 
 <cfoutput>

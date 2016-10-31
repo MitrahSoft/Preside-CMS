@@ -1,5 +1,5 @@
 <cfscript>
-	language            = prc.language ?: {};
+	language            = prc.language ?: structNew();
 	object              = rc.object ?: "";
 	id                  = rc.id ?: "";
 	recordLabel         = prc.recordLabel ?: "Unknown";

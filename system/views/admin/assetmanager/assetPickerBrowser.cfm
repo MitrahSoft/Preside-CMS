@@ -1,6 +1,6 @@
 <cfscript>
 	activeFolder = Trim( rc.folder  ?: "" );
-	allowedTypes = prc.allowedTypes ?: [];
+	allowedTypes = prc.allowedTypes ?: arrayNew(1);
 
 	rootFolder   = prc.rootFolderId ?: 0;
 	if ( not Len( activeFolder ) ) {

@@ -2,7 +2,7 @@
 	param name="args.objectName"       type="string"  default=(rc.object ?: '' );
 	param name="args.editRecordAction" type="string"  default=event.buildAdminLink( linkTo='datamanager.quickEditRecordAction', queryString="object=#args.objectName#" );
 	param name="args.validationResult" type="any"     default=( rc.validationResult ?: '' );
-	param name="args.record"           type="struct"  default=( prc.record ?: {} );
+	param name="args.record"           type="struct"  default=( prc.record ?: structNew() );
 
 	editRecordPrompt    = translateResource( uri="preside-objects.#args.objectName#:editRecord.prompt", defaultValue="" );
 	objectTitleSingular = translateResource( uri="preside-objects.#args.objectName#:title.singular"   , defaultValue=args.objectName );

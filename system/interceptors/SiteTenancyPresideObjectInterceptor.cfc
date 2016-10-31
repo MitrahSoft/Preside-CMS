@@ -6,7 +6,7 @@ component extends="coldbox.system.Interceptor" {
 	public void function configure() {}
 
 	public void function postReadPresideObject( event, interceptData ) {
-		var objectMeta = interceptData.objectMeta ?: {};
+		var objectMeta = interceptData.objectMeta ?: structNew();
 
 		objectMeta.siteTemplates = objectMeta.siteTemplates ?: _getSiteTemplateForObject( objectMeta.name );
 		objectMeta.siteFiltered  = objectMeta.siteFiltered ?: false;
@@ -18,7 +18,7 @@ component extends="coldbox.system.Interceptor" {
 
 	public void function prePrepareObjectFilter( event, interceptData ) {
 		if ( _objectIsUsingSiteTenancy( interceptData.objectName ?: "" ) ) {
-			interceptData.extraFilters = interceptData.extraFilters ?: [];
+			interceptData.extraFilters = interceptData.extraFilters ?: arrayNew(1);
 			interceptData.extraFilters.append( { filter = { "#interceptData.objectName#.site" = event.getSiteId() } } );
 		}
 	}
@@ -32,7 +32,7 @@ component extends="coldbox.system.Interceptor" {
 
 	public void function preInsertObjectData( event, interceptData ) {
 		if ( _objectIsUsingSiteTenancy( interceptData.objectName ?: "" ) ) {
-			interceptData.data      = interceptData.data      ?: {};
+			interceptData.data      = interceptData.data      ?: structNew();
 			interceptData.data.site = interceptData.data.site ?: event.getSiteId();
 		}
 	}

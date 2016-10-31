@@ -4,7 +4,7 @@ component output=false {
 
 	private struct function prepareMessage( event, rc, prc, args={} ) output=false {
 		var topic = args.topic ?: "";
-		var data  = args.data  ?: {};
+		var data  = args.data  ?: structNew();
 
 
 		if ( Len( Trim( args.notificationId ?: "" ) ) ) {

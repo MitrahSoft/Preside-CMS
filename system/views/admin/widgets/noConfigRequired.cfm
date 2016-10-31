@@ -1,5 +1,5 @@
 <cfscript>
-	widget      = args.widget ?: {};
+	widget      = args.widget ?: structNew();
 	widgetTitle = translateResource( widget.title ?: "", widget.title ?: "" );
 </cfscript>
 

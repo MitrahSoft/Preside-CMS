@@ -7,7 +7,7 @@
 	#renderView( view="/admin/datamanager/_editRecordForm", args={
 		  object           = "site"
 		, id               = rc.id      ?: ""
-		, record           = prc.record ?: {}
+		, record           = prc.record ?: structNew()
 		, editRecordAction = event.buildAdminLink( linkTo='sites.editSiteAction' )
 		, cancelAction     = prc.cancelAction
 	} )#

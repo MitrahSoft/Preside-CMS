@@ -1,7 +1,7 @@
 <cfscript>
 	formId = "editForm-" & CreateUUId();
 	formAction = event.buildAdminLink( 'formbuilder.editFormAction' );
-	theForm    = prc.form ?: {};
+	theForm    = prc.form ?: structNew();
 </cfscript>
 
 <cfoutput>

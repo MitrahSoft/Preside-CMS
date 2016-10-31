@@ -356,16 +356,16 @@ component displayName="Preside Object View Service" {
 			return true;
 		}
 
-		if ( IsSimpleValue( arguments.filter.page       ?: [] ) && arguments.filter.page       == currentPageId ) {
+		if ( IsSimpleValue( arguments.filter.page       ?: arrayNew(1) ) && arguments.filter.page       == currentPageId ) {
 			return true;
 		}
-		if ( IsSimpleValue( arguments.filterParams.page ?: [] ) && arguments.filterParams.page == currentPageId ) {
+		if ( IsSimpleValue( arguments.filterParams.page ?: arrayNew(1) ) && arguments.filterParams.page == currentPageId ) {
 			return true;
 		}
-		if ( IsSimpleValue( arguments.filter.id         ?: [] ) && arguments.filter.id         == currentPageId ) {
+		if ( IsSimpleValue( arguments.filter.id         ?: arrayNew(1) ) && arguments.filter.id         == currentPageId ) {
 			return true;
 		}
-		if ( IsSimpleValue( arguments.filterParams.id   ?: [] ) && arguments.filterParams.id   == currentPageId ) {
+		if ( IsSimpleValue( arguments.filterParams.id   ?: arrayNew(1) ) && arguments.filterParams.id   == currentPageId ) {
 			return true;
 		}
 

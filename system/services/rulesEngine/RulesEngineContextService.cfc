@@ -57,7 +57,7 @@ component displayName="RulesEngine Context Service" {
 		var validContexts = Duplicate( arguments.parentContexts );
 
 		for( var parentContext in arguments.parentContexts ) {
-			var subContexts   = contexts[ parentContext ].subcontexts ?: [];
+			var subContexts   = contexts[ parentContext ].subcontexts ?: arrayNew(1);
 			for( var subContext in subContexts ) {
 				validContexts.append( listValidExpressionContextsForParentContexts( [ subContext ] ), true );
 			}

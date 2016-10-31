@@ -8,7 +8,7 @@
 			  formName          = "taskmanager.configuration"
 			, context           = "admin"
 			, formId            = formId
-			, savedData         = prc.configuration ?: {}
+			, savedData         = prc.configuration ?: structNew()
 			, validationResult  = rc.validationResult ?: ""
 		)#
 

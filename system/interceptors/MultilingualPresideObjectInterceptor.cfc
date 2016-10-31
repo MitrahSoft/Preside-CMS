@@ -10,7 +10,7 @@ component extends="coldbox.system.Interceptor" output=false {
 	public void function postReadPresideObjects( event, interceptData ) {
 		if ( featureService.isFeatureEnabled( "multilingual" ) ) {
 			multilingualPresideObjectService.addTranslationObjectsForMultilingualEnabledObjects(
-				objects = ( interceptData.objects ?: {} )
+				objects = ( interceptData.objects ?: structNew() )
 			);
 		}
 	}

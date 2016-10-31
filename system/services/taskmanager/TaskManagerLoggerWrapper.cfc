@@ -25,7 +25,7 @@ component displayName="TaskManager Logger Wrapper" {
 		if ( loggingMethods.findNoCase( arguments.methodName ) ) {
 			var args = {
 				  message   = arguments.methodArgs[1] ?: ( arguments.methodArgs.message   ?: "" )
-				, extraInfo = arguments.methodArgs[2] ?: ( arguments.methodArgs.extraInfo ?: {} )
+				, extraInfo = arguments.methodArgs[2] ?: ( arguments.methodArgs.extraInfo ?: structNew() )
 			};
 			args.extraInfo.taskRunId      = _getTaskRunId();
 			args.extraInfo.taskHistoryDao = _getTaskHistoryDao();

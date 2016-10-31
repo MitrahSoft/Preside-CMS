@@ -7,7 +7,7 @@
 	#renderView( view="/admin/datamanager/_editRecordForm", args={
 		  object           = "security_group"
 		, id               = rc.id      ?: ""
-		, record           = prc.record ?: {}
+		, record           = prc.record ?: structNew()
 		, editRecordAction = event.buildAdminLink( linkTo='userManager.editGroupAction' )
 		, cancelAction     = event.buildAdminLink( linkTo='usermanager.groups' )
 	} )#

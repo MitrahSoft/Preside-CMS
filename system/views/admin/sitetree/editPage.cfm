@@ -22,7 +22,7 @@
 	canSortChildren         = prc.canSortChildren         ?: false;
 	canManagePagePerms      = prc.canManagePagePerms      ?: false;
 	canActivate             = prc.canActivate             ?: false;
-	translations            = prc.translations            ?: [];
+	translations            = prc.translations            ?: arrayNew(1);
 	translateUrlBase        = event.buildAdminLink( linkTo="sitetree.translatePage", queryString="id=#pageId#&language=" );
 
 	backToTreeLink  = prc.backToTreeLink  ?: "";

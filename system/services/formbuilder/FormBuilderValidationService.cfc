@@ -33,7 +33,7 @@ component {
 
 		for( var item in items ) {
 			if ( IsBoolean( item.type.isFormField ?: "" ) && item.type.isFormField ) {
-				var config   = item.configuration ?: {};
+				var config   = item.configuration ?: structNew();
 				var itemType = item.type.id ?: "";
 
 				rules.append( getStandardRulesForFormField( argumentCollection=config ), true );

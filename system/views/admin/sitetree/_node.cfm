@@ -65,7 +65,7 @@
 		hasDropdown = hasDeletePagePermission || hasSortPagesPermission || hasManagePermsPermission || hasPageHistoryPermission;
 
 		selected          = rc.selected ?: "";
-		selectedAncestors = prc.selectedAncestors ?: [];
+		selectedAncestors = prc.selectedAncestors ?: arrayNew(1);
 		isSelected        = args.id == selected;
 		isOpen            = !isSelected && selectedAncestors.find( args.id );
 

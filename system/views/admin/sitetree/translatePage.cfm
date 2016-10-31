@@ -3,7 +3,7 @@
 	pageId                 = rc.id ?: "";
 	currentLanguageId      = rc.language ?: "";
 	version                = rc.version ?: "";
-	translations           = prc.translations ?: [];
+	translations           = prc.translations ?: arrayNew(1);
 	translateUrlBase       = event.buildAdminLink( linkTo="sitetree.translatePage", queryString="id=#pageId#&language=" );
 	pageTypeObjectName     = prc.pageTypeObjectName     ?: "page";
 	pageIsMultilingual     = prc.pageIsMultilingual     ?: false;
@@ -54,7 +54,7 @@
 			, mergeWithFormName = prc.mergeFormName ?: ""
 			, context           = "admin"
 			, formId            = formId
-			, savedData         = prc.savedTranslation ?: {}
+			, savedData         = prc.savedTranslation ?: structNew()
 			, validationResult  = rc.validationResult ?: ""
 		)#
 

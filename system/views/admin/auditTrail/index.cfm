@@ -1,5 +1,5 @@
 <cfscript>
-	logs        = prc.logs    ?: [];
+	logs        = prc.logs    ?: arrayNew(1);
 	dateFrom    = rc.dateFrom ?: "";
 	dateTo      = rc.dateTo   ?: "";
 	user        = rc.user     ?: "";

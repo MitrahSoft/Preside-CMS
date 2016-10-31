@@ -447,7 +447,7 @@ component output=false singleton=true {
 	private struct function _findColumnRelationship( required string objectName, required string columnName ) output=false {
 		var found = {};
 		var relationships = _getRelationships();
-		relationships = relationships[ objectName ] ?: {};
+		relationships = relationships[ objectName ] ?: structNew();
 
 		for( var foreignObj in relationships ){
 			for( var join in relationships[ foreignObj ] ) {

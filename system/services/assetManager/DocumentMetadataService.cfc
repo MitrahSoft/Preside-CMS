@@ -31,7 +31,7 @@ component displayName="Document metadata service" {
 	public struct function getMetaData( required any fileContent ) {
 		var result = _parse( fileContent = arguments.fileContent, includeText = false );
 
-		return result.metadata ?: {};
+		return result.metadata ?: structNew();
 	}
 
 	/**

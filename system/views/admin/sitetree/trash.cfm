@@ -5,7 +5,7 @@
 	prc.pageTitle = translateResource( uri="cms:sitetree.trash", data=[ site.name ?: "" ] );
 	prc.pageSubTitle = translateResource( uri="cms:sitetree.trash.subtitle" );
 
-	treeTrash     = prc.treeTrash ?: [];
+	treeTrash     = prc.treeTrash ?: arrayNew(1);
 </cfscript>
 
 <cfoutput>

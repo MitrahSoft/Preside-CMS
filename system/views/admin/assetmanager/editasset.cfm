@@ -16,11 +16,11 @@
 	saveBtnTitle = translateResource( "cms:assetManager.add.asset.form.save.button" );
 	cancelBtnTitle = translateResource( "cms:assetManager.add.asset.form.cancel.button" );
 
-	permissionContext = prc.permissionContext ?: [];
+	permissionContext = prc.permissionContext ?: arrayNew(1);
 	hasDeletePermission  = hasCmsPermission( permissionKey="assetmanager.assets.delete" , context="assetmanagerfolder", contextKeys=permissionContext );
 	hasDownloadPermission  = hasCmsPermission( permissionKey="assetmanager.assets.download" , context="assetmanagerfolder", contextKeys=permissionContext );
 	canTranslate       = prc.canTranslate      ?:false;
-	assetTranslations  = prc.assetTranslations ?: [];
+	assetTranslations  = prc.assetTranslations ?: arrayNew(1);
 	translateUrlBase   = event.buildAdminLink( linkTo="assetManager.translateAssetRecord", queryString="object=asset&id=#assetId#&language=" );
 </cfscript>
 

@@ -296,13 +296,13 @@ component displayName="System configuration service" {
 
 		return _getFormsService().createForm( basedOn=fullFormName, generator=function( definition ){
 			var rawForm = definition.getRawDefinition();
-			var tabs    = rawForm.tabs ?: [];
+			var tabs    = rawForm.tabs ?: arrayNew(1);
 
 			for( var tab in tabs ) {
-				var fieldsets = tab.fieldsets ?: [];
+				var fieldsets = tab.fieldsets ?: arrayNew(1);
 
 				for ( var fieldset in tab.fieldsets ) {
-					var fields = fieldset.fields ?: [];
+					var fields = fieldset.fields ?: arrayNew(1);
 
 					for( var field in fields ) {
 						definition.modifyField( name=field.name ?: "", fieldset=fieldset.id ?: "", tab=tab.id ?: "", required=false );

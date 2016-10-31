@@ -3,7 +3,7 @@
 	param name="args.folderTitle"    type="string";
 	param name="args.isSystemFolder" type="boolean" default=false;
 
-	permissionContext = prc.permissionContext ?: [];
+	permissionContext = prc.permissionContext ?: arrayNew(1);
 
 	hasAddFolderPermission         = !args.isSystemFolder && hasCmsPermission( permissionKey="assetmanager.folders.add"               , context="assetmanagerfolder", contextKeys=permissionContext );
 	hasDeleteFolderPermission      = !args.isSystemFolder && args.folderTitle != "$root" && hasCmsPermission( permissionKey="assetmanager.folders.delete", context="assetmanagerfolder", contextKeys=permissionContext );

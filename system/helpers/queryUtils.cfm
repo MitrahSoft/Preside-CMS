@@ -20,7 +20,7 @@
 	<cfargument name="columns" type="string" required="false" default="#arguments.qry.columnList#" />
 
 	<cfscript>
-		var arr    = ArrayNew(1);
+		var arr    = arrayNew(1);
 		var cols   = ListToArray( arguments.columns );
 		var row    = "";
 		var col    = "";

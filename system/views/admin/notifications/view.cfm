@@ -1,5 +1,5 @@
 <cfscript>
-	notification = prc.notification ?: {};
+	notification = prc.notification ?: structNew();
 </cfscript>
 
 <cfoutput>

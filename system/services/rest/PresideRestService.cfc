@@ -202,7 +202,7 @@ component {
 	public void function processResponse( required any restRequest, required any restResponse, required any requestContext ) {
 		_dealWithEtags( arguments.restRequest, arguments.restResponse, arguments.requestContext );
 
-		var headers = restResponse.getHeaders() ?: {};
+		var headers = restResponse.getHeaders() ?: structNew();
 		for( var headerName in headers ) {
 			requestContext.setHttpHeader( name=headerName, value=headers[ headerName ] );
 		}
@@ -222,7 +222,7 @@ component {
 
 	public struct function getResourceForUri( required string api, required string resourcePath ) {
 		var apis         = _getApis();
-		var apiResources = apis[ api ] ?: [];
+		var apiResources = apis[ api ] ?: arrayNew(1);
 
 		for( var resource in apiResources ) {
 			if ( ReFindNoCase( resource.uriPattern, arguments.resourcePath ) ) {

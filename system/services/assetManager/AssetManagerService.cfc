@@ -834,7 +834,7 @@ component displayName="AssetManager Service" {
 	public array function listTypesForGroup( required string groupName ) {
 		var groups = _getGroups();
 
-		return groups[ arguments.groupName ] ?: [];
+		return groups[ arguments.groupName ] ?: arrayNew(1);
 	}
 
 	public query function getAsset( required string id, array selectFields=[], boolean throwOnMissing=false ) {
@@ -1214,7 +1214,7 @@ component displayName="AssetManager Service" {
 				assetBinary = _applyAssetTransformation(
 					  assetBinary          = assetBinary
 					, transformationMethod = transformation.method ?: ""
-					, transformationArgs   = transformation.args   ?: {}
+					, transformationArgs   = transformation.args   ?: structNew()
 					, filename             = filename              ?: ""
 				);
 
@@ -1639,7 +1639,7 @@ component displayName="AssetManager Service" {
 			folderId = dao.insertData( data );
 		}
 
-		var children = arguments.settings.children ?: {};
+		var children = arguments.settings.children ?: structNew();
 		for( var childId in children ){
 			_setupConfiguredSystemFolder( ListAppend( arguments.id, childId, "." ), arguments.settings.children[ childId ], folderId );
 		}
@@ -1659,7 +1659,7 @@ component displayName="AssetManager Service" {
 		var configured = _getConfiguredDerivatives();
 
 		if ( StructKeyExists( configured, arguments.derivativeName ) ) {
-			return configured[ arguments.derivativeName ].transformations ?: [];
+			return configured[ arguments.derivativeName ].transformations ?: arrayNew(1);
 		}
 
 		throw(

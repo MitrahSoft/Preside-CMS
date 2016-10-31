@@ -3,7 +3,7 @@
 	inputId      = args.id           ?: "";
 	inputClass   = args.class        ?: "";
 	defaultValue = args.defaultValue ?: "";
-	permissions  = args.permissions  ?: ArrayNew(1);
+	permissions  = args.permissions  ?: arrayNew(1);
 
 	value  = event.getValue( name=inputName, defaultValue=defaultValue );
 	if ( not IsSimpleValue( value ) ) {

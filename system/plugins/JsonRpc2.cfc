@@ -53,7 +53,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 		prc._jsonRpc2Request = {
 			  id     : parsedInput.id ?: NullValue()
 			, method : parsedInput.method
-			, params : parsedInput.params ?: []
+			, params : parsedInput.params ?: arrayNew(1)
 		};
 
 		return true;
@@ -79,7 +79,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 	public any function getRequestParams() output=false {
 		var rq = getJsonRpcRequest();
 
-		return rq.params ?: [];
+		return rq.params ?: arrayNew(1);
 	}
 
 	public any function getRequestMethod() output=false {

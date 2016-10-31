@@ -2,7 +2,7 @@
 <cfparam name="args.id"           type="string" />
 <cfparam name="args.asset_folder" type="string" />
 <cfscript>
-	permissionContext = prc.permissionContext ?: [];
+	permissionContext = prc.permissionContext ?: arrayNew(1);
 
 	hasEditPermission  = hasCmsPermission( permissionKey="assetmanager.assets.edit" , context="assetmanagerfolder", contextKeys=permissionContext );
 	hasDeletePermission  = hasCmsPermission( permissionKey="assetmanager.assets.delete" , context="assetmanagerfolder", contextKeys=permissionContext );

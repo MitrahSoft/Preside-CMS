@@ -1,5 +1,5 @@
 <cfscript>
-	record = prc.record ?: {};
+	record = prc.record ?: structNew();
 	linkType = record.type ?: "sitetreelink";
 
 	validationResult = rc.validationResult ?: "";

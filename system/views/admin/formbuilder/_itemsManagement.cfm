@@ -1,5 +1,5 @@
 <cfscript>
-	items = args.items ?: [];
+	items = args.items ?: arrayNew(1);
 </cfscript>
 
 <cfoutput>

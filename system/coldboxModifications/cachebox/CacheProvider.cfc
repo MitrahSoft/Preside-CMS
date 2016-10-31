@@ -7,7 +7,7 @@ component output=false extends="coldbox.system.cache.providers.CacheBoxColdBoxPr
 		var prefx  = Trim( arguments.prefix );
 		var kys    = IsSimpleValue( arguments.keys ) ? ListToArray( arguments.keys ) : arguments.keys;
 
-		request[ _requestKey ] = request[ _requestKey ] ?: {};
+		request[ _requestKey ] = request[ _requestKey ] ?: structNew();
 
 		for( var key in kys ){
 			result[ prefx & key ] = clear( prefx & key );

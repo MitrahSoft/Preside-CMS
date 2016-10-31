@@ -9,7 +9,7 @@
 			  formName          = "preside-objects.security_user.admin.edit.profile"
 			, context           = "admin"
 			, formId            = formId
-			, savedData         = prc.record ?: {}
+			, savedData         = prc.record ?: structNew()
 			, validationResult  = rc.validationResult ?: ""
 		)#
 

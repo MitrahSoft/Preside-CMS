@@ -27,7 +27,7 @@ component output=false singleton=true {
 				return locales[ arguments.bundle ];
 			}
 
-			return ArrayNew(1);
+			return arrayNew(1);
 		}
 
 		return locales._all;

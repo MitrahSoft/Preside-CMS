@@ -2,7 +2,7 @@
 	pageId           = rc.id ?: "";
 	validationResult = rc.validationResult ?: "";
 	configFormName   = prc.configFormName ?: "";
-	pageConfig       = prc.pageConfig     ?: {};
+	pageConfig       = prc.pageConfig     ?: structNew();
 
 	formId = "application-page-config-form-" & pageId;
 </cfscript>

@@ -1,6 +1,6 @@
 <cfscript>
 	selected     = args.selectedApplication ?: "cms";
-	applications = args.applications ?: [];
+	applications = args.applications ?: arrayNew(1);
 </cfscript>
 
 <cfoutput>

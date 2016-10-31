@@ -51,7 +51,7 @@ component {
 			return renderViewlet( event="formbuilder.core.successMessage", args={ formId=args.form } );
 		}
 
-		var validationRulesetName = formBuilderValidationService.getRulesetForFormItems( args.formItems ?: [] );
+		var validationRulesetName = formBuilderValidationService.getRulesetForFormItems( args.formItems ?: arrayNew(1) );
 		if ( validationRulesetName.len() ) {
 			args.validationJs = validationEngine.getJqueryValidateJs(
 				  ruleset         = validationRulesetName

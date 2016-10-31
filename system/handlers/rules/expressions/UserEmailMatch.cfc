@@ -16,7 +16,7 @@ component {
 		,          string  _stringOperator = "eq"
 		,          boolean _does           = true
 	) {
-		var details = payload.user ?: {};
+		var details = payload.user ?: structNew();
 
 		if ( details.isEmpty() ) {
 			return false;

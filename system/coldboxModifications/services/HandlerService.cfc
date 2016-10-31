@@ -35,7 +35,7 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 		var i                = 1;
 		var thisAbsolutePath = "";
 		var cleanHandler     = "";
-		var fileArray        = ArrayNew(1);
+		var fileArray        = arrayNew(1);
 		var files            = DirectoryList( arguments.directory, true, "query", "*.cfc" );
 		var actions          = "";
 
@@ -173,7 +173,7 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 				var invocationPath = arguments.siteTemplatesInvocationPath & ".#subDir.name#.handlers";
 
 				if ( DirectoryExists( handlersDir ) ) {
-					arguments.existingMappings[ subDir.name ] = arguments.existingMappings[ subDir.name ] ?: [];
+					arguments.existingMappings[ subDir.name ] = arguments.existingMappings[ subDir.name ] ?: arrayNew(1);
 					arguments.existingMappings[ subDir.name ].append( { invocationPath=invocationPath, handlers=getHandlerListing( ExpandPath( handlersDir ), invocationPath ) } );
 				}
 			}
@@ -188,7 +188,7 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 				methods[ method ] = true;
 			} );
 		}
-		var metaMethods = arguments.meta.functions ?: ArrayNew(1);
+		var metaMethods = arguments.meta.functions ?: arrayNew(1);
 		for( var method in metaMethods ) {
 			methods[ method.name ] = true;
 		}

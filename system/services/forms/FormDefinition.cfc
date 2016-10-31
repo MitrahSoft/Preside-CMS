@@ -59,9 +59,9 @@ component {
 			tabDefinition[ key ] = IsSimpleValue( arguments[ key ] ) ? arguments[ key ] : Duplicate( arguments[ key ] );
 		}
 
-		tabDefinition.fieldSets = tabDefinition.fieldSets ?: [];
+		tabDefinition.fieldSets = tabDefinition.fieldSets ?: arrayNew(1);
 
-		raw.tabs = raw.tabs ?: [];
+		raw.tabs = raw.tabs ?: arrayNew(1);
 		raw.tabs.append( tabDefinition );
 
 		return this;
@@ -78,7 +78,7 @@ component {
 	public any function deleteTab( required string id ) {
 		var raw     = _getRawDefinition();
 		var args    = arguments;
-		var rawTabs = raw.tabs ?: [];
+		var rawTabs = raw.tabs ?: arrayNew(1);
 		raw.tabs = rawTabs.filter( function( tab ){
 			return ( tab.id ?: "" ) != args.id;
 		} );
@@ -122,9 +122,9 @@ component {
 				fieldset[ key ] = IsSimpleValue( arguments[ key ] ) ? arguments[ key ] : Duplicate( arguments[ key ] );
 			}
 		}
-		fieldset.fields = fieldset.fields ?: [];
+		fieldset.fields = fieldset.fields ?: arrayNew(1);
 
-		_tab.fieldsets = _tab.fieldsets ?: [];
+		_tab.fieldsets = _tab.fieldsets ?: arrayNew(1);
 		_tab.fieldsets.append( fieldset );
 
 		return this;
@@ -190,7 +190,7 @@ component {
 		var _fieldset = _getFieldset( id=arguments.fieldset, tab=arguments.tab, createIfNotExists=true );
 		var field    = {};
 
-		_fieldset.fields = _fieldset.fields ?: [];
+		_fieldset.fields = _fieldset.fields ?: arrayNew(1);
 
 		for( var key in arguments ) {
 			if ( !ArrayFindNoCase( [ "fieldset", "tab" ], key ) ) {
@@ -254,7 +254,7 @@ component {
 	private struct function _getTab( required string id, required boolean createIfNotExists ) {
 		var raw = _getRawDefinition();
 
-		raw.tabs = raw.tabs ?: [];
+		raw.tabs = raw.tabs ?: arrayNew(1);
 
 		for( var tab in raw.tabs ) {
 			if ( ( tab.id ?: "" ) == arguments.id ) {
@@ -274,7 +274,7 @@ component {
 	private struct function _getFieldset( required string id, required string tab, required boolean createIfNotExists ) {
 		var _tab = _getTab( id=arguments.tab, createIfNotExists=arguments.createIfNotExists );
 
-		_tab.fieldsets = _tab.fieldsets ?: [];
+		_tab.fieldsets = _tab.fieldsets ?: arrayNew(1);
 
 		for( var fieldset in _tab.fieldsets ) {
 			if ( ( fieldset.id ?: "" ) == arguments.id ) {
@@ -294,7 +294,7 @@ component {
 	private struct function _getField( required string name, required string fieldset, required string tab, required boolean createIfNotExists ) {
 		var _fieldset = _getFieldset( id=arguments.fieldset, tab=arguments.tab, createIfNotExists=arguments.createIfNotExists );
 
-		_fieldset.fields = _fieldset.fields ?: [];
+		_fieldset.fields = _fieldset.fields ?: arrayNew(1);
 
 		for( var field in _fieldset.fields ) {
 			if ( ( field.name ?: "" ) == arguments.name ) {

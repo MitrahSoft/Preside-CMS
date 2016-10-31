@@ -1,5 +1,5 @@
 <cfscript>
-	tabs               = args.tabs          ?: [];
+	tabs               = args.tabs          ?: arrayNew(1);
 	content            = args.content       ?: "";
 	formName           = args.formName      ?: "";
 	validationJs       = args.validationJs  ?: "";

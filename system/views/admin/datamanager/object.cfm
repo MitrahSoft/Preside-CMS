@@ -10,7 +10,7 @@
 	prc.pageIcon        = "puzzle-piece";
 	prc.pageTitle       = objectTitle;
 	prc.pageSubTitle    = objectDescription;
-	batchEditableFields = prc.batchEditableFields       ?: {};
+	batchEditableFields = prc.batchEditableFields       ?: structNew();
 	canAdd              = prc.canAdd                    ?: false;
 	canDelete           = prc.canDelete                 ?: false;
 	canSort             = prc.canSort                   ?: false;

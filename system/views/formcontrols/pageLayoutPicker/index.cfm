@@ -4,7 +4,7 @@
 	inputClass   = args.class        ?: "";
 	placeholder  = args.placeholder  ?: "";
 	defaultValue = args.defaultValue ?: "";
-	layouts      = args.layouts    ?: ArrayNew(1);
+	layouts      = args.layouts    ?: arrayNew(1);
 
 	value  = event.getValue( name=inputName, defaultValue=defaultValue );
 	if ( not IsSimpleValue( value ) ) {

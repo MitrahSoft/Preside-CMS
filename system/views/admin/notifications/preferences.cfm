@@ -1,12 +1,12 @@
 <cfscript>
-	topics        = prc.topics ?: [];
-	subscriptions = prc.subscriptions ?: [];
+	topics        = prc.topics ?: arrayNew(1);
+	subscriptions = prc.subscriptions ?: arrayNew(1);
 	activeTab     = rc.topic ?: "general";
 
 	formId      = "preferences-form";
 	isTopicForm = Len( Trim( rc.topic ?: "" ) );
 	if ( isTopicForm ) {
-		savedSubscription = prc.subscription ?: {};
+		savedSubscription = prc.subscription ?: structNew();
 		formAction = event.buildAdminLink( linkTo='notifications.saveTopicPreferencesAction' );
 	} else {
 		formAction = event.buildAdminLink( linkTo='notifications.savePreferencesAction' );

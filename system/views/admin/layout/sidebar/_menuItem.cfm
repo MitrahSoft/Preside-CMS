@@ -3,7 +3,7 @@
 <cfparam name="args.title"        type="string"  default="" />
 <cfparam name="args.icon"         type="string"  default="" />
 <cfparam name="args.subMenu"      type="string"  default="" />
-<cfparam name="args.subMenuItems" type="array"   default="#ArrayNew(1)#" />
+<cfparam name="args.subMenuItems" type="array"   default="#arrayNew(1)#" />
 <cfparam name="args.gotoKey"      type="string"  default="" />
 
 <cfoutput>

@@ -5,7 +5,7 @@
 		activeFolder = rootFolder;
 	}
 
-	permissionContext   = prc.permissionContext ?: [];
+	permissionContext   = prc.permissionContext ?: arrayNew(1);
 </cfscript>
 
 <cfoutput>

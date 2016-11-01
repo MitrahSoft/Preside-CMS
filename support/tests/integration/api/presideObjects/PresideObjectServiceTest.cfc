@@ -2635,18 +2635,15 @@
 	</cffunction>
 
 	<cffunction name="_getDbTables" access="private" returntype="string" output="false">
-		<cfset var tables = "" />
-		<cfdbinfo type="tables" name="tables" datasource="#application.dsn#" />
+		<cfset var tables = new dbinfo( datasource="#application.dsn#" ).tables() />
 		<cfreturn ValueList( tables.table_name ) />
 	</cffunction>
 
 	<cffunction name="_getDbTableColumns" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
-		<cfset var columns = "" />
+		<cfset var columns = new dbinfo( datasource="#application.dsn#", table="#arguments.table#" ).columns() />
 		<cfset var col     = "" />
 		<cfset var cols    = {} />
-
-		<cfdbinfo type="columns" table="#arguments.table#" name="columns" datasource="#application.dsn#" />
 
 		<cfscript>
 			for( col in columns ){
@@ -2661,11 +2658,9 @@
 		<cfargument name="table" type="string" required="true" />
 
 		<cfscript>
-			var indexes = "";
+			var indexes = new dbinfo( datasource="#application.dsn#", table="#arguments.table#" ).index();
 			var index   = "";
 			var ixs     = {};
-
-			dbinfo( type="index", table="#arguments.table#", name="indexes", datasource="#application.dsn#" );
 
 			for( index in indexes ){
 				if ( index.index_name neq "PRIMARY" ) {
@@ -2688,15 +2683,13 @@
 		<cfargument name="table" type="string" required="true" />
 
 		<cfscript>
-			var keys        = "";
+			var keys        = new dbinfo( datasource="#application.dsn#", table="#arguments.table#" ).Foreignkeys();
 			var key         = "";
 			var constraints = {};
 			var rules       = {};
 
 			rules["0"] = "cascade";
 			rules["2"] = "set null";
-
-			cfdbinfo( type="Foreignkeys", table=arguments.table, datasource="#application.dsn#", name="keys" );
 
 			for( key in keys ){
 				constraints[ key.fk_name ] = {

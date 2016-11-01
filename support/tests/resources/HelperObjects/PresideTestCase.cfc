@@ -189,11 +189,9 @@
 
 	<cffunction name="_getDbTables" access="private" returntype="string" output="false">
 		<cfscript>
-			var tableInfo       = "";
+			var tableInfo       = new dbinfo( datasource="#application.dsn#" ).tables();
 			var tables          = [];
 			var reservedSchemas = [ "sys", "information_schema" ];
-
-			cfdbinfo( type="tables", name="tableInfo", datasource="#application.dsn#" );
 
 			for( var table in tableInfo ){
 				var isInReservedSchema = reservedSchemas.find( table.table_schem ?: "" );
@@ -211,15 +209,13 @@
 		<cfargument name="table" type="string" required="true" />
 
 		<cfscript>
-			var keys        = "";
+			var keys        = new dbinfo( datasource="#application.dsn#", table="#arguments.table#" ).Foreignkeys();
 			var key         = "";
 			var constraints = {};
 			var rules       = {};
 
 			rules["0"] = "cascade";
 			rules["2"] = "set null";
-
-			cfdbinfo( type="Foreignkeys", table="#arguments.table#", datasource="#application.dsn#", name="keys" );
 
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
@@ -250,11 +246,9 @@
 		<cfargument name="tableName" type="string" required="true" />
 
 		<cfscript>
-			var indexes = "";
+			var indexes = new dbinfo( datasource="#application.dsn#", table="#arguments.tableName#" ).index();
 			var index   = "";
 			var ixs     = {};
-
-			cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#application.dsn#" );
 
 			for( index in indexes ){
 				var isPrimaryKeyIndex = index.index_name == "PRIMARY" || ReFindNoCase( "^pk_", index.index_name ) || ReFindNoCase( "_pkey$", index.index_name );
@@ -278,14 +272,7 @@
 
 	<cffunction name="_getTableColumns" access="private" returntype="query" output="false">
 		<cfargument name="tableName" type="string" required="true" />
-
-		<cfscript>
-			var columns = "";
-
-			cfdbinfo( type="columns", name="columns", table="#arguments.tableName#", datasource="#application.dsn#" );
-
-			return columns;
-		</cfscript>
+			<cfreturn new dbinfo( datasource="#application.dsn#", table="#arguments.tableName#" ).columns()/>
 	</cffunction>
 
 	<cffunction name="_getDbAdapter" access="private" returntype="any" output="false">

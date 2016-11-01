@@ -34,11 +34,9 @@ component {
 	}
 
 	private boolean function _checkDsn() {
-		var info = "";
-		var dsn = "preside_test_suite";
-
+		var dsn      = "preside_test_suite";
 		try {
-			cfdbinfo( type="version", name="info", datasource="#dsn#" );
+			var info = new dbinfo( datasource="#dsn#" ).version();
 
 		} catch ( database e ) {
 			var isCommandLineExecuted = cgi.server_protocol == "CLI/1.0";
@@ -133,9 +131,7 @@ component {
 
 	private boolean function _dsnExists() {
 		try {
-			var info = "";
-
-			cfdbinfo( type="version", name="info", datasource="preside_test_suite" );
+			var info = new dbinfo( datasource="preside_test_suite" ).version();
 
 			return info.recordcount > 0;
 		} catch ( database e ) {

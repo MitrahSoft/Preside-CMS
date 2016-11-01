@@ -1,17 +1,17 @@
+<cf_presideparam name="args.controlName"    type="string" />
+<cf_presideparam name="args.title"          type="string" />
+<cf_presideparam name="args.savedPerms"     type="array" />
+<cf_presideparam name="args.inheritedPerms" type="array" />
+
 <cfscript>
-	param name="args.controlName"    type="string";
-	param name="args.title"          type="string";
-	param name="args.savedPerms"     type="array";
-	param name="args.inheritedPerms" type="array";
+	function savedPermsToValueList( required array savedPerms ) {
+		var permsList = ArrayNew(1);
 
-	function savedPermsToValueList( required array savedPerms ) output=false {
-		var valueList = [];
+		for( var perm in savedPerms ) {
+			ArrayAppend( permsList, perm.id );
+		}
 
-		savedPerms.each( function( perm ){
-			valueList.append( perm.id );
-		} );
-
-		return valueList.toList();
+		return ArrayToList(permsList);
 	}
 </cfscript>
 

@@ -24,7 +24,7 @@
 	// PUBLIC API METHODS
 		public array function scaffoldWidget( required string id, string name="",  string description="", string icon="fa-magic", string options="", string extension="", boolean createHandler=false ) {
 			var filesCreated = _ensureExtensionExists( arguments.extension );
-			var i18nProps    = StructNew( "linked" );
+			var i18nProps    = createObject("java", "java.util.LinkedHashMap").init();
 
 			if ( _getWidgetsService().widgetExists( arguments.id ) ) {
 				throw( type="scaffoldwidget.widget.exists", message="The '#arguments.id#' widget already exists" );
@@ -61,7 +61,7 @@
 
 		public array function scaffoldPageType( required string id, string name="", string pluralName=arguments.name, string description="", string icon="page-o" string fields="", string extension="", boolean createHandler=false ) {
 			var filesCreated = _ensureExtensionExists( arguments.extension );
-			var i18nProps    = StructNew( "linked" );
+			var i18nProps    = createObject("java", "java.util.LinkedHashMap").init();
 
 			if ( _getPageTypesService().pageTypeExists( arguments.id ) ) {
 				throw( type="scaffoldpagetype.pagetype.exists", message="The '#arguments.id#' page type already exists" );
@@ -134,7 +134,7 @@
 			, required string extension
 		) {
 			var filesCreated = _ensureExtensionExists( arguments.extension );
-			var i18nProps    = StructNew( "linked" );
+			var i18nProps    = createObject("java", "java.util.LinkedHashMap").init();
 
 			i18nProps[ "name" ]        = arguments.name;
 			i18nProps[ "description" ] = arguments.description;
@@ -468,7 +468,7 @@
 
 		public array function scaffoldRuleExpression( required string id, required string label, required string text, required string context, string extension="" ) {
 			var filesCreated = _ensureExtensionExists( arguments.extension );
-			var i18nProps    = StructNew( "linked" );
+			var i18nProps    = createObject("java", "java.util.LinkedHashMap").init();
 
 			var root            = _getScaffoldRoot( arguments.extension );
 			var filePath        = root & "handlers/rules/expressions/" & arguments.id & ".cfc";

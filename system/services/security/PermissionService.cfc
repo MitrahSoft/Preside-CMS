@@ -176,7 +176,7 @@ component displayName="Admin permissions service" {
 		if ( arguments.includeDefaults ) {
 			for( key in contextPerms ) {
 				_getDefaultGroupsForPermission( permissionKey=key ).each( function( group ){
-					if ( !contextPerms[ key ].granted.findNoCase( group ) ) {
+					if ( !contextPerms[ key ].granted.find( group ) ) {
 						contextPerms[ key ].granted.append( group );
 					}
 				} );

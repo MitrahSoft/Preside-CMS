@@ -12,35 +12,24 @@ component {
 
 // PUBLIC API METHODS
 	public query function getDatabaseVersion( required string dsn ) {
-		var db = "";
 
-		cfdbinfo( type="version", datasource=arguments.dsn, name="db" );
-
-		return db;
+		return new dbinfo( datasource="#arguments.dsn#" ).version();
 	}
 
 	public query function getTableInfo( required string tableName, required string dsn ) {
-		var table = "";
 
-		cfdbinfo( type="tables", name="table", pattern="#arguments.tableName#", datasource="#arguments.dsn#" );
-
-		return table;
+		return new dbinfo( datasource="#arguments.dsn#", pattern="#arguments.tableName#" ).tables();
 	}
 
 	public query function getTableColumns( required string tableName, required string dsn ) {
-		var columns = "";
 
-		cfdbinfo( type="columns", name="columns", table=arguments.tableName, datasource=arguments.dsn );
-
-		return columns;
+		return new dbinfo( datasource="#arguments.dsn#", table="#arguments.tableName#" ).columns();
 	}
 
 	public struct function getTableIndexes( required string tableName, required string dsn ) {
-		var indexes = "";
+		var indexes = new dbinfo( datasource="#arguments.dsn#", table="#arguments.tableName#" ).index();
 		var index   = "";
 		var ixs     = {};
-
-		cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#arguments.dsn#" );
 
 		for( index in indexes ){
 			if ( Len( Trim( index.index_name ) ) && index.index_name != "PRIMARY" ) {
@@ -59,7 +48,7 @@ component {
 	}
 
 	public struct function getTableForeignKeys( required string tableName, required string dsn ) {
-		var keys        = "";
+		var keys        = new dbinfo( datasource="#arguments.dsn#", table="#arguments.tableName#" ).foreignKeys();
 		var key         = "";
 		var constraints = {};
 		var rules       = {};
@@ -67,7 +56,6 @@ component {
 		rules["0"] = "cascade";
 		rules["2"] = "set null";
 
-		cfdbinfo( type="foreignKeys", table=arguments.tableName, datasource="#arguments.dsn#", name="keys" );
 		for( key in keys ){
 			constraints[ key.fk_name ] = {
 				  pk_table  = key.pktable_name

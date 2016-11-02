@@ -38,9 +38,12 @@ component displayname="Native Image Manipulation Service" {
 		var currentAspectRatio = 0;
 
 		try {
-
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &listLast( arguments.filename, "." );
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			currentImageInfo = ImageInfo( image );
+			fileWrite( tmpFilePath, arguments.asset );
+			image = ImageNew(tmpFilePath);
+			fileDelete( tmpFilePath );
 
 		} catch ( "java.io.IOException" e ) {
 			throw( type="AssetTransformer.resize.notAnImage" );
@@ -107,6 +110,11 @@ component displayname="Native Image Manipulation Service" {
 
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			imageInfo = ImageInfo( image );
+
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &listLast( arguments.filename, "." );
+			fileWrite( tmpFilePath, arguments.asset );
+			image = ImageNew(tmpFilePath);
+			fileDelete( tmpFilePath );
 
 		} catch ( "java.io.IOException" e ) {
 			throw( type="AssetTransformer.shrinkToFit.notAnImage" );

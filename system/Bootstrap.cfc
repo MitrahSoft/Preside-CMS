@@ -27,7 +27,7 @@ component {
 		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
 		this.passArrayByReference                    = true;
 		this.serialization.preservecaseforstructKey  = true;
-		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar" ],loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml" };
+		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar", _getPresideRoot() & "\system\services\qrcodes\lib\" ],loadColdFusionClassPath = true, reloadOnChange= false };
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
 	}

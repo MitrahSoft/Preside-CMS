@@ -52,7 +52,6 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				expect( log[1] ).toBe( {
 					  id      = recordId
 					, isDraft = true
-					, title   = content
 				} );
 
 			} );
@@ -79,7 +78,6 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				expect( log[1] ).toBe( {
 					  id      = recordId
 					, isDraft = true
-					, title   = content
 				} );
 
 			} );

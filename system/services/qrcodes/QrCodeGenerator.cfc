@@ -15,7 +15,7 @@ component {
 
 // PUBLIC API
 	public binary function generateQrCode( required string input, numeric size=125, string imageType="gif" ) {
-		var qrCode = CreateObject( "java", "net.glxn.qrgen.javase.QRCode", _getLibPath() );
+		var qrCode = CreateObject( "java", "net.glxn.qrgen.javase.QRCode" );
 		var binary = qrCode.from( arguments.input )
 		      .to( _getImageTypeConstant( arguments.imageType ) )
 		      .withSize( arguments.size, arguments.size )
@@ -23,7 +23,7 @@ component {
 		      .toByteArray();
 
 		if ( arguments.imageType == "jpg" ) {
-			FileWrite( "/resources/qrcodes/helloWorld.jpg", binary );
+			FileWrite( expandPath( "/resources/qrcodes/helloWorld.jpg" ), binary );
 		}
 
 		return binary;
@@ -40,7 +40,7 @@ component {
 	}
 
 	private string function _getImageTypeConstant( required string imageType ) {
-		var imageTypes = CreateObject( "java", "net.glxn.qrgen.core.image.ImageType", _getLibPath() );
+		var imageTypes = CreateObject( "java", "net.glxn.qrgen.core.image.ImageType" );
 
 		switch( arguments.imageType ) {
 			case "jpg":

@@ -67,8 +67,9 @@ component {
 	 */
 	public string function getDefaultEvent( string applicationId=getDefaultApplication() ) {
 		var apps = _getConfiguredApplications();
+		var defaultEvent = structKeyExists(apps, arguments.applicationid) ? apps[ arguments.applicationid ].defaultEvent : "";
 
-		return apps[ arguments.applicationId ].defaultEvent ?: "";
+		return defaultEvent;
 	}
 
 	/**
@@ -79,9 +80,10 @@ component {
 	 * @applicationId.hint The ID of the application who's layout you wish to get. If not supplied, the default application will be used.
 	 */
 	public string function getLayout( string applicationId=getDefaultApplication() ) {
-		var apps = _getConfiguredApplications();
-
-		return apps[ arguments.applicationId ].layout ?: "";
+		var apps   = _getConfiguredApplications();
+		var layout = structKeyExists(apps, arguments.applicationid) ? apps[ arguments.applicationid ].layout : "";
+		
+		return layout;
 	}
 
 	/**
@@ -120,11 +122,11 @@ component {
 
 			if ( applicationId.len() ) {
 				applications[ applicationId ] = {
-					  feature            = app.feature            ?: applicationId
-					, accessPermission   = app.accessPermission   ?: "#applicationId#.access"
-					, defaultEvent       = app.defaultEvent       ?: "admin.#applicationId#.index"
-					, activeEventPattern = app.activeEventPattern ?: "^admin\.#applicationId#.*"
-					, layout             = app.layout             ?: applicationId
+					  feature            = isdefined("app.feature")            ? app.feature : applicationId
+					, accessPermission   = isdefined("app.accessPermission")   ? app.accessPermission : "#applicationId#.access"
+					, defaultEvent       = isdefined("app.defaultEvent")       ? app.defaultEvent : "admin.#applicationId#.index"
+					, activeEventPattern = isdefined("app.activeEventPattern") ? app.activeEventPattern : "^admin\.#applicationId#.*"
+					, layout             = isdefined("app.layout")             ? app.layout : applicationId
 				};
 			}
 		}

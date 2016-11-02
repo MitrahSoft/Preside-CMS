@@ -8,7 +8,7 @@ component extends="testbox.system.BaseSpec"{
 		describe( "generateQrCode", function(){
 			it( "should produce a predictable barcode image binary from text input", function(){
 				var generated = generator.generateQrCode( "hello world" );
-				var expected  = FileReadBinary( "/resources/qrcodes/helloWorldDefaults.gif" );
+				var expected  = FileReadBinary( expandPath( "/resources/qrcodes/helloWorldDefaults.gif" ) );
 
 				expect( generated ).toBe( expected );
 
@@ -16,14 +16,14 @@ component extends="testbox.system.BaseSpec"{
 
 			it( "Should produce a square image with specified dimension size (pixels)", function(){
 				var generated = generator.generateQrCode( input="hello world", size=300 );
-				var expected  = FileReadBinary( "/resources/qrcodes/helloWorld300x300.gif" );
+				var expected  = FileReadBinary( expandPath( "/resources/qrcodes/helloWorld300x300.gif" ) );
 
 				expect( generated ).toBe( expected );
 			} );
 
 			it( "should produce a jpg when 'jpg' specified as image type", function(){
 				var generated = generator.generateQrCode( input="hello world", imageType="jpg" );
-				var expected  = FileReadBinary( "/resources/qrcodes/helloWorld.jpg" );
+				var expected  = FileReadBinary( expandPath( "/resources/qrcodes/helloWorld.jpg" ) );
 
 				expect( generated ).toBe( expected );
 			} );

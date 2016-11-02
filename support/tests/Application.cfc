@@ -14,7 +14,7 @@ component {
 	this.mappings['/preside']     = currentDir & "..\..\";
 	this.mappings['/coldbox']     = currentDir & "..\..\system\externals\coldbox-standalone-3.8.2\coldbox";
 	this.sessionmanagement        = true;
-	this.javaSettings             = {LoadPaths = [expandPath("..\..\system/services\encryption\bcrypt\lib\jbcrypt-0.3m.jar")], loadColdFusionClassPath = true, reloadOnChange= true, watchInterval = 100, watchExtensions = "jar,class,xml"};
+	this.javaSettings             = { LoadPaths = [ expandPath("..\..\system/services\encryption\bcrypt\lib\jbcrypt-0.3m.jar"), expandPath( "..\..\system/services\qrcodes\lib\" ) ], loadColdFusionClassPath = true, reloadOnChange= false };
 	setting requesttimeout="6000";
 	_loadDsn();
 

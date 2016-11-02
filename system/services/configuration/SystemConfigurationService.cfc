@@ -67,7 +67,7 @@ component displayName="System configuration service" {
 			return result.value;
 		}
 
-		return injected[ "#categoryName#.#settingName#" ] ?: defaultName;
+		return structKeyExists( injected, "#category#.#setting#" ) ? injected[ "#category#.#setting#" ] : defaultStr;
 	}
 
 	/**

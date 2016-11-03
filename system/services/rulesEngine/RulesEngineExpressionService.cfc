@@ -190,7 +190,7 @@ component displayName="RulesEngine Expression Service" {
 		, required any    validationResult
 	) {
 		var expression = _getRawExpression( arguments.expressionId, false );
-
+		var formFields = arguments.fields;
 		if ( expression.isEmpty() ) {
 			arguments.validationResult.setGeneralMessage( "The [#arguments.expressionId#] expression could not be found" );
 			return false;
@@ -205,7 +205,7 @@ component displayName="RulesEngine Expression Service" {
 			var field    = expression.fields[ fieldName ];
 			var required = IsBoolean( field.required ?: "" ) && field.required;
 
-			if ( required && IsEmpty( arguments.fields[ fieldName ] ?: "" ) ) {
+			if ( required && isNull( formFields[ fieldName ] ?: "" ) ) {
 				arguments.validationResult.setGeneralMessage( "The [#arguments.expressionId#] expression is missing one or more required fields" );
 				return false;
 			}

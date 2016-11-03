@@ -39,6 +39,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, user       = { subcontexts=[ "somethingelse" ] }
 					, page       = {}
 					, somethingelse = {}
+					, test = {}
 				};
 				var service  = _getService( contexts );
 

@@ -151,12 +151,12 @@ component {
 		
 		var readNonLifeCycleFunctions = function( meta ){			
 			var functions = structKeyExists( arguments.meta, "functions" ) ? arguments.meta.functions : [];
-			if ( arguments.meta.keyExists( "extends" ) ) {
+			if ( structKeyExists( arguments.meta, "extends" ) ) {
 				readNonLifeCycleFunctions( arguments.meta.extends );
 			}
 
 			for( var func in functions ) {
-				var functionName = func.name ?: "";
+				var functionName = func.name;
 				if ( Len( Trim( functionName ) ) && !ReFindNoCase( lifeCycleRegex, functionName ) ) {
 					actions[ functionName ] = true;
 				}

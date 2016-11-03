@@ -5,7 +5,7 @@ component extends="testbox.system.BaseSpec"{
 
 			it( "should read XMP metadata from an image file that has embedded XMP meta", function(){
 				var reader = new preside.system.services.assetManager.xmp.XmpMetaReader();
-				var testFile = FileReadBinary( "/resources/assetManager/xmptest.jpg" );
+				var testFile = FileReadBinary( expandpath("/resources/assetManager/xmptest.jpg") );
 				var expectedMeta = {
 					"CreateDate"                   = "2014-02-11T15:17:58Z",
 					"LegacyIPTCDigest"             = "FCE11F89C8B7C9782F346234075877EB",
@@ -31,14 +31,14 @@ component extends="testbox.system.BaseSpec"{
 
 			it( "should return an empty structure when the file has no XMP data embedded", function(){
 				var reader = new preside.system.services.assetManager.xmp.XmpMetaReader();
-				var testFile = FileReadBinary( "/resources/assetManager/testlandscape.jpg" );
+				var testFile = FileReadBinary( expandpath("/resources/assetManager/testlandscape.jpg") );
 
 				expect( reader.readMeta( testFile ) ).toBe( {} );
 			} );
 
 			it( "should return an empty structure when the file is not an image", function(){
 				var reader = new preside.system.services.assetManager.xmp.XmpMetaReader();
-				var testFile = FileReadBinary( "/resources/assetManager/testfile.txt" );
+				var testFile = FileReadBinary( expandpath("/resources/assetManager/testfile.txt") );
 
 				expect( reader.readMeta( testFile ) ).toBe( {} );
 			} );

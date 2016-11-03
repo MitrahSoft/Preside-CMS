@@ -45,7 +45,7 @@ component displayname="Native Image Manipulation Service" {
 			image = ImageNew(tmpFilePath);
 			fileDelete( tmpFilePath );
 
-		} catch ( "java.io.IOException" e ) {
+		} catch ( "application" e ) {
 			throw( type="AssetTransformer.resize.notAnImage" );
 		}
 
@@ -116,7 +116,7 @@ component displayname="Native Image Manipulation Service" {
 			image = ImageNew(tmpFilePath);
 			fileDelete( tmpFilePath );
 
-		} catch ( "java.io.IOException" e ) {
+		} catch ( "application" e ) {
 			throw( type="AssetTransformer.shrinkToFit.notAnImage" );
 		}
 
@@ -177,7 +177,7 @@ component displayname="Native Image Manipulation Service" {
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			imageInfo = ImageInfo( image );
 
-		} catch ( "java.io.IOException" e ) {
+		} catch ( "application" e ) {
 			throw( type="AssetTransformer.shrinkToFit.notAnImage" );
 		}
 

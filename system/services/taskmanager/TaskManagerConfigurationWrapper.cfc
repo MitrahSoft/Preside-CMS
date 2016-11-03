@@ -29,7 +29,7 @@ component displayName="TaskManager Configuration Wrapper" {
 
 		for( var dir in _getHandlerDirectories() ){
 			for( var file in [ "ScheduledTasks.cfc", "Tasks.cfc" ] ) {
-				var filePath = dir & "/" & file;
+				var filePath = expandPath( dir ) & "/" & file;
 				var handler  = LCase( ReReplace( file, "\.cfc$", "" ) );
 
 				if ( FileExists( filePath ) ) {

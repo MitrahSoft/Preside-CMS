@@ -106,8 +106,8 @@ component extends="testbox.system.BaseSpec"{
 						, requiredParameters	= { post=[] }
 						, parameterTypes      	= { post={} }
 					}],
-					"\api1" = [{
-						  handler    			= "\api1.ResourceX"
+					"/api1" = [{
+						  handler    			= "api1.ResourceX"
 						, tokens     			= [ "pattern", "id" ]
 						, uriPattern 			= "^/test/(.*?)/(.*?)/$"
 						, verbs      			= { post="post", get="get", delete="delete", put="putDataTest" }
@@ -115,30 +115,30 @@ component extends="testbox.system.BaseSpec"{
 						, parameterTypes 		= { delete={}, get={}, put={} }
 						
 					},{
-						  handler    			= "\api1.ResourceX"
+						  handler    			= "api1.ResourceX"
 						, tokens     			= [ "pattern" ]
 						, uriPattern 			= "^/test/(.*?)$"
 						, verbs      			= { post="post", get="get", delete="delete", put="putDataTest" }
 						, requiredParameters	= { delete=[], get=[], put=[] }
 						, parameterTypes 		= { delete={}, get={}, put={} }
 					}],
-					"\api1\subapi" = [{
-						  handler    			= "\api1\subapi.ParamAwareResource"
+					"/api1/subapi" = [{
+						  handler    			= "api1.subapi.ParamAwareResource"
 						, tokens     			= [ "param1" ]
 						, uriPattern 			= "^/my/paramaware/pattern/(.*?)$"
 						, verbs      			= { get="get" }
 						, requiredParameters	= { get=["param1", "x"] }
 						, parameterTypes      	= { get={param1="string", x="numeric", y="date", z="uuid"} }
 					},{
-						  handler    			= "\api1\subapi.TestResource"
+						  handler    			= "api1.subapi.TestResource"
 						, tokens     			= []
 						, uriPattern 			= "^/my/pattern/$"
 						, verbs      			= { get="get" }
 						, requiredParameters	= { get=[] }
 						, parameterTypes      	= { get={} }
 					}],
-					"\api2" = [{
-						  handler    			= "\api2.AnotherResource"
+					"/api2" = [{
+						  handler    			= "api2.AnotherResource"
 						, tokens     			= [ "pattern", "here" ]
 						, uriPattern 			= "^/another/matching/(.*?)/(.*?)$"
 						, verbs      			= { post="post" }

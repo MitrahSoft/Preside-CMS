@@ -75,7 +75,7 @@ component displayName="Preside Object View Service" {
 			}
 		}
 
-		var viewFilePath   = _getColdboxRenderer().locateView( arguments.view ) & ".cfm";
+		var viewFilePath   = expandPath( _getColdboxRenderer().locateView( arguments.view ) & ".cfm" );
 		var viewDetails    = _readView( arguments.presideObject, viewFilePath );
 		var selectDataArgs = Duplicate( arguments );
 		var data           = "";

@@ -228,7 +228,7 @@ component displayName="Website user action service" {
 
 // PRIVATE HELPERS
 	private boolean function _sessionsAreDisabled() {
-		var applicationSettings = getApplicationSettings( true );
+		var applicationSettings = getApplicationMetadata();
 
 		return !IsBoolean( applicationSettings.sessionManagement ?: "" ) || !applicationSettings.sessionManagement;
 	}

@@ -162,9 +162,9 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase"{
 					.$results( QueryNew('value') );
 
 				expect( configService.getSetting(
-					  category = "somecategory"
-					, setting  = "asetting"
-					, default  = "defaultResult"
+					  category   = "somecategory"
+					, setting    = "asetting"
+					, defaultStr = "defaultResult"
 				) ).toBe( "defaultResult");
 			} );
 

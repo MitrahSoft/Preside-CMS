@@ -61,7 +61,7 @@
 					, interceptorService = arguments.interceptorService
 					, featureService = mockFeatureService
 				);
-				var localCachebox      = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
+				var localCachebox      = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments[ "forceNewInstance" ] );
 				var mockRequestContext = getMockBox().createStub();
 
 				var dbInfoService  = new preside.system.services.database.DbInfoService();

@@ -78,7 +78,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 
 				definition.deleteTab( "anotherTab" );
 				definition.deleteTab( "tabtab" );
-				expect( definition.getRawDefinition() ).toBe( { tabs=[{ id="anotherTab", fieldsets=[] },{ id="mytab", fieldsets=[] },{ id="tab2", fieldsets=[] },{ id="tabtab", fieldsets=[] }] } );
+				expect( definition.getRawDefinition() ).toBe( { tabs=[{ id="mytab", fieldsets=[] },{ id="tab2", fieldsets=[] }] } );
 			} );
 
 			it( "should do nothing when the passed tab does not exist in the form", function(){
@@ -209,7 +209,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 
 				expect( definition.getRawDefinition() ).toBe({ tabs=[
 					  { id="test", fieldsets=[{id="test", fields=[]}]}
-					, { id="testtab2", fieldsets=[{id="testfieldset2", fields=[]}]}
+					, { id="testtab2", fieldsets=[]}
 				]});
 			} );
 
@@ -339,7 +339,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 
 				expect( definition.getRawDefinition() ).toBe({ tabs=[
 					  { id="test", fieldsets=[{id="test", fields=[{ name="testfield" }, { name="another.test" }]}]}
-					, { id="testtab2", fieldsets=[{id="testfieldset2", fields=[ { name="field1" }, { name="field2" } ]}]}
+					, { id="testtab2", fieldsets=[{id="testfieldset2", fields=[ { name="field2" } ]}]}
 				]});
 			} );
 

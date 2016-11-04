@@ -648,7 +648,7 @@ component displayName="Forms service" {
 
 		var rawDefinition = formDefinition.getRawDefinition();
 
-		if ( !Len( Trim( arguments.formName ) ) ) {
+		if ( !Len( Trim( arguments[ "formName" ] ) ) ) {
 			arguments.formName = _generateFormNameFromDefinition( rawDefinition );
 		}
 

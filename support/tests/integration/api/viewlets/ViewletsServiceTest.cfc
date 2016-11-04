@@ -79,6 +79,8 @@ component extends="testbox.system.BaseSpec"{
 					, "subfolder.someview"
 					, "templateHandler"
 					, "templateHandler.index"
+					, "templateHandler.test"
+					, "templatespecific.test"
 				] );
 			} );
 
@@ -99,6 +101,8 @@ component extends="testbox.system.BaseSpec"{
 					  "default.test"
 					, "subfolder.handler.test"
 					, "subfolder.secondlevel.test"
+					, "templateHandler.test"
+					, "templatespecific.test"
 				] );
 
 			} );

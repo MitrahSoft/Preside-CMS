@@ -249,7 +249,7 @@ component displayName="System configuration service" {
 		var autoDiscoverDirectories = _getAutoDiscoverDirectories();
 
 		for( var dir in autoDiscoverDirectories ) {
-			dir   = ReReplace( dir, "/$", "" );
+			dir   = expandPath( ReReplace( dir, "/$", "" ) );
 			var objects = DirectoryList( dir & objectsPath, false, "query", "*.xml" );
 
 			for ( var obj in objects ) {

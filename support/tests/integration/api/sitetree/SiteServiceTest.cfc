@@ -64,7 +64,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				var siteService = _getSiteService();
 
 				mockSessionStorage.$( "exists" ).$args( "_activeSite" ).$results( false );
-				mockSessionStorage.$( "setVar", NullValue() );
+				mockSessionStorage.$( "setVar", javaCast( "null", "" ) );
 
 				mockPermissionService.$( "hasPermission" ).$args( permissionKey="sites.navigate", context="site", contextKeys=[ sites[1] ] ).$results( true );
 				mockPermissionService.$( "hasPermission" ).$args( permissionKey="sites.navigate", context="site", contextKeys=[ sites[2] ] ).$results( true );

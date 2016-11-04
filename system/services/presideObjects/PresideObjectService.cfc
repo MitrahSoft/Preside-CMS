@@ -1127,9 +1127,9 @@ component displayName="Preside Object Service" {
 	 *
 	 */
 	public string function getObjectPropertyAttribute( required string objectName, required string propertyName, required string attributeName, string defaultValue="" ) autodoc=true {
-		var obj = _getObject( arguments.objectName );
-
-		return obj.meta.properties[ arguments.propertyName ][ arguments.attributeName ] ?: arguments.defaultValue;
+		var obj  = _getObject( arguments.objectName );
+		var attr = structKeyExists( obj.meta.properties, arguments.propertyName ) && structKeyExists( obj.meta.properties[ arguments.propertyName ], arguments.attributeName ) ? obj.meta.properties[ arguments.propertyName ][ arguments.attributeName ] : "";
+		return len( attr ) ? attr : arguments.defaultValue;
 	}
 
 

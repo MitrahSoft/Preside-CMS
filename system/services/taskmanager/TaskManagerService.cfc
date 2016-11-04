@@ -460,22 +460,20 @@ component displayName="Task Manager Service" {
 		var settings = _getSystemConfigurationService().getCategorySettings( "taskmanager" );
 		var enabled  = IsBoolean( settings.scheduledtasks_enabled ?: "" ) && settings.scheduledtasks_enabled;
 		var action   = enabled ? "update" : "delete";
-		var args     = {};
-
-		args.task = "PresideTaskManager_" & LCase( Hash( GetCurrentTemplatePath() ) );
+		var task     = "PresideTaskManager_" & LCase( Hash( GetCurrentTemplatePath() ) );
 
 		if ( enabled ) {
-			args.url       = _getScheduledTaskUrl( settings.site_context ?: "" );
-			args.startdate = "1900-01-01";
-			args.startTime = "00:00:00";
-			args.interval  = "30";
+			var port = cgi.server_port != 80 ? cgi.server_port : "";
 
-			if ( cgi.server_port != 80 ) {
-				args.port = cgi.server_port;
+			cfschedule( action=action, task=task, url=_getScheduledTaskUrl( settings.site_context ?: "" ), startdate="1900-01-01", startTime="00:00:00", interval="30", port=port );
+		}
+		else {
+			cfschedule( action="list", task=task, result="result" );
+
+			if( result.recordCount ) {
+				cfschedule( action=action, task=task );
 			}
-		};
-
-		cfschedule ( action=action, attributeCollection=args );
+		}
 	}
 
 	public array function getAllTaskDetails() {

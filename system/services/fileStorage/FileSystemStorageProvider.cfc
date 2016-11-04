@@ -273,7 +273,7 @@ component implements="preside.system.services.fileStorage.StorageProvider" displ
 			_trashDirectory &= "/";
 		}
 
-		_ensureDirectoryExists( expandpath(_trashDirectory) );
+		_ensureDirectoryExists( _trashDirectory );
 	}
 
 	private string function _getRootUrl(){

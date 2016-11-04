@@ -46,12 +46,12 @@ component {
 
 	public void function onRequestEnd() {
 		_invalidateSessionIfNotUsed();
-		_cleanupCookies();
+		// _cleanupCookies();
 	}
 
 	public void function onAbort() {
 		_invalidateSessionIfNotUsed();
-		_cleanupCookies();
+		// _cleanupCookies();
 	}
 
 	public boolean function onRequest() output=true {
@@ -401,7 +401,7 @@ component {
 				this.sessionTimeout = CreateTimeSpan( 0, 0, 0, 1 );
 			}
 
-			_removeSessionCookies();
+			// _removeSessionCookies();
 		}
 	}
 

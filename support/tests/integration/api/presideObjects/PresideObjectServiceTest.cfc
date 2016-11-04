@@ -2681,54 +2681,49 @@
 
 	<cffunction name="_getTableForeignKeys" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
-		<cfset getFkName = queryNew('')>
-		<!---It should be defined in BaseAdapter --->
 		<cfdbinfo type="Foreignkeys" table="#arguments.table#" name="keys" datasource="#application.dsn#" />
-		<cfif ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server">
-			<cfquery name="getFkName" dataSource = "#application.dsn#">
-				SELECT CONSTRAINT_NAME,TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = "preside_test" AND CONSTRAINT_TYPE = 'FOREIGN KEY'
-			</cfquery>
-		</cfif>
+
 		<cfscript>
 			var key         = "";
 			var fkName      = "";
 			var constraints = {};
 			var rules       = {};
-			rules["0"] = "cascade";
-			rules["2"] = "set null";
+			rules["0"]      = "cascade";
+			rules["2"]      = "set null";
+			var fk_value    = new Query();
 
-			if( ListFindNoCase( keys.columnList, "fk_name" ) ){
-				QueryAddColumn( getFkName, "constraint_name", arrayNew(1) );
-				QueryAddColumn( getFkName, "table_name", arrayNew(1) );
-
-				for( key in keys ){
-					QuerySetCell( getFkName, "constraint_name", key.fk_name, key.currentRow );
-					QuerySetCell( getFkName, "table_name", key.fktable_name, key.currentRow );
-				}
-			}
-
-			for( fkName in getFkName ) {
-				for( key in keys ) {
-					if( fkName.table_name eq key.fktable_name ){
-						constraints[ fkName.constraint_name ] = {
-							  pk_table  = arguments.table
-							, fk_table  = key.fktable_name
-							, pk_column = key.pkcolumn_name
-							, fk_column = key.fkcolumn_name
-						};
-
-						if ( StructKeyExists( rules, key.update_rule ) ) {
-							constraints[ fkName.constraint_name ].on_update = rules[ key.update_rule ];
-						} else {
-							constraints[ fkName.constraint_name ].on_update = "error";
-						}
-
-						if ( StructKeyExists( rules, key.delete_rule ) ) {
-							constraints[ fkName.constraint_name ].on_delete = rules[ key.delete_rule ];
-						} else {
-							constraints[ fkName.constraint_name ].on_delete = "error";
+			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
+				var sql       = _getDbAdapter().getForeignKeyName();
+				var getFkName = _getRunner().runSql( dsn = application.dsn, sql = sql );
+				QueryAddColumn( keys, "FK_NAME", arrayNew(1) );
+				QueryAddColumn( keys, "PKTABLE_NAME", arrayNew(1) );
+				for( fkName in getFkName ) {
+					for( key in keys ){
+						if( fkName.table_name eq key.fktable_name ) {
+							QuerySetCell( keys, "FK_NAME", fkName.constraint_name, keys.currentRow );
+							QuerySetCell( keys, "PKTABLE_NAME", arguments.table, keys.currentRow );
 						}
 					}
+				}
+			}
+			for( key in keys ){
+				constraints[ key.fk_name ] = {
+					  pk_table  = key.pktable_name
+					, fk_table  = key.fktable_name
+					, pk_column = key.pkcolumn_name
+					, fk_column = key.fkcolumn_name
+				};
+
+				if ( StructKeyExists( rules, key.update_rule ) ) {
+					constraints[ key.fk_name ].on_update = rules[ key.update_rule ];
+				} else {
+					constraints[ key.fk_name ].on_update = "error";
+				}
+
+				if ( StructKeyExists( rules, key.delete_rule ) ) {
+					constraints[ key.fk_name ].on_delete = rules[ key.delete_rule ];
+				} else {
+					constraints[ key.fk_name ].on_delete = "error";
 				}
 			}
 			return constraints;

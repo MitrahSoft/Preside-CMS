@@ -77,7 +77,7 @@ component extends="BaseAdapter" {
 		  required string  tableName
 		, required string  columnName
 		, required string  dbType
-		,          string  defaultValue
+		,          string  defaultValue  = ""
 		,          numeric maxLength     = 0
 		,          boolean nullable      = true
 		,          boolean primaryKey    = false
@@ -150,7 +150,9 @@ component extends="BaseAdapter" {
 	public string function getDropForeignKeySql( required string foreignKeyName, required string tableName) {
 		return "alter table #escapeEntity( arguments.tableName )# drop constraint #escapeEntity( arguments.foreignKeyName )#";
 	}
-
+	public string function getForeignKeyName() {
+		return "SELECT CONSTRAINT_NAME,TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_CATALOG = 'preside_test' AND CONSTRAINT_TYPE = 'FOREIGN KEY'";
+	}
 	public string function getDropIndexSql( required string indexName, required string tableName ) {
 		return "drop index #escapeEntity( arguments.tableName )#.#escapeEntity( arguments.indexName )#";
 	}

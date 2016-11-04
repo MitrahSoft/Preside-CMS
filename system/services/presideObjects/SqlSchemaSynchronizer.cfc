@@ -454,8 +454,14 @@ component {
 		var key     = "";
 		var adapter = _getAdapter( dsn );
 		var dropSql = "";
+		var Fk_name = QueryNew("");
 
-		keys = _getTableForeignKeys( tableName = arguments.primaryTableName, dsn = arguments.dsn );
+		if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
+			var sql = _getAdapter( dsn ).getForeignKeyName();
+			Fk_name = _runSql( dsn = arguments.dsn, sql = sql );
+		}
+
+		keys = _getTableForeignKeys( tableName = arguments.primaryTableName, dsn = arguments.dsn, Fk_name = Fk_name );
 
 		for( keyName in keys ){
 			key = keys[ keyName ];

@@ -369,7 +369,7 @@ component {
 
 // PRIVATE UTILITY
 	private array function _getUdfFiles() {
-		var udfs     = DirectoryList( "/preside/system/helpers", true, false, "*.cfm" );
+		var udfs     = DirectoryList( "#ExpandPath('/preside')#/system/helpers", true, false, "*.cfm" );
 		var siteUdfs = arrayNew(1);
 		var udf      = "";
 		var i        = 0;

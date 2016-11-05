@@ -57,7 +57,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 		// set request time
 		request.fwExecTime = getTickCount();
 
-		try {
+		
 			// Create Request Context & Capture Request
 			event = cbController.getRequestService().requestCapture();
 
@@ -214,7 +214,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 			if ( areSessionsEnabled() && cbController.getSetting( "flash" ).autoSave ) {
 				cbController.getRequestService().getFlashScope().saveFlash();
 			}
-		} catch( any e ) {
+		try {} catch( any e ) {
 			var defaultShowErrorsSetting = IsBoolean( application.injectedConfig.showErrors ?: "" ) && application.injectedConfig.showErrors;
 			var showErrors               = cbController.getSetting( name="showErrors", defaultValue=defaultShowErrorsSetting );
 
@@ -228,7 +228,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 				interceptorData = StructNew();
 				interceptorData.exception = e;
 				interceptorService.processState( "onException", interceptorData );
-
+cfcatch = {};
 				// Handle The Exception
 				ExceptionBean = exceptionService.ExceptionHandler( cfcatch, "application", "Application Execution Exception" );
 

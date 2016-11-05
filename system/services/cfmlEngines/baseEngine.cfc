@@ -7,10 +7,10 @@
 		<cfset returnVariable = "">
 
 		<cfif isstruct(server) AND server.coldfusion.productname EQ "Lucee">
-			<cfinvoke component="lucee" method="#arguments.missingMethodName#" argumentcollection="#arguments.missingMethodArguments#" returnvariable="returnVariable" >
+			<cfinvoke component="preside.system.cfmlEngine.lucee" method="#arguments.missingMethodName#" argumentcollection="#arguments.missingMethodArguments#" returnvariable="returnVariable" >
 			</cfinvoke>
 		<cfelseif isstruct(server) AND server.coldfusion.productname EQ "ColdFusion Server">
-			<cfinvoke component="acf" method="#arguments.missingMethodName#" argumentcollection="#arguments.missingMethodArguments#" returnvariable="returnVariable" >
+			<cfinvoke component="preside.system.cfmlEngine.acf" method="#arguments.missingMethodName#" argumentcollection="#arguments.missingMethodArguments#" returnvariable="returnVariable" >
 			</cfinvoke>
 		</cfif>
 

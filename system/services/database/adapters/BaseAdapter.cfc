@@ -20,7 +20,7 @@ component {
 	}
 
 	public string function getGeneratedKey(required any result){
-		return arguments.result.generatedKey ?: "";
+		return arguments.result.generatedKey ? arguments.result.generatedKey : "";
 	}
 
 	public string function getColumnDefinitionSql(

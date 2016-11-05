@@ -471,7 +471,7 @@ component displayName="Task Manager Service" {
 			cfschedule( action=action, task=task, url=_getScheduledTaskUrl( settings.site_context ?: "" ), startdate="1900-01-01", startTime="00:00:00", interval="30", port=port );
 		}
 		else {
-			_getcfmlBaseEngine().onMissingMethod( "deleteSchedule", { "taskName"=task } );
+			_getcfmlBaseEngine().deleteSchedule(task);
 		}
 	}
 

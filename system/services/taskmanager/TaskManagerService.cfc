@@ -19,6 +19,7 @@ component displayName="Task Manager Service" {
 	 * @logger.inject                     logbox:logger:taskmanager
 	 * @errorLogService.inject            errorLogService
 	 * @siteService.inject                siteService
+	 * @baseEngine.inject                 baseEngine
 	 *
 	 */
 	public any function init(
@@ -31,6 +32,7 @@ component displayName="Task Manager Service" {
 		, required any logger
 		, required any errorLogService
 		, required any siteService
+		, required any baseEngine
 	) {
 		_setConfiguredTasks( arguments.configWrapper.getConfiguredTasks() );
 		_setController( arguments.controller );
@@ -41,6 +43,7 @@ component displayName="Task Manager Service" {
 		_setLogger( arguments.logger );
 		_setErrorLogService( arguments.errorLogService );
 		_setSiteService( arguments.siteService );
+		_setcfmlBaseEngine( arguments.baseEngine );
 
 		_initialiseDb();
 
@@ -468,11 +471,7 @@ component displayName="Task Manager Service" {
 			cfschedule( action=action, task=task, url=_getScheduledTaskUrl( settings.site_context ?: "" ), startdate="1900-01-01", startTime="00:00:00", interval="30", port=port );
 		}
 		else {
-			cfschedule( action="list", task=task, result="result" );
-
-			if( result.recordCount ) {
-				cfschedule( action=action, task=task );
-			}
+			_getcfmlBaseEngine().onMissingMethod( "deleteSchedule", { "taskName"=task } );
 		}
 	}
 
@@ -749,6 +748,13 @@ component displayName="Task Manager Service" {
 	}
 	private void function _setSiteService( required any siteService ) {
 		_siteService = arguments.siteService;
+	}
+
+	private any function _getcfmlBaseEngine() {
+		return _setcfmlBaseEngine;
+	}
+	private any function _setcfmlBaseEngine( required any baseEngine ) {
+		_setcfmlBaseEngine = arguments.baseEngine;
 	}
 
 }

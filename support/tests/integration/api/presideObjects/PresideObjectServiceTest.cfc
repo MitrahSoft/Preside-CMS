@@ -2635,16 +2635,16 @@
 	</cffunction>
 
 	<cffunction name="_getDbTables" access="private" returntype="string" output="false">
-		<cfset var tables = new dbinfo( datasource="#application.dsn#" ).tables() />
+		<cfdbinfo type="tables" name="tables" datasource="#application.dsn#" />
 		<cfreturn ValueList( tables.table_name ) />
 	</cffunction>
 
 	<cffunction name="_getDbTableColumns" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
-		<cfset var columns = new dbinfo( datasource="#application.dsn#", table="#arguments.table#" ).columns() />
-		<cfset var col     = "" />
-		<cfset var cols    = {} />
-
+		<cfset columns  = QueryNew('') />
+		<cfset var col  = "" />
+		<cfset var cols = {} />
+		<cfdbinfo type="columns" table="#arguments.table#" name="columns" datasource="#application.dsn#" />
 		<cfscript>
 			for( col in columns ){
 				cols[ col.column_name ] = col;
@@ -2656,9 +2656,9 @@
 
 	<cffunction name="_getDbTableIndexes" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
-
+		<cfset indexes  = QueryNew('') />
+		<cfdbinfo type="index" table="#arguments.table#" name="indexes" datasource="#application.dsn#" />
 		<cfscript>
-			var indexes = new dbinfo( datasource="#application.dsn#", table="#arguments.table#" ).index();
 			var index   = "";
 			var ixs     = {};
 

@@ -193,8 +193,9 @@
 	</cffunction>
 
 	<cffunction name="_getDbTables" access="private" returntype="string" output="false">
+		<cfset tableInfo  = QueryNew('') />
+		<cfdbinfo type="tables" name="tableInfo" datasource="#application.dsn#" />
 		<cfscript>
-			var tableInfo       = new dbinfo( datasource="#application.dsn#" ).tables();
 			var tables          = [];
 			var reservedSchemas = [ "sys", "information_schema" ];
 
@@ -263,9 +264,9 @@
 
 	<cffunction name="_getTableIndexes" access="private" returntype="struct" output="false">
 		<cfargument name="tableName" type="string" required="true" />
-
+		<cfset indexes  = QueryNew('') />
+		<cfdbinfo type="index" table="#arguments.tableName#" name="indexes" datasource="#application.dsn#" />
 		<cfscript>
-			var indexes = new dbinfo( datasource="#application.dsn#", table="#arguments.tableName#" ).index();
 			var index   = "";
 			var ixs     = {};
 
@@ -288,7 +289,9 @@
 
 	<cffunction name="_getTableColumns" access="private" returntype="query" output="false">
 		<cfargument name="tableName" type="string" required="true" />
-			<cfreturn new dbinfo( datasource="#application.dsn#", table="#arguments.tableName#" ).columns()/>
+		<cfset columns  = QueryNew('') />
+		<cfdbinfo type="columns" table="#arguments.tableName#" name="columns" datasource="#application.dsn#" />
+			<cfreturn columns/>
 	</cffunction>
 
 	<cffunction name="_getDbAdapter" access="private" returntype="any" output="false">
@@ -296,6 +299,7 @@
 			dbInfoService = new preside.system.services.database.DbInfoService()
 		).getAdapter( application.dsn ) />
 	</cffunction>
+
 	<cffunction name="_getRunner" access="private" returntype="any" output="false">
 		<cfset logger = new tests.resources.HelperObjects.TestLogger( logLevel = "DEBUG" )>
 		<cfscript>

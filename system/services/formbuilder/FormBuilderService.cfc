@@ -203,7 +203,7 @@ component {
 				, validationResult = validationResult
 			);
 
-			if ( itemTypeConfig.isFormField && Len( Trim( arguments.config.name ?: "" ) ) ) {
+			if ( itemTypeConfig.isFormField && Len( Trim( structKeyExists( arguments.config, "name") ? arguments.config.name : "" ) ) ) {
 				_validateFieldNameIsUniqueForFormItem( argumentCollection=arguments, validationResult=validationResult );
 			}
 		}

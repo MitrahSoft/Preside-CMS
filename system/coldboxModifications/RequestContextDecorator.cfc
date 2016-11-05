@@ -475,7 +475,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 			var loggedIn          = websiteLoginService.isLoggedIn() && (!fullLoginRequired || !websiteLoginService.isAutoLoggedIn() );
 
 			if ( Len( Trim( accessRules.access_condition ) ) ) {
-				var conditionIsTrue = getModel( "rulesEngineWebRequestService" ).evaluateCondition( accessRules.access_condition );
+				var conditionIsTrue = getModel( "rulesEngineWebRequestService" ).evaluate_condition( accessRules.access_condition );
 
 				if ( !conditionIsTrue ) {
 					if ( !loggedIn ) {

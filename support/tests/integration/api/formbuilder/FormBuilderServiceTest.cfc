@@ -818,8 +818,8 @@ component extends="testbox.system.BaseSpec"{
 					  formId      = formId
 					, requestData = requestData
 					, instanceId  = instanceId
-					, ipAddress   = ipAddress
-					, userAgent   = userAgent
+					, ipAddress   = Trim( ListLast( CGI.REMOTE_ADDR ?: "" ) )
+					, userAgent   = ( CGI.HTTP_USER_AGENT ?: "" )
 				) ).toBe( validationResult );
 
 				expect( mockFormSubmissionDao.$callLog().insertData.len() ).toBe( 1 );
@@ -827,8 +827,8 @@ component extends="testbox.system.BaseSpec"{
 					  form           = formId
 					, submitted_by   = userId
 					, form_instance  = instanceId
-					, ip_address     = ipAddress
-					, user_agent     = userAgent
+					, ip_address     = Trim( ListLast( CGI.REMOTE_ADDR ?: "" ) )
+					, user_agent     = ( CGI.HTTP_USER_AGENT ?: "" )
 					, submitted_data = SerializeJson( formSubmissionData )
 				} } );
 			} );

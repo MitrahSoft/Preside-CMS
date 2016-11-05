@@ -345,7 +345,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 			} );
 		} );
 
-		describe( "evaluateCondition()", function(){
+		describe( "evaluate_condition()", function(){
 			it( "should return true when it contains a single expression that evaluates to true for the given payload", function(){
 				var service     = _getService();
 				var payload     = { blah=CreateUUId() };
@@ -365,7 +365,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -391,7 +391,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( false );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -406,7 +406,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 				service.$( "getCondition" ).$args( conditionId ).$results( {} );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -442,7 +442,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -478,7 +478,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( false );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -514,7 +514,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -550,7 +550,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -588,7 +588,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -624,7 +624,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( false );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -660,7 +660,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( false );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -698,7 +698,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -734,7 +734,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( false );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -790,7 +790,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( true );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload
@@ -855,7 +855,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, payload          = payload
 				).$results( false );
 
-				expect( service.evaluateCondition(
+				expect( service.evaluate_condition(
 					  conditionId = conditionId
 					, context     = context
 					, payload     = payload

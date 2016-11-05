@@ -100,7 +100,7 @@ component output=false {
 
 		if ( permissionSettings.restricted ) {
 			if ( Len( Trim( permissionSettings.conditionId ) ) ) {
-				var conditionIsTrue = rulesEngineWebRequestService.evaluateCondition( permissionSettings.conditionId );
+				var conditionIsTrue = rulesEngineWebRequestService.evaluate_condition( permissionSettings.conditionId );
 
 				if ( !conditionIsTrue ) {
 					if ( !isLoggedIn() || ( permissionSettings.fullLoginRequired && isAutoLoggedIn() ) ) {

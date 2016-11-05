@@ -88,7 +88,7 @@ component displayName="RulesEngine Condition Service" {
 	 * @context.hint     The context of the evaluation, e.g. 'webrequest', or 'workflow', etc.
 	 * @payload.hint     Payload for the given context, e.g. a structure containing workflow state, or information about the current web request
 	 */
-	public boolean function evaluateCondition(
+	public boolean function evaluate_condition(
 		  required string conditionId
 		, required string context
 		, required struct payload

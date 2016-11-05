@@ -34,14 +34,14 @@ component displayName="RulesEngine Web Request Service" {
 	 * @autodoc
 	 * @conditionId.hint ID of the condition to evaluate
 	 */
-	public boolean function evaluateCondition( required string conditionId ) {
+	public boolean function evaluate_condition( required string conditionId ) {
 		var event   = $getRequestContext();
 		var payload = {
 			  page = event.getValue( name="presidePage", defaultValue={}, private=true )
 			, user = _getWebsiteLoginService().getLoggedInUserDetails()
 		};
 
-		return _getConditionService().evaluateCondition(
+		return _getConditionService().evaluate_condition(
 			  conditionId = arguments.conditionId
 			, context     = "webrequest"
 			, payload     = payload

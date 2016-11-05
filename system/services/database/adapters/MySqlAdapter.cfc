@@ -85,7 +85,11 @@ component extends="BaseAdapter" {
 		return "alter table #escapeEntity( arguments.tableName )# drop foreign key #escapeEntity( arguments.foreignKeyName )#";
 	}
 	public string function getForeignKeyName() {
-		return "SELECT CONSTRAINT_NAME,TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = 'preside_test' AND CONSTRAINT_TYPE = 'FOREIGN KEY' GROUP BY TABLE_NAME";
+		return "SELECT rc.CONSTRAINT_NAME,rc.UPDATE_RULE,rc.DELETE_RULE,tc.CONSTRAINT_TYPE,tc.TABLE_NAME
+				FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
+				INNER JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS rc
+				ON tc.CONSTRAINT_NAME=rc.CONSTRAINT_NAME
+				WHERE CONSTRAINT_TYPE = 'FOREIGN KEY' AND tc.CONSTRAINT_SCHEMA = 'preside_test'";
 	}
 	public string function getDropIndexSql( required string indexName, required string tableName ) {
 		return "alter table #escapeEntity( arguments.tableName )# drop index #escapeEntity( arguments.indexName )#";

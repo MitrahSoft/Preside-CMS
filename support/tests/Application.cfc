@@ -34,9 +34,9 @@ component {
 	}
 
 	private boolean function _checkDsn() {
-		var dsn      = "preside_test_suite";
+		var dsn  = "preside_test_suite";
 		try {
-			var info = new dbinfo( datasource="#dsn#" ).version();
+			cfdbinfo( datasource="#dsn#", name="info", type="version" );
 
 		} catch ( database e ) {
 			var isCommandLineExecuted = cgi.server_protocol == "CLI/1.0";
@@ -131,7 +131,7 @@ component {
 
 	private boolean function _dsnExists() {
 		try {
-			var info = new dbinfo( datasource="preside_test_suite" ).version();
+			cfdbinfo( datasource="preside_test_suite", name="info", type="version" );
 
 			return info.recordcount > 0;
 		} catch ( database e ) {

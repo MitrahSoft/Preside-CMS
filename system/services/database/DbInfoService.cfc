@@ -54,12 +54,14 @@
 		<cfdbinfo type="Foreignkeys" table="#arguments.tableName#" name="keys" datasource="#arguments.dsn#" />
 
 		<cfscript>
-			var fk          = "";
-			var key         = "";
-			var constraints = {};
-			var rules       = {};
-			rules["0"]      = "cascade";
-			rules["2"]      = "set null";
+			var fk            = "";
+			var key           = "";
+			var constraints   = {};
+			var rules         = {};
+			rules["0"]        = "cascade";
+			rules["cascade"]  = "cascade";
+			rules["2"]        = "set null";
+			rules["set null"] = "set null";
 
 			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
 				var getFkName = arguments.Fk_name ?: QueryNew("");
@@ -70,6 +72,8 @@
 						if( fk.table_name eq key.fktable_name ) {
 							QuerySetCell( keys, "FK_NAME", fk.constraint_name, keys.currentRow );
 							QuerySetCell( keys, "PKTABLE_NAME", arguments.tableName, keys.currentRow );
+							QuerySetCell( keys, "update_rule", fkName.update_rule, keys.currentRow );
+							QuerySetCell( keys, "delete_rule", fkName.delete_rule, keys.currentRow );
 						}
 					}
 				}

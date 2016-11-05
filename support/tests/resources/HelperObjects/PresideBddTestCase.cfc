@@ -216,13 +216,15 @@
 		<cfdbinfo type="Foreignkeys" table="#arguments.table#" name="keys" datasource="#application.dsn#" />
 
 		<cfscript>
-			var key         = "";
-			var fkName      = "";
-			var constraints = {};
-			var rules       = {};
-			rules["0"]      = "cascade";
-			rules["2"]      = "set null";
-			var fk_value    = new Query();
+			var key           = "";
+			var fkName        = "";
+			var constraints   = {};
+			var rules         = {};
+			rules["0"]        = "cascade";
+			rules["cascade"]  = "cascade";
+			rules["2"]        = "set null";
+			rules["set null"] = "set null";
+			var fk_value      = new Query();
 
 			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
 				var sql       = _getDbAdapter().getForeignKeyName();
@@ -230,10 +232,12 @@
 				QueryAddColumn( keys, "FK_NAME", arrayNew(1) );
 				QueryAddColumn( keys, "PKTABLE_NAME", arrayNew(1) );
 				for( fkName in getFkName ) {
-					for( key in keys ) {
+					for( key in keys ){
 						if( fkName.table_name eq key.fktable_name ) {
 							QuerySetCell( keys, "FK_NAME", fkName.constraint_name, keys.currentRow );
 							QuerySetCell( keys, "PKTABLE_NAME", arguments.table, keys.currentRow );
+							QuerySetCell( keys, "update_rule", fkName.update_rule, keys.currentRow );
+							QuerySetCell( keys, "delete_rule", fkName.delete_rule, keys.currentRow );
 						}
 					}
 				}

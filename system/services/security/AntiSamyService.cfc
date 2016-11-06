@@ -34,8 +34,6 @@ component {
 	}
 
 	private void function _setupAntiSamy() {
-		var jars = DirectoryList( _getLibPath(), false, "path", "*.jar" );
-
 		_setAntiSamy( CreateObject( "java", "org.owasp.validator.html.AntiSamy" ) );
 	}
 

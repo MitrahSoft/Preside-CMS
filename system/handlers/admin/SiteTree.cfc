@@ -1142,7 +1142,7 @@ component extends="preside.system.base.AdminHandler" {
 
 	private query function _getPageAndThrowOnMissing( event, rc, prc, pageId, includeTrash=false, allowVersions=false, setVersion=true ) {
 		var _pageId = arguments.pageId        ?: ( rc.id ?: "" );
-		var version = arguments.allowVersions ? ( rc.version ?: versioningService.getLatestVersionNumber( "page", pageId ) ) : 0;
+		var version = arguments.allowVersions ? ( rc.version ?: versioningService.getLatestVersionNumber( "page", _pageId ) ) : 0;
 		var page    = siteTreeService.getPage(
 			  id              = _pageId
 			, version         = Val( version )

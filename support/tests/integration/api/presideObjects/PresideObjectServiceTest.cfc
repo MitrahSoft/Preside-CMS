@@ -2685,30 +2685,13 @@
 
 		<cfscript>
 			var key           = "";
-			var fkName        = "";
 			var constraints   = {};
-			var rules         = {};
-			rules["0"]        = "cascade";
-			rules["cascade"]  = "cascade";
-			rules["2"]        = "set null";
-			rules["set null"] = "set null";
-			var fk_value      = new Query();
+			var rules         = _getcfmlBaseEngine().getFKRules();
 
 			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
 				var sql       = _getDbAdapter().getForeignKeyName();
 				var getFkName = _getRunner().runSql( dsn = application.dsn, sql = sql );
-				QueryAddColumn( keys, "FK_NAME", arrayNew(1) );
-				QueryAddColumn( keys, "PKTABLE_NAME", arrayNew(1) );
-				for( fkName in getFkName ) {
-					for( key in keys ){
-						if( fkName.table_name eq key.fktable_name ) {
-							QuerySetCell( keys, "FK_NAME", fkName.constraint_name, keys.currentRow );
-							QuerySetCell( keys, "PKTABLE_NAME", arguments.table, keys.currentRow );
-							QuerySetCell( keys, "update_rule", fkName.update_rule, keys.currentRow );
-							QuerySetCell( keys, "delete_rule", fkName.delete_rule, keys.currentRow );
-						}
-					}
-				}
+				keys          = _getcfmlBaseEngine().populateKeys( getFkName, keys, arguments.table );
 			}
 			for( key in keys ){
 				constraints[ key.fk_name ] = {

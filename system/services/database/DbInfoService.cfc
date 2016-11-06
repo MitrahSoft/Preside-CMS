@@ -1,105 +1,107 @@
-<cfcomponent output="false" singleton="true">
-	<cffunction name="init" access="public" returntype="any">
-		<cfreturn this>
-	</cffunction>
+/**
+ * Proxy to cfdbinfo for returning information about a database and its objects
+ *
+ * @singleton
+ */
+component {
 
-	<cffunction name="getDatabaseVersion" access="public" returntype="Query">
-		<cfargument name="dsn" type="string" required="true">
-			<cfdbinfo type="version" name="db" datasource="#arguments.dsn#" />
-			<cfreturn db>
-	</cffunction>
+// CONSTRUCTOR
 
-	<cffunction name="getTableInfo" access="public" returntype="Query">
-		<cfargument name="tableName" type="string" required="true">
-		<cfargument name="dsn" type="string" required="true">
-			<cfdbinfo type="tables" datasource="#arguments.dsn#" pattern="#arguments.tableName#" name="tableInfo" />
-		<cfreturn tableInfo>
-	</cffunction>
+	/**
+	 * @baseEngine.inject   baseEngine
+	 *
+	 */
+	public any function init( any baseEngine ) {
+		_setcfmlBaseEngine( arguments.baseEngine );
+		return this;
+	}
 
-	<cffunction name="getTableColumns" access="public" returntype="Query">
-		<cfargument name="tableName" type="string" required="true">
-		<cfargument name="dsn" type="string" required="true">
-		<cfdbinfo type="columns" table="#arguments.tableName#" name="columns" datasource="#arguments.dsn#" />
-		<cfreturn columns>
-	</cffunction>
+// PUBLIC API METHODS
+	public query function getDatabaseVersion( required string dsn ) {
+		var db = "";
 
-	<cffunction name="getTableIndexes" access="public" returntype="Struct">
-		<cfargument name="tableName" type="string" required="true">
-		<cfargument name="dsn" type="string" required="true">
-		<cfdbinfo type="index" table="#arguments.tableName#" name="indexes" datasource="#arguments.dsn#" />
-		<cfscript>
-			var index   = "";
-			var ixs     = {};
-			for( index in indexes ){
-				if ( Len( Trim( index.index_name ) ) && index.index_name != "PRIMARY" ) {
-					if ( !StructKeyExists( ixs, index.index_name ) ){
-						ixs[ index.index_name ] = {
-							  unique = !( IsBoolean( index.non_unique ) && index.non_unique )
-							, fields = ""
-						};
-					}
+		cfdbinfo( type="version", datasource=arguments.dsn, name="db" );
+		return db;
+	}
 
-					ixs[ index.index_name ].fields = ListAppend( ixs[ index.index_name ].fields, index.column_name );
+	public query function getTableInfo( required string tableName, required string dsn ) {
+		var table = "";
+
+		cfdbinfo( type="tables", name="table", pattern="#arguments.tableName#", datasource="#arguments.dsn#" );
+		return table;
+	}
+
+	public query function getTableColumns( required string tableName, required string dsn ) {
+		var columns = "";
+
+		cfdbinfo( type="columns", name="columns", table=arguments.tableName, datasource=arguments.dsn );
+
+		return columns;
+	}
+
+	public struct function getTableIndexes( required string tableName, required string dsn ) {
+		var indexes = "";
+		var index   = "";
+		var ixs     = {};
+
+		cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#arguments.dsn#" );
+
+		for( index in indexes ){
+			if ( Len( Trim( index.index_name ) ) && index.index_name != "PRIMARY" ) {
+				if ( !StructKeyExists( ixs, index.index_name ) ){
+					ixs[ index.index_name ] = {
+						  unique = !( IsBoolean( index.non_unique ) && index.non_unique )
+						, fields = ""
+					};
 				}
+
+				ixs[ index.index_name ].fields = ListAppend( ixs[ index.index_name ].fields, index.column_name );
+			}
+		}
+
+		return ixs;
+	}
+
+	public struct function getTableForeignKeys( required string tableName, required string dsn, query Fk_name ) {
+		var key         = "";
+		var constraints = {};
+		var rules       = _getcfmlBaseEngine().getFKRules();
+
+		cfdbinfo( type="foreignKeys", table=arguments.tableName, datasource="#arguments.dsn#", name="keys" );
+
+		if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
+			var getFkName = arguments.Fk_name ?: QueryNew("");
+			keys          = _getcfmlBaseEngine().populateKeys( getFkName, keys, arguments.tableName );
+		}
+
+		for( key in keys ){
+			constraints[ key.fk_name ] = {
+				  pk_table  = key.pktable_name
+				, fk_table  = key.fktable_name
+				, pk_column = key.pkcolumn_name
+				, fk_column = key.fkcolumn_name
+			};
+
+			if ( StructKeyExists( rules, key.update_rule ) ) {
+				constraints[ key.fk_name ].on_update = rules[ key.update_rule ];
+			} else {
+				constraints[ key.fk_name ].on_update = "error";
 			}
 
-			return ixs;
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="getTableForeignKeys" access="public" returntype="struct" output="false">
-		<cfargument name="tableName" type="string" required="true" >
-		<cfargument name="dsn"       type="string" required="true">
-		<cfargument name="Fk_name"   type="string" required="false">
-		<cfdbinfo type="Foreignkeys" table="#arguments.tableName#" name="keys" datasource="#arguments.dsn#" />
-
-		<cfscript>
-			var fk            = "";
-			var key           = "";
-			var constraints   = {};
-			var rules         = {};
-			rules["0"]        = "cascade";
-			rules["cascade"]  = "cascade";
-			rules["2"]        = "set null";
-			rules["set null"] = "set null";
-
-			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
-				var getFkName = arguments.Fk_name ?: QueryNew("");
-				QueryAddColumn( keys, "FK_NAME", arrayNew(1) );
-				QueryAddColumn( keys, "PKTABLE_NAME", arrayNew(1) );
-				for( fk in getFkName ) {
-					for( key in keys ){
-						if( fk.table_name eq key.fktable_name ) {
-							QuerySetCell( keys, "FK_NAME", fk.constraint_name, keys.currentRow );
-							QuerySetCell( keys, "PKTABLE_NAME", arguments.tableName, keys.currentRow );
-							QuerySetCell( keys, "update_rule", fkName.update_rule, keys.currentRow );
-							QuerySetCell( keys, "delete_rule", fkName.delete_rule, keys.currentRow );
-						}
-					}
-				}
+			if ( StructKeyExists( rules, key.delete_rule ) ) {
+				constraints[ key.fk_name ].on_delete = rules[ key.delete_rule ];
+			} else {
+				constraints[ key.fk_name ].on_delete = "error";
 			}
+		}
+		return constraints;
+	}
 
-			for( key in keys ){
-				constraints[ key.fk_name ] = {
-					  pk_table  = key.pktable_name
-					, fk_table  = key.fktable_name
-					, pk_column = key.pkcolumn_name
-					, fk_column = key.fkcolumn_name
-				};
-
-				if ( StructKeyExists( rules, key.update_rule ) ) {
-					constraints[ key.fk_name ].on_update = rules[ key.update_rule ];
-				} else {
-					constraints[ key.fk_name ].on_update = "error";
-				}
-
-				if ( StructKeyExists( rules, key.delete_rule ) ) {
-					constraints[ key.fk_name ].on_delete = rules[ key.delete_rule ];
-				} else {
-					constraints[ key.fk_name ].on_delete = "error";
-				}
-			}
-			return constraints;
-		</cfscript>
-	</cffunction>
-</cfcomponent>
+	// GETTERS AND SETTERS
+	private any function _getcfmlBaseEngine() {
+		return _setcfmlBaseEngine;
+	}
+	private any function _setcfmlBaseEngine( required any baseEngine ) {
+		_setcfmlBaseEngine = arguments.baseEngine;
+	}
+}

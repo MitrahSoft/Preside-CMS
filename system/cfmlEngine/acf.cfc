@@ -41,4 +41,8 @@ component output="false" displayname=""  {
 		return true;
 	}
 
+	public function getAntiSamyObject(jarFolderPath){
+		return CreateObject( "java", "org.owasp.validator.html.AntiSamy" );
+	}
+
 }

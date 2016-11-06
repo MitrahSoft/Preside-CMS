@@ -27,7 +27,8 @@ component {
 		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
 		this.passArrayByReference                    = true;
 		this.serialization.preservecaseforstructKey  = true;
-		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar", _getPresideRoot() & "\system\services\qrcodes\lib\QRGen\", _getPresideRoot() & "\system\services\qrcodes\lib\zxing\", _getPresideRoot() & "\system\services\assetManager\xmp\xmpcore.jar", _getPresideRoot() & "\system\services\taskmanager\lib\", _getPresideRoot() & "\system\services\security\antisamylib\" ], loadColdFusionClassPath = true, reloadOnChange= false };
+		// Antisamy JAR already available in BUILT IN ACF
+		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar", _getPresideRoot() & "\system\services\qrcodes\lib\QRGen\", _getPresideRoot() & "\system\services\qrcodes\lib\zxing\", _getPresideRoot() & "\system\services\assetManager\xmp\xmpcore.jar", _getPresideRoot() & "\system\services\taskmanager\lib\" ], loadColdFusionClassPath = true, reloadOnChange= false };
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
 	}

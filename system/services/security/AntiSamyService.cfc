@@ -36,7 +36,6 @@ component {
 
 	private void function _setupAntiSamy() {
 		_setAntiSamy( _getBaseEngine().getAntiSamyObject( _getLibPath() ) );
-		// _setAntiSamy( CreateObject( "java", "org.owasp.validator.html.AntiSamy" ) );
 	}
 
 	private array function _listJars( required string directory ) {

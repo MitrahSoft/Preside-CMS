@@ -1075,7 +1075,7 @@ component displayName="Preside Object Service" {
 	public boolean function fieldExists( required string objectName, required string fieldName ) autodoc=true {
 		var obj = _getObject( arguments.objectName );
 
-		return StructKeyExists( obj.meta.properties, arguments.fieldName );
+		return StructKeyExists( obj.meta.properties, lcase( arguments.fieldName ) );
 	}
 
 	/**
@@ -1459,7 +1459,7 @@ component displayName="Preside Object Service" {
 			if ( not StructKeyExists( arguments.data, key ) ) { // should use IsNull() arguments.data[key] but bug in Railo prevents this
 				param = {
 					  name  = paramName
-					, value = NullValue()
+					, value = javacast( "null", 0 )
 					, type  = dataType
 					, null  = true
 				};

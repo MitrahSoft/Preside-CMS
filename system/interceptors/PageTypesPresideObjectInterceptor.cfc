@@ -17,7 +17,7 @@ component extends="coldbox.system.Interceptor" output=false {
 
 // PRIVATE HELPERS
 	private boolean function _isPageTypeObject( required struct objectMeta ) output=false {
-		var objectPath = arguments.objectMeta.name ?: "";
+		var objectPath = structKeyExists( arguments.objectMeta, "name" ) ? arguments.objectMeta.name : "";
 
 		return ReFindNoCase( "\.page-types\.", objectPath );
 	}

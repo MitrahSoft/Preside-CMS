@@ -1650,9 +1650,9 @@ component displayName="AssetManager Service" {
 
 		// todo, sanity check the input
 		args.asset              = arguments.assetBinary;
-		var getAssetTransformer = _getAssetTransformer()[ arguments.transformationMethod ];
-		return getAssetTransformer( argumentCollection = args );
+		args.fileName           = arguments.fileName;
 
+		return invoke( _getAssetTransformer(), arguments.transformationMethod, args );
 	}
 
 	private array function _getPreconfiguredDerivativeTransformations( required string derivativeName ) {

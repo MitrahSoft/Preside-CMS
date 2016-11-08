@@ -40,7 +40,6 @@ component output="false" {
 		,          struct params    = {}
 	) output=false {
 
-		var sourceCfc  = _getSourceCfc();
 		var validators = _getValidators();
 		var method     = "";
 		var args       = {};
@@ -74,8 +73,8 @@ component output="false" {
 		for( param in arguments.params ){
 			args[ param ] = arguments.params[ param ];
 		}
-		var sourceCfc = sourceCfc[ method ];
-		return sourceCfc( argumentCollection = args );
+
+		return invoke( _getSourceCfc(), method, args );
 	}
 
 	public array function getValidatorParamValues( required string name, struct params={} ) output=false {

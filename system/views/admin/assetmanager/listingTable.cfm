@@ -29,6 +29,6 @@
 			</tbody>
 		</table>
 
-		#renderView( view="/admin/assetmanager/_listingTableMultiActions" )#
+		#presideRenderView( view="/admin/assetmanager/_listingTableMultiActions" )#
 	</form>
 </cfoutput>

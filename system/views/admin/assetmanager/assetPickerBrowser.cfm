@@ -7,7 +7,7 @@
 		activeFolder = rootFolder;
 	}
 
-	folders = renderView(
+	folders = presideRenderView(
 		  view           = "admin/assetManager/_folderBrowserListingForPicker"
 		, presideObject  = "asset_folder"
 		, filter         = { parent_folder = activeFolder }
@@ -19,7 +19,7 @@
 	if ( allowedTypes.len() ){
 		assetFilter.asset_type = allowedTypes;
 	}
-	assets = renderView(
+	assets = presideRenderView(
 		  view           = "admin/assetManager/_assetBrowserListingForPicker"
 		, presideObject  = "asset"
 		, filter         = assetFilter
@@ -40,7 +40,7 @@
 		</thead>
 		<tbody data-nav-list="1" data-nav-list-child-selector="> tr">
 			<cfif activeFolder neq rootFolder>
-				#renderView( view="admin/assetManager/_folderBrowserListingUpOneLevelForPicker", presideObject="asset_folder", id=activeFolder )#
+				#presideRenderView( view="admin/assetManager/_folderBrowserListingUpOneLevelForPicker", presideObject="asset_folder", id=activeFolder )#
 			</cfif>
 			#folders#
 			#assets#

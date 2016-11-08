@@ -19,7 +19,7 @@
 	</cffunction>
 
 <!--- rendering --->
-	<cffunction name="renderView" access="public" returntype="any" output="false">
+	<cffunction name="presideRenderView" access="public" returntype="any" output="false">
 		<cfscript>
 			if ( Len( Trim( arguments.presideObject ?: "" ) ) ) {
 				return getSingleton( "presideObjectViewService" ).renderView(
@@ -27,7 +27,7 @@
 				);
 			}
 
-			return getPlugin( "Renderer" ).renderView( argumentCollection=arguments );
+			return getPresidePlugin( "Renderer" ).renderView( argumentCollection=arguments );
 		</cfscript>
 	</cffunction>
 
@@ -136,7 +136,7 @@
 			var cacheKey = "translateResource" & SerializeJson( args );
 
 			return simpleRequestCache( cacheKey, function(){
-				return getPlugin( "i18n" ).translateResource( argumentCollection = args );
+				return getPresidePlugin( "i18n" ).translateResource( argumentCollection = args );
 			} );
 		</cfscript>
 	</cffunction>
@@ -227,12 +227,12 @@
 			} );
 		</cfscript>
 	</cffunction>
-	<cffunction name="getPlugin" access="public" returntype="any" output="false">
+	<cffunction name="getPresidePlugin" access="public" returntype="any" output="false">
 		<cfargument name="pluginName" type="string" required="true" />
 
 		<cfscript>
 			var args = arguments;
-			return simpleRequestCache( "getPlugin" & args.pluginName, function(){
+			return simpleRequestCache( "getPresidePlugin" & args.pluginName, function(){
 				return getController().getPlugin( args.pluginName );
 			} );
 		</cfscript>

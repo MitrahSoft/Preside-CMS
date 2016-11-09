@@ -64,7 +64,7 @@ component displayName="Website visitor service" {
 
 // PRIVATE HELPERS
 	private boolean function _sessionsAreEnabled() {
-		var appSettings = getApplicationSettings( true );
+		var appSettings = getApplicationMetaData();
 
 		return IsBoolean( appSettings.sessionManagement ?: "" ) && appSettings.sessionManagement;
 	}

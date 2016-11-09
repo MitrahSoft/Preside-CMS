@@ -21,7 +21,7 @@
 <!--- rendering --->
 	<cffunction name="presideRenderView" access="public" returntype="any" output="false">
 		<cfscript>
-			if ( Len( Trim( arguments.presideObject ?: "" ) ) ) {
+			if ( Len( Trim( structKeyExists( arguments, "presideObject" ) ? arguments.presideObject : "" ) ) ) {
 				return getSingleton( "presideObjectViewService" ).renderView(
 					argumentCollection = arguments
 				);

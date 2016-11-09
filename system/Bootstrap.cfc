@@ -274,11 +274,11 @@ component {
 
 		var appMappingPath = Replace( ReReplace( COLDBOX_APP_MAPPING, "^/", "" ), "/", ".", "all" );
 
-		if ( FileExists( "#COLDBOX_APP_MAPPING#/config/LocalConfig.cfc" ) ) {
+		if ( FileExists( expandPath( "#COLDBOX_APP_MAPPING#/config/LocalConfig.cfc" ) ) ) {
 			return "#appMappingPath#.config.LocalConfig";
 		}
 
-		if ( FileExists( "#COLDBOX_APP_MAPPING#/config/Config.cfc" ) ) {
+		if ( FileExists( expandPath( "#COLDBOX_APP_MAPPING#/config/Config.cfc" ) ) ) {
 			return "#appMappingPath#.config.Config";
 		}
 

@@ -2094,7 +2094,8 @@ component displayName="Preside Object Service" {
 		var newData = Duplicate( arguments.data );
 
 		for( var propName in props ){
-			if ( !StructKeyExists( arguments.data, propName ) && Len( Trim( props[ propName ]['default'] ?: "" ) ) ) {
+
+			if ( !StructKeyExists( arguments.data, propName ) && Len( Trim( structKeyExists( props[ propName ], "default" ) ? props[ propName ]['default'] : "") ) ) {
 				var defaultValue = props[ propName ]['default'];
 
 				switch( ListFirst( defaultValue, ":" ) ) {

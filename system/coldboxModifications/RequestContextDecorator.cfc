@@ -438,7 +438,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 
 		clearBreadCrumbs();
 
-		if ( !IsNull( arguments.parentpage ?: NullValue() ) && arguments.parentPage.recordCount ) {
+		if ( !IsNull( arguments.parentpage ?: javacast("null","") ) && arguments.parentPage.recordCount ) {
 			page.parent_page = arguments.parentPage.id;
 
 			var ancestors = sitetreeSvc.getAncestors( id = arguments.parentPage.id );

@@ -9,7 +9,7 @@ component accessors=true {
 		do {
 			link = _getNextLink( rendered );
 			if ( !IsNull( link ) ) {
-				rendered = Replace( rendered, link.rawMatch, arguments.builder.renderLink( link.page ?: NullValue(), link.title ), "all" );
+				rendered = Replace( rendered, link.rawMatch, arguments.builder.renderLink( link.page ?: javacast("null",""), link.title ), "all" );
 			}
 		} while( !IsNull( link ) );
 
@@ -41,7 +41,7 @@ component accessors=true {
 
 		return {
 			  rawMatch = rawMatch
-			, page     = page  ?: NullValue()
+			, page     = page  ?: javacast("null","")
 			, title    = title ?: pageId
 		};
 	}

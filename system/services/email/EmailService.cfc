@@ -88,7 +88,7 @@ component output=false singleton=true autodoc=true displayName="Email service" {
 			props.put( "mail.smtp.starttls.enable", "true" );
 			props.put( "mail.smtp.auth", "true" );
 
-			var mailSession = CreateObject( "java", "javax.mail.Session" ).getInstance( props, NullValue() );
+			var mailSession = CreateObject( "java", "javax.mail.Session" ).getInstance( props, javacast("null","") );
 			var transport   = mailSession.getTransport( "smtp" );
 
 			transport.connect( arguments.host, arguments.port, arguments.username, arguments.password );

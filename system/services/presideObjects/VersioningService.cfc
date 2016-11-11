@@ -153,7 +153,7 @@ component {
 		versionedData._version_is_latest_draft = true;
 
 		if ( poService.fieldExists( versionObjectName, "id" ) ) {
-			versionedData.id = versionedData.id ?: NullValue();
+			versionedData.id = versionedData.id ?: javacast("null","");
 		}
 
 		if ( Len( Trim( versionedData.id ?: "" ) ) ) {
@@ -205,8 +205,8 @@ component {
 	public array function getChangedFields( required string objectName, required string recordId, required struct newData, struct existingData, struct existingManyToManyData ) {
 		var poService            = $getPresideObjectService();
 		var changedFields        = [];
-		var oldData              = arguments.existingData ?: NullValue();
-		var oldManyToManyData    = arguments.existingManyToManyData ?: NullValue();
+		var oldData              = arguments.existingData ?: javacast("null","");
+		var oldManyToManyData    = arguments.existingManyToManyData ?: javacast("null","");
 		var properties           = poService.getObjectProperties( arguments.objectName );
 		var ignoredFields        = _getIgnoredFieldsForVersioning( arguments.objectName );
 

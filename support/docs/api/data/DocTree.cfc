@@ -10,11 +10,11 @@ component accessors=true {
 	}
 
 	public any function getPage( required string id ) {
-		return idMap[ arguments.id ] ?: NullValue();
+		return idMap[ arguments.id ] ?: javacast("null","");
 	}
 
 	public any function getPageByPath( required string path ) {
-		return pathMap[ arguments.path ] ?: NullValue();
+		return pathMap[ arguments.path ] ?: javacast("null","");
 	}
 
 	public boolean function pageExists( required string id ) {
@@ -197,7 +197,7 @@ component accessors=true {
 			var page = arguments.pages[i];
 
 			if ( i==1 ) {
-				page.setPreviousPage( arguments.lastPageTouched ?: NullValue() );
+				page.setPreviousPage( arguments.lastPageTouched ?: javacast("null","") );
 			} else {
 				page.setPreviousPage( arguments.pages[i-1] );
 			}
@@ -205,16 +205,16 @@ component accessors=true {
 			if( page.getChildren().len() ) {
 				page.setNextPage( page.getChildren()[1] );
 			} elseif ( i == pageCount ) {
-				page.setNextPage( arguments.nextParentPage ?: NullValue() );
+				page.setNextPage( arguments.nextParentPage ?: javacast("null","") );
 			} else {
 				page.setNextPage( arguments.pages[i+1] );
 			}
 
 			arguments.lastPageTouched = page;
 
-			var nextParent = ( i == pageCount ) ? ( arguments.nextParentPage ?: NullValue() ) : arguments.pages[i+1];
+			var nextParent = ( i == pageCount ) ? ( arguments.nextParentPage ?: javacast("null","") ) : arguments.pages[i+1];
 			for( var child in page.getChildren() ){
-				_calculateNextAndPreviousPageLinks( page.getChildren(), ( nextParent ?: NullValue() ), arguments.lastPageTouched )
+				_calculateNextAndPreviousPageLinks( page.getChildren(), ( nextParent ?: javacast("null","") ), arguments.lastPageTouched )
 			}
 		}
 	}

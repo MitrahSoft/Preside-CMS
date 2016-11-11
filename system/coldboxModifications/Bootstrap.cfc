@@ -33,7 +33,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 	}
 
 	public any function getController() output=false {
-		return application[ locateAppKey() ] ?: NullValue();
+		return application[ locateAppKey() ] ?: javacast("null","");
 	}
 
 	public void function processColdBoxRequest() output=true {

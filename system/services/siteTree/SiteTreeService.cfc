@@ -756,7 +756,7 @@ component {
 			}
 
 			if ( StructKeyExists( data, "parent_page" ) and not Len( Trim( data.parent_page ) ) ) {
-				data.parent_page = NullValue();
+				data.parent_page = javacast("null","");
 			}
 
 			versionNumber = _getPresideObjectService().getNextVersionNumber();

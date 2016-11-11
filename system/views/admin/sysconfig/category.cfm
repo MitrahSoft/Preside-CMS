@@ -54,8 +54,8 @@
 			, formId            = formId
 			, savedData         = prc.savedData
 			, validationResult  = rc.validationResult ?: ""
-			, fieldLayout       = isSiteConfig ? "formcontrols.layouts.fieldWithOverrideOption"    : NullValue()
-			, fieldsetLayout    = isSiteConfig ? "formcontrols.layouts.fieldsetWithOverrideOption" : NullValue()
+			, fieldLayout       = isSiteConfig ? "formcontrols.layouts.fieldWithOverrideOption"    : javacast("null","")
+			, fieldsetLayout    = isSiteConfig ? "formcontrols.layouts.fieldsetWithOverrideOption" : javacast("null","")
 		)#
 
 		<div class="form-actions row">

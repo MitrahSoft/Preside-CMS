@@ -51,7 +51,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 		}
 
 		prc._jsonRpc2Request = {
-			  id     : parsedInput.id ?: NullValue()
+			  id     : parsedInput.id ?: javacast("null","")
 			, method : parsedInput.method
 			, params : parsedInput.params ?: arrayNew(1)
 		};
@@ -73,7 +73,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 
 	public string function getRequestId() output=false {
 		var rq = getJsonRpcRequest();
-		return rq.id ?: NullValue();
+		return rq.id ?: javacast("null","");
 	}
 
 	public any function getRequestParams() output=false {
@@ -103,7 +103,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 		var prc   = event.getCollection( private = true );
 		var response = {
 			  jsonrpc = "2.0"
-			, id      = prc._jsonRpc2Request.id ?: NullValue()
+			, id      = prc._jsonRpc2Request.id ?: javacast("null","")
 			, error   = { code : arguments.code, message=arguments.message }
 		};
 

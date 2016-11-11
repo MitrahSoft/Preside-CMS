@@ -277,8 +277,8 @@ component displayName="Preside Object View Service" {
 		cache.set(
 			  objectKey         = arguments.cacheKey
 			, object            = arguments.value
-			, timeout           = arguments.cacheTimeout           ?: NullValue()
-			, lastAccessTimeout = arguments.cacheLastAccessTimeout ?: NullValue()
+			, timeout           = arguments.cacheTimeout           ?: javacast("null","")
+			, lastAccessTimeout = arguments.cacheLastAccessTimeout ?: javacast("null","")
 		);
 	}
 

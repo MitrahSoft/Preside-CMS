@@ -15,9 +15,9 @@ component extends="preside.system.base.SystemPresideObject" displayName="Website
 	property name="combined_benefits" relationship="many-to-many" relatedTo="website_benefit" relatedVia="website_benefit_combined_benefits" relatedViaSourceFk="source_website_benefit" relatedViaTargetFk="target_website_benefit";
 	property name="combined_benefits_are_inclusive" type="boolean" dbtype="boolean" required=false default=false;
 
-	public numeric function calculatePriority( required struct data ) output=false {
+	public numeric function calculatePriority( required struct data, required string objectName ) output=false {
 		if ( !IsNumeric( data.priority ?: "" ) ) {
-			var currentMaxPriority = this.selectData( selectFields=[ "Max( priority ) as maxPriority" ] );
+			var currentMaxPriority = this.selectData( objectName=arguments.objectName, selectFields=[ "Max( priority ) as maxPriority" ] );
 
 			currentMaxPriority = Val( currentMaxPriority.maxPriority ?: "" );
 

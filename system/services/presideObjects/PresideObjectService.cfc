@@ -765,7 +765,7 @@ component displayName="Preside Object Service" {
 
 		if ( !Len( Trim( selectDataArgs.orderBy ) ) ) {
 			var relatedVia   = getObjectPropertyAttribute( arguments.objectName, arguments.propertyName, "relatedVia", "" );
-			var hasSortOrder = Len( Trim( relatedVia ) ) && getObjectProperties( relatedVia ).keyExists( "sort_order" );
+			var hasSortOrder = Len( Trim( relatedVia ) ) && structKeyExists( getObjectProperties( relatedVia ), "sort_order" );
 			if ( hasSortOrder ) {
 				selectDataArgs.orderBy = relatedVia & ".sort_order";
 			}
@@ -810,7 +810,7 @@ component displayName="Preside Object Service" {
 		if ( Len( Trim( pivotTable ) ) and Len( Trim( targetObject ) ) ) {
 			var newRecords      = ListToArray( arguments.targetIdList );
 			var anythingChanged = false;
-			var hasSortOrder    = getObjectProperties( pivotTable ).keyExists( "sort_order" );
+			var hasSortOrder    = StructKeyExists( getObjectProperties( pivotTable ), "sort_order" );
 			var currentSelect   = [ "#targetFk# as targetId" ];
 
 			if ( hasSortOrder ) {
@@ -2110,7 +2110,7 @@ component displayName="Preside Object Service" {
 						var obj = getObject( arguments.objectName );
 						var fun = obj[ ListRest( defaultValue, ":" ) ];
 
-						newData[ propName ] = fun( arguments.data );
+						newData[ propName ] = fun( arguments.data, arguments.objectName );
 					break;
 					default:
 						newData[ propName ] = defaultValue;

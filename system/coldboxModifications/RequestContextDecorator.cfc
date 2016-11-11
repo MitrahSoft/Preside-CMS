@@ -252,12 +252,11 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 	}
 
 	public string function renderIncludes( string type, string group="default" ) output=false {
-		var rendered      = _getSticker().renderIncludes( argumentCollection = arguments );
-
+		var rendered  = _getSticker().renderIncludes( argumentCollection = arguments );
+		var _group    = arguments.group;
 		if ( !arguments.keyExists( "type" ) || arguments.type == "js" ) {
 			var inlineJs = getRequestContext().getValue( name="__presideInlineJs", defaultValue={}, private=true );
-			var stack    = inlineJs[ arguments.group ] ?: arrayNew(1);
-
+			var stack    = inlineJs[ _group ] ?: arrayNew(1);
 			rendered &= ArrayToList( stack, Chr(10) );
 
 			inlineJs[ arguments.group ] = [];

@@ -468,7 +468,7 @@
 					<cfset structInsert( controller.getSetting("layoutsRefMap"), cbox_layoutLocationKey, cbox_layoutLocation, true)>
 				</cflock>
 			</cfif>
-
+			<cfset cbox_layoutLocation = replace( cbox_layoutLocation, "//", "/" )>
 			<cfset viewLocations = discoverViewPaths( reverse ( listRest( reverse( cbox_layoutLocation ), ".")),arguments.module,cbox_explicitModule) />
 			<!--- RenderLayout --->
 			<cfset iData.renderedLayout = renderViewComposite(cbox_currentLayout, viewLocations.viewPath, viewLocations.viewHelperPath, args) />

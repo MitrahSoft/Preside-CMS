@@ -27,7 +27,6 @@ component output=false singleton=true {
 
 		if ( StructKeyExists( arguments, "params" ) ) {
 			for( param in arguments.params ){
-				param.value = param.value ?: "";
 
 				if ( not IsSimpleValue( param.value ) ) {
 					throw(

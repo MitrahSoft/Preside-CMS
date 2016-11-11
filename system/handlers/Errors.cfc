@@ -13,7 +13,7 @@ component {
 			return renderView( view="/admin/errorPages/notFound" );
 		}
 		event.initializePresideSiteteePage( systemPage="notFound" );
-		return renderView( view="/errors/notFound", presideobject="notFound", id=event.getCurrentPageId(), args=args );
+		return presideRenderView( view="/errors/notFound", presideobject="notFound", id=event.getCurrentPageId(), args=args );
 	}
 
 	private string function accessDeniedPageType( event, rc, prc, args={} ) {

@@ -372,15 +372,13 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 			return arguments.active && ( !IsDate( arguments.embargo_date ) || Now() >= arguments.embargo_date ) && ( !IsDate( arguments.expiry_date ) || Now() <= arguments.expiry_date );
 		};
 
-
-
-		if ( (StructKeyExists( arguments, "slug" ) && len(Trim( arguments.slug ) ) ? arguments.slug : "/" ) == "/" && !Len( Trim( arguments.pageId ?: "" ) ) && !Len( Trim( arguments.systemPage ?: "" ) )) {
+		if ( (StructKeyExists( arguments, "slug" ) && len(Trim( arguments.slug ) ) ? arguments.slug : "/" ) == "/" && !Len( Trim( structKeyExists( arguments, "pageId" ) ? arguments.pageId : "" ) ) && !Len( Trim( structKeyExists( arguments,"systemPage" ) ? arguments.systemPage : "" ) )) {
 			page = sitetreeSvc.getSiteHomepage( getLatest=getLatest, allowDrafts=allowDrafts );
 			parentPages = QueryNew( page.columnlist );
 		} else {
-			if ( Len( Trim( arguments.pageId ?: "" ) ) ) {
+			if ( Len( Trim( structKeyExists( arguments, "pageId" ) ? arguments.pageId : "" ) ) ) {
 				getPageArgs.id = arguments.pageId;
-			} else if ( Len( Trim( arguments.systemPage ?: "" ) ) ) {
+			} else if ( Len( Trim( structKeyExists( arguments,"systemPage" ) ? arguments.systemPage : "" ) ) ) {
 				getPageArgs.systemPage = arguments.systemPage;
 			} else {
 				getPageArgs.slug = arguments.slug;

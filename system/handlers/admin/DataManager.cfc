@@ -1315,9 +1315,9 @@
 
 		<cfscript>
 			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.object );
-			arguments.gridFields = ( len(trim(arguments.gridFields)) EQ 0 AND structKeyExists(rc, "gridFields") ? rc.gridFields : 'label,datecreated,_version_author' );
+			arguments.gridFields = ( len( trim( arguments.gridFields ) ) EQ 0 AND structKeyExists( rc, "gridFields" ) ? rc.gridFields : len( trim( arguments.gridFields ) ) ? arguments.gridFields : 'label,datecreated,_version_author' );
 
-			gridFields = ListToArray( gridFields );
+			gridFields = ListToArray( arguments.gridFields );
 
 			var objectTitleSingular = translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object );
 			var checkboxCol         = [];

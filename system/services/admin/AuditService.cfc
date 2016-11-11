@@ -44,7 +44,7 @@ component displayName="Audit Service" {
 				, type       = arguments.type
 				, user       = arguments.userId
 				, record_id  = arguments.recordId
-				, uri        = cgi.request_url
+				, uri        = cgi.server_name & cgi.script_name & "?" & cgi.query_string
 				, user_ip    = cgi.remote_addr
 				, user_agent = cgi.http_user_agent
 			} );

@@ -473,7 +473,7 @@ component displayName="Preside Object Service" {
 			}
 		}
 
-		if ( !Len( Trim( arguments.id ?: "" ) ) and _isEmptyFilter( arguments.filter ) and not arguments.forceUpdateAll ) {
+		if ( !Len( Trim( structKeyExists( arguments,"id" ) ? arguments.id : "" ) ) and _isEmptyFilter( arguments.filter ) and not arguments.forceUpdateAll ) {
 			throw(
 				  type    = "PresideObjects.updateAllProtection"
 				, message = "A call to update records in [#arguments.objectName#] was made without any filter which would lead to all records being updated"
@@ -501,7 +501,7 @@ component displayName="Preside Object Service" {
 			if ( requiresVersioning ) {
 				_getVersioningService().saveVersionForUpdate(
 					  objectName           = arguments.objectName
-					, id                   = arguments.id ?: NullValue()
+					, id                   = arguments.id ?: javacast( "null","" )
 					, filter               = preparedFilter.filter
 					, filterParams         = preparedFilter.filterParams
 					, data                 = cleanedData

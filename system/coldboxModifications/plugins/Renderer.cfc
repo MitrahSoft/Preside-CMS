@@ -504,7 +504,7 @@
 
 			for( var i=layoutDirs.len(); i>0; i-- ){
 				layoutPath = layoutDirs[i] & "/" & arguments.layout;
-				if ( FileExists( layoutPath ) ) {
+				if ( FileExists( expandPath( layoutPath ) ) ) {
 					return layoutPath;
 				}
 			}

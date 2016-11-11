@@ -141,7 +141,7 @@ component extends="coldbox.system.web.Controller" output=false {
 			return true;
 		}
 
-		var functions = arguments.handlerMeta.functions ?: arrayNew(1);
+		var functions = structKeyExists( arguments.handlerMeta,'functions' ) && isArray( arguments.handlerMeta.functions ) ? arguments.handlerMeta.functions : arrayNew(1);
 
 		for( var func in functions ) {
 			if ( ( func.name ?: "" ) eq arguments.action ) {

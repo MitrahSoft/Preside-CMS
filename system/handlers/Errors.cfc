@@ -29,7 +29,7 @@ component {
 		switch( args.reason ?: "" ){
 			case "INSUFFICIENT_PRIVILEGES":
 				event.initializePresideSiteteePage( systemPage="accessDenied" );
-				return renderView( view="/errors/insufficientPrivileges", presideobject="accessDenied", id=event.getCurrentPageId(), args=args );
+				return presideRenderView( view="/errors/insufficientPrivileges", presideobject="accessDenied", id=event.getCurrentPageId(), args=args );
 			default:
 				websiteLoginService.setPostLoginUrl( Len( Trim( args.postLoginUrl ?: "" ) ) ? args.postLoginUrl : event.getCurrentUrl() );
 				event.initializePresideSiteteePage( systemPage="login" );

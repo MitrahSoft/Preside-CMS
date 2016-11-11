@@ -44,7 +44,7 @@
 			<div class="col-md-offset-2">
 				<a href="#event.buildAdminLink( linkTo='sitetree.trash' )#" class="pull-right red">
 					<i class="fa fa-fw fa-trash fa-lg"></i>
-					#translateResource( uri="cms:sitetree.trash.link.title", data=[ trashCount ] )#
+					#translateResource( uri="cms:sitetree.trash.link.title", data=[ toString(trashCount) ] )#
 				</a>
 			</div>
 		</div>

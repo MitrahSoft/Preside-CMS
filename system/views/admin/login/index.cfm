@@ -7,7 +7,7 @@
 	if ( rememberMeExpiryInDays == 1 ) {
 		rememberMeLabel = translateResource( uri="cms:login.remember.me.single.day.label" );
 	} else {
-		rememberMeLabel = translateResource( uri="cms:login.remember.me.label", data=[ rememberMeExpiryInDays ] );
+		rememberMeLabel = translateResource( uri="cms:login.remember.me.label", data=[ tostring(rememberMeExpiryInDays) ] );
 	}
 </cfscript>
 

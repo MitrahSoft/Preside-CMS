@@ -654,7 +654,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 // HTTP Header helpers
 	public string function getClientIp() output=false {
 		var httpHeaders = getHttpRequestData().headers;
-		var clientIp    = httpHeaders[ "x-real-ip" ] ?: ( httpHeader[ "x-forwarded-for"] ?: cgi.remote_addr );
+		var clientIp    = httpHeaders[ "x-real-ip" ] ?: ( httpHeaders[ "x-forwarded-for"] ?: cgi.remote_addr );
 
 		return Trim( ListFirst( clientIp ) );
 	}

@@ -832,9 +832,9 @@ component displayName="AssetManager Service" {
 	}
 
 	public array function listTypesForGroup( required string groupName ) {
-		var groups = _getGroups();
-
-		return groups[ arguments.groupName ] ?: arrayNew(1);
+		var groups        = _getGroups();
+		var listTypeGroup = structKeyExists( groups, "arguments.groupName" ) ? groups[ arguments.groupName ] : arrayNew(1);
+		return listTypeGroup;
 	}
 
 	public query function getAsset( required string id, array selectFields=[], boolean throwOnMissing=false ) {

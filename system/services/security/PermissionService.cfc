@@ -49,7 +49,7 @@ component displayName="Admin permissions service" {
 	 *
 	 */
 	public array function listRoles() {
-		return _getRoles().keyArray();
+		return structKeyArray( _getRoles() );
 	}
 
 	/**

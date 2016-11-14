@@ -108,14 +108,16 @@
 						</a>
 					</li>
 				</cfif>
-				<cfloop list="#managedChildPageTypes#" index="i" item="managedPageType">
-					<li>
-						<a href="#event.buildAdminLink( linkTo='sitetree.managedChildren', queryString='parent=#pageId#&pageType=#managedPageType#' )#">
-							<i class="fa fa-fw fa-ellipsis-h"></i>&nbsp;
-							#translateResource( uri="cms:sitetree.manage.type", data=[ LCase( translateResource( "page-types.#managedPageType#:name" ) ) ] )#
-						</a>
-					</li>
-				</cfloop>
+				<cfif listLen( managedChildPageTypes )>
+					<cfloop list="#managedChildPageTypes#" index="i" item="managedPageType">
+						<li>
+							<a href="#event.buildAdminLink( linkTo='sitetree.managedChildren', queryString='parent=#pageId#&pageType=#managedPageType#' )#">
+								<i class="fa fa-fw fa-ellipsis-h"></i>&nbsp;
+								#translateResource( uri="cms:sitetree.manage.type", data=[ LCase( translateResource( "page-types.#managedPageType#:name" ) ) ] )#
+							</a>
+						</li>
+					</cfloop>
+				</cfif>
 
 				<li>
 					<a data-global-key="p" href="#event.buildAdminLink( linkTo='sitetree.previewPage', queryString='id=#pageId#' )#">

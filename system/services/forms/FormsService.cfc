@@ -295,7 +295,8 @@ component displayName="Forms service" {
 		var renderArgs        = "";
 		var tabs              = [];
 		var _fieldLayout      = structKeyExists( arguments,"fieldLayout" ) ? arguments.fieldlayout : "formcontrols.layouts.field";
-		var _tabLayout        = structKeyExists( arguments,"tabLayout" ) ? arguments.fieldlayout : "formcontrols.layouts.tab";
+		var _tabLayout        = structKeyExists( arguments,"tabLayout" ) ? arguments.tabLayout : "formcontrols.layouts.tab";
+		var _fieldsetLayout   = structKeyExists( arguments,"fieldsetLayout" ) ? arguments.fieldsetLayout : "formcontrols.layouts.fieldsetLayout";
 		for( var tab in frm.tabs ){
 			if ( IsBoolean( structKeyExists( tab,"deleted" ) ? tab.deleted : "" ) && tab.deleted ) {
 				continue;
@@ -357,7 +358,7 @@ component displayName="Forms service" {
 				renderArgs.append( _getI18nTabOrFieldsetAttributes( fieldset ) );
 
 				renderedFieldSets.append( coldbox.renderViewlet(
-					  event = ( fieldset.layout ?: _fieldLayout )
+					  event = ( fieldset.layout ?: _fieldsetLayout )
 					, args  = renderArgs
 				) );
 			}

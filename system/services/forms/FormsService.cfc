@@ -294,31 +294,29 @@ component displayName="Forms service" {
 		var renderedFields    = "";
 		var renderArgs        = "";
 		var tabs              = [];
-		var _fieldLayout      = structKeyExists( arguments,"fieldLayout" ) ? arguments.fieldlayout : "formcontrols.layouts.field";
-		var _tabLayout        = structKeyExists( arguments,"tabLayout" ) ? arguments.tabLayout : "formcontrols.layouts.tab";
-		var _fieldsetLayout   = structKeyExists( arguments,"fieldsetLayout" ) ? arguments.fieldsetLayout : "formcontrols.layouts.fieldsetLayout";
+
 		for( var tab in frm.tabs ){
-			if ( IsBoolean( structKeyExists( tab,"deleted" ) ? tab.deleted : "" ) && tab.deleted ) {
+			if ( IsBoolean( tab.deleted ?: "" ) && tab.deleted ) {
 				continue;
 			}
 
 			renderedFieldSets = CreateObject( "java", "java.lang.StringBuffer" );
-			if ( not Len( Trim( structKeyExists( tab,"id" ) ? tab.id : "" ) ) ) {
+			if ( not Len( Trim( tab.id ?: "" ) ) ) {
 				tab.id = CreateUUId();
 			}
 
 			for( var fieldset in tab.fieldsets ) {
-				if ( IsBoolean( structKeyExists( fieldset,"deleted" ) ? fieldset.deleted : "" ) && fieldset.deleted ) {
+				if ( IsBoolean( fieldset.deleted ?: "" ) && fieldset.deleted ) {
 					continue;
 				}
 
 				renderedFields = CreateObject( "java", "java.lang.StringBuffer" );
 
 				for( var field in fieldset.fields ) {
-					if ( ( IsBoolean( structKeyExists( fieldset,"deleted" ) ? fieldset.deleted : "" ) && field.deleted ) || arguments.suppressFields.findNoCase( field.name ) ) {
+					if ( ( IsBoolean( field.deleted ?: "" ) && field.deleted ) || arguments.suppressFields.findNoCase( field.name ) ) {
 						continue;
 					}
-					if ( ( structKeyExists( field,"control" ) ? field.control : "default" ) neq "none" ) {
+					if ( ( field.control ?: "default" ) neq "none" ) {
 						renderArgs = {
 							  name               = arguments.fieldNamePrefix & ( field.name ?: "" ) & arguments.fieldNameSuffix
 							, type               = field.control ?: "default"
@@ -344,7 +342,7 @@ component displayName="Forms service" {
 							renderArgs.defaultValue = field.default;
 						}
 
-						renderArgs.layout = field.layout ?: _formControlHasLayout( renderArgs.type ) ? _fieldLayout : "";
+						renderArgs.layout = ( structKeyExists( field, "layout" ) ? field.layout : _formControlHasLayout( renderArgs.type ) ) ? arguments.fieldlayout : "";
 
 						StructAppend( renderArgs, field, false );
 						StructAppend( renderArgs, _getI18nFieldAttributes( field=field ) );
@@ -358,7 +356,7 @@ component displayName="Forms service" {
 				renderArgs.append( _getI18nTabOrFieldsetAttributes( fieldset ) );
 
 				renderedFieldSets.append( coldbox.renderViewlet(
-					  event = ( fieldset.layout ?: _fieldsetLayout )
+					  event = ( StructKeyExists( fieldset, "layout" ) ? fieldset.layout : arguments.fieldsetLayout )
 					, args  = renderArgs
 				) );
 			}
@@ -371,7 +369,7 @@ component displayName="Forms service" {
 			tabs.append( renderArgs );
 
 			renderedTabs.append( coldbox.renderViewlet(
-				  event = ( tab.layout ?: _tabLayout )
+				  event = ( StructKeyExists( tab, "layout" ) ? tab.layout : arguments.tabLayout )
 				, args  = renderArgs
 			) );
 			activeTab = false;
@@ -558,7 +556,7 @@ component displayName="Forms service" {
 		var fieldValue       = "";
 
 		for( var field in formFields ){
-			fieldValue = arguments.formData[ field ] ?: "";
+			fieldValue = structKeyExists( arguments.formData, field ) ? arguments.formData[ field ] : "";
 			if ( Len( fieldValue ) ) {
 				try {
 					arguments.formData[ field ] = preProcessFormField(
@@ -1085,10 +1083,13 @@ component displayName="Forms service" {
 					continue;
 				}
 
-				for( var field in fieldset.fields ) {
+				for( var field in fieldSet.fields ) {
 					var fieldMatched = false;
 					var fieldDeleted = false;
-					for( var mField in matchingFieldset.fields ){
+					// if we use matchingFieldset.fields directly in for loop, ArrayDelete( matchingFieldset.fields, mField ); making issue in ACF
+					var tempMatchingFieldsetFields = duplicate(matchingFieldset.fields);
+
+					for( var mField in tempMatchingFieldsetFields ){
 						if ( mField.name == field.name ) {
 							if ( IsBoolean( field.deleted ?: "" ) and field.deleted ) {
 								ArrayDelete( matchingFieldset.fields, mField );
@@ -1100,6 +1101,8 @@ component displayName="Forms service" {
 							}
 						}
 					}
+
+
 					if ( !fieldMatched && !fieldDeleted ) {
 						ArrayAppend( matchingFieldset.fields, field );
 					}

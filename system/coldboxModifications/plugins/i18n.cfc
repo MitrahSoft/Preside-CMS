@@ -25,9 +25,14 @@ component extends="coldbox.system.plugins.i18n" output=false {
 		}
 
 		if ( ArrayLen( arguments.data ) ) {
+			var tempData = arrayNew(1);
+			for( var element in arguments.data ) {
+				arrayAppend( tempData, toString( element ) );
+			}
+
 			translated = getController().getPlugin( "ResourceBundle" ).formatRBString(
 				  rbString         = translated
-				, substituteValues = arguments.data
+				, substituteValues = tempData
 			);
 		}
 

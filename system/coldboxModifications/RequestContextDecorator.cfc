@@ -270,7 +270,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 	public void function includeInlineJs( required string js, string group="default" ) output=false {
 		var inlineJs = getRequestContext().getValue( name="__presideInlineJs", defaultValue={}, private=true );
 
-		inlineJs[ arguments.group ] = inlineJs[ arguments.group ] ?: arrayNew(1);
+		inlineJs[ arguments.group ] = structKeyExists( inlineJs, arguments.group ) ? inlineJs[ arguments.group ] : arrayNew(1);
 		inlineJs[ arguments.group ].append( "<script type=""text/javascript"">" & Chr(10) & arguments.js & Chr(10) & "</script>" );
 
 		getRequestContext().setValue( name="__presideInlineJs", value=inlineJs, private=true );

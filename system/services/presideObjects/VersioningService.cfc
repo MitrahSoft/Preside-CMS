@@ -233,12 +233,12 @@ component {
 				}
 			} else {
 				var propDbType = ( properties[ field ].dbtype ?: "" );
-				if ( IsEmpty( arguments.newData[ field ] ?: "" ) ) {
+				if ( !len( trim( StructKeyExists( arguments.newData, field ) ? arguments.newData[ field ] : "" ) ) ) {
 					if ( propDbType == "boolean" ) {
 						arguments.newData[ field ] = 0;
 					}
 				}
-				if ( StructKeyExists( oldData, field ) && Compare( oldData[ field ], arguments.newData[ field ] ?: "" ) ) {
+				if ( StructKeyExists( oldData, field ) && Compare( oldData[ field ], StructKeyExists( arguments.newData, field ) ? arguments.newData[ field ] : "" ) ) {
 					changedFields.append( field );
 				}
 			}

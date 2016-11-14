@@ -69,7 +69,8 @@ component extends="coldbox.system.interceptors.SES" output=false {
 
 // private utility methods
 	private void function _detectIncomingSite( event, interceptData ) output=false {
-		var pathInfo = super.getCGIElement( "path_info", event );
+
+		var pathInfo = len( trim(super.getCGIElement( "path_info", event ) ) ) ? super.getCGIElement( "path_info", event ) : '/' ;
 		var domain   = super.getCGIElement( "server_name", event );
 		var site     = "";
 

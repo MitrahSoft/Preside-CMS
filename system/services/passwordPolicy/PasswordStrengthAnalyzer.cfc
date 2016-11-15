@@ -226,7 +226,7 @@ component {
 	}
 
 	private void function _setupCommonPasswords() {
-		_commonPasswords = DeSerializeJson( FileRead( ExpandPath( "/preside" ) & "\system\services\passwordPolicy\./commonPasswords.json" ) );
+		_commonPasswords = DeSerializeJson( FileRead( ExpandPath( "/preside" ) & "\system\services\passwordPolicy\commonPasswords.json" ) );
 	}
 
 	private void function _setupSymbolClasses() {

@@ -343,10 +343,8 @@ component displayName="Forms service" {
 						}
 
 						renderArgs.layout = ( structKeyExists( field, "layout" ) ? field.layout : _formControlHasLayout( renderArgs.type ) ) ? arguments.fieldlayout : "";
-
 						StructAppend( renderArgs, field, false );
 						StructAppend( renderArgs, _getI18nFieldAttributes( field=field ) );
-
 						renderedFields.append( renderFormControl( argumentCollection=renderArgs ) );
 					}
 				}
@@ -944,11 +942,11 @@ component displayName="Forms service" {
 
 	private struct function _getI18nFieldAttributes( required struct field ) {
 		var i18n             = _getI18n();
-		var fieldName        = arguments.field.name ?: "";
+		var fieldName        = structKeyExists( arguments.field, "name" ) ? arguments.field.name : "";
 		var backupLabelUri   = "cms:preside-objects.default.field.#fieldName#.title";
-		var fieldLabel       = arguments.field.label       ?: "";
-		var fieldHelp        = arguments.field.help        ?: "";
-		var fieldPlaceholder = arguments.field.placeholder ?: "";
+		var fieldLabel       = structKeyExists( arguments.field, "label" ) ? arguments.field.label : "";
+		var fieldHelp        = structKeyExists( arguments.field, "help" ) ? arguments.field.help : "";
+		var fieldPlaceholder = structKeyExists( arguments.field, "placeholder" ) ? arguments.field.placeholder : "";
 		var attributes       = {};
 
 		if ( Len( Trim( fieldLabel ) ) ) {

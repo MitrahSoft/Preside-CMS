@@ -1329,7 +1329,7 @@
 			var dtHelper            = getMyPlugin( "JQueryDatatablesHelpers" );
 			var sortOrder           = dtHelper.getSortOrder();
 
-			if ( len( trim( sortOrder ) ) ) {
+			if ( !len( trim( sortOrder ) ) ) {
 				sortOrder = dataManagerService.getDefaultSortOrderForDataGrid( object );
 			}
 

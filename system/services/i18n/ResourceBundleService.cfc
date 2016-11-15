@@ -179,7 +179,7 @@ component output=false singleton=true {
 		var files              = "";
 		var directory          = "";
 		var file               = "";
-		var bundleData         = createObject("java", "java.util.LinkedHashMap").init();
+		var bundleData         = structNew( "ordered" );
 		var filePattern        = ListLast( arguments.bundleName, "." );
 
 		if ( ListLen( arguments.bundleName, "." ) gt 1 ) {

@@ -1563,7 +1563,7 @@
 		<cfargument name="addAnotherAction"  type="string"  required="false" default=""     />
 		<cfargument name="successAction"     type="string"  required="false" default=""     />
 		<cfargument name="redirectOnSuccess" type="boolean" required="false" default="true" />
-		<cfargument name="formName"          type="string"  required="false" default="preside-objects.#arguments.object#.admin.add" />
+		<cfargument name="formName"          type="string"  required="false" default="" />
 		<cfargument name="audit"             type="boolean" required="false" default="false" />
 		<cfargument name="auditAction"       type="string"  required="false" default="" />
 		<cfargument name="auditType"         type="string"  required="false" default="datamanager" />
@@ -1572,8 +1572,8 @@
 		<cfargument name="canSaveDraft"      type="boolean" required="false" default="false" />
 
 		<cfscript>
-			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object );
-
+			arguments.object   = ( len( trim( arguments.object ) ) EQ 0 AND structKeyExists( rc, "object" ) ? rc.object : arguments.object );
+			arguments.formName = ( len( trim( arguments.formName ) ) AND structKeyExists( arguments, "formName" ) ) ? arguments.formName : "preside-objects.#arguments.object#.admin.add";
 			var formData         = event.getCollectionForForm( arguments.formName );
 			var labelField       = presideObjectService.getObjectAttribute( object, "labelfield", "label" );
 			var obj              = "";
@@ -1853,7 +1853,7 @@
 		<cfargument name="successUrl"        type="string"  required="false" default="" />
 		<cfargument name="missingUrl"        type="string"  required="false" default="" />
 		<cfargument name="redirectOnSuccess" type="boolean" required="false" default="true" />
-		<cfargument name="formName"          type="string"  required="false" default="preside-objects.#object#.admin.edit" />
+		<cfargument name="formName"          type="string"  required="false" default="" />
 		<cfargument name="mergeWithFormName" type="string"  required="false" default="" />
 		<cfargument name="audit"             type="boolean" required="false" default="false" />
 		<cfargument name="auditAction"       type="string"  required="false" default="" />
@@ -1871,7 +1871,7 @@
 			arguments.recordId = ( len(trim(arguments.recordId)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.recordId);
 			arguments.missingUrl = ( len(trim(arguments.missingUrl)) ? arguments.missingUrl : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#arguments.object#" ) );
 
-			formName = Len( Trim( mergeWithFormName ) ) ? formsService.getMergedFormName( formName, mergeWithFormName ) : formName;
+			formName = ( Len( Trim( arguments.mergeWithFormName ) ) AND structKeyExists( arguments, "mergeWithFormName" ) ) ? formsService.getMergedFormName( formName, arguments.mergeWithFormName ) : ( Len( Trim( arguments.formName ) ) AND structKeyExists( arguments, "formName" ) ) ? arguments.formName : "preside-objects.#arguments.object#.admin.edit";
 
 			var id               = rc.id      ?: "";
 			var version          = rc.version ?: "";

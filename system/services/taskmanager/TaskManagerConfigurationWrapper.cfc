@@ -35,7 +35,7 @@ component displayName="TaskManager Configuration Wrapper" {
 				if ( FileExists( expandPath( filePath ) ) ) {
 					var componentPath = Replace( filePath, "/", ".", "all" );
 					    componentPath = ReReplace( componentPath, "\.cfc$", "" );
-					    componentPath = replace( componentPath, ".#listFirst(componentPath, '.')#.", "" );
+					    componentPath = replace( componentPath, ".#listFirst(componentPath, '.')#.", "application." );
 
 					var meta = getComponentMetaData( componentPath );
 

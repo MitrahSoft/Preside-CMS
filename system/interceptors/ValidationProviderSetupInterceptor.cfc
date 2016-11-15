@@ -8,11 +8,10 @@ component extends="coldbox.system.Interceptor" {
 	public void function configure() {}
 
 	public void function afterInstanceCreation( event, interceptData ) {
-		var mapping = arguments.interceptData.mapping ?: "";
-
+		var mapping = structKeyExists( arguments.interceptData, "mapping" ) ? arguments.interceptData.mapping : "";
 		if ( !IsSimpleValue( mapping ) ) {
 			if ( mapping.getName() == "ValidationEngine" ) {
-				var validationEngine = arguments.interceptData.target ?: "";
+				var validationEngine = structKeyExists( arguments.interceptData, "target" ) ? arguments.interceptData.target : "";
 
 				if ( IsArray( configuredValidationProviders ) ) {
 					for ( var providerName in configuredValidationProviders ) {

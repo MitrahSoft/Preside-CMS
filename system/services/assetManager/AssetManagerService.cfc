@@ -571,7 +571,7 @@ component displayName="AssetManager Service" {
 		asset.asset_folder     = resolveFolderId( arguments.folder );
 		asset.asset_type       = fileTypeInfo.typeName;
 		asset.storage_path     = newFileName;
-		asset.size             = asset.size  ?: Len( arguments.fileBinary );
+		asset.size             = asset.size  ?: Len( arguments['fileBinary'] );
 		asset.title            = asset.title ?: "";
 
 		isAssetAllowedInFolder(
@@ -1323,9 +1323,9 @@ component displayName="AssetManager Service" {
 	}
 
 	public boolean function isDerivativePubliclyAccessible( required string derivative ) {
-		var derivatives = _getConfiguredDerivatives();
-
-		return ( derivatives[ arguments.derivative ].permissions ?: "inherit" ) == "public";
+		var derivatives    = _getConfiguredDerivatives();
+		var derivativeType = arguments.derivative;
+		return ( derivatives[ derivativeType ].permissions ?: "inherit" ) == "public";
 	}
 
 	public string function getDerivativeConfigSignature( required string derivative ) {
@@ -1659,7 +1659,9 @@ component displayName="AssetManager Service" {
 		var configured = _getConfiguredDerivatives();
 
 		if ( StructKeyExists( configured, arguments.derivativeName ) ) {
-			return configured[ arguments.derivativeName ].transformations ?: arrayNew(1);
+			var derivativeType = arguments.derivativeName;
+
+			return arrayLen( configured[ derivativeType ].transformations ) ? configured[ derivativeType ].transformations : arrayNew(1);
 		}
 
 		throw(

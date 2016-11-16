@@ -12,7 +12,7 @@ component output=false {
 		var assetId         = rc.assetId      ?: "";
 		var versionId       = rc.versionId    ?: "";
 		var derivativeName  = rc.derivativeId ?: "";
-		var isTrashed       = IsTrue( rc.isTrashed ) ?: "";
+		var isTrashed       = IsTrue( rc.isTrashed );
 		var asset           = "";
 		var assetSelectFields = [ "asset.title", ( Len( Trim( versionId ) ) ? "asset_version.asset_type" : "asset.asset_type" ) ];
 

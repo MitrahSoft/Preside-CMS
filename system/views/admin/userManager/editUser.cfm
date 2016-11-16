@@ -1,7 +1,7 @@
 <cfscript>
 	prc.pageIcon  = "group";
 	prc.pageTitle = translateResource( uri="cms:usermanager.editUser.page.title", data=[ prc.record.known_as ?: "" ] );
-	var mergeFormName = rc.id == event.getAdminUserId() ? "preside-objects.security_user.admin.edit.self" : "";
+	mergeFormName = rc.id == event.getAdminUserId() ? "preside-objects.security_user.admin.edit.self" : "";
 </cfscript>
 
 <cfoutput>

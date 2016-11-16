@@ -464,7 +464,7 @@ component output=false singleton=true {
 		}
 
 		relationships = _getManyToManyRelationships();
-		relationships = relationships[ objectName ] ?: structNew();
+		relationships = structKeyExists( relationships, objectName ) ? relationships[ objectName ] : structNew();
 		for( var foreignObj in relationships ){
 			for( var join in relationships[ foreignObj ] ) {
 				if ( join.propertyName eq arguments.columnName ) {

@@ -1633,7 +1633,7 @@
 				return newId;
 			}
 
-			newRecordLink = event.buildAdminLink( linkTo=viewRecordAction ?: "datamanager.viewRecord", queryString="object=#object#&id=#newId#" );
+			newRecordLink = event.buildAdminLink( linkTo=Len( Trim( viewRecordAction ) ) ? viewRecordAction : "datamanager.viewRecord", queryString="object=#object#&id=#newId#" );
 
 			messageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
 				  translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object )

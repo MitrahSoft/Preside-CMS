@@ -4,7 +4,7 @@ component output=false {
 		var tempFile     = GetTempDirectory() & "/" & createUUID();
 		var uploadResult = "";
 
-		if ( not Len( Trim( rc[ arguments.fieldName ] ?: "" ) ) ) {
+		if ( not Len( Trim( structKeyExists( rc, arguments['fieldName'] ) ? rc[ arguments['fieldName'] ] : "" ) ) ) {
 			return {};
 		}
 

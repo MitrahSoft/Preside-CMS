@@ -99,7 +99,11 @@ component extends="preside.system.base.AdminHandler" {
 
 		if ( ancestors.recordCount ) {
 			additionalNodeArgs.permission_context = listToArray( ValueList( ancestors.id ) );
-			additionalNodeArgs.permission_context.reverse();
+			var reversePermissionContext = [];
+			for( var i=ArrayLen(additionalNodeArgs.permission_context); i>=1; i-- ){
+				arrayAppend( reversePermissionContext, additionalNodeArgs.permission_context[i] );
+			}
+			additionalNodeArgs.permission_context = reversePermissionContext;
 		}
 		additionalNodeArgs.permission_context.prepend( parentId );
 

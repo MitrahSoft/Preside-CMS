@@ -161,7 +161,7 @@ component output=false singleton=true displayname="Site service" autodoc=true {
 	public string function getActiveSiteId() output=false autodoc=true {
 		var site = _getColdbox().getRequestContext().getSite();
 
-		return site.id ?: "";
+		return structKeyExists( site, 'id' ) && len( Trim( site.id ) ) ? site.id : "";
 	}
 
 	/**
@@ -171,7 +171,7 @@ component output=false singleton=true displayname="Site service" autodoc=true {
 	public string function getActiveSiteTemplate() output=false autodoc=true {
 		var site = _getColdbox().getRequestContext().getSite();
 
-		return site.template ?: "";
+		return structKeyExists( site, 'template' ) && len( Trim( site.template ) ) ? site.template : "";
 	}
 
 	/**

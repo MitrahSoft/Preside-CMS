@@ -1,8 +1,7 @@
+<cf_presideparam name="prc.category"  type="component">
+<cf_presideparam name="prc.savedData" type="struct">
+<cf_presideparam name="prc.formName"  type="string">
 <cfscript>
-	param name="prc.category"  type="ConfigCategory";
-	param name="prc.savedData" type="struct";
-	param name="prc.formName"  type="string";
-
 	formId     = "edit-system-config-" & ( rc.id ?: "" );
 	sites      = prc.sites ?: QueryNew('');
 	categoryId = Trim( rc.id   ?: "" );

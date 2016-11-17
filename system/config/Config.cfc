@@ -497,7 +497,7 @@ component {
 		derivatives.adminthumbnail = {
 			  permissions = "inherit"
 			, transformations = [
-				  { method="pdfPreview" , args={ page=1                }, inputfiletype="pdf", outputfiletype="jpg" }
+				  { method="pdfPreview" , args={ pages=1                }, inputfiletype="pdf", outputfiletype="jpg" }
 				, { method="shrinkToFit", args={ width=200, height=200 } }
 			  ]
 		};

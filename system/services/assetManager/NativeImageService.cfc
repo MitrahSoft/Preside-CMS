@@ -100,18 +100,20 @@ component displayname="Native Image Manipulation Service" {
 		  required binary  asset
 		, required numeric width
 		, required numeric height
-		,          string  quality = "highPerformance"
+		, required string  filename
+		,          string  quality  = "highPerformance"
 	) {
 		var image         = "";
 		var imageInfo     = "";
 		var interpolation = arguments.quality;
+		var fileExtension =  listLast( arguments.filename, "." ) != 'pdf' ? listLast( arguments.filename, "." ) : 'jpg';
 
 		try {
 
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			imageInfo = ImageInfo( image );
 
-			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &listLast( arguments.filename, "." );
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &fileExtension;
 			fileWrite( tmpFilePath, arguments.asset );
 			image = ImageNew(tmpFilePath);
 			fileDelete( tmpFilePath );
@@ -147,14 +149,19 @@ component displayname="Native Image Manipulation Service" {
 		,          string pages
 		,          string transparent
 	) {
+
+		var tmpPdfPath = GetTempDirectory() & "/" & createUUID() & ".pdf";
+		fileWrite( tmpPdfPath, arguments.asset );
+
 		var imagePrefix = CreateUUId();
-		var tmpFilePath = GetTempDirectory() & "/" & imagePrefix & "_page_" & arguments.page & ".jpg";
+		var tmpFilePath = GetTempDirectory() & "/" & imagePrefix & "_page_" & arguments.pages & ".jpg";
 		var allowedArgs = [ "scale", "resolution", "format", "pages", "transparent", "maxscale", "maxlength", "maxbreadth" ];
 		var pdfAttributes = {
 			  action      = "thumbnail"
-			, source      = asset
+			, source      = tmpPdfPath
 			, destination = GetTempDirectory()
 			, imagePrefix = imagePrefix
+			, overwrite   = true
 		};
 
 		for( var arg in allowedArgs ) {
@@ -164,6 +171,7 @@ component displayname="Native Image Manipulation Service" {
 		}
 
 		cfpdf( attributeCollection=pdfAttributes );
+		fileDelete( tmpPdfPath );
 
 		return FileReadBinary( tmpFilePath );
 	}

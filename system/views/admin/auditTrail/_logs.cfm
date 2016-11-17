@@ -19,7 +19,7 @@
 				auditTrailData.userLink = event.buildAdminLink( linkto="auditTrail", queryString="user=" & auditTrailData.user );
 
 				auditTrailData.actionLink      = event.buildAdminLink( linkto="auditTrail", queryString="action=" & auditTrailData.action );
-				auditTrailData.actionTitle     = translateResource( uri="auditlog.#auditTrailData.type#:#auditTrailData.action#.title", defaultValue=action.action );
+				auditTrailData.actionTitle     = translateResource( uri="auditlog.#auditTrailData.type#:#auditTrailData.action#.title", defaultValue=auditTrailData.action );
 				auditTrailData.actionIconClass = translateResource( uri="auditlog.#auditTrailData.type#:#auditTrailData.action#.iconClass" );
 
 				auditTrailData.typeLink      = event.buildAdminLink( linkto="auditTrail", queryString="type=" & auditTrailData.type );

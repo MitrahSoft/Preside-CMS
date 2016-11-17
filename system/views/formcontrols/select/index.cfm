@@ -11,7 +11,7 @@
 	addMissingValues   		= IsTrue( args.addMissingValues 	?: "" );
 	removeObjectPickerClass	= args.removeObjectPickerClass     	?: false;
 	objectPickerClass  		= removeObjectPickerClass			?  "" : "object-picker" ;
-	labels            		= ( structKeyExists( args, "labels") && len( args.labels ) )  ?  args.labels : args.values;
+	labels            		= structKeyExists( args, "labels") && ( isArray( args.labels ) ) && arrayLen( args.labels ) ? args.labels : (structKeyExists( args, "labels") && len( trim( args.labels ) ) ? args.labels : args.values );
 
 	if ( IsSimpleValue( values ) ) { values = ListToArray( values ); }
 	if ( IsSimpleValue( labels ) ) { labels = ListToArray( labels ); }

@@ -11,7 +11,7 @@ component {
 	 * @coldbox.inject               coldbox
 	 * @presideObjectService.inject  PresideObjectService
 	 * @resourceBundleService.inject ResourceBundleService
-	 * @stickerForPreside.inject     coldbox:myplugin:stickerForPreside
+	 * @stickerForPreside.inject     coldbox:myplugin:StickerForPreside
 	 * @widgetsService.inject        WidgetsService
 	 * @pageTypesService.inject      PageTypesService
 	 * @formsService.inject          FormsService

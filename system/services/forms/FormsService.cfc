@@ -1176,20 +1176,20 @@ component displayName="Forms service" {
 
 	private void function _stripDisabledFeatures( required struct formDefinition ) {
 		var tabs = arguments.formDefinition.tabs ?: arrayNew(1);
+		//writedump(tabs);abort;
 
-		for( var i=tabs.len(); i>0; i-- ) {
+		for( var i=arrayLen( tabs ); i>0; i-- ) {
 			if ( _itemBelongsToDisabledFeature( tabs[ i ] ) ) {
 				tabs.deleteAt( i );
 			}
 
-			var fieldsets = tabs[ i ].fieldSets ?: arrayNew(1);
+			var fieldsets = arrayIsDefined( tabs, i ) ? tabs[ i ].fieldSets : arrayNew(1);
 			for( var n=fieldsets.len(); n>0; n-- ) {
 				if ( _itemBelongsToDisabledFeature( fieldsets[ n ] ) ) {
 					fieldsets.deleteAt( n );
 				}
 
-				var fields = fieldsets[ n ].fields ?: arrayNew(1);
-
+				var fields = arrayIsDefined( fieldsets, n ) ? fieldsets[ n ].fields : arrayNew(1);
 				for( var x=fields.len(); x>0; x-- ) {
 					if ( _itemBelongsToDisabledFeature( fields[ x ] ) ) {
 						fields.deleteAt( x );

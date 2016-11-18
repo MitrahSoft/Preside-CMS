@@ -2,7 +2,7 @@ component extends="preside.system.base.AdminHandler" {
 
 	property name="systemConfigurationService" inject="systemConfigurationService";
 	property name="siteService"                inject="siteService";
-	property name="messageBox"                 inject="coldbox:plugin:messageBox";
+	property name="MessageBox"                 inject="coldbox:plugin:MessageBox";
 
 
 // LIFECYCLE EVENTS
@@ -114,7 +114,7 @@ component extends="preside.system.base.AdminHandler" {
 		} );
 
 		if ( !validationResult.validated() ) {
-			messageBox.error( translateResource( uri="cms:sysconfig.validation.failed" ) );
+			MessageBox.error( translateResource( uri="cms:sysconfig.validation.failed" ) );
 			var persist = formData;
 			persist.validationResult = validationResult;
 
@@ -145,7 +145,7 @@ component extends="preside.system.base.AdminHandler" {
 			, configuration    = formData
 		} );
 
-		messageBox.info( translateResource( uri="cms:sysconfig.saved" ) );
+		MessageBox.info( translateResource( uri="cms:sysconfig.saved" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="sysconfig.category", queryString="id=#categoryId#" ) );
 	}
 

@@ -1,6 +1,6 @@
 component extends="preside.system.base.AdminHandler" output=false {
 
-	property name="messagebox"      inject="coldbox:plugin:messagebox";
+	property name="MessageBox"      inject="coldbox:plugin:MessageBox";
 	property name="errorLogService" inject="errorLogService";
 
 	public void function preHandler( event ) output=false {
@@ -30,13 +30,13 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 	public void function deleteLogAction( event, rc, prc ) output=false {
 		errorLogService.deleteError( rc.log ?: "" );
-		messagebox.info( translateResource( "cms:errorLogs.log.deleted.confirmation" ) );
+		MessageBox.info( translateResource( "cms:errorLogs.log.deleted.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( "errorLogs" ) );
 	}
 
 	public void function deleteAllAction( event, rc, prc ) output=false {
 		errorLogService.deleteAllErrors();
-		messagebox.info( translateResource( "cms:errorLogs.all.logs.deleted.confirmation" ) );
+		MessageBox.info( translateResource( "cms:errorLogs.all.logs.deleted.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( "errorLogs" ) );
 	}
 

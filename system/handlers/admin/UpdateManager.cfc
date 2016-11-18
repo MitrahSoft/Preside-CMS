@@ -1,7 +1,7 @@
 component extends="preside.system.base.AdminHandler" output=false {
 
 	property name="updateManagerService" inject="updateManagerService";
-	property name="messageBox"           inject="coldbox:plugin:messageBox";
+	property name="MessageBox"           inject="coldbox:plugin:MessageBox";
 
 
 // LIFECYCLE EVENTS
@@ -40,9 +40,9 @@ component extends="preside.system.base.AdminHandler" output=false {
 		for( var version in prc.downloadingVersions ){
 			if ( prc.downloadingVersions[ version ].complete ) {
 				if ( prc.downloadingVersions[ version ].success ) {
-					messagebox.info( translateResource( uri="cms:updateManager.download.complete.confirmation", data=[ version ] ) );
+					MessageBox.info( translateResource( uri="cms:updateManager.download.complete.confirmation", data=[ version ] ) );
 				} else {
-					messagebox.error( translateResource( uri="cms:updateManager.download.error.message", data=[ version ] ) );
+					MessageBox.error( translateResource( uri="cms:updateManager.download.error.message", data=[ version ] ) );
 				}
 				updateManagerService.clearDownload( version );
 			}
@@ -72,7 +72,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		var validationResult = validateForm( formName=formName, formData=formData );
 
 		if ( not validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 			persist = formData;
 			persist.validationResult = validationResult;
 
@@ -81,7 +81,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 		updateManagerService.saveSettings( settings=formData );
 
-		messageBox.info( translateResource( uri="cms:updateManager.settings.saved.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:updateManager.settings.saved.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 
 	}
@@ -90,12 +90,12 @@ component extends="preside.system.base.AdminHandler" output=false {
 		try {
 			updateManagerService.downloadVersion( version = rc.version ?: "" );
 		} catch( "UpdateManagerService.unknown.version" e ) {
-			messageBox.error( translateResource( uri="cms:updatemanager.download.version.not.found.error", data=[ rc.version ?: "" ] ) );
+			MessageBox.error( translateResource( uri="cms:updatemanager.download.version.not.found.error", data=[ rc.version ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 
 		}
 
-		messageBox.info( translateResource( uri="cms:updatemanager.download.started.confirmation", data=[ rc.version ?: "" ] ) );
+		MessageBox.info( translateResource( uri="cms:updatemanager.download.started.confirmation", data=[ rc.version ?: "" ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 	}
 
@@ -103,11 +103,11 @@ component extends="preside.system.base.AdminHandler" output=false {
 		try {
 			updateManagerService.installVersion( version = rc.version ?: "" );
 		} catch( "UpdateManagerService.unknown.version" e ) {
-			messageBox.error( translateResource( uri="cms:updatemanager.install.version.not.found.error", data=[ rc.version ?: "" ] ) );
+			MessageBox.error( translateResource( uri="cms:updatemanager.install.version.not.found.error", data=[ rc.version ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 
 		} catch( "UpdateManagerService.railo.admin.secured" e ) {
-			messageBox.error( translateResource( uri="cms:updatemanager.install.railo.admin.access.denied", data=[ rc.version ?: "" ] ) );
+			MessageBox.error( translateResource( uri="cms:updatemanager.install.railo.admin.access.denied", data=[ rc.version ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 
 		} catch( "presidecms.auto.schema.sync.disabled" exception ) {
@@ -118,7 +118,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 			cfheader( statuscode=500 ); cfcontent( reset=true );WriteOutput( Trim( errorMessage ) );abort;
 		}
 
-		messageBox.info( translateResource( uri="cms:updatemanager.installed.confirmation", data=[ rc.version ?: "" ] ) );
+		MessageBox.info( translateResource( uri="cms:updatemanager.installed.confirmation", data=[ rc.version ?: "" ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 	}
 
@@ -126,19 +126,19 @@ component extends="preside.system.base.AdminHandler" output=false {
 		try {
 			updateManagerService.deleteVersion( version = rc.version ?: "" );
 		} catch( "UpdateManagerService.unknown.version" e ) {
-			messageBox.error( translateResource( uri="cms:updatemanager.delete.version.not.found.error", data=[ rc.version ?: "" ] ) );
+			MessageBox.error( translateResource( uri="cms:updatemanager.delete.version.not.found.error", data=[ rc.version ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 
 		} catch( "UpdateManagerService.cannot.delete.current.version" e ) {
-			messageBox.error( translateResource( uri="cms:updatemanager.cannot.delete.current.version.error", data=[ rc.version ?: "" ] ) );
+			MessageBox.error( translateResource( uri="cms:updatemanager.cannot.delete.current.version.error", data=[ rc.version ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 
 		} catch( "UpdateManagerService.failed.to.delete" e ) {
-			messageBox.error( translateResource( uri="cms:updatemanager.cannot.delete.version.error", data=[ rc.version ?: "" ] ) );
+			MessageBox.error( translateResource( uri="cms:updatemanager.cannot.delete.version.error", data=[ rc.version ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 		}
 
-		messageBox.info( translateResource( uri="cms:updatemanager.version.deleted.confirmation", data=[ rc.version ?: "" ] ) );
+		MessageBox.info( translateResource( uri="cms:updatemanager.version.deleted.confirmation", data=[ rc.version ?: "" ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="updateManager" ) );
 	}
 

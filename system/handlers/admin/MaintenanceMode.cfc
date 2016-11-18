@@ -1,7 +1,7 @@
 component extends="preside.system.base.AdminHandler" {
 
 	property name="maintenanceModeManagerService" inject="maintenanceModeManagerService";
-	property name="messageBox"                    inject="coldbox:plugin:messagebox";
+	property name="MessageBox"                    inject="coldbox:plugin:MessageBox";
 
 	public void function preHandler( event, rc, prc ) {
 		super.preHandler( argumentCollection = arguments );
@@ -31,12 +31,12 @@ component extends="preside.system.base.AdminHandler" {
 		if ( !validationResult.validated() ) {
 			var persist = formData;
 			persist.validationResult = validationResult;
-			messageBox.error( translateResource( uri="cms:maintenanceMode.settingsform.error" ) );
+			MessageBox.error( translateResource( uri="cms:maintenanceMode.settingsform.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="maintenanceMode" ), persistStruct=persist );
 		}
 
 		maintenanceModeManagerService.saveSettings( formData );
-		messageBox.info( translateResource( uri="cms:maintenanceMode.settings.saved.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:maintenanceMode.settings.saved.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="maintenanceMode" ) );
 	}
 

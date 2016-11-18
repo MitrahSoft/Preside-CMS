@@ -2,7 +2,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 	property name="widgetsService" inject="widgetsService";
 	property name="siteService"    inject="siteService";
-	property name="messageBox"     inject="coldbox:plugin:messageBox";
+	property name="MessageBox"     inject="coldbox:plugin:MessageBox";
 
 	public void function dialog( event, rc, prc ) output=false {
 		var widget            = rc.widget            ?: "";
@@ -48,7 +48,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 			);
 
 			if ( not validationResult.validated() ) {
-				messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 
 				config.validationResult = validationResult;
 

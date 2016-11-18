@@ -2,7 +2,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 	property name="websitePermissionService" inject="websitePermissionService";
 	property name="websiteBenefitDao"        inject="presidecms:object:website_benefit";
-	property name="messageBox"               inject="coldbox:plugin:messageBox";
+	property name="MessageBox"               inject="coldbox:plugin:MessageBox";
 	property name="bCryptService"            inject="bCryptService";
 
 	function prehandler( event, rc, prc ) output=false {
@@ -66,7 +66,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 		websitePermissionService.syncBenefitPermissions( benefitId=newId, permissions=ListToArray( rc.permissions ?: "" ) );
 
-		messageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
+		MessageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
 			  translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object )
 			, '<a href="#newRecordLink#">#event.getValue( name='label', defaultValue=translateResource( uri="cms:datamanager.record" ) )#</a>'
 		] ) );
@@ -86,7 +86,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		prc.record = websiteBenefitDao.selectData( filter={ id=id } );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:websiteBenefitsManager.benefitNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:websiteBenefitsManager.benefitNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="websiteBenefitsManager" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -116,7 +116,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 		websitePermissionService.syncBenefitPermissions( benefitId=rc.id ?: "", permissions=ListToArray( rc.permissions ?: "" ) );
 
-		messageBox.info( translateResource( uri="cms:websiteBenefitsManager.benefit.saved.confirmation", data=[ rc.label ?: "" ] ) );
+		MessageBox.info( translateResource( uri="cms:websiteBenefitsManager.benefit.saved.confirmation", data=[ rc.label ?: "" ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="websiteBenefitsManager" ) );
 	}
 
@@ -158,7 +158,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 		websitePermissionService.prioritizeBenefits( benefits );
 
-		messageBox.info( translateResource( uri="cms:websiteBenefitsManager.priority.saved.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:websiteBenefitsManager.priority.saved.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="websiteBenefitsManager" ) );
 	}
 

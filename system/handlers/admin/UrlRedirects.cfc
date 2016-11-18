@@ -2,7 +2,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 	property name="urlRedirectsService" inject="urlRedirectsService";
 	property name="ruleDao"             inject="presidecms:object:url_redirect_rule";
-	property name="messageBox"          inject="coldbox:plugin:messageBox";
+	property name="MessageBox"          inject="coldbox:plugin:MessageBox";
 
 // public handlers
 	public void function preHandler( event ) output=false {
@@ -92,7 +92,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		}
 
 		if ( !Len( Trim( ruleId ) ) ||  !prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:urlRedirects.ruleNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:urlRedirects.ruleNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="urlRedirects" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );

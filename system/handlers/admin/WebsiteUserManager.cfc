@@ -3,7 +3,7 @@ component extends="preside.system.base.AdminHandler" {
 	property name="websitePermissionService" inject="websitePermissionService";
 	property name="websiteLoginService"      inject="websiteLoginService";
 	property name="presideObjectService"     inject="presideObjectService";
-	property name="messageBox"               inject="coldbox:plugin:messageBox";
+	property name="MessageBox"               inject="coldbox:plugin:MessageBox";
 	property name="bCryptService"            inject="bCryptService";
 	property name="passwordPolicyService"    inject="passwordPolicyService";
 
@@ -70,7 +70,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		websitePermissionService.syncUserPermissions( userId=newId, permissions=ListToArray( rc.permissions ?: "" ) );
 
-		messageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
+		MessageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
 			  translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object )
 			, '<a href="#newRecordLink#">#( rc.display_name ?: '')#</a>'
 		] ) );
@@ -88,7 +88,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.record = presideObjectService.selectData( objectName="website_user", filter={ id=rc.id ?: "" } );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:websiteUserManager.userNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:websiteUserManager.userNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="websiteUserManager" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -120,7 +120,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		websitePermissionService.syncUserPermissions( userId=rc.id ?: "", permissions=ListToArray( rc.permissions ?: "" ) );
 
-		messageBox.info( translateResource( uri="cms:websiteUserManager.user.saved.confirmation", data=[ rc.display_name ?: "" ] ) );
+		MessageBox.info( translateResource( uri="cms:websiteUserManager.user.saved.confirmation", data=[ rc.display_name ?: "" ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="websiteUserManager" ) );
 	}
 
@@ -130,7 +130,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.record = presideObjectService.selectData( objectName="website_user", filter={ id=rc.id ?: "" } );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:websiteUserManager.userNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:websiteUserManager.userNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="websiteUserManager" ) );
 		}
 
@@ -151,7 +151,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.record = presideObjectService.selectData( objectName="website_user", filter={ id=rc.id ?: "" } );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:websiteUserManager.userNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:websiteUserManager.userNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="websiteUserManager" ) );
 		}
 
@@ -166,7 +166,7 @@ component extends="preside.system.base.AdminHandler" {
 				, action   = "change_website_user_password"
 				, recordId = prc.record.id
 			);
-			messageBox.info( translateResource( uri="cms:websiteUserManager.userPassword.changed.confirmation", data=[ prc.record.display_name ] ) );
+			MessageBox.info( translateResource( uri="cms:websiteUserManager.userPassword.changed.confirmation", data=[ prc.record.display_name ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="websiteUserManager" ) );
 		}
 

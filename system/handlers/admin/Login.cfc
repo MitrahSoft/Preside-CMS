@@ -4,7 +4,7 @@ component extends="preside.system.base.AdminHandler" {
 	property name="passwordPolicyService" inject="passwordPolicyService";
 	property name="applicationsService"   inject="applicationsService";
 	property name="sessionStorage"        inject="coldbox:plugin:sessionStorage";
-	property name="messageBox"            inject="coldbox:plugin:messageBox";
+	property name="MessageBox"            inject="coldbox:plugin:MessageBox";
 	property name="i18n"                  inject="coldbox:plugin:i18n";
 
 	public void function preHandler( event, action, eventArguments ) {

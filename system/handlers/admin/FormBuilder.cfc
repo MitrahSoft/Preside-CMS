@@ -4,7 +4,7 @@ component extends="preside.system.base.AdminHandler" {
 	property name="formBuilderRenderingService" inject="formBuilderRenderingService";
 	property name="itemTypesService"            inject="formBuilderItemTypesService";
 	property name="actionsService"              inject="formBuilderActionsService";
-	property name="messagebox"                  inject="coldbox:plugin:messagebox";
+	property name="MessageBox"                  inject="coldbox:plugin:MessageBox";
 	property name="spreadsheetLib"              inject="spreadsheetLib";
 
 
@@ -49,7 +49,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.form = formBuilderService.getForm( rc.id ?: "" );
 
 		if ( !prc.form.recordcount ) {
-			messagebox.error( translateResource( "formbuilder:form.not.found.alert" ) );
+			MessageBox.error( translateResource( "formbuilder:form.not.found.alert" ) );
 			setNextEvent( url=event.buildAdminLink( "formbuilder" ) );
 		}
 
@@ -138,7 +138,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.form = formBuilderService.getForm( rc.id ?: "" );
 
 		if ( !prc.form.recordcount ) {
-			messagebox.error( translateResource( "formbuilder:form.not.found.alert" ) );
+			MessageBox.error( translateResource( "formbuilder:form.not.found.alert" ) );
 			setNextEvent( url=event.buildAdminLink( "formbuilder" ) );
 		}
 
@@ -228,7 +228,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.form = formBuilderService.getForm( rc.id ?: "" );
 
 		if ( !prc.form.recordcount ) {
-			messagebox.error( translateResource( "formbuilder:form.not.found.alert" ) );
+			MessageBox.error( translateResource( "formbuilder:form.not.found.alert" ) );
 			setNextEvent( url=event.buildAdminLink( "formbuilder" ) );
 		}
 
@@ -252,7 +252,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.form = formBuilderService.getForm( rc.id ?: "" );
 
 		if ( !prc.form.recordcount ) {
-			messagebox.error( translateResource( "formbuilder:form.not.found.alert" ) );
+			MessageBox.error( translateResource( "formbuilder:form.not.found.alert" ) );
 			setNextEvent( url=event.buildAdminLink( "formbuilder" ) );
 		}
 		if ( IsTrue( prc.form.locked ) ) {
@@ -405,10 +405,10 @@ component extends="preside.system.base.AdminHandler" {
 
 		if ( activated ) {
 			formBuilderService.activateForm( formId );
-			messagebox.info( translateResource( "formbuilder:activated.confirmation" ) );
+			MessageBox.info( translateResource( "formbuilder:activated.confirmation" ) );
 		} else {
 			formBuilderService.deactivateForm( formId );
-			messagebox.info( translateResource( "formbuilder:deactivated.confirmation" ) );
+			MessageBox.info( translateResource( "formbuilder:deactivated.confirmation" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="formbuilder.manageform", querystring="id=" & formId ) );
@@ -422,10 +422,10 @@ component extends="preside.system.base.AdminHandler" {
 
 		if ( locked ) {
 			formBuilderService.lockForm( formId );
-			messagebox.info( translateResource( "formbuilder:locked.confirmation" ) );
+			MessageBox.info( translateResource( "formbuilder:locked.confirmation" ) );
 		} else {
 			formBuilderService.unlockForm( formId );
-			messagebox.info( translateResource( "formbuilder:unlocked.confirmation" ) );
+			MessageBox.info( translateResource( "formbuilder:unlocked.confirmation" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="formbuilder.manageform", querystring="id=" & formId ) );
@@ -445,9 +445,9 @@ component extends="preside.system.base.AdminHandler" {
 		formBuilderService.deleteSubmissions( submissionIds );
 
 		if ( submissionIds.len() == 1 ) {
-			messagebox.info( translateResource( uri="formbuilder:submission.deleted.confirmation" ) );
+			MessageBox.info( translateResource( uri="formbuilder:submission.deleted.confirmation" ) );
 		} else {
-			messagebox.info( translateResource( uri="formbuilder:submissions.deleted.confirmation" ) );
+			MessageBox.info( translateResource( uri="formbuilder:submissions.deleted.confirmation" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="formbuilder.submissions", queryString="id=" & formId ) );

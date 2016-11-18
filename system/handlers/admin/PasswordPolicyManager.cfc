@@ -2,7 +2,7 @@ component extends="preside.system.base.AdminHandler" {
 
 	property name="passwordPolicyService"    inject="passwordPolicyService";
 	property name="passwordStrengthAnalyzer" inject="passwordStrengthAnalyzer";
-	property name="messagebox"               inject="coldbox:plugin:messagebox";
+	property name="MessageBox"               inject="coldbox:plugin:MessageBox";
 
 // LIFECYCLE EVENTS
 	function preHandler( event, rc, prc ) {
@@ -55,9 +55,9 @@ component extends="preside.system.base.AdminHandler" {
 
 		if ( validationResult.validated() ) {
 			passwordPolicyService.savePolicy( argumentCollection=formData, context=context );
-			messagebox.info( translateResource( "cms:passwordpolicymanager.policy.saved.confirmation" ) );
+			MessageBox.info( translateResource( "cms:passwordpolicymanager.policy.saved.confirmation" ) );
 		} else {
-			messagebox.info( translateResource( "cms:passwordpolicymanager.policy.validation.failed.message" ) );
+			MessageBox.info( translateResource( "cms:passwordpolicymanager.policy.validation.failed.message" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkto="passwordPolicyManager", queryString="context=" & context ) );

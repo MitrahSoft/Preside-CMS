@@ -7,7 +7,7 @@
 	<cfproperty name="validationEngine"                 inject="validationEngine"                 />
 	<cfproperty name="siteService"                      inject="siteService"                      />
 	<cfproperty name="versioningService"                inject="versioningService"                />
-	<cfproperty name="messageBox"                       inject="coldbox:plugin:messageBox"        />
+	<cfproperty name="MessageBox"                       inject="coldbox:plugin:MessageBox"        />
 
 	<cffunction name="preHandler" access="public" returntype="void" output="false">
 		<cfargument name="event"          type="any"    required="true" />
@@ -247,11 +247,11 @@
 					, detail   = { objectName=objectName }
 				);
 
-				messageBox.info( translateResource( uri="cms:datamanager.permsSaved.confirmation", data=[ objectName ] ) );
+				MessageBox.info( translateResource( uri="cms:datamanager.permsSaved.confirmation", data=[ objectName ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", queryString="id=#objectName#" ) );
 			}
 
-			messageBox.error( translateResource( uri="cms:datamanager.permsSaved.error", data=[ objectName ] ) );
+			MessageBox.error( translateResource( uri="cms:datamanager.permsSaved.error", data=[ objectName ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="datamanager.managePerms", queryString="object=#objectName#" ) );
 
 		</cfscript>
@@ -290,13 +290,13 @@
 			_checkPermission( argumentCollection=arguments, key="viewversions", object=object );
 
 			if ( !presideObjectService.objectIsVersioned( object ) ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNot.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNot.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
 			prc.record = presideObjectService.selectData( objectName=object, filter={ id=id }, useCache=false, allowDraftVersions=true );
 			if ( !prc.record.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -323,7 +323,7 @@
 			prc.language = multilingualPresideObjectService.getLanguage( languageId );
 
 			if ( prc.language.isempty() ) {
-				messageBox.error( translateResource( uri="cms:multilingual.language.not.active.error" ) );
+				MessageBox.error( translateResource( uri="cms:multilingual.language.not.active.error" ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.editRecord", queryString="object=#object#&id=#id#" ) );
 			}
 
@@ -333,13 +333,13 @@
 			_checkPermission( argumentCollection=arguments, key="viewversions", object=object );
 
 			if ( !presideObjectService.objectIsVersioned( object ) ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
 			prc.record = presideObjectService.selectData( objectName=object, filter={ id=id }, useCache=false );
 			if ( not prc.record.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 			prc.recordLabel = prc.record[ presideObjectService.getObjectAttribute( objectName=object, attributeName="labelfield", defaultValue="label" ) ] ?: "";
@@ -374,7 +374,7 @@
 			_checkObjectExists( argumentCollection=arguments, object=object );
 			_checkPermission( argumentCollection=arguments, key="edit", object=object );
 			if ( !recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -431,7 +431,7 @@
 			_checkObjectExists( argumentCollection=arguments, object=objectName );
 			_checkPermission( argumentCollection=arguments, key="edit", object=objectName );
 			if ( !sourceIds.len() ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -444,10 +444,10 @@
 			);
 
 			if( success ) {
-				messageBox.info( translateResource( uri="cms:datamanager.batchedit.confirmation", data=[ objectName ] ) );
+				MessageBox.info( translateResource( uri="cms:datamanager.batchedit.confirmation", data=[ objectName ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", queryString="id=#objectName#" ) );
 			} else {
-				messageBox.error( translateResource( uri="cms:datamanager.batchedit.error", data=[ objectName ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.batchedit.error", data=[ objectName ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", queryString="id=#objectName#" ) );
 			}
 		</cfscript>
@@ -726,7 +726,7 @@
 			}
 
 			if ( not prc.record.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -802,7 +802,7 @@
 			prc.language = multilingualPresideObjectService.getLanguage( rc.language ?: "" );
 
 			if ( prc.language.isempty() ) {
-				messageBox.error( translateResource( uri="cms:multilingual.language.not.active.error" ) );
+				MessageBox.error( translateResource( uri="cms:multilingual.language.not.active.error" ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.editRecord", queryString="object=#object#&id=#id#" ) );
 			}
 
@@ -830,7 +830,7 @@
 			}
 
 			if ( not prc.sourceRecord.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -885,13 +885,13 @@
 
 			prc.language = multilingualPresideObjectService.getLanguage( rc.language ?: "" );
 			if ( prc.language.isempty() ) {
-				messageBox.error( translateResource( uri="cms:multilingual.language.not.active.error" ) );
+				MessageBox.error( translateResource( uri="cms:multilingual.language.not.active.error" ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.editRecord", queryString="object=#object#&id=#id#" ) );
 			}
 
 			var record = presideObjectService.selectData( objectName=object, filter={ id=id } );
 			if ( !record.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -913,7 +913,7 @@
 			var validationResult = validateForm( formName=formName, formData=formData );
 
 			if ( not validationResult.validated() ) {
-				messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 				persist = formData;
 				persist.validationResult = validationResult;
 				persist.delete( "id" );
@@ -950,7 +950,7 @@
 				, detail   = auditDetail
 			);
 
-			messageBox.info( translateResource( uri="cms:datamanager.recordTranslated.confirmation", data=[ objectName ] ) );
+			MessageBox.info( translateResource( uri="cms:datamanager.recordTranslated.confirmation", data=[ objectName ] ) );
 			if( isTrue( fromDataGrid ) ) {
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", queryString="id=#object#" ) );
 			} else {
@@ -973,7 +973,7 @@
 			_checkObjectExists( argumentCollection=arguments, object=object );
 
 			if ( not Len( Trim( ids ) ) ) {
-				messageBox.error( translateResource( "cms:datamanager.norecordsselected.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.norecordsselected.error" ) );
 				setNextEvent( url=listingUrl );
 			}
 
@@ -989,7 +989,7 @@
 				break;
 			}
 
-			messageBox.error( translateResource( "cms:datamanager.invalid.multirecord.action.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.invalid.multirecord.action.error" ) );
 			setNextEvent( url=listingUrl );
 		</cfscript>
 	</cffunction>
@@ -1010,7 +1010,7 @@
 			_checkObjectExists( argumentCollection=arguments, object=object );
 
 			if ( not Len( Trim( ids ) ) ) {
-				messageBox.error( translateResource( "cms:datamanager.norecordsselected.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.norecordsselected.error" ) );
 				setNextEvent( url=listingUrl );
 			}
 
@@ -1020,7 +1020,7 @@
 				break;
 			}
 
-			messageBox.error( translateResource( "cms:datamanager.invalid.multirecord.action.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.invalid.multirecord.action.error" ) );
 			setNextEvent( url=listingUrl );
 		</cfscript>
 	</cffunction>
@@ -1094,7 +1094,7 @@
 
 			prc.record = presideObjectService.selectData( objectName=object, filter={ id=id }, useCache=false );
 			if ( not prc.record.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.manageOneToManyRecords", querystring="object=#object#&parentId=#parentId#&relationshipKey=#relationshipKey#" ) );
 			}
 			prc.record = queryRowToStruct( prc.record );
@@ -1152,7 +1152,7 @@
 			var objectNamePlural = translateResource( uri="preside-objects.#object#:title", defaultValue=object );
 
 			if ( ! datamanagerService.isSortable( object ) ) {
-				messageBox.error( translateResource( uri="cms:datamanager.objectNotSortable.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.objectNotSortable.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -1183,7 +1183,7 @@
 			var objectNamePlural = translateResource( uri="preside-objects.#object#:title", defaultValue=object );
 
 			if ( ! datamanagerService.isSortable( object ) ) {
-				messageBox.error( translateResource( uri="cms:datamanager.objectNotSortable.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.objectNotSortable.error", data=[ LCase( objectName ) ] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			}
 
@@ -1196,7 +1196,7 @@
 				, sortedIds  = ListToArray( rc.ordered ?: "" )
 			);
 
-			messageBox.info( translateResource( uri="cms:datamanager.recordsSorted.confirmation", data=[ LCase( objectName ) ] ) );
+			MessageBox.info( translateResource( uri="cms:datamanager.recordsSorted.confirmation", data=[ LCase( objectName ) ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 		</cfscript>
 	</cffunction>
@@ -1586,7 +1586,7 @@
 			validationResult = validateForm( formName=arguments.formName, formData=formData );
 
 			if ( not validationResult.validated() ) {
-				messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 				persist = formData;
 				persist.validationResult = validationResult;
 				if ( Len( errorAction ?: "" ) ) {
@@ -1635,7 +1635,7 @@
 
 			newRecordLink = event.buildAdminLink( linkTo=Len( Trim( viewRecordAction ) ) ? viewRecordAction : "datamanager.viewRecord", queryString="object=#object#&id=#newId#" );
 
-			messageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
+			MessageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
 				  translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object )
 				, '<a href="#newRecordLink#">#event.getValue( name=labelField, defaultValue=translateResource( uri="cms:datamanager.record" ) )#</a>'
 			] ) );
@@ -1688,7 +1688,7 @@
 			validationResult = validateForm( formName=arguments.formName, formData=formData );
 
 			if ( not validationResult.validated() ) {
-				messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 				persist = formData;
 				persist.validationResult = validationResult;
 				if ( Len( errorAction ?: "" ) ) {
@@ -1707,7 +1707,7 @@
 
 			newRecordLink = event.buildAdminLink( linkTo=viewRecordAction ?: "datamanager.viewRecord", queryString="object=#object#&id=#newId#" );
 
-			messageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
+			MessageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
 				  translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object )
 				, '<a href="#newRecordLink#">#event.getValue( name=labelField, defaultValue=translateResource( uri="cms:datamanager.record" ) )#</a>'
 			] ) );
@@ -1792,7 +1792,7 @@
 			records = obj.selectData( selectField=[labelField], filter={ id = ids }, useCache=false );
 
 			if ( records.recordCount neq ids.len() ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[objectName] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[objectName] ) );
 				setNextEvent( url=postActionUrl );
 			}
 
@@ -1806,7 +1806,7 @@
 				try {
 					presideObjectService.deleteRelatedData( objectName=object, recordId=ids );
 				} catch( "PresideObjectService.CascadeDeleteTooDeep" e ) {
-					messageBox.error( translateResource( uri="cms:datamanager.cascadeDelete.cascade.too.deep.error", data=[objectName] ) );
+					MessageBox.error( translateResource( uri="cms:datamanager.cascadeDelete.cascade.too.deep.error", data=[objectName] ) );
 					setNextEvent( url=postActionUrl );
 				}
 			}
@@ -1827,15 +1827,15 @@
 
 				if ( redirectOnSuccess ) {
 					if ( ids.len() eq 1 ) {
-						messageBox.info( translateResource( uri="cms:datamanager.recordDeleted.confirmation", data=[ objectName, records[labelField][1] ] ) );
+						MessageBox.info( translateResource( uri="cms:datamanager.recordDeleted.confirmation", data=[ objectName, records[labelField][1] ] ) );
 					} else {
-						messageBox.info( translateResource( uri="cms:datamanager.recordsDeleted.confirmation", data=[ objectNamePlural, ids.len() ] ) );
+						MessageBox.info( translateResource( uri="cms:datamanager.recordsDeleted.confirmation", data=[ objectNamePlural, ids.len() ] ) );
 					}
 
 					setNextEvent( url=postActionUrl );
 				}
 			} else {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotDeleted.unknown.error" ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotDeleted.unknown.error" ) );
 				setNextEvent( url=postActionUrl );
 			}
 		</cfscript>
@@ -1885,7 +1885,7 @@
 			var existingRecord   = presideObjectService.selectData( objectName=object, filter={ id=id }, allowDraftVersions=arguments.draftsEnabled );
 
 			if ( !existingRecord.recordCount ) {
-				messageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.recordNotFound.error", data=[ LCase( objectName ) ] ) );
 
 				setNextEvent( url=missingUrl );
 			}
@@ -1894,7 +1894,7 @@
 			validationResult = validateForm( formName=formName, formData=formData );
 
 			if ( not validationResult.validated() ) {
-				messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+				MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 				persist = formData;
 				persist.validationResult = validationResult;
 
@@ -1948,7 +1948,7 @@
 			}
 
 			if ( redirectOnSuccess ) {
-				messageBox.info( translateResource( uri="cms:datamanager.recordEdited.confirmation", data=[ objectName ] ) );
+				MessageBox.info( translateResource( uri="cms:datamanager.recordEdited.confirmation", data=[ objectName ] ) );
 
 				setNextEvent( url=successUrl );
 			}
@@ -1999,7 +1999,7 @@
 
 		<cfscript>
 			if ( not presideObjectService.objectExists( object ) ) {
-				messageBox.error( translateResource( uri="cms:datamanager.objectNotFound.error", data=[object] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.objectNotFound.error", data=[object] ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="datamanager.index" ) );
 			}
 		</cfscript>
@@ -2079,7 +2079,7 @@
 			}
 
 			if ( arguments.relocateIfNoAccess ) {
-				messageBox.error( translateResource( uri="cms:datamanager.objectNotManagedByManager.error", data=[ objectName ] ) );
+				MessageBox.error( translateResource( uri="cms:datamanager.objectNotManagedByManager.error", data=[ objectName ] ) );
 				setNextEvent(
 					url = event.buildAdminLink( "datamanager" )
 				);

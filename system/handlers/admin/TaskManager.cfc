@@ -3,7 +3,7 @@ component extends="preside.system.base.AdminHandler" {
 	property name="taskManagerService"         inject="taskManagerService";
 	property name="taskHistoryDao"             inject="presidecms:object:taskmanager_task_history";
 	property name="systemConfigurationService" inject="systemConfigurationService";
-	property name="messageBox"                 inject="coldbox:plugin:messageBox";
+	property name="MessageBox"                 inject="coldbox:plugin:MessageBox";
 
 	public void function preHandler( event ) {
 		super.preHandler( argumentCollection=arguments );
@@ -75,7 +75,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		taskManagerService.registerMasterScheduledTask();
 
-		messageBox.info( translateResource( uri="cms:taskmanager.configuration.saved" ) );
+		MessageBox.info( translateResource( uri="cms:taskmanager.configuration.saved" ) );
 
 		setNextEvent( url=event.buildAdminLink( linkTo="taskmanager" ) );
 
@@ -116,7 +116,7 @@ component extends="preside.system.base.AdminHandler" {
 			, detail   = formData
 		);
 
-		messageBox.info( translateResource( uri="cms:taskmanager.configuration.saved" ) );
+		MessageBox.info( translateResource( uri="cms:taskmanager.configuration.saved" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="taskmanager" ) );
 	}
 

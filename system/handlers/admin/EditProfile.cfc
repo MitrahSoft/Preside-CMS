@@ -1,7 +1,7 @@
 component output="false" extends="preside.system.base.AdminHandler" {
 
 	property name="userDao"               inject="presidecms:object:security_user";
-	property name="messageBox"            inject="coldbox:plugin:messageBox";
+	property name="MessageBox"            inject="coldbox:plugin:MessageBox";
 	property name="bCryptService"         inject="bCryptService";
 	property name="passwordPolicyService" inject="passwordPolicyService";
 
@@ -64,7 +64,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 		var validationResult = validateForm( formName=formName, formData=formData );
 
 		if ( !validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 			var persist = formData;
 			persist.validationResult = validationResult;
 
@@ -77,7 +77,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 			, type   = "userprofile"
 		);
 
-		messageBox.info( translateResource( uri="cms:editProfile.updated.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:editProfile.updated.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="" ) );
 	}
 
@@ -109,7 +109,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 		}
 
 		if ( !validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 
 			setNextEvent( url=event.buildAdminLink( linkTo="editProfile.updatePassword" ), persistStruct={ validationResult=validationResult } );
 		}
@@ -125,7 +125,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 			, type   = "userprofile"
 		);
 
-		messageBox.info( translateResource( uri="cms:editProfile.password.updated.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:editProfile.password.updated.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="editProfile" ) );
 	}
 
@@ -185,7 +185,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 
 			if ( authVerified ) {
 				loginService.enableTwoFactorAuthenticationForUser();
-				messagebox.info( translateResource( "cms:editProfile.twofactorauthentication.setup.complete.confirmation" ) );
+				MessageBox.info( translateResource( "cms:editProfile.twofactorauthentication.setup.complete.confirmation" ) );
 
 				event.audit(
 					  action = "2fa_setup"
@@ -196,7 +196,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 			}
 
 			validationResult.addError( "oneTimeToken", translateResource( "cms:editProfile.twofactorauthentication.setup.invalid.auth.code" ) );
-			messagebox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 		}
 
 		setNextEvent(

@@ -5,7 +5,7 @@ component output=false extends="preside.system.base.AdminHandler" {
 	property name="siteDao"         inject="presidecms:object:site";
 	property name="aliasDao"        inject="presidecms:object:site_alias_domain";
 	property name="redirectDao"     inject="presidecms:object:site_redirect_domain";
-	property name="messagebox"      inject="coldbox:plugin:messagebox";
+	property name="MessageBox"      inject="coldbox:plugin:MessageBox";
 
 	public void function preHandler( event, rc, prc ) output=false {
 		super.preHandler( argumentCollection = arguments );
@@ -60,7 +60,7 @@ component output=false extends="preside.system.base.AdminHandler" {
 		siteService.syncSiteRedirectDomains( siteId, rc.redirect_domains ?: "" );
 		siteService.syncSiteAliasDomains( siteId, rc.alias_domains ?: "" );
 
-		messageBox.info( translateResource( "cms:sites.added.confirmation" ) );
+		MessageBox.info( translateResource( "cms:sites.added.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="sites.manage" ) );
 	}
 
@@ -72,7 +72,7 @@ component output=false extends="preside.system.base.AdminHandler" {
 		prc.record       = siteDao.selectData( id=siteId );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:sites.siteNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:sites.siteNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="sites.manage" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -118,7 +118,7 @@ component output=false extends="preside.system.base.AdminHandler" {
 		siteService.syncSiteRedirectDomains( siteId, rc.redirect_domains ?: "" );
 		siteService.syncSiteAliasDomains( siteId, rc.alias_domains ?: "" );
 
-		messageBox.info( translateResource( "cms:sites.saved.confirmation" ) );
+		MessageBox.info( translateResource( "cms:sites.saved.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="sites.manage" ) );
 	}
 
@@ -128,7 +128,7 @@ component output=false extends="preside.system.base.AdminHandler" {
 		prc.record = siteDao.selectData( id=rc.id ?: "" );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:sites.siteNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:sites.siteNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="sites.manage" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -153,11 +153,11 @@ component output=false extends="preside.system.base.AdminHandler" {
 		var success = runEvent( event="admin.Permissions.saveContextPermsAction", private=true );
 
 		if ( success ) {
-			messageBox.info( translateResource( uri="cms:sites.permsSaved.confirmation" ) );
+			MessageBox.info( translateResource( uri="cms:sites.permsSaved.confirmation" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="sites.manage" ) );
 		}
 
-		messageBox.error( translateResource( uri="cms:sites.permsSaved.error" ) );
+		MessageBox.error( translateResource( uri="cms:sites.permsSaved.error" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="sites.editPermissions", queryString="id=#siteId#" ) );
 	}
 

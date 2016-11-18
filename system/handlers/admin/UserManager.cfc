@@ -2,7 +2,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 	property name="presideObjectService" inject="presideObjectService";
 	property name="loginService"         inject="loginService";
-	property name="messageBox"           inject="coldbox:plugin:messageBox";
+	property name="MessageBox"           inject="coldbox:plugin:MessageBox";
 	property name="bCryptService"        inject="bCryptService";
 
 	function prehandler( event, rc, prc ) output=false {
@@ -78,7 +78,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		prc.record = presideObjectService.selectData( objectName="security_group", filter={ id=rc.id ?: "" } );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:usermanager.groupNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:usermanager.groupNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="usermanager.groups" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -172,7 +172,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		}
 
 		var newRecordLink = event.buildAdminLink( linkTo="usermanager.editUser", queryString="id=#newUserId#" );
-		messageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
+		MessageBox.info( translateResource( uri="cms:datamanager.recordAdded.confirmation", data=[
 			  translateResource( uri="preside-objects.security_user:title.singular", defaultValue="security_user" )
 			, '<a href="#newRecordLink#">#( rc.known_as ?: "" )#</a>'
 		] ) );
@@ -190,7 +190,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		prc.record = presideObjectService.selectData( objectName="security_user", filter={ id=rc.id ?: "" } );
 
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:usermanager.userNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:usermanager.userNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="usermanager.users" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -236,7 +236,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 		var postActionUrl = event.buildAdminLink( linkTo="usermanager.users" );
 
 		if ( id == event.getAdminUserId() ) {
-			messageBox.error( translateResource( uri="cms:usermanager.userCannotDeleteSelf.error" ) );
+			MessageBox.error( translateResource( uri="cms:usermanager.userCannotDeleteSelf.error" ) );
 			setNextEvent( url=postActionUrl );
 		}
 
@@ -245,14 +245,14 @@ component extends="preside.system.base.AdminHandler" output=false {
 		var record = obj.selectData( id = id );
 
 		if ( !record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:usermanager.userNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:usermanager.userNotFound.error" ) );
 			setNextEvent( url=postActionUrl );
 		}
 
 		var blockers = presideObjectService.listForeignObjectsBlockingDelete( object, id );
 		if ( ArrayLen( blockers ) ) {
 			if ( obj.updateData( id=id, data = { active=0 } ) ) {
-				messageBox.warn( translateResource( uri="cms:usermanager.userDeActivated.confirmation", data=[ record.known_as ] ) );
+				MessageBox.warn( translateResource( uri="cms:usermanager.userDeActivated.confirmation", data=[ record.known_as ] ) );
 				setNextEvent( url=postActionUrl );
 			}
 		} else {
@@ -263,12 +263,12 @@ component extends="preside.system.base.AdminHandler" output=false {
 					, recordId = id
 					, detail   = QueryRowToStruct( record )
 				);
-				messageBox.info( translateResource( uri="cms:usermanager.userDeleted.confirmation", data=[ record.known_as ] ) );
+				MessageBox.info( translateResource( uri="cms:usermanager.userDeleted.confirmation", data=[ record.known_as ] ) );
 				setNextEvent( url=postActionUrl );
 			}
 		}
 
-		messageBox.error( translateResource( uri="cms:usermanager.recordNotDeleted.unknown.error" ) );
+		MessageBox.error( translateResource( uri="cms:usermanager.recordNotDeleted.unknown.error" ) );
 		setNextEvent( url=postActionUrl );
 	}
 

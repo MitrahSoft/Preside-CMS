@@ -9,7 +9,7 @@ component extends="preside.system.base.AdminHandler" {
 	property name="errorLogService"                  inject="errorLogService";
 	property name="storageProviderService"           inject="storageProviderService";
 	property name="storageLocationService"           inject="storageLocationService";
-	property name="messageBox"                       inject="coldbox:plugin:messageBox";
+	property name="MessageBox"                       inject="coldbox:plugin:MessageBox";
 	property name="datatableHelper"                  inject="coldbox:myplugin:JQueryDatatablesHelpers";
 	property name="multilingualPresideObjectService" inject="multilingualPresideObjectService";
 
@@ -28,7 +28,7 @@ component extends="preside.system.base.AdminHandler" {
 		if ( Len( Trim( rc.asset ?: "" ) ) ) {
 			prc.asset = assetManagerService.getAsset( rc.asset );
 			if ( not prc.asset.recordCount ) {
-				messageBox.error( translateResource( uri="cms:assetmanager.asset.not.found.error" ) );
+				MessageBox.error( translateResource( uri="cms:assetmanager.asset.not.found.error" ) );
 				setNextEvent( url = event.buildAdminLink( linkTo="assetManager" ) );
 			}
 			prc.asset = QueryRowToStruct( prc.asset );
@@ -97,18 +97,18 @@ component extends="preside.system.base.AdminHandler" {
 			}
 		} catch ( any e ) {
 			logError( e );
-			messageBox.error( translateResource( "cms:assetmanager.trash.asset.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.trash.asset.unexpected.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager", querystring="folder=#parentFolder#" ) );
 		}
 
 		if ( trashed ) {
 			if ( alreadyTrashed ) {
-				messageBox.info( translateResource( uri="cms:assetmanager.delete.asset.success", data=[ asset.original_title ] ) );
+				MessageBox.info( translateResource( uri="cms:assetmanager.delete.asset.success", data=[ asset.original_title ] ) );
 			} else {
-				messageBox.info( translateResource( uri="cms:assetmanager.trash.asset.success", data=[ asset.title ] ) );
+				MessageBox.info( translateResource( uri="cms:assetmanager.trash.asset.success", data=[ asset.title ] ) );
 			}
 		} else {
-			messageBox.error( translateResource( "cms:assetmanager.trash.asset.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.trash.asset.unexpected.error" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=#parentFolder#" ) );
@@ -154,15 +154,15 @@ component extends="preside.system.base.AdminHandler" {
 				}
 			} catch ( any e ) {
 				logError( e );
-				messageBox.error( translateResource( "cms:assetmanager.trash.asset.unexpected.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.trash.asset.unexpected.error" ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="assetManager", querystring="folder=#parentFolder#" ) );
 			}
 		}
 
 		if ( permanent ) {
-			messageBox.info( translateResource( uri="cms:assetmanager.delete.assets.success" ) );
+			MessageBox.info( translateResource( uri="cms:assetmanager.delete.assets.success" ) );
 		} else {
-			messageBox.info( translateResource( uri="cms:assetmanager.trash.assets.success" ) );
+			MessageBox.info( translateResource( uri="cms:assetmanager.trash.assets.success" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=#parentFolder#" ) );
@@ -187,13 +187,13 @@ component extends="preside.system.base.AdminHandler" {
 					, folderId  = folderId
 				);
 			} catch( "PresideCMS.AssetManager.asset.wrong.type.for.folder" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
 				success = false;
 			} catch( "PresideCMS.AssetManager.asset.too.big.for.folder" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
 				success = false;
 			} catch( "PresideCMS.AssetManager.folder.in.different.location" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.across.locations.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.across.locations.error" ) );
 				success = false;
 			}
 
@@ -202,7 +202,7 @@ component extends="preside.system.base.AdminHandler" {
 			}
 		}
 
-		messagebox.info( translateResource( "cms:assetmanager.assets.moved.confirmation" ) );
+		MessageBox.info( translateResource( "cms:assetmanager.assets.moved.confirmation" ) );
 
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=" & fromFolder ) );
 	}
@@ -221,13 +221,13 @@ component extends="preside.system.base.AdminHandler" {
 					, folderId  = folderId
 				);
 			} catch( "PresideCMS.AssetManager.asset.wrong.type.for.folder" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
 				success = false;
 			} catch( "PresideCMS.AssetManager.asset.too.big.for.folder" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.to.folder.error" ) );
 				success = false;
 			} catch( "PresideCMS.AssetManager.folder.in.different.location" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.across.locations.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.assets.could.not.be.moved.across.locations.error" ) );
 				success = false;
 			}
 			if ( !success ) {
@@ -235,7 +235,7 @@ component extends="preside.system.base.AdminHandler" {
 			}
 		}
 
-		messagebox.info( translateResource( "cms:assetmanager.assets.restored.confirmation" ) );
+		MessageBox.info( translateResource( "cms:assetmanager.assets.restored.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=trash" ) );
 	}
 
@@ -260,7 +260,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 
 		if ( not validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:assetmanager.add.folder.validation.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.add.folder.validation.error" ) );
 			persist = formData;
 			persist.validationResult = validationResult;
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.addFolder", querystring="folder=#formData.parent_folder#" ), persistStruct=persist );
@@ -270,7 +270,7 @@ component extends="preside.system.base.AdminHandler" {
 			newFolderId = assetManagerService.addFolder( argumentCollection = formData );
 		} catch ( any e ) {
 			logError( e );
-			messageBox.error( translateResource( "cms:assetmanager.add.folder.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.add.folder.unexpected.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.addFolder", querystring="folder=#formData.parent_folder#" ), persistStruct=formData );
 		}
 
@@ -284,7 +284,7 @@ component extends="preside.system.base.AdminHandler" {
 			, denyUsers     = ListToArray( rc.deny_access_to_users     ?: "" )
 		);
 
-		messageBox.info( translateResource( uri="cms:assetmanager.folder.added.confirmation", data=[ formData.label ?: '' ] ) );
+		MessageBox.info( translateResource( uri="cms:assetmanager.folder.added.confirmation", data=[ formData.label ?: '' ] ) );
 		if ( Val( rc._addanother ?: 0 ) ) {
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.addFolder", queryString="folder=#formData.parent_folder#" ), persist="_addAnother" );
 		} else {
@@ -297,7 +297,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		prc.record = prc.folder ?: QueryNew('');
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:assetmanager.folderNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:assetmanager.folderNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.index" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -330,7 +330,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 
 		if ( not validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:assetmanager.edit.folder.validation.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.edit.folder.validation.error" ) );
 			persist = formData;
 			persist.validationResult = validationResult;
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editFolder", querystring="folder=#parentFolder#&id=#folderId#" ), persistStruct=persist );
@@ -340,7 +340,7 @@ component extends="preside.system.base.AdminHandler" {
 			assetManagerService.editFolder( id=folderId, data=formData );
 		} catch ( any e ) {
 			logError( e );
-			messageBox.error( translateResource( "cms:assetmanager.edit.folder.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.edit.folder.unexpected.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editFolder", querystring="folder=#parentFolder#&id=#folderId#" ), persistStruct=formData );
 		}
 
@@ -354,7 +354,7 @@ component extends="preside.system.base.AdminHandler" {
 			, denyUsers     = ListToArray( rc.deny_access_to_users     ?: "" )
 		);
 
-		messageBox.info( translateResource( uri="cms:assetmanager.folder.edited.confirmation", data=[ formData.label ?: '' ] ) );
+		MessageBox.info( translateResource( uri="cms:assetmanager.folder.edited.confirmation", data=[ formData.label ?: '' ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=#folderId#" ) );
 	}
 
@@ -363,7 +363,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		prc.record = prc.folder ?: QueryNew('');
 		if ( not prc.record.recordCount ) {
-			messageBox.error( translateResource( uri="cms:assetmanager.folderNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:assetmanager.folderNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.index" ) );
 		}
 		prc.record = queryRowToStruct( prc.record );
@@ -394,7 +394,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 
 		if ( not validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:assetmanager.edit.folder.validation.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.edit.folder.validation.error" ) );
 			persist = formData;
 			persist.validationResult = validationResult;
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.setfolderlocation", querystring="folder=#parentFolder#&id=#folderId#" ), persistStruct=persist );
@@ -404,11 +404,11 @@ component extends="preside.system.base.AdminHandler" {
 			assetManagerService.setFolderLocation( id=folderId, data=formData );
 		} catch ( any e ) {
 			logError( e );
-			messageBox.error( translateResource( "cms:assetmanager.edit.folder.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.edit.folder.unexpected.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.setfolderlocation", querystring="folder=#parentFolder#&id=#folderId#" ), persistStruct=formData );
 		}
 
-		messageBox.info( translateResource( uri="cms:assetmanager.folder.location.set.confirmation", data=[ formData.label ?: '' ] ) );
+		MessageBox.info( translateResource( uri="cms:assetmanager.folder.location.set.confirmation", data=[ formData.label ?: '' ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=#folderId#" ) );
 	}
 
@@ -418,7 +418,7 @@ component extends="preside.system.base.AdminHandler" {
 		var folderId         = rc.folder ?: "";
 
 		if ( assetManagerService.folderHasContent( folderId ) ) {
-			messageBox.warn( translateResource( "cms:assetmanager.trash.folder.not.empty.error" ) );
+			MessageBox.warn( translateResource( "cms:assetmanager.trash.folder.not.empty.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager", querystring="folder=#folderId#" ) );
 		}
 
@@ -430,14 +430,14 @@ component extends="preside.system.base.AdminHandler" {
 			trashed = assetManagerService.trashFolder( folderId );
 		} catch ( any e ) {
 			logError( e );
-			messageBox.error( translateResource( "cms:assetmanager.trash.folder.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.trash.folder.unexpected.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager", querystring="folder=#parentFolder#" ) );
 		}
 
 		if ( trashed ) {
-			messageBox.info( translateResource( uri="cms:assetmanager.trash.folder.success", data=[ folder.label ] ) );
+			MessageBox.info( translateResource( uri="cms:assetmanager.trash.folder.success", data=[ folder.label ] ) );
 		} else {
-			messageBox.error( translateResource( "cms:assetmanager.trash.folder.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.trash.folder.unexpected.error" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=#parentFolder#" ) );
@@ -557,7 +557,7 @@ component extends="preside.system.base.AdminHandler" {
 		validationResult = validateForm( formName=formName, formData=formData );
 
 		if ( not validationResult.validated() ) {
-			messagebox.error( translateResource( "cms:datamanager.data.validation.error" ) );
+			MessageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 			persist = formData;
 			persist.validationResult = validationResult;
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=#assetId#" ), persistStruct=persist );
@@ -581,10 +581,10 @@ component extends="preside.system.base.AdminHandler" {
 				, denyUsers     = ListToArray( rc.deny_access_to_users     ?: "" )
 			);
 
-			messagebox.info( translateResource( uri="cms:assetmanager.asset.edit.success", data=[ formData.title ?: "" ] ) );
+			MessageBox.info( translateResource( uri="cms:assetmanager.asset.edit.success", data=[ formData.title ?: "" ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager", queryString="folder=#folderId#" ) );
 		} else {
-			messagebox.error( translateResource( "cms:assetmanager.asset.edit.unexpected.error" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.asset.edit.unexpected.error" ) );
 			persist = formData;
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=#assetId#" ), persistStruct=persist );
 		}
@@ -597,7 +597,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.language              = multilingualPresideObjectService.getLanguage( rc.language ?: "" );
 
 		if ( prc.language.isempty() ) {
-			messageBox.error( translateResource( uri="cms:assetManager.translation.language.not.active.error" ) );
+			MessageBox.error( translateResource( uri="cms:assetManager.translation.language.not.active.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editAsset", queryString="asset=#id#" ) );
 		}
 		_checkPermissions( argumentCollection=arguments, key="assets.translate" );
@@ -606,7 +606,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.record       = multiLingualPresideObjectService.selectTranslation( objectName=object, id=id, languageId=prc.language.id, useCache=false );
 		
 		if ( not prc.sourceRecord.recordCount ) {
-			messageBox.error( translateResource( uri="cms:assetManager.translation.recordNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:assetManager.translation.recordNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editAsset", querystring="asset=#id#" ) );
 		}
 		prc.record       = queryRowToStruct( prc.record );
@@ -632,12 +632,12 @@ component extends="preside.system.base.AdminHandler" {
 		prc.language = multilingualPresideObjectService.getLanguage( rc.language ?: "" );
 
 		if ( prc.language.isempty() ) {
-			messageBox.error( translateResource( uri="cms:assetManager.translation.language.not.active.error" ) );
+			MessageBox.error( translateResource( uri="cms:assetManager.translation.language.not.active.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editAsset", queryString="asset=#id#" ) );
 		}
 
 		if ( not presideObjectService.dataExists( objectName=object, filter={ id=id } ) ) {
-			messageBox.error( translateResource( uri="cms:assetManager.translation.recordNotFound.error" ) );
+			MessageBox.error( translateResource( uri="cms:assetManager.translation.recordNotFound.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editAsset", queryString="asset=#id#" ) );
 		}
 
@@ -657,7 +657,7 @@ component extends="preside.system.base.AdminHandler" {
 		var validationResult = validateForm( formName=formName, formData=formData );
 
 		if ( not validationResult.validated() ) {
-			messageBox.error( translateResource( "cms:assetManager.translation.validation.error" ) );
+			MessageBox.error( translateResource( "cms:assetManager.translation.validation.error" ) );
 			persist                  = formData;
 			persist.validationResult = validationResult;
 			persist.delete( "id" );
@@ -673,7 +673,7 @@ component extends="preside.system.base.AdminHandler" {
 			, languageId = languageId
 		);
 
-		messageBox.info( translateResource( uri="cms:assetManager.recordTranslated.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:assetManager.recordTranslated.confirmation" ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", querystring="asset=#id#" ) );
 	}
 
@@ -684,7 +684,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 
 		if ( success ) {
-			messagebox.info( translateResource( "cms:assetmanager.asset.make.version.active.success" ) );
+			MessageBox.info( translateResource( "cms:assetmanager.asset.make.version.active.success" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editAsset", queryString="asset=#rc.asset#" ) );
@@ -697,7 +697,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 
 		if ( success ) {
-			messagebox.info( translateResource( "cms:assetmanager.asset.delete.version.success" ) );
+			MessageBox.info( translateResource( "cms:assetmanager.asset.delete.version.success" ) );
 		}
 
 		setNextEvent( url=event.buildAdminLink( linkTo="assetManager.editAsset", queryString="asset=#rc.asset#" ) );
@@ -716,7 +716,7 @@ component extends="preside.system.base.AdminHandler" {
 		preProcessForm( formName, formData );
 
 		if ( !IsStruct( formData.file ?: "" ) || formData.file.isEmpty() ) {
-			messagebox.error( translateResource( "cms:assetmanager.upload.new.version.missing.file" ) );
+			MessageBox.error( translateResource( "cms:assetmanager.upload.new.version.missing.file" ) );
 		} else {
 			var success = false;
 
@@ -727,7 +727,7 @@ component extends="preside.system.base.AdminHandler" {
 					, fileName   = formData.file.fileName
 				);
 			} catch ( "AssetManager.mismatchedMimeType" e ) {
-				messagebox.error( translateResource( "cms:assetmanager.upload.new.version.mismatched.type.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.upload.new.version.mismatched.type.error" ) );
 				setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) );
 
 			} catch ( any e ) {
@@ -736,9 +736,9 @@ component extends="preside.system.base.AdminHandler" {
 			}
 
 			if ( success ) {
-				messagebox.info( translateResource( "cms:assetmanager.upload.new.version.confirmation" ) );
+				MessageBox.info( translateResource( "cms:assetmanager.upload.new.version.confirmation" ) );
 			} else {
-				messagebox.error( translateResource( "cms:assetmanager.upload.new.version.unknown.error" ) );
+				MessageBox.error( translateResource( "cms:assetmanager.upload.new.version.unknown.error" ) );
 			}
 		}
 
@@ -1016,11 +1016,11 @@ component extends="preside.system.base.AdminHandler" {
 				, detail   = QueryRowToStruct( folderRecord )
 				, recordId = folderId
 			);
-			messageBox.info( translateResource( uri="cms:assetmanager.permsSaved.confirmation", data=[ folderRecord.label ] ) );
+			MessageBox.info( translateResource( uri="cms:assetmanager.permsSaved.confirmation", data=[ folderRecord.label ] ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.index", queryString="folder=#folderId#" ) );
 		}
 
-		messageBox.error( translateResource( uri="cms:assetmanager.permsSaved.error", data=[ folderRecord.label ] ) );
+		MessageBox.error( translateResource( uri="cms:assetmanager.permsSaved.error", data=[ folderRecord.label ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.managePerms", queryString="folder=#folderId#" ) );
 	}
 
@@ -1097,7 +1097,7 @@ component extends="preside.system.base.AdminHandler" {
 			var persist = completeFormData;
 			persist.validationResult = validationResult;
 
-			messageBox.error( translateResource( uri="cms:assetmanager.location.not.valid" ) );
+			MessageBox.error( translateResource( uri="cms:assetmanager.location.not.valid" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.addlocation", queryString="provider=" & provider ), persistStruct=persist );
 		}
 
@@ -1109,7 +1109,7 @@ component extends="preside.system.base.AdminHandler" {
 		var id = storageLocationService.addLocation( argumentCollection = locationArgs );
 		var editLink = '<a href="#event.buildAdminLink( linkTo='assetmanager.editLocation', querystring='id=#id#' )#">#( completeFormData.name ?: '' )#</a>';
 
-		messageBox.info( translateResource( uri="cms:assetmanager.location.added", data=[ editLink ] ) );
+		MessageBox.info( translateResource( uri="cms:assetmanager.location.added", data=[ editLink ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.managelocations" ) );
 	}
 
@@ -1124,7 +1124,7 @@ component extends="preside.system.base.AdminHandler" {
 		}
 
 		if ( prc.location.isEmpty() ) {
-			messageBox.info( translateResource( uri="cms:assetmanager.location.not.found" ) );
+			MessageBox.info( translateResource( uri="cms:assetmanager.location.not.found" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.managelocations" ) );
 		}
 
@@ -1154,7 +1154,7 @@ component extends="preside.system.base.AdminHandler" {
 		var location   = storagelocationService.getLocation( locationId );
 
 		if ( location.isEmpty() ) {
-			messageBox.error( translateResource( uri="cms:assetmanager.location.not.found" ) );
+			MessageBox.error( translateResource( uri="cms:assetmanager.location.not.found" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.managelocations" ) );
 		}
 
@@ -1177,7 +1177,7 @@ component extends="preside.system.base.AdminHandler" {
 			var persist = completeFormData;
 			persist.validationResult = validationResult;
 
-			messageBox.error( translateResource( uri="cms:assetmanager.location.not.valid" ) );
+			MessageBox.error( translateResource( uri="cms:assetmanager.location.not.valid" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editLocation", queryString="id=" & locationId ), persistStruct=persist );
 		}
 
@@ -1189,7 +1189,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		storageLocationService.updateLocation( argumentCollection = locationArgs );
 
-		messageBox.info( translateResource( uri="cms:assetmanager.location.saved", data=[ generalFormData.name ] ) );
+		MessageBox.info( translateResource( uri="cms:assetmanager.location.saved", data=[ generalFormData.name ] ) );
 		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.managelocations" ) );
 	}
 

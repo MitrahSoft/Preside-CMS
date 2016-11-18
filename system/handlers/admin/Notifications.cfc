@@ -1,7 +1,7 @@
 component extends="preside.system.base.AdminHandler" {
 
 	property name="notificationService" inject="notificationService";
-	property name="messageBox"          inject="coldbox:plugin:messageBox";
+	property name="MessageBox"          inject="coldbox:plugin:MessageBox";
 
 	public void function preHandler( event ) {
 		super.preHandler( argumentCollection=arguments );
@@ -139,7 +139,7 @@ component extends="preside.system.base.AdminHandler" {
 			, topics = ListToArray( rc.subscriptions ?: "" )
 		);
 
-		messageBox.info( translateResource( uri="cms:notifications.preferences.saved.confirmation" ) );
+		MessageBox.info( translateResource( uri="cms:notifications.preferences.saved.confirmation" ) );
 
 		setNextEvent( url=event.buildAdminLink( linkTo="notifications.preferences" ) );
 	}
@@ -157,10 +157,10 @@ component extends="preside.system.base.AdminHandler" {
 				, settings = formData
 			);
 
-			messageBox.info( translateResource( uri="cms:notifications.preferences.saved.confirmation" ) );
+			MessageBox.info( translateResource( uri="cms:notifications.preferences.saved.confirmation" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="notifications.preferences", queryString="topic=#topic#" ) );
 		} else {
-			messageBox.error( translateResource( uri="cms:notifications.preferences.saving.error" ) );
+			MessageBox.error( translateResource( uri="cms:notifications.preferences.saving.error" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="notifications.preferences", queryString="topic=#topic#" ), persistStruct={ validationResult=validationResult } );
 		}
 
@@ -194,11 +194,11 @@ component extends="preside.system.base.AdminHandler" {
 
 		if ( validationResult.validated() ) {
 			notificationService.saveGlobalTopicConfiguration( topic, formData );
-			messageBox.info( translateResource( uri="cms:notifications.configuration.saved.confirmation" ) );
+			MessageBox.info( translateResource( uri="cms:notifications.configuration.saved.confirmation" ) );
 			setNextEvent( url=event.buildAdminLink( linkTo="notifications.configure", queryString="topic=#topic#" ) );
 		}
 
-		messageBox.error( translateResource( uri="cms:notifications.configuration.saving.error" ) );
+		MessageBox.error( translateResource( uri="cms:notifications.configuration.saving.error" ) );
 		var persist = formData;
 		    persist.validationResult = validationResult;
 		setNextEvent( url=event.buildAdminLink( linkTo="notifications.configure", queryString="topic=#topic#" ), persistStruct=persist );

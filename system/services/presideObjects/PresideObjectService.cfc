@@ -2160,7 +2160,7 @@ component displayName="Preside Object Service" {
 	private any function _announceInterception( required string state, struct interceptData={} ) {
 		_getInterceptorService().processState( argumentCollection=arguments );
 
-		return interceptData.interceptorResult ?: structNew();
+		return structKeyExists( interceptData, "interceptorResult" ) ? interceptData.interceptorResult : structNew();
 	}
 
 // GETTERS AND SETTERS

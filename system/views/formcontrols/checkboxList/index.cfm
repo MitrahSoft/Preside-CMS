@@ -6,7 +6,7 @@
 	defaultValue   = args.defaultValue    ?: "";
 	extraClasses   = args.extraClasses    ?: "";
 	values         = args.values          ?: "";
-	labels         = len( args.labels )   ?  args.labels : args.values;
+	labels         = structKeyExists( args, "labels" ) && args.labels.len() ? args.labels : args.values;
 
 	if ( IsSimpleValue( values ) ) { values = ListToArray( values ); }
 	if ( IsSimpleValue( labels ) ) { labels = ListToArray( labels ); }

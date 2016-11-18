@@ -46,11 +46,13 @@
 
 	<cfscript>
 		var q = QueryNew( arguments.columnList );
-
 		for( var st in arguments.arrayOfStructs ){
-			QueryAddRow( q, st );
+			var queryData = {};
+			for( column in columnList ){
+				structInsert( queryData, column, st[column] );
+			}
+			QueryAddRow( q, queryData );
 		}
-
 		return q;
 	</cfscript>
 </cffunction>

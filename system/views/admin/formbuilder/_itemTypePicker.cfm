@@ -8,12 +8,13 @@
 				<div>
 					<ul class="formbuilder-item-type-picker-item-list">
 						<cfloop array="#category.types#" index="n" item="type">
+							<cfset typeTitle = translateResource( uri="formbuilder:itemconfig.modal.title", data=[ type.title ] )>
 							<li class="item-type"
 							    data-item-template="true"
 							    data-item-type="#type.id#"
 							    data-requires-configuration="#type.requiresConfiguration#"
 							    data-config-endpoint="#event.buildAdminLink( linkTo='formbuilder.itemConfigDialog', queryString='itemtype=#type.id#' )#"
-							    data-config-title="#translateResource( uri="formbuilder:itemconfig.modal.title", data=[ type.title ] )#">
+							    data-config-title="#typeTitle#">
 
 								<span>
 									<i class="fa fa-fw #type.iconClass#"></i>&nbsp;

@@ -225,12 +225,12 @@ component displayName="RulesEngine Expression Service" {
 	 */
 	public struct function preProcessConfiguredFields( required string expressionId, required struct configuredFields ) {
 		var expression       = _getRawExpression( arguments.expressionId );
-		var expressionFields = expression.fields ?: structNew();
+		var expressionFields = structKeyExists( expression, "fields" ) ? expression.fields : structNew();
 		var fieldTypeService = _getFieldTypeService();
 		var processed        = {};
 
 		for( var fieldName in configuredFields ) {
-			if ( expressionFields.keyExists( fieldName ) ) {
+			if ( structKeyExists( expressionFields, fieldName ) ) {
 				configuredFields[ fieldName ] = fieldTypeService.prepareConfiguredFieldData(
 					  fieldType          = expressionFields[ fieldName ].fieldType
 					, fieldConfiguration = expressionFields[ fieldName ]

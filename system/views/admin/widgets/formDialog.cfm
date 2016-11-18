@@ -9,8 +9,8 @@
 	formAction = event.buildAdminLink( linkTo="widgets.saveConfigFormAction" );
 </cfscript>
 
-<cfoutput>
-	<cfsavecontent variable="body">
+<cfsavecontent variable="body">
+	<cfoutput>
 		<form class="form-horizontal widget-config-form" data-auto-focus-form="true" id="widget-#( rc.widget ?: '' )#" action="#formAction#" method="post">
 			<input name="widget" type="hidden" value="#( rc.widget ?: "" )#" />
 
@@ -21,7 +21,9 @@
 				, context          = "widgetdialog"
 			)#
 		</form>
-	</cfsavecontent>
+	</cfoutput>
+</cfsavecontent>
 
+<cfoutput>
 	#renderView( view="/admin/widgets/_dialogLayout", args={ body=body } )#
 </cfoutput>

@@ -57,7 +57,7 @@ component {
 	public struct function getWidget( required string widgetId ) {
 		var widgets = _getWidgets();
 
-		return widgets[ arguments.widgetId ] ?: structNew();
+		return StructKeyExists( widgets, arguments.widgetId ) ? widgets[ arguments.widgetId ] : structNew();
 	}
 
 	public string function renderWidget( required string widgetId, string configJson="", string context="", struct config={} ) {
@@ -190,25 +190,25 @@ component {
 
 			for ( var view in views ) {
 				var id = "";
-				if ( views.type eq "Dir" ) {
-					id = views.name;
-				} else if ( views.type == "File" && ReFindNoCase( "\.cfm$", views.name ) && !views.name.startsWith( "_" ) ) {
-					id = ReReplaceNoCase( views.name, "\.cfm$", "" );
+				if ( view.type eq "Dir" ) {
+					id = view.name;
+				} else if ( view.type == "File" && ReFindNoCase( "\.cfm$", view.name ) && !view.name.startsWith( "_" ) ) {
+					id = ReReplaceNoCase( view.name, "\.cfm$", "" );
 				} else {
 					continue;
 				}
 
 				ids[ id ] = 1;
-				siteTemplateMap[ id ] = siteTemplateMap[ id ] ?: arrayNew(1);
+				siteTemplateMap[ id ] = structKeyExists( siteTemplateMap, id ) ? siteTemplateMap[ id ] : arrayNew(1);
 				siteTemplateMap[ id ].append( siteTemplate );
 			}
 
 			for ( var handler in handlers ) {
-				if ( handlers.type eq "File" ) {
-					var id = ReReplace( handlers.name, "\.cfc$", "" );
+				if ( handler.type eq "File" ) {
+					var id = ReReplace( handler.name, "\.cfc$", "" );
 					ids[ id ] = 1;
 
-					siteTemplateMap[ id ] = siteTemplateMap[ id ] ?: arrayNew(1);
+					siteTemplateMap[ id ] = structKeyExists( siteTemplateMap, id ) ? siteTemplateMap[ id ] : arrayNew(1);
 					siteTemplateMap[ id ].append( siteTemplate );
 				}
 			}
@@ -246,7 +246,7 @@ component {
 	private string function _getWidgetProperty( required string widgetId, required string propertyName ) {
 		var widget = _getWidget( widgetId );
 
-		return widget[ arguments.propertyName ] ?: "";
+		return StructKeyExists( widget, arguments.propertyName ) ? widget[ arguments.propertyName ] : "";
 	}
 
 	private string function _getViewletEventForWidget( required string widgetId ) {
@@ -335,7 +335,7 @@ component {
 	}
 
 	private boolean function _isWidgetInCategories( required string widgetId, required array categories ) {
-		var widgetCategories = getWidget( arguments.widgetId ).categories ?: arrayNew(1);
+		var widgetCategories = arrayLen( getWidget( arguments.widgetId ).categories ) ? getWidget( arguments.widgetId ).categories : arrayNew(1);
 
 		if ( !widgetCategories.len() ) {
 			widgetCategories = [ "default" ];

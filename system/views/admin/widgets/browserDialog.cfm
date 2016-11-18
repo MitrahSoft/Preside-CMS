@@ -1,17 +1,19 @@
 <cfscript>
-	widgets = prc.widgets ?: QueryNew('');
+	widgets = structKeyExists( prc, 'widgets' ) && isQuery( prc.widgets ) ? prc.widgets : QueryNew('');
 
 	prc.pageIcon     = "magic";
 	prc.pageTitle    = translateResource( uri="cms:widget.dialog.browser.title" );
 	prc.pageSubTitle = translateResource( uri="cms:widget.dialog.browser.description" );
 </cfscript>
 
-<cfoutput>
-	<cfsavecontent variable="body">
-		<cfif not widgets.recordCount>
+<cfsavecontent variable="body">
+	<cfif not widgets.recordCount>
+		<cfoutput>
 			<p><em>#translateResource( uri="cms:widget.dialog.browser.none.configured" )#</em></p>
-		<cfelse>
-			<div id="widget-list" class="widget-list">
+		</cfoutput>
+	<cfelse>
+		<div id="widget-list" class="widget-list">
+			<cfoutput>
 				<div class="well well-sm">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-m-12">
@@ -24,30 +26,30 @@
 						</div>
 					</div>
 				</div>
-
-				<ul class="list-unstyled clearfix list" data-nav-list="1" data-nav-list-child-selector="li">
-					<cfloop query="widgets">
-						<cfset widgetLink = event.buildAdminLink( linkTo="widgets.dialog", queryString="widget=#widgets.id#") />
-						<li>
-							<div class="pull-left widget-icon-container">
-								<a href="#widgetLink#" class="widget-image-link">
-									<i class="fa #widgets.icon# fa-4x"></i>
+			</cfoutput>
+			<ul class="list-unstyled clearfix list" data-nav-list="1" data-nav-list-child-selector="li">
+				<cfoutput query="widgets">
+					<cfset widgetLink = event.buildAdminLink( linkTo="widgets.dialog", queryString="widget=#widgets.id#") />
+					<li>
+						<div class="pull-left widget-icon-container">
+							<a href="#widgetLink#" class="widget-image-link">
+								<i class="fa #widgets.icon# fa-4x"></i>
+							</a>
+						</div>
+						<div class="pull-left widget-text-container">
+							<h4 class="smallest">
+								<a href="#widgetLink#" class="widget-title">
+									#widgets.title#
 								</a>
-							</div>
-							<div class="pull-left widget-text-container">
-								<h4 class="smallest">
-									<a href="#widgetLink#" class="widget-title">
-										#widgets.title#
-									</a>
-								</h4>
-								<p class="widget-description">#widgets.description#</p>
-							</div>
-						</li>
-					</cfloop>
-				</ul>
-			</div>
-		</cfif>
-	</cfsavecontent>
-
+							</h4>
+							<p class="widget-description">#widgets.description#</p>
+						</div>
+					</li>
+				</cfoutput>
+			</ul>
+		</div>
+	</cfif>
+</cfsavecontent>
+<cfoutput>
 	#renderView( view="/admin/widgets/_dialogLayout", args={ body=body } )#
 </cfoutput>

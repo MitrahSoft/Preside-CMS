@@ -38,10 +38,11 @@ component displayname="Native Image Manipulation Service" {
 		var currentAspectRatio = 0;
 
 		try {
-			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &listLast( arguments.filename, "." );
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			currentImageInfo = ImageInfo( image );
-			fileWrite( tmpFilePath, arguments.asset );
+
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &fileExtension;
+			imageWrite( image, tmpFilePath );
 			image = ImageNew(tmpFilePath);
 			fileDelete( tmpFilePath );
 
@@ -114,7 +115,7 @@ component displayname="Native Image Manipulation Service" {
 			imageInfo = ImageInfo( image );
 
 			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &fileExtension;
-			fileWrite( tmpFilePath, arguments.asset );
+			imageWrite( image, tmpFilePath );
 			image = ImageNew(tmpFilePath);
 			fileDelete( tmpFilePath );
 

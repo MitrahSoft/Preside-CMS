@@ -26,6 +26,7 @@ component displayname="Native Image Manipulation Service" {
 	 */
 	public binary function resize(
 		  required binary  asset
+		, required string filename
 		,          numeric width               = 0
 		,          numeric height              = 0
 		,          string  quality             = "highPerformance"
@@ -41,7 +42,7 @@ component displayname="Native Image Manipulation Service" {
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			currentImageInfo = ImageInfo( image );
 
-			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &fileExtension;
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &listLast( arguments.filename, "." );
 			imageWrite( image, tmpFilePath );
 			image = ImageNew(tmpFilePath);
 			fileDelete( tmpFilePath );

@@ -229,8 +229,8 @@ component {
 
 		do {
 			embeddedImage = _findNextEmbeddedImage( renderedContent );
-
-			if ( Len( Trim( embeddedImage.asset ?: "" ) ) ) {
+			var embeddedImageAsset = structKeyExists( embeddedImage, 'asset' ) ? embeddedImage.asset : "";
+			if ( Len( Trim( embeddedImageAsset ) ) ) {
 				var args       = Duplicate( embeddedImage );
 				var derivative = args.derivative ?: "";
 
@@ -255,7 +255,8 @@ component {
 				);
 			}
 
-			if ( Len( Trim( embeddedImage.placeholder ?: "" ) ) ) {
+			var embeddedImagePlaceholder = structKeyExists( embeddedImage, 'placeholder' ) ? embeddedImage.placeholder : "";
+			if ( Len( Trim( embeddedImagePlaceholder ) ) ) {
 				renderedContent = Replace( renderedContent, embeddedImage.placeholder, renderedImage, "all" );
 			}
 

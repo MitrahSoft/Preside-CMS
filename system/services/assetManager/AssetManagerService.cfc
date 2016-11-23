@@ -1326,7 +1326,7 @@ component displayName="AssetManager Service" {
 	public boolean function isDerivativePubliclyAccessible( required string derivative ) {
 		var derivatives    = _getConfiguredDerivatives();
 		var derivativeType = arguments.derivative;
-		return ( derivatives[ derivativeType ].permissions ?: "inherit" ) == "public";
+		return ( structKeyExists( derivatives, derivativeType ) && derivatives[ derivativeType ].permissions ?: "inherit" ) == "public";
 	}
 
 	public string function getDerivativeConfigSignature( required string derivative ) {

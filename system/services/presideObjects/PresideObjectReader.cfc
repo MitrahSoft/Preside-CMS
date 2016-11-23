@@ -160,7 +160,7 @@ component {
 		var propName     = "";
 		var orderedProps = _getOrderedPropertiesInAHackyWayBecauseRailoGivesThemInRandomOrder( pathToCfc = arguments.pathToCfc );
 
-		param name="arguments.meta.properties"    default=createObject("java", "java.util.LinkedHashMap").init();
+		param name="arguments.meta.properties"    default=StructNew("ordered");
 		param name="arguments.meta.propertyNames" default=arrayNew(1);
 
 		for( propName in orderedProps ){
@@ -345,10 +345,10 @@ component {
 
 	private void function _fixOrderOfProperties( required struct meta ) {
 		param name="arguments.meta.propertyNames" default=arrayNew(1);
-		param name="arguments.meta.properties"    default=createObject("java", "java.util.LinkedHashMap").init();
+		param name="arguments.meta.properties"    default=StructNew("ordered");
 
 		var propName     = "";
-		var orderedProps = createObject("java", "java.util.LinkedHashMap").init();
+		var orderedProps = StructNew("ordered");
 	
 
 			for( propName in arguments.meta.propertyNames ){

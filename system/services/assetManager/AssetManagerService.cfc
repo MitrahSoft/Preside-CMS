@@ -479,8 +479,11 @@ component displayName="AssetManager Service" {
 		);
 
 		for( var record in records ){
-			record.folder = record.folder ?: "";
-			result.append( record );
+			var asset    = {};
+			asset[ 'folder' ] = record.folder ?: "";
+			asset[ 'value' ]  = record.value  ?: "";
+			asset[ 'text' ]   = record.text  ? : "";
+			result.append( asset );
 		}
 
 		return result;
@@ -832,9 +835,9 @@ component displayName="AssetManager Service" {
 	}
 
 	public array function listTypesForGroup( required string groupName ) {
-		var groups        = _getGroups();
-		var listTypeGroup = structKeyExists( groups, "arguments.groupName" ) ? groups[ arguments.groupName ] : arrayNew(1);
-		return listTypeGroup;
+		var groups = _getGroups();
+		var args   = duplicate( arguments );
+		return groups[ args.groupName ] ?: [];
 	}
 
 	public query function getAsset( required string id, array selectFields=[], boolean throwOnMissing=false ) {
@@ -1683,7 +1686,7 @@ component displayName="AssetManager Service" {
 					AssetTypes[ typeName ] = {
 						  typeName          = typeName
 						, groupName         = groupName
-						, extension         = type.extension ?: typeName
+						, extension         = structKeyExists( type, "extension" ) ? type.extension : typeName
 						, mimetype          = type.mimetype  ?: ""
 						, serveAsAttachment = IsBoolean( type.serveAsAttachment ?: "" ) && type.serveAsAttachment
 					};

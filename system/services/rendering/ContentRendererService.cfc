@@ -273,7 +273,7 @@ component {
 		do {
 			embeddedAttachment = _findNextEmbeddedAttachment( renderedContent );
 
-			if ( Len( Trim( embeddedAttachment.asset ?: "" ) ) ) {
+			if ( Len( Trim( structKeyExists( embeddedAttachment, "asset" ) ? embeddedAttachment.asset : "" ) ) ) {
 				var args = Duplicate( embeddedAttachment );
 
 				args.delete( "asset" );
@@ -286,7 +286,7 @@ component {
 				);
 			}
 
-			if ( Len( Trim( embeddedAttachment.placeholder ?: "" ) ) ) {
+			if ( Len( Trim( structKeyExists( embeddedAttachment, "placeholder" ) ? embeddedAttachment.placeholder : "" ) ) ) {
 				renderedContent = Replace( renderedContent, embeddedAttachment.placeholder, renderedAttachment, "all" );
 			}
 

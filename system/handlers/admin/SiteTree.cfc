@@ -944,13 +944,18 @@ component extends="preside.system.base.AdminHandler" {
 		var preparedPages = [];
 
 		for ( record in records ) {
+			var page          = {};
 			if ( IsNull( record.parent ?: ""  ) || !Len( Trim( record.parent ?: "" ) ) ) {
-				record.parent = "";
+				page[ 'parent' ] = "";
 			}
 
-			record.icon = translateResource( "page-types.#record.page_type#:iconclass", "fa-file-o" );
+			page[ 'value' ]     = record.value     ?: "";
+			page[ 'text' ]      = record.text      ?: "";
+			page[ 'depth' ]     = record.depth     ?: "";
+			page[ 'page_type' ] = record.page_type ?: "";
+			page[ 'icon' ]      = translateResource( "page-types.#record.page_type#:iconclass", "fa-file-o" );
 
-			preparedPages.append( record );
+			preparedPages.append( page );
 		}
 
 		event.renderData( type="json", data=preparedPages );

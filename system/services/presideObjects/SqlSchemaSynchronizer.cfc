@@ -12,6 +12,7 @@ component {
 	 * @schemaVersioningService.inject     SqlSchemaVersioning
 	 * @autoRunScripts.inject              coldbox:setting:autoSyncDb
 	 * @autoRestoreDeprecatedFields.inject coldbox:setting:autoRestoreDeprecatedFields
+	 * @configuredDatabase.inject          coldbox:setting:database
 	 */
 	public any function init(
 		  required any     adapterFactory
@@ -20,6 +21,7 @@ component {
 		, required any     schemaVersioningService
 		, required boolean autoRunScripts
 		, required boolean autoRestoreDeprecatedFields
+		, required string  configuredDatabase
 
 	) {
 
@@ -29,6 +31,7 @@ component {
 		_setSchemaVersioningService( arguments.schemaVersioningService );
 		_setAutoRunScripts( arguments.autoRunScripts );
 		_setAutoRestoreDeprecatedFields( arguments.autoRestoreDeprecatedFields );
+		_setConfiguredDatabase( arguments.configuredDatabase );
 
 		return this;
 	}
@@ -457,7 +460,7 @@ component {
 		var Fk_name = QueryNew("");
 
 		if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
-			var sql = _getAdapter( dsn ).getForeignKeyName();
+			var sql = _getAdapter( dsn ).getForeignKeyName( _getConfiguredDatabase() );
 			Fk_name = _runSql( dsn = arguments.dsn, sql = sql );
 		}
 
@@ -758,5 +761,12 @@ component {
 	}
 	private void function _setAutoRestoreDeprecatedFields( required boolean autoRestoreDeprecatedFields ) {
 		_autoRestoreDeprecatedFields = arguments.autoRestoreDeprecatedFields;
+	}
+
+	private void function _setConfiguredDatabase( required string configuredDatabase ) {
+		_configuredDatabase = arguments.configuredDatabase;
+	}
+	private any function _getConfiguredDatabase() {
+		return _configuredDatabase;
 	}
 }

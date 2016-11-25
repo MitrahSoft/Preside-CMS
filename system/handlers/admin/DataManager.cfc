@@ -1866,7 +1866,7 @@
 		<cfscript>
 			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object);
 			arguments.errorUrl = ( len(trim(arguments.errorAction)) ? event.buildAdminLink( linkTo=errorAction ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
-			arguments.successUrl = ( len(trim(arguments.successAction)) ? event.buildAdminLink( linkTo=successAction, queryString='id=' & id ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
+			arguments.successUrl = ( len( trim( arguments.successUrl ) ) ? arguments.successUrl : ( len( trim( arguments.successAction ) ) ? event.buildAdminLink( linkTo=successAction, queryString='id=' & id ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) ) );
 
 			arguments.recordId = ( len(trim(arguments.recordId)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.recordId);
 			arguments.missingUrl = ( len(trim(arguments.missingUrl)) ? arguments.missingUrl : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#arguments.object#" ) );

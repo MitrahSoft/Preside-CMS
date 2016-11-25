@@ -2689,7 +2689,7 @@
 			var rules         = _getcfmlBaseEngine().getFKRules();
 
 			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
-				var sql       = _getDbAdapter().getForeignKeyName();
+				var sql       = _getDbAdapter().getForeignKeyName( application.databaseName );
 				var getFkName = _getRunner().runSql( dsn = application.dsn, sql = sql );
 				keys          = _getcfmlBaseEngine().populateKeys( getFkName, keys, arguments.table );
 			}

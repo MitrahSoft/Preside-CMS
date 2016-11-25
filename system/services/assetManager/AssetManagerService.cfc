@@ -482,7 +482,7 @@ component displayName="AssetManager Service" {
 			var asset    = {};
 			asset[ 'folder' ] = record.folder ?: "";
 			asset[ 'value' ]  = record.value  ?: "";
-			asset[ 'text' ]   = record.text  ? : "";
+			asset[ 'text' ]   = record.text   ?: "";
 			result.append( asset );
 		}
 

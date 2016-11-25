@@ -183,7 +183,7 @@ component {
 		var siteTemplateMap         = {};
 
 		for( var dir in autoDiscoverDirectories ) {
-			dir              = ReReplace( dir, "/$", "" );
+			dir              = expandPath( ReReplace( dir, "/$", "" ) );
 			var views        = DirectoryList( dir & viewsPath   , false, "query" );
 			var handlers     = DirectoryList( dir & handlersPath, false, "query", "*.cfc" );
 			var siteTemplate = _getSiteTemplateFromPath( dir );

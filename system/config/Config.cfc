@@ -149,6 +149,7 @@ component {
 		settings.preside_admin_path          = "admin";
 		settings.presideHelpAndSupportLink   = "http://www.pixl8.co.uk";
 		settings.dsn                         = "preside";
+		settings.dataBase                    = "presidedb";
 		settings.presideObjectsTablePrefix   = "pobj_";
 		settings.system_users                = "sysadmin";
 		settings.updateRepositoryUrl         = "http://downloads.presidecms.com.s3.amazonaws.com";

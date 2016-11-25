@@ -90,6 +90,7 @@ component {
 		}
 
 		application.dsn = dsn;
+		application.databaseName = "preside_test_suite";
 
 		return true;
 	}

@@ -37,21 +37,23 @@
 
 							<div class="groups-list">
 								<div class="pull-left">
-									#renderView( view="admin/permissions/_editableGroupsList", args={
+									<cfset grantTitleArgs = { 
 										  savedPerms     = savedGrants
 										, inheritedPerms = inheritedGrants
 										, savedOpposites = savedDenials
 										, title          = grantTitle
 										, icon           = "check-circle"
-									} )#
+									}>
+									#renderView( view="admin/permissions/_editableGroupsList", args=grantTitleArgs )#
 
-									#renderView( view="admin/permissions/_editableGroupsList", args={
+									<cfset denyTitleArgs = {
 										  savedPerms     = savedDenials
 										, savedOpposites = savedGrants
 										, inheritedPerms = inheritedDenials
 										, title          = denyTitle
-										, icon           = "minus-circle"
-									} )#
+										, icon           = "minus-circle"	
+									}>
+									#renderView( view="admin/permissions/_editableGroupsList", args=denyTitleArgs )#
 								</div>
 
 								<i class="fa fa-pencil edit-row-icon pull-right"></i>
@@ -61,20 +63,21 @@
 								<div class="row">
 									<div class="col-sm-11">
 										<div class="row">
-											#renderView( view="admin/permissions/_editableGroupsInput", args={
+											<cfset grantTitleArgs = {
 												  controlName    = "grant.#key#"
 												, savedPerms     = savedGrants
 												, inheritedPerms = inheritedGrants
 												, title          = grantTitle
-											} )#
+											}>
+											#renderView( view="admin/permissions/_editableGroupsInput", args=grantTitleArgs )#
 
-											#renderView( view="admin/permissions/_editableGroupsInput", args={
+											<cfset denyTitleArgs = {
 												  controlName    = "deny.#key#"
 												, savedPerms     = savedDenials
 												, inheritedPerms = inheritedDenials
 												, title          = denyTitle
-											} )#
-
+											}>
+											#renderView( view="admin/permissions/_editableGroupsInput", args=denyTitleArgs )#
 										</div>
 									</div>
 									<div class="col-sm-1">

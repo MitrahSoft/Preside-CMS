@@ -5,7 +5,7 @@ component output=false {
 
 	public string function index( event, rc, prc, args={} ) output=false {
 		var targetObject = args.object        ?: "";
-		var ajax         = args.ajax          ?: true;
+		var ajax         = ( structKeyExists( args, "ajax" ) AND len( trim( args.ajax ) ) ) ? args.ajax : true;
 		var savedFilters = args.objectFilters ?: "";
 
 		if ( IsBoolean( ajax ) && ajax ) {

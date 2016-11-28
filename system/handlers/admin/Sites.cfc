@@ -207,7 +207,7 @@ component output=false extends="preside.system.base.AdminHandler" {
 
 		for( var site in sites ){
 			if ( hasCmsPermission( "sites.navigate", "site", [ site.id ] ) ) {
-				if ( site.id == currentSiteId || ( IsEmpty( currentSiteId ) && sites.currentRow == 1 ) ) {
+				if ( site.id == currentSiteId || ( !len( trim( currentSiteId ) ) && sites.currentRow == 1 ) ) {
 					args.currentSite = site;
 				} else {
 					args.sites.append( site );

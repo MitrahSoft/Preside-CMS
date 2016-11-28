@@ -7,7 +7,7 @@
 	placeholder         	= HtmlEditFormat( translateResource( uri=placeholder, defaultValue=placeholder ) );
 	defaultValue        	= args.defaultValue     ?: "";
 	sortable            	= args.sortable         ?: "";
-	ajax                	= args.ajax             ?: true;
+	ajax                	= ( structKeyExists( args, "ajax" ) AND len( trim( args.ajax ) ) ) ? args.ajax : true;
 	remoteUrl           	= args.remoteUrl        ?: "";
 	prefetchUrl         	= args.prefetchUrl      ?: "";
 	records             	= args.records          ?: QueryNew('');

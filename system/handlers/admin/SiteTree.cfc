@@ -911,25 +911,32 @@ component extends="preside.system.base.AdminHandler" {
 		event.setView( view="admin/sitetree/pageTypeDialog", nolayout=true );
 	}
 
+	
 	public void function getPagesForAjaxPicker( event, rc, prc ) {
 		var records = siteTreeService.getPagesForAjaxSelect(
-			  maxRows      = rc.maxRows      ?: 1000
-			, searchQuery  = rc.q            ?: ""
-			, ids          = ListToArray( rc.values ?: "" )
+		 maxRows      = rc.maxRows      ?: 1000
+		, searchQuery  = rc.q            ?: ""
+		, ids          = ListToArray( rc.values ?: "" )
 		);
+
 		var preparedPages = [];
 
 		for ( record in records ) {
+			var siteTreePage = {};
 			if ( IsNull( record.parent ?: ""  ) || !Len( Trim( record.parent ?: "" ) ) ) {
-				record.parent = "";
+				siteTreePage[ 'parent' ] = "";
 			}
 			if ( record.depth ) {
-				record.parent = RepeatString( "&rarr;", record.depth ) & record.parent;
+				siteTreePage[ 'parent' ] = RepeatString( "&rarr;", record.depth ) & record.parent;
 			}
 
-			record.icon = translateResource( "page-types.#record.page_type#:iconclass", "fa-file-o" );
+			siteTreePage[ 'icon' ]      = translateResource( "page-types.#record.page_type#:iconclass", "fa-file-o" );
+			siteTreePage[ 'page_type' ] = record.page_type;
+			siteTreePage[ 'depth' ]     = record.depth;
+			siteTreePage[ 'text' ]      = record.text;
+			siteTreePage[ 'value' ]     = record.value;
 
-			preparedPages.append( record );
+			preparedPages.append( siteTreePage );
 		}
 
 		event.renderData( type="json", data=preparedPages );

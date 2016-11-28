@@ -1733,10 +1733,11 @@
 		<cfargument name="rc"       type="struct" required="true" />
 		<cfargument name="prc"      type="struct" required="true" />
 		<cfargument name="object"   type="string" required="false" default="" />
-		<cfargument name="formName" type="string" required="false" default="preside-objects.#arguments.object#.admin.quickadd" />
+		<cfargument name="formName" type="string" required="false" default="" />
 
 		<cfscript>
 			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object );
+			arguments.formName = structKeyExists( arguments, "formName" ) AND len( trim( arguments.formName ) ) ? arguments.formName : "preside-objects.#arguments.object#.admin.quickadd";
 
 			var formData         = event.getCollectionForForm( arguments.formName );
 			var validationResult = validateForm( formName=arguments.formName, formData=formData );
@@ -1864,14 +1865,14 @@
 
 
 		<cfscript>
-			arguments.object = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object);
-			arguments.errorUrl = ( len(trim(arguments.errorAction)) ? event.buildAdminLink( linkTo=errorAction ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
+			arguments.object     = ( len(trim(arguments.object)) EQ 0 AND structKeyExists(rc, "object") ? rc.object : arguments.object);
+			arguments.errorUrl   = ( len(trim(arguments.errorAction)) ? event.buildAdminLink( linkTo=errorAction ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) );
 			arguments.successUrl = ( len( trim( arguments.successUrl ) ) ? arguments.successUrl : ( len( trim( arguments.successAction ) ) ? event.buildAdminLink( linkTo=successAction, queryString='id=' & id ) : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#object#" ) ) );
 
-			arguments.recordId = ( len(trim(arguments.recordId)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.recordId);
+			arguments.recordId   = ( len(trim(arguments.recordId)) EQ 0 AND structKeyExists(rc, "id") ? rc.id : arguments.recordId);
 			arguments.missingUrl = ( len(trim(arguments.missingUrl)) ? arguments.missingUrl : event.buildAdminLink( linkTo="datamanager.object", querystring="id=#arguments.object#" ) );
-
-			formName = ( Len( Trim( arguments.mergeWithFormName ) ) AND structKeyExists( arguments, "mergeWithFormName" ) ) ? formsService.getMergedFormName( formName, arguments.mergeWithFormName ) : ( Len( Trim( arguments.formName ) ) AND structKeyExists( arguments, "formName" ) ) ? arguments.formName : "preside-objects.#arguments.object#.admin.edit";
+			arguments.formName   = ( structKeyExists( arguments, "formName" ) AND Len( Trim( arguments.formName ) ) ) ? arguments.formName : "preside-objects.#arguments.object#.admin.edit";
+			formName = ( structKeyExists( arguments, "mergeWithFormName" ) AND Len( Trim( arguments.mergeWithFormName ) ) ) ? formsService.getMergedFormName( arguments.formName, arguments.mergeWithFormName ) : arguments.formName;
 
 			var id               = rc.id      ?: "";
 			var version          = rc.version ?: "";

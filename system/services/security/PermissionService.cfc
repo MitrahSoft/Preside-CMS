@@ -154,12 +154,13 @@ component displayName="Admin permissions service" {
 		}
 
 		if ( arguments.contextKeys.len() ) {
+			arraySort( expandedPermissionKeys, "textnocase" );
 			dbData = _getContextPermDao().selectData(
 				  selectFields = [ "granted", "permission_key", "security_group", "security_group.label as group_name" ]
 				, filter       = {
 					  context        = arguments.context
 					, context_key    = arguments.contextKeys
-					, permission_key = expandedPermissionKeys.sort( "textnocase" )
+					, permission_key = expandedPermissionKeys
 				  }
 			);
 

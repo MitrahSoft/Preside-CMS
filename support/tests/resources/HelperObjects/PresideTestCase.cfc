@@ -84,7 +84,7 @@
 					, schemaVersioningService     = schemaVersioning
 					, autoRunScripts              = true
 					, autoRestoreDeprecatedFields = true
-					, configuredDatabase          = application.databaseName
+					, configuredDatabaseName      = true
 				);
 				var relationshipGuidance = new preside.system.services.presideObjects.relationshipGuidance(
 					  objectReader = objReader

@@ -342,7 +342,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				tmpFile = "/tests/resources/fileStorage/.trash/" & trashedPath; // this will get cleaned up by the teardown() function
 
 				expect( provider.objectExists( path=pathToStoreItAt ) ).toBeFalse();
-				expect( FileExists( expandPath( tmpFile ) ) ).toBeTrue();
+				expect( FileExists( ( tmpFile ) ) ).toBeTrue();
 			} );
 
 			it( "should send private object to recycle storage", function(){
@@ -363,7 +363,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				tmpFile = "/tests/resources/fileStorage/.trash/" & trashedPath; // this will get cleaned up by the teardown() function
 
 				expect( provider.objectExists( path=pathToStoreItAt, private=true ) ).toBeFalse();
-				expect( FileExists( expandPath( tmpFile ) ) ).toBeTrue();
+				expect( FileExists( ( tmpFile ) ) ).toBeTrue();
 			} );
 
 		} );

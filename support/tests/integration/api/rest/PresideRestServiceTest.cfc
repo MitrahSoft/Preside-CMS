@@ -5,7 +5,7 @@ component extends="testbox.system.BaseSpec"{
 		describe( "getApiForUri()", function(){
 			it( "should find the most detailed API match for the given URI", function(){
 				var restService = getService();
-				expect( restService.getApiForUri( "\api1\subapi\my\pattern\" ) ).toBe( "\api1\subapi" );
+				expect( restService.getApiForUri( "/api1/subapi/my/pattern/" ) ).toBe( "/api1/subapi" );
 			} );
 		} );
 
@@ -14,7 +14,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should find first regex match for a passed URI", function(){
 				var restService = getService();
 
-				expect( restService.getResourceForUri( api="\api1", resourcePath="/test/my-pattern/#CreateUUId()#/" ) ).toBe( {
+				expect( restService.getResourceForUri( api="/api1", resourcePath="/test/my-pattern/#CreateUUId()#/" ) ).toBe( {
 					  handler    = "api1.ResourceX"
 					, tokens     = [ "pattern", "id" ]
 					, uriPattern = "^/test/(.*?)/(.*?)/$"

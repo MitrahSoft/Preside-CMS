@@ -58,7 +58,11 @@ component displayName="Task Manager Service" {
 	public struct function getTask( required string taskKey ) {
 		var tasks = _getConfiguredTasks();
 
-		return structKeyExists( tasks, arguments.taskKey ) && isStruct( tasks[ arguments.taskKey ] ) ? tasks[ arguments.taskKey ] : cfthrow( type="TaskManager.missing.task", message="Task [#arguments.taskKey#] does not exist. Existing tasks are: #SerializeJson( listTasks() )#" );
+		if( structKeyExists( tasks, arguments.taskKey ) && isStruct( tasks[ arguments.taskKey ] ) ){
+			return tasks[ arguments.taskKey ];
+		} else {
+			cfthrow( type="TaskManager.missing.task", message="Task [#arguments.taskKey#] does not exist. Existing tasks are: #SerializeJson( listTasks() )#" );
+		}
 	}
 
 	public struct function getTaskConfiguration( required string taskKey ) {

@@ -186,7 +186,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 							id="somefieldset",
 							fields=[
 								{ name="anotherfield", rules=[], sortorder=5 },
-								{ name="somename", control="overridenControl", required="false", rules=[], sortorder=10 }
+								{ name="somename", rules=[], sortorder=10 }
 							]
 						},{
 							title="",
@@ -507,7 +507,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 							id="somefieldset",
 							fields=[
 								{ name="anotherfield", rules=[], sortorder=5 },
-								{ name="somename", control="overridenControl", required="false", rules=[], sortorder=10 }
+								{ name="somename", rules=[], sortorder=10 }
 							]
 						},{
 							title="",

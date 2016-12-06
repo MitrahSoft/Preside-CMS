@@ -118,10 +118,11 @@ component {
 		);
 
 		if ( record.recordCount ) {
+			var data = record[ property ];
 			preview = renderField(
 				  object   = object
 				, property = property
-				, data     = record[ property ]
+				, data     = data
 				, context  = "preview"
 			);
 		}

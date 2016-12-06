@@ -261,7 +261,7 @@ component {
 		var versionObjectName = $getPresideObjectService().getVersionObjectName( arguments.objectName );
 		var extraFilters      = [];
 
-		if ( arguments.keyExists( "recordId" ) ) {
+		if ( structKeyExists( arguments, "recordId" ) ) {
 			arguments.filter = { id = arguments.recordId };
 			arguments.filterParams = {};
 		}
@@ -302,8 +302,8 @@ component {
 				changedFields[ field ] = "";
 			}
 		}
-
-		changedFields = changedFields.keyArray().sort( "textnocase" );
+		changedFields = structKeyArray( changedFields );
+		arraySort( changedFields, "textnocase" );
 
 		return changedFields;
 	}
@@ -321,7 +321,7 @@ component {
 		if ( record.recordCount ) {
 			for( var r in record ) { record = r; }
 			for( var field in changedFields ) {
-				if ( record.keyExists( field ) ) {
+				if ( structKeyExists( record, field ) ) {
 					dataToPublish[ field ] = record[ field ];
 				}
 			}

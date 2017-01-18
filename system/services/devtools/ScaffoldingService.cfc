@@ -264,8 +264,6 @@ component singleton=true {
 		return filePath;
 	}
 
-
-
 	public string function scaffoldView( required string viewName, string subDir="", string extension="", array args=[] ) {
 		var root     = _getScaffoldRoot( arguments.extension );
 		var filePath = root & "views/" & arguments.subDir & "/" & arguments.viewName & ".cfm";

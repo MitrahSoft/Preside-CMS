@@ -58,7 +58,7 @@ component {
 
 		var filter           = "page.trashed = :trashed";
 		if( !arguments.trash ){
-			filter &= " and page.page_type in (:page_type)"
+			filter &= " and page.page_type in (:page_type)";
 		}
 
 		var maxDepth = arguments.maxDepth;
@@ -157,10 +157,10 @@ component {
 		}
 
 		if ( arguments.version ) {
-			args.fromVersionTable = true
-			args.specificVersion  = arguments.version
+			args.fromVersionTable = true;
+			args.specificVersion  = arguments.version;
 		} else if ( arguments.getLatest ) {
-			args.fromVersionTable = true
+			args.fromVersionTable = true;
 		}
 
 		return _getPObj().selectData( argumentCollection = args );
@@ -209,7 +209,7 @@ component {
 		var pobj   = _getPresideObject( pt.getPresideObject() );
 		var args  = { filter={ page=arguments.id }, allowDraftVersions=arguments.allowDrafts };
 		if ( arguments.getLatest ) {
-			args.fromVersionTable = true
+			args.fromVersionTable = true;
 		}
 		var record = pobj.selectData( argumentCollection=args );
 
@@ -217,7 +217,7 @@ component {
 			return {};
 		}
 
-		for( var r in record ) { record = r }; // query to struct hack
+		for( var r in record ) { record = r; } // query to struct hack
 		StructDelete( record, "id" );
 		StructDelete( record, "datecreated" );
 		StructDelete( record, "datemodified" );
@@ -384,7 +384,7 @@ component {
 		} else {
 			args.maxRows = 0;
 			args.startRow = 1;
-			args.selectFields = [ "count( * ) as nRows" ]
+			args.selectFields = [ "count( * ) as nRows" ];
 			result.totalRecords = _getPresideObjectService().selectData( argumentCollection=args ).nRows;
 		}
 
@@ -451,7 +451,7 @@ component {
 				, active           = true
 				, trashed          = false
 			  }
-		}
+		};
 
 		if ( arguments.version ) {
 			homepageArgs.fromVersionTable = true;
@@ -489,7 +489,7 @@ component {
 		, boolean allowDrafts       = $getRequestContext().showNonLiveContent()
 	) {
 		var args = arguments;
-		var requiredSelectFields = [ "id", "title", "navigation_title", "exclude_children_from_navigation", "page_type", "exclude_from_navigation_when_restricted", "access_restriction" ]
+		var requiredSelectFields = [ "id", "title", "navigation_title", "exclude_children_from_navigation", "page_type", "exclude_from_navigation_when_restricted", "access_restriction" ];
 		for( var field in requiredSelectFields) {
 			if ( !args.selectFields.find( field ) && !args.selectFields.find( "page." & field ) ) {
 				args.selectFields.append( "page." & field );
@@ -567,7 +567,7 @@ component {
 		);
 
 		var isManagedType   = Len( Trim( page.parent_type ) ) && getManagedChildTypesForParentType( page.parent_type ).findNoCase( page.page_type );
-		var excludedFromNav = arguments.isSubMenu ? Val( page.exclude_from_sub_navigation ) : ( Val( page.exclude_from_navigation ) || Val( page.exclude_children_from_navigation ) )
+		var excludedFromNav = arguments.isSubMenu ? Val( page.exclude_from_sub_navigation ) : ( Val( page.exclude_from_navigation ) || Val( page.exclude_children_from_navigation ) );
 		if ( isManagedType || excludedFromNav ) {
 			return [];
 		}

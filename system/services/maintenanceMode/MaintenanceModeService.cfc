@@ -79,8 +79,8 @@ component {
 	public void function showMaintenancePageIfActive() {
 		if ( isMaintenanceModeActive() && !canRequestBypassMaintenanceMode() ) {
 			var settings = getMaintenanceModeSettings();
-			header statuscode=503;
-			content reset="true" type="text/html";
+			cfheader( statuscode=503 );
+			cfcontent( reset="true", type="text/html" );
 			WriteOutput( settings.html );
 			abort;
 		}
@@ -103,7 +103,7 @@ component {
 	}
 
 	private any function _getApplicationVariable() {
-		return application.presideMaintenanceMode ?: NullValue();
+		return application.presideMaintenanceMode ?: javaCast( "null", 0 );
 	}
 	private void function _setApplicationVariable( required struct maintenanceModeSettings ) {
 		application.presideMaintenanceMode = arguments.maintenanceModeSettings;

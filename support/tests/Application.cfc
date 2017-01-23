@@ -36,7 +36,7 @@ component {
 		var dsn = "preside_test_suite";
 
 		try {
-			dbinfo type="version" name="info" datasource="#dsn#";
+			cfdbinfo( type="version", name="info", datasource="#dsn#" );
 
 		} catch ( database e ) {
 			var isCommandLineExecuted = cgi.server_protocol == "CLI/1.0";
@@ -133,7 +133,7 @@ component {
 		try {
 			var info = "";
 
-			dbinfo type="version" name="info" datasource="preside_test_suite";
+			cfdbinfo( type="version", name="info", datasource="preside_test_suite" );
 
 			return info.recordcount > 0;
 		} catch ( database e ) {

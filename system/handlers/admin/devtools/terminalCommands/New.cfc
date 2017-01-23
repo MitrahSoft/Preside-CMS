@@ -44,10 +44,10 @@ component hint="Create various preside system entities such as widgets and page 
 			ArrayAppend( userInputPrompts, { prompt="Description: ", required=false, paramName="description"} );
 		}
 		if ( !StructKeyExists( params, "icon" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Icon class, we use font-awesome 4: ", required=false, default="fa-magic", paramName="icon"} );
+			ArrayAppend( userInputPrompts, { prompt="Icon class, we use font-awesome 4: ", required=false, "default"="fa-magic", paramName="icon"} );
 		}
 		if ( !StructKeyExists( params, "createHandler" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Create handler?", required=true, default="N", paramName="createHandler", validityRegex="^[YyNn]$" } );
+			ArrayAppend( userInputPrompts, { prompt="Create handler?", required=true, "default"="N", paramName="createHandler", validityRegex="^[YyNn]$" } );
 		}
 		if ( !StructKeyExists( params, "options" ) ) {
 			ArrayAppend( userInputPrompts, { prompt="Config options, e.g. 'title,max_items,feed_url': ", required=false, paramName="options"} );
@@ -103,10 +103,10 @@ component hint="Create various preside system entities such as widgets and page 
 			ArrayAppend( userInputPrompts, { prompt="Description: ", required=false, paramName="description"} );
 		}
 		if ( !StructKeyExists( params, "icon" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Icon class, we use font-awesome 4: ", required=false, default="fa-file-o", paramName="icon"} );
+			ArrayAppend( userInputPrompts, { prompt="Icon class, we use font-awesome 4: ", required=false, "default"="fa-file-o", paramName="icon"} );
 		}
 		if ( !StructKeyExists( params, "createHandler" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Create handler?", required=true, default="N", paramName="createHandler", validityRegex="^[YyNn]$" } );
+			ArrayAppend( userInputPrompts, { prompt="Create handler?", required=true, "default"="N", paramName="createHandler", validityRegex="^[YyNn]$" } );
 		}
 		if ( !StructKeyExists( params, "fields" ) ) {
 			ArrayAppend( userInputPrompts, { prompt="Config fields, e.g. 'title,max_items,feed_url': ", required=false, paramName="fields"} );
@@ -263,7 +263,7 @@ component hint="Create various preside system entities such as widgets and page 
 			ArrayAppend( userInputPrompts, { prompt="Description: ", required=false, paramName="description"} );
 		}
 		if ( !StructKeyExists( params, "icon" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Icon class, we use font-awesome 4: ", required=false, default="fa-cogs", paramName="icon"} );
+			ArrayAppend( userInputPrompts, { prompt="Icon class, we use font-awesome 4: ", required=false, "default"="fa-cogs", paramName="icon"} );
 		}
 		if ( !StructKeyExists( params, "extension" ) ) {
 			ArrayAppend( userInputPrompts, { prompt="Extension name, leave blank for no extension: ", required=false, paramName="extension"} );
@@ -334,10 +334,10 @@ component hint="Create various preside system entities such as widgets and page 
 			ArrayAppend( userInputPrompts, { prompt="Form control ID: ", required=true, paramName="id" } );
 		}
 		if ( !StructKeyExists( params, "createHandler" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Create handler?", required=true, default="N", paramName="createHandler", validityRegex="^[YyNn]$" } );
+			ArrayAppend( userInputPrompts, { prompt="Create handler?", required=true, "default"="N", paramName="createHandler", validityRegex="^[YyNn]$" } );
 		}
 		if ( !StructKeyExists( params, "contexts" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Contexts (e.g. index,website):", required=false, default="index", paramName="contexts" } );
+			ArrayAppend( userInputPrompts, { prompt="Contexts (e.g. index,website):", required=false, "default"="index", paramName="contexts" } );
 		}
 		if ( !StructKeyExists( params, "extension" ) ) {
 			ArrayAppend( userInputPrompts, { prompt="Extension name, leave blank for no extension: ", required=false, paramName="extension"} );
@@ -386,7 +386,7 @@ component hint="Create various preside system entities such as widgets and page 
 			ArrayAppend( userInputPrompts, { prompt="Expression text (e.g. 'User {_is} logged in'): ", required=true, paramName="text" } );
 		}
 		if ( !StructKeyExists( params, "context" ) ) {
-			ArrayAppend( userInputPrompts, { prompt="Context (e.g. webrequest):", required=false, default="webrequest", paramName="context" } );
+			ArrayAppend( userInputPrompts, { prompt="Context (e.g. webrequest):", required=false, "default"="webrequest", paramName="context" } );
 		}
 		if ( !StructKeyExists( params, "extension" ) ) {
 			ArrayAppend( userInputPrompts, { prompt="Extension name, leave blank for no extension: ", required=false, paramName="extension"} );

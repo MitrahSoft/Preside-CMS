@@ -30,9 +30,10 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	public void function index( event, rc, prc ) {
-		if ( ( rc.selected ?: "" ).len() ) {
+		rc.selected = rc.selected ?: "";
+		if ( rc.selected.len() ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
-			prc.selectedAncestors = prc.selectedAncestors.recordCount ? ValueArray( prc.selectedAncestors.id ) : [];
+			prc.selectedAncestors = prc.selectedAncestors.recordCount ? listToArray( ValueList( prc.selectedAncestors.id ) ) : [];
 			event.includeData( { selectedNode = rc.selected } );
 		}
 		prc.activeTree = siteTreeService.getTree( trash = false, format="nestedArray", maxDepth=0, selectFields=[
@@ -97,7 +98,7 @@ component extends="preside.system.base.AdminHandler" {
 		};
 
 		if ( ancestors.recordCount ) {
-			additionalNodeArgs.permission_context = ValueArray( ancestors.id );
+			additionalNodeArgs.permission_context = listToArray( ValueList( ancestors.id ) );
 			additionalNodeArgs.permission_context.reverse();
 		}
 		additionalNodeArgs.permission_context.prepend( parentId );
@@ -123,10 +124,10 @@ component extends="preside.system.base.AdminHandler" {
 				, managedChildrenBaseLink = managedChildrenBaseLink
 			} );
 		}
-
-		if ( ( rc.selected ?: "" ).len() ) {
+		rc.selected = rc.selected ?: "";
+		if ( rc.selected.len() ) {
 			prc.selectedAncestors = sitetreeService.getAncestors( id=rc.selected, selectFields=[ "id" ] );
-			prc.selectedAncestors = prc.selectedAncestors.recordcount ? ValueArray( prc.selectedAncestors.id ) : [];
+			prc.selectedAncestors = prc.selectedAncestors.recordcount ? listToArray( ValueList( prc.selectedAncestors.id ) ) : [];
 			event.includeData( { selectedPage = rc.selected } );
 		}
 
@@ -243,7 +244,7 @@ component extends="preside.system.base.AdminHandler" {
 			persist = {
 				  _addanother = 1
 				, active      = formData.active ?: 0
-			}
+			};
 
 			setNextEvent( url=event.buildAdminLink( linkTo="sitetree.addPage", queryString="parent_page=#parent#&page_type=#rc.page_type#" ), persistStruct=persist );
 		} else {
@@ -279,7 +280,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.canActivate  = !IsTrue( prc.page._version_is_draft ) && !pageType.isSystemPageType() && _checkPermissions( argumentCollection=arguments, key="activate", pageId=pageId, throwOnError=false );
 
 		prc.mainFormName  = "preside-objects.page.edit";
-		prc.mergeFormName = _getPageTypeFormName( pageType, "edit" )
+		prc.mergeFormName = _getPageTypeFormName( pageType, "edit" );
 
 		prc.page = QueryRowToStruct( prc.page );
 		var savedData = getPresideObject( pageType.getPresideObject() ).selectData( filter={ page = pageId }, fromVersionTable=( version > 0 ), specificVersion=version, allowDraftVersions=true  );
@@ -344,7 +345,7 @@ component extends="preside.system.base.AdminHandler" {
 			setNextEvent( url=event.buildAdminLink( linkTo="sitetree" ) );
 		}
 		pageType = pageTypesService.getPageType( page.page_type );
-		var mergeFormName = _getPageTypeFormName( pageType, "edit" )
+		var mergeFormName = _getPageTypeFormName( pageType, "edit" );
 		if ( Len( Trim( mergeFormName ) ) ) {
 			formName = formsService.getMergedFormName( formName, mergeFormName );
 		}
@@ -615,7 +616,7 @@ component extends="preside.system.base.AdminHandler" {
 		}
 
 		formData = event.getCollectionForForm( formName );
-		formData._translation_language = languageId
+		formData._translation_language = languageId;
 		formData.id = multilingualPresideObjectService.getExistingTranslationId(
 			  objectName = "page"
 			, id         = pageId
@@ -652,7 +653,7 @@ component extends="preside.system.base.AdminHandler" {
 		}
 
 		var auditDetail = QueryRowToStruct( page );
-		auditDetail.languageId = languageId
+		auditDetail.languageId = languageId;
 		event.audit(
 			  action   = "translate_page"
 			, type     = "sitetree"
@@ -683,7 +684,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.pageTypeObjectName     = prc.pageType.getPresideObject();
 		prc.pageIsMultilingual     = multilingualPresideObjectService.isMultilingual( "page" );
 		prc.pageTypeIsMultilingual = multilingualPresideObjectService.isMultilingual( prc.pageTypeObjectName );
-		prc.versionedObjectName    = prc.pageIsMultilingual ? "page" : prc.pageTypeObjectName
+		prc.versionedObjectName    = prc.pageIsMultilingual ? "page" : prc.pageTypeObjectName;
 
 		_pageCrumbtrail( argumentCollection=arguments, pageId=prc.page.id, pageTitle=prc.page.title );
 		event.addAdminBreadCrumb(
@@ -695,7 +696,7 @@ component extends="preside.system.base.AdminHandler" {
 			, link  = ""
 		);
 
-		prc.pageTitle = translateResource( uri="cms:sitetree.pageTranslationHistory.title", data=[ prc.page.title, prc.language.name ] )
+		prc.pageTitle = translateResource( uri="cms:sitetree.pageTranslationHistory.title", data=[ prc.page.title, prc.language.name ] );
 		prc.pageIcon  = "history";
 	}
 
@@ -986,7 +987,7 @@ component extends="preside.system.base.AdminHandler" {
 		var pageTypeObjectName     = pageType.getPresideObject();
 		var pageIsMultilingual     = multilingualPresideObjectService.isMultilingual( "page" );
 		var pageTypeIsMultilingual = multilingualPresideObjectService.isMultilingual( pageTypeObjectName );
-		var versionedObjectName    = pageIsMultilingual ? "page" : pageTypeObjectName
+		var versionedObjectName    = pageIsMultilingual ? "page" : pageTypeObjectName;
 
 		runEvent(
 			  event          = "admin.DataManager._getTranslationRecordHistoryForAjaxDataTables"
@@ -1093,7 +1094,7 @@ component extends="preside.system.base.AdminHandler" {
 		setNextEvent( url=event.buildLink( page=( rc.id ?: "" ) ) );
 	}
 
-<!--- private viewlets --->
+//private viewlets
 	private string function searchBox( event, rc, prc, args={} ) {
 		var prefetchCacheBuster = datamanagerService.getPrefetchCachebusterForAjaxSelect( "page" );
 
@@ -1103,7 +1104,7 @@ component extends="preside.system.base.AdminHandler" {
 		return renderView( view="/admin/sitetree/_searchBox", args=args );
 	}
 
-<!--- private helpers --->
+//private helpers
 	private boolean function _checkPermissions( event, rc, prc, required string key, string pageId="", string prefix="sitetree.", boolean throwOnError=true ) {
 		var permitted = "";
 		var permKey   = arguments.prefix & arguments.key;
@@ -1140,10 +1141,10 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	private query function _getPageAndThrowOnMissing( event, rc, prc, pageId, includeTrash=false, allowVersions=false, setVersion=true ) {
-		var pageId  = arguments.pageId        ?: ( rc.id ?: "" );
-		var version = arguments.allowVersions ? ( rc.version ?: versioningService.getLatestVersionNumber( "page", pageId ) ) : 0;
+		var _pageId = arguments.pageId        ?: ( rc.id ?: "" );
+		var version = arguments.allowVersions ? ( rc.version ?: versioningService.getLatestVersionNumber( "page", _pageId ) ) : 0;
 		var page    = siteTreeService.getPage(
-			  id              = pageId
+			  id              = _pageId
 			, version         = Val( version )
 			, includeInactive = true
 			, includeTrash    = arguments.includeTrash
@@ -1164,19 +1165,19 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	private array function _getPagePermissionContext( event, rc, prc, pageId, includePageId=true ) {
-		var pageId   = arguments.pageId ?: ( rc.id ?: "" );
+		var _pageId  = arguments.pageId ?: ( rc.id ?: "" );
 		var cacheKey = "pagePermissionContext";
 
 		if ( prc.keyExists( cacheKey ) ) {
 			return prc[ cacheKey ];
 		}
 
-		var ancestors = sitetreeService.getAncestors( id = pageId, selectFields=[ "id" ] );
+		var ancestors = sitetreeService.getAncestors( id = _pageId, selectFields=[ "id" ] );
 		var context   = ancestors.recordCount ? ListToArray( ValueList( ancestors.id ) ) : [];
 		var reversed  = [];
 
 		if ( arguments.includePageId ) {
-			context.append( pageId );
+			context.append( _pageId );
 		}
 
 		for( var i=context.len(); i>0; i-- ){

@@ -11,11 +11,11 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // route handler methods
-	public boolean function match( required string path, required any event ) output=false {
+	public boolean function match( required string path, required any event ) {
 		return ReFindNoCase( "^/file/(.*?)/", arguments.path );
 	}
 
-	public void function translate( required string path, required any event ) output=false {
+	public void function translate( required string path, required any event ) {
 		var storagePath     = ToString( ToBinary( ReReplace( arguments.path, "^/file/(.*?)/.*$", "\1" ) ) );
 		var storageProvider = ListFirst( storagePath, "/" );
 		var filename        = ListLen( storagePath, "|" ) > 1 ? ListRest( storagePath, "|" ) : ListLast( storagePath, "/" );
@@ -34,11 +34,11 @@ component implements="iRouteHandler" output=false singleton=true {
 		}
 	}
 
-	public boolean function reverseMatch( required struct buildArgs, required any event ) output=false {
+	public boolean function reverseMatch( required struct buildArgs, required any event ) {
 		return Len( Trim( buildArgs.fileStoragePath ?: "" ) ) && Len( Trim( buildArgs.fileStorageProvider ?: "" ) );
 	}
 
-	public string function build( required struct buildArgs, required any event ) output=false {
+	public string function build( required struct buildArgs, required any event ) {
 		var path = '/' & buildArgs.fileStorageProvider & buildArgs.fileStoragePath;
 
 		if ( Len( Trim( buildArgs.filename ?: "" ) ) ) {
@@ -51,10 +51,10 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // private getters and setters
-	private string function _getEventName() output=false {
+	private string function _getEventName() {
 		return _eventName;
 	}
-	private void function _setEventName( required string eventName ) output=false {
+	private void function _setEventName( required string eventName ) {
 		_eventName = arguments.eventName;
 	}
 }

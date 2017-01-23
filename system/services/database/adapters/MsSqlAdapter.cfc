@@ -25,7 +25,7 @@ component extends="BaseAdapter" {
 		,          boolean  autoIncrement = false
 
 	) {
-		var columnDef  = escapeEntity( arguments.columnName )
+		var columnDef  = escapeEntity( arguments.columnName );
 		var isNullable = not arguments.primaryKey and ( arguments.nullable or StructKeyExists( arguments, 'defaultValue' ) );
 
 		switch( arguments.dbType ) {
@@ -202,7 +202,7 @@ component extends="BaseAdapter" {
 	}
 
 	public string function getDeleteSql( required string tableName, required any filter, string tableAlias="" ) {
-		var sql = "delete "
+		var sql = "delete ";
 
 		if ( Len( Trim( arguments.tableAlias ) ) ) {
 			sql &= "#escapeEntity( arguments.tableAlias )# from #escapeEntity( arguments.tableName )# as #escapeEntity( arguments.tableAlias )#";

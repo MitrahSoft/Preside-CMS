@@ -202,7 +202,7 @@
 					extraFilters.append({
 						  filter       = "#filterByField# = :#filterByField#"
 						, filterParams = { "#filterByField#" = rc[filterByField] }
-					})
+					});
 				}
 			}
 
@@ -1341,10 +1341,10 @@
 			var sortOrder           = dtHelper.getSortOrder();
 			var expressionFilter    = rc.sFilterExpression ?: "";
 			var savedFilters        = ListToArray( rc.sSavedFilterExpressions ?: "" );
-			var extraFilters        = arguments.extraFilters ?: [];
+			var _extraFilters        = arguments.extraFilters ?: [];
 
 			try {
-				extraFilters.append( rulesEngineFilterService.prepareFilter(
+				_extraFilters.append( rulesEngineFilterService.prepareFilter(
 					  objectName = object
 					, expressionArray = DeSerializeJson( expressionFilter )
 				) );
@@ -1355,11 +1355,11 @@
 				, selectFields = [ "expressions" ]
 				, filter = { id=savedFilters }
 			);
-			for( var filter in savedFilters ) {
+			for( var _filter in savedFilters ) {
 				try {
-					extraFilters.append( rulesEngineFilterService.prepareFilter(
+					_extraFilters.append( rulesEngineFilterService.prepareFilter(
 						  objectName = object
-						, expressionArray = DeSerializeJson( filter.expressions )
+						, expressionArray = DeSerializeJson( _filter.expressions )
 					) );
 				} catch( any e ){}
 			}
@@ -1379,7 +1379,7 @@
 				, orderBy       = sortOrder
 				, searchQuery   = dtHelper.getSearchQuery()
 				, draftsEnabled = arguments.draftsEnabled
-				, extraFilters = extraFilters
+				, extraFilters = _extraFilters
 			);
 			var records = Duplicate( results.records );
 			for( var record in records ){
@@ -1789,7 +1789,7 @@
 		<cfargument name="prc"               type="struct"  required="true" />
 		<cfargument name="object"            type="string"  required="false" default="#( rc.object ?: '' )#" />
 		<cfargument name="postAction"        type="string"  required="false" default="datamanager.object" />
-		<cfargument name="postActionUrl"     type="string"  required="false" default="#( rc.postActionUrl ?: ( event.buildAdminLink( linkTo=postAction, queryString=( postAction=="datamanager.object" ? "id=#object#" : "" ) ) ) )#" />
+		<!--- <cfargument name="postActionUrl"     type="string"  required="false" default="#( rc.postActionUrl ?: ( event.buildAdminLink( linkTo=postAction, queryString=( postAction=="datamanager.object" ? "id=#object#" : "" ) ) ) )#" /> --->
 		<cfargument name="redirectOnSuccess" type="boolean" required="false" default="true" />
 		<cfargument name="audit"             type="boolean" required="false" default="false" />
 		<cfargument name="auditAction"       type="string"  required="false" default="datamanager_delete_record" />
@@ -1891,7 +1891,7 @@
 			var formData         = event.getCollectionForForm( formName );
 			var objectName       = translateResource( uri="preside-objects.#object#:title.singular", defaultValue=object );
 			var obj              = "";
-			var validationResult = "";
+			var _validationResult = "";
 			var persist          = "";
 			var isDraft          = false;
 			var forceVersion     = false;
@@ -1904,12 +1904,12 @@
 			}
 
 			formData.id = id;
-			validationResult = validateForm( formName=formName, formData=formData, validationResult=( arguments.validationResult ?: NullValue() ) );
+			_validationResult = validateForm( formName=formName, formData=formData, validationResult=( arguments.validationResult ?: NullValue() ) );
 
-			if ( not validationResult.validated() ) {
+			if ( not _validationResult.validated() ) {
 				messageBox.error( translateResource( "cms:datamanager.data.validation.error" ) );
 				persist = formData;
-				persist.validationResult = validationResult;
+				persist.validationResult = _validationResult;
 
 				setNextEvent( url=errorUrl, persistStruct=persist );
 			}

@@ -2,7 +2,7 @@ component {
 
 	public array function newRuleset( any rules ){
 		var rule        = "";
-		var rules       = [];
+		var ruleset       = [];
 		var parsedRules = Duplicate( arguments.rules );
 
 		if ( IsSimplevalue( parsedRules ) ) {
@@ -25,7 +25,7 @@ component {
 
 		for( rule in parsedRules ){
 			try {
-				rules.append( {
+				ruleset.append( {
 					  fieldName       = rule.fieldName
 					, validator       = rule.validator
 					, params          = rule.params          ?: {}
@@ -42,6 +42,6 @@ component {
 			}
 		}
 
-		return rules;
+		return ruleset;
 	}
 }

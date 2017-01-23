@@ -56,7 +56,8 @@ component {
 		}
 
 		for( var group in groups ) {
-			groups[ group ].objects.sort( function( obj1, obj2 ){
+			var currentgroup=groups[ group ];
+			currentgroup.objects.sort( function( obj1, obj2 ){
 				return obj1.title > obj2.title ? 1 : -1;
 			} );
 			ArrayAppend( groupedObjects, groups[ group ] );
@@ -98,7 +99,7 @@ component {
 		var forbiddenFields      = [ dao.getIdField(), dao.getLabelField(), dao.getDateCreatedField(), dao.getDateModifiedField() ];
 		var isFieldBatchEditable = function( propertyName, attributes ) {
 			if ( forbiddenFields.findNoCase( propertyName ) ) {
-				return false
+				return false;
 			}
 			if ( attributes.relationship == "one-to-many" ) {
 				return false;
@@ -114,7 +115,7 @@ component {
 			}
 
 			return true;
-		}
+		};
 
 		for( var property in objectAttributes ) {
 			if ( isFieldBatchEditable( property, objectAttributes[ property ] ) ) {
@@ -318,7 +319,7 @@ component {
 						case "delete":
 							targetIdList = existingIds;
 							for( var id in newChoices ) {
-								targetIdList.delete( id )
+								targetIdList.delete( id );
 							}
 							break;
 						default:
@@ -398,7 +399,7 @@ component {
 		records = _getPresideObjectService().selectData( argumentCollection = args );
 		if ( arguments.ids.len() ) {
 			var tmp = {};
-			for( var r in records ) { tmp[ r.id ] = transormResult( r ) };
+			for( var r in records ) { tmp[ r.id ] = transormResult( r ); };
 			for( var id in arguments.ids ){
 				if ( tmp.keyExists( id ) ) {
 					result.append( tmp[id] );

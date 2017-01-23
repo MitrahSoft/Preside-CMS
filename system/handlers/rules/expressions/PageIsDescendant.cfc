@@ -15,10 +15,11 @@ component {
 		  required string  pages
 		,          boolean _is = true
 	) {
-		var ancestors    = ( payload.page.ancestorList ?: "" ).listToArray();
+		var ancestors    = ( payload.page.ancestorList ?: "" );
+		var ancestorList = ancestors.listToArray();
 		var isDescendant = false;
 
-		for( var ancestor in ancestors ) {
+		for( var ancestor in ancestorList ) {
 			if ( pages.listFindNoCase( ancestor ) ) {
 				isDescendant = true;
 				break;

@@ -63,7 +63,7 @@ component displayName="CFThread Helper" {
 		var cfthreads    = {};
 		var isTerminated = function( threadToCheck ) {
 			return threadToCheck.getThreadScope().status == "TERMINATED";
-		}
+		};
 
 		for( var thread in javaThreads ) {
 			if ( thread.getName() contains "cfthread" ) {

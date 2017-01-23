@@ -115,7 +115,7 @@ component displayName="Audit Service" {
 			, startRow     = ( ( arguments.page - 1 ) * arguments.pageSize ) + 1
 		);
 
-		subset = subset.recordCount ? ValueArray( subset.id ) : [];
+		subset = subset.recordCount ? listToArray( ValueList( subset.id ) ): [];
 
 		return _getDao().selectData(
 			  filter       = { "audit_log.id" = subset }
@@ -176,7 +176,7 @@ component displayName="Audit Service" {
 			  selectFields = [ "distinct type" ]
 		);
 
-		return ValueArray( types.type );
+		return listToArray( ValueList( types.type ) );
 	}
 
 // PRIVATE GETTERS AND SETTERS

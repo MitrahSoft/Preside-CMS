@@ -62,7 +62,8 @@ component output="false" {
 
 		for( method in methods ) {
 			if ( method.access eq "public" and method.name eq jsMethod ) {
-				result = arguments.sourceCfc[ jsMethod ]();
+				var source = arguments.sourceCfc[ jsMethod ];
+				result     = source();
 
 				if ( not IsSimpleValue( result ) ) {
 					throw( type="ValidationProvider.badJsReturnValue", message="A non-string value was returned from the javascript validator function, [#jsMethod#]. This method should return a string containing a javascript function." );

@@ -51,7 +51,7 @@ component {
 // PRIVATE HELPERS
 	private void function _setupMetaFactory() {
 		var lib     = [ GetDirectoryFromPath( GetCurrentTemplatePath() ) & "/xmpcore.jar" ];
-		var factory = CreateObject( "java", "com.adobe.xmp.XMPMetaFactory", lib );
+		var factory = CreateObject( "java", "com.adobe.xmp.XMPMetaFactory" );
 
 		_setMetaFactory( factory );
 	}

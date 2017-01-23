@@ -21,11 +21,12 @@ component {
 		var poService = $getPresideObjectService();
 
 		if ( poService.isPageType( arguments.object ) || arguments.object == "page" ) {
-			return _getSiteTreeService().editPage(
+			var data = {
 				  id           = arguments.recordId
 				, isDraft      = true
 				, "#property#" = arguments.content
-			);
+			};
+			return _getSiteTreeService().editPage( argumentCollection = data );
 		}
 
 		var result = poService.updateData(

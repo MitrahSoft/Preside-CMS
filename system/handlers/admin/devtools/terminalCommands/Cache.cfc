@@ -13,7 +13,7 @@ component hint="Interact with and report on system caches" {
 			return Chr(10) & "[[b;white;]Usage:] cache [operation]" & Chr(10) & Chr(10)
 			               & "Valid operations:" & Chr(10) & Chr(10)
 			               & "    [[b;white;]stats]      : Displays summary statistics of the PresideCMS caches." & Chr(10)
-			               & "    [[b;white;]resetstats] : Resets hit, miss and other agreggated statistics to zero." & Chr(10)
+			               & "    [[b;white;]resetstats] : Resets hit, miss and other agreggated statistics to zero." & Chr(10);
 		}
 
 		return runEvent( event="admin.devtools.terminalCommands.cache.#params[1]#", private=true, prePostExempt=true );

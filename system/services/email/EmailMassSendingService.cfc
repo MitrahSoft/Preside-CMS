@@ -50,7 +50,7 @@ component {
 	 * @autodoc true
 	 */
 	public boolean function processQueue( any logger ) {
-		autoQueueScheduledSendouts( logger ?: NullValue() )
+		autoQueueScheduledSendouts( logger ?: NullValue() );
 
 		var rateLimit      = Val( $getPresideSetting( "email", "ratelimit", 100 ) );
 		var processedCount = 0;

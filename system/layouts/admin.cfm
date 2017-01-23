@@ -41,8 +41,8 @@
 
 	htmlTitle = translateResource( uri="cms:cms.title" ) & " :: " & ( prc.pageTitle ?: translateResource( uri="cms:cms.tagline", defaultValue="" ) );
 
-	header name="cache-control" value="no-cache, no-store";
-	header name="expires"       value="Fri, 20 Nov 2015 00:00:00 GMT";
+	cfheader( name="cache-control", value="no-cache, no-store" );
+	cfheader( name="expires",       value="Fri, 20 Nov 2015 00:00:00 GMT" );
 </cfscript>
 
 <cfoutput><!DOCTYPE html>

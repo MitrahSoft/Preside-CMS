@@ -19,7 +19,7 @@ component {
 			}
 		}
 
-		content type="image/png" variable="#_transparentPixelPng#";abort;
+		cfcontent( type="image/png", variable="#_transparentPixelPng#" );abort;
 	}
 
 	public void function click( event, rc, prc ) {

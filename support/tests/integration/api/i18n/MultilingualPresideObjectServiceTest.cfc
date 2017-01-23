@@ -15,10 +15,10 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 					,[ "id-4", "de", "German" , "Deutche" , 0 ]
 				] );
 				var expectedResult = [
-					  { id="id-2", iso_code="ar", name="Arabic" , native_name="Arbic"   , left_to_right=1, default=true , sortOrder=1 }
-					, { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, default=false, sortOrder=2 }
-					, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, default=false, sortOrder=3 }
-					, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, default=false, sortOrder=4 }
+					  { id="id-2", iso_code="ar", name="Arabic" , native_name="Arbic"   , left_to_right=1, "default"=true , sortOrder=1 }
+					, { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, "default"=false, sortOrder=2 }
+					, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, "default"=false, sortOrder=3 }
+					, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, "default"=false, sortOrder=4 }
 				];
 
 				var languagesCombined = ListToArray( mockSettings.additional_languages );
@@ -41,9 +41,9 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 					,[ "id-4", "de", "German" , "Deutche" , 0 ]
 				] );
 				var expectedResult = [
-					  { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, default=false, sortOrder=1 }
-					, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, default=false, sortOrder=2 }
-					, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, default=false, sortOrder=3 }
+					  { id="id-3", iso_code="en", name="English", native_name="English" , left_to_right=0, "default"=false, sortOrder=1 }
+					, { id="id-1", iso_code="fr", name="French" , native_name="francais", left_to_right=0, "default"=false, sortOrder=2 }
+					, { id="id-4", iso_code="de", name="German" , native_name="Deutche" , left_to_right=0, "default"=false, sortOrder=3 }
 				];
 
 				var languagesCombined = ListToArray( mockSettings.additional_languages );
@@ -73,7 +73,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				];
 
 				svc.$( "listLanguages" ).$args( includeDefault=false ).$results( mockLanguages );
-				mockPresideObjectService.$( "objectIsVersioned" ).$args( objectName ).$results( true )
+				mockPresideObjectService.$( "objectIsVersioned" ).$args( objectName ).$results( true );
 				mockPresideObjectService.$( "selectData" ).$args(
 					  selectFields       = [ "_translation_language", "_version_is_draft", "_version_has_drafts" ]
 					, objectName         = "_translation_" & objectName
@@ -102,7 +102,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				];
 
 				svc.$( "listLanguages" ).$args( includeDefault=false ).$results( mockLanguages );
-				mockPresideObjectService.$( "objectIsVersioned" ).$args( objectName ).$results( false )
+				mockPresideObjectService.$( "objectIsVersioned" ).$args( objectName ).$results( false );
 				mockPresideObjectService.$( "selectData" ).$args(
 					  selectFields       = [ "_translation_language" ]
 					, objectName         = "_translation_" & objectName
@@ -118,14 +118,14 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 			it( "should return an empty struct when the language is not an actively translatable language", function(){
 				var svc = _getService();
 
-				svc.$( "listLanguages", [{id="id-1", name="French", default=true }] );
+				svc.$( "listLanguages", [{id="id-1", name="French", "default"=true }] );
 
 				expect( svc.getLanguage( "id-5" ) ).toBeEmpty();
 			} );
 
 			it( "should return details of actively translatable language", function(){
 				var svc = _getService();
-				var languages = [{id="id-1", name="French", default=true }, {id="id-2", name="English", default=false}]
+				var languages = [{id="id-1", name="French", "default"=true }, {id="id-2", name="English", "default"=false}];
 
 				svc.$( "listLanguages", languages );
 

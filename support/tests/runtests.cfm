@@ -1,5 +1,5 @@
+<cfprocessingdirective suppressWhiteSpace=true>
 <cfscript>
-	processingdirective suppressWhiteSpace=true {
 		isCommandLineExecuted = cgi.server_protocol == "CLI/1.0";
 
 		function exitCode( required numeric code ) {
@@ -18,10 +18,10 @@
 			results = Trim( testbox.run() );
 			if ( isCommandLineExecuted ) {
 				resultsDir       = "/preside/support/build/artifacts/testresults/";
-				testsResultsFile = "testresults_#DateTimeFormat( Now(), 'yyyy-mm-dd_HHNN' )#.html"
+				testsResultsFile = "testresults_#DateTimeFormat( Now(), 'yyyy-mm-dd_HHNN' )#.html";
 
 				if ( !DirectoryExists( resultsDir ) ) {
-					DirectoryCreate( resultsDir )
+					DirectoryCreate( resultsDir );
 				}
 				FileWrite( resultsDir & testsResultsFile, results );
 
@@ -62,5 +62,5 @@
 				rethrow;
 			}
 		}
-	}
 </cfscript>
+</cfprocessingdirective>

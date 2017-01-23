@@ -61,7 +61,7 @@ component {
 			filter &= " and page.page_type in (:page_type)";
 		}
 
-		var maxDepth = arguments.maxDepth;
+		var _maxDepth = arguments.maxDepth;
 		var args     = {
 			  orderBy            = "page._hierarchy_sort_order"
 			, filter             = filter
@@ -88,14 +88,14 @@ component {
 			args.filter       &= " and page._hierarchy_lineage like :_hierarchy_lineage";
 			args.filterParams._hierarchy_lineage = rootPage._hierarchy_child_selector;
 
-			if ( maxDepth >= 0 && !isNull( rootPage._hierarchy_depth ) && isNumeric( rootPage._hierarchy_depth ) ) {
-				maxDepth += rootPage._hierarchy_depth+1;
+			if ( _maxDepth >= 0 && !isNull( rootPage._hierarchy_depth ) && isNumeric( rootPage._hierarchy_depth ) ) {
+				_maxDepth += rootPage._hierarchy_depth+1;
 			}
 		}
 
-		if ( maxDepth >= 0 ) {
+		if ( _maxDepth >= 0 ) {
 			args.filter       &= " and page._hierarchy_depth <= :_hierarchy_depth";
-			args.filterParams._hierarchy_depth = maxDepth;
+			args.filterParams._hierarchy_depth = _maxDepth;
 		}
 
 		tree = _getPObj().selectData( argumentCollection = args );
@@ -133,13 +133,13 @@ component {
 				args.filter          = "page.id = :id";
 				args.filterParams.id = _getPageIdWithMultilingualSlug( argumentCollection=arguments );
 			} else {
-				args.filter       = "page.slug = :slug and page._hierarchy_slug = :_hierarchy_slug" // this double match is for performance - the full slug cannot be indexed because of its potential size
-				args.filterParams = { slug = ListLast( arguments.slug, "/" ), _hierarchy_slug = arguments.slug }
+				args.filter       = "page.slug = :slug and page._hierarchy_slug = :_hierarchy_slug"; // this double match is for performance - the full slug cannot be indexed because of its potential size
+				args.filterParams = { slug = ListLast( arguments.slug, "/" ), _hierarchy_slug = arguments.slug };
 			}
 
 		} else if ( StructKeyExists( arguments, "systemPage" ) ) {
-			args.filter       = "page.page_type = :page_type"
-			args.filterParams = { page_type = arguments.systemPage }
+			args.filter       = "page.page_type = :page_type";
+			args.filterParams = { page_type = arguments.systemPage };
 
 		} else {
 			throw(
@@ -737,7 +737,8 @@ component {
 						data._hierarchy_child_selector = data._hierarchy_lineage & existingPage._hierarchy_id & "/%";
 						data._hierarchy_depth          = newParent._hierarchy_depth + 1;
 						data._hierarchy_sort_order     = newParent._hierarchy_sort_order & _paddedSortOrder( data.sort_order ) & "/";
-						data._hierarchy_slug           = newParent._hierarchy_slug & ( slugChanged ? data : existingPage ).slug & "/";
+						var _slugChanged               = slugChanged ? data : existingPage;
+						data._hierarchy_slug           = newParent._hierarchy_slug & _slugChanged.slug & "/";
 
 					} else if ( IsBoolean( arguments.trashed ?: "" ) && arguments.trashed ) {
 						data.sort_order                = _calculateSortOrder();
@@ -746,7 +747,8 @@ component {
 						data._hierarchy_child_selector = "/" & existingPage._hierarchy_id & "/%";
 						data._hierarchy_depth          = 0;
 						data._hierarchy_sort_order     = "/" & _paddedSortOrder( data.sort_order ) & "/";
-						data._hierarchy_slug           = "/" & ( slugChanged ? data : existingPage ).slug & "/";
+						var _slugChangedTemp           = slugChanged ? data : existingPage;
+						data._hierarchy_slug           = "/" & _slugChangedTemp.slug & "/";
 					} else {
 						throw(
 							  type    = "SiteTreeService.MissingParent"
@@ -825,7 +827,7 @@ component {
 		}
 
 		if ( updated && !arguments.skipAudit ) {
-			for( var p in existingPage ) { existingPage = p };
+			for( var p in existingPage ) { existingPage = p; }
 			$audit(
 				  action   = arguments.isDraft ? "save_draft_page" : "edit_page"
 				, type     = "sitetree"
@@ -1033,7 +1035,7 @@ component {
 	public boolean function userHasPageAccess( required string pageId ) {
 		var restrictionRules = getAccessRestrictionRulesForPage( arguments.pageId );
 
-		if ( [ "none", "partial" ].find( restrictionRules.access_restriction ) ) {
+		if ( arrayFindNoCase( [ "none", "partial" ], restrictionRules.access_restriction ) ) {
 			return true;
 		}
 
@@ -1444,7 +1446,7 @@ component {
 		var currentLanguage = $getColdbox().getRequestContext().getLanguage();
 
 		for( var i=1; i<=slugPieces.len(); i++ ) {
-			args.filter       = "( IfNull( _translations.slug, page.slug ) = :page.slug and ( _translations.slug is null or _translations._translation_language = :_translations._translation_language ) ) and page.parent_page = :page.parent_page"
+			args.filter       = "( IfNull( _translations.slug, page.slug ) = :page.slug and ( _translations.slug is null or _translations._translation_language = :_translations._translation_language ) ) and page.parent_page = :page.parent_page";
 			args.filterParams = {
 				  "page.slug"                           = slugPieces[ i ]
 				, "_translations._translation_language" = currentLanguage

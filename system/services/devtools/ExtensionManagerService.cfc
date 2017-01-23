@@ -271,7 +271,7 @@ component singleton=true {
 
 		if ( missingFields.len() ) {
 			var message = "The extension, [#arguments.extensionNameOrDirectory#], has an invalid manifest file. Missing required fields: ";
-			var delim   = ""
+			var delim   = "";
 			for( var field in missingFields ) {
 				message &= delim & "[#field#]";
 				delim = ", ";

@@ -100,7 +100,7 @@
 					<div id="version-carousel" class="owl-carousel owl-theme">
 						<cfloop query="versions">
 							<cfset version = QueryRowToStruct( versions, versions.currentRow ) />
-							<cfset version.isCurrentVersion = version.id == asset.active_version />
+							<cfset version.isCurrentVersion = version.id eq asset.active_version />
 							<cfset version.hasDownloadPermission = hasDownloadPermission>
 							<cfset version.hasDeletePermission = hasDeletePermission>
 							#renderView( view="/admin/assetmanager/_assetVersionPreview", args=version )#

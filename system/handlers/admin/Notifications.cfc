@@ -20,9 +20,9 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	public void function getNotificationsForAjaxDataTables( event, rc, prc ) {
-		var topic               = ( rc.topic    ?: "" )
-		var dateFrom            = ( rc.dateFrom ?: "" )
-		var dateTo              = ( rc.dateTo   ?: "" )
+		var topic               = ( rc.topic    ?: "" );
+		var dateFrom            = ( rc.dateFrom ?: "" );
+		var dateTo              = ( rc.dateTo   ?: "" );
 		var checkboxCol         = [];
 		var optionsCol          = [];
 		var gridFields          = [ "topic", "data", "datecreated" ];

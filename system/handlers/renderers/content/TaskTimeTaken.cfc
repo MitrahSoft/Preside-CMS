@@ -8,7 +8,7 @@ component output=false {
 		}
 
 		if ( data < 1000 ) {
-			return "< 1s"
+			return "< 1s";
 		}
 
 		data = data / 1000;
@@ -38,7 +38,7 @@ component output=false {
 		}
 
 		if ( data < 1000 ) {
-			return "< 1s"
+			return "< 1s";
 		}
 
 		data = data / 1000;

@@ -19,7 +19,7 @@ component  {
 			  linkTo      = "rulesengine.getFiltersForAjaxSelectControl"
 			, querystring = "maxRows=100&prefetchCacheBuster=#prefetchCacheBuster#&filterObject=#filterObject#"
 		);
-		args.placeholder = args.placeholder ?: "cms:rulesengine.filterPicker.placeholder"
+		args.placeholder = args.placeholder ?: "cms:rulesengine.filterPicker.placeholder";
 
 		if ( IsTrue( args.quickAdd ?: "" ) ) {
 			args.quickAddUrl = event.buildAdminLink(

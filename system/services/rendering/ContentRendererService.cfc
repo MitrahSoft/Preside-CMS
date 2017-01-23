@@ -28,19 +28,20 @@ component {
 
 // PUBLIC API METHODS
 	public string function render( required string renderer, required any data, any context="default" ) {
-		var renderer = _getRenderer( name=arguments.renderer, context=arguments.context );
-		var r        = "";
-		var rendered = arguments.data;
+		var localRenderer = _getRenderer( name=arguments.renderer, context=arguments.context );
+		var _renderer     = _getRenderer( name=arguments.renderer, context=arguments.context );
+		var r             = "";
+		var rendered      = arguments.data;
 
-		if ( renderer.isChain() ) {
-			for( r in renderer.getChain() ){
+		if ( localRenderer.isChain() ) {
+			for( r in localRenderer.getChain() ){
 				rendered = this.render( renderer=r, data=rendered, context=arguments.context );
 			}
 
 			return rendered;
 		} else {
 			var args = IsStruct( arguments.data ) ? arguments.data : { data=arguments.data };
-			return _getColdbox().renderViewlet( event=renderer.getViewlet(), args=args );
+			return _getColdbox().renderViewlet( event=_renderer.getViewlet(), args=args );
 		}
 	}
 

@@ -48,7 +48,7 @@ component {
 
 	private string function formLayout( event, rc, prc, args={} ) {
 		if ( ( rc.formBuilderFormSubmitted ?: "" ) == ( args.form ?: "" ) ) {
-			return renderViewlet( event="formbuilder.core.successMessage", args={ formId=args.form } )
+			return renderViewlet( event="formbuilder.core.successMessage", args={ formId=args.form } );
 		}
 
 		var validationRulesetName = formBuilderValidationService.getRulesetForFormItems( args.formItems ?: [] );

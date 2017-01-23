@@ -73,7 +73,7 @@ component extends="coldbox.system.interceptors.SES" output=false {
 
 // private utility methods
 	private void function _detectIncomingSite( event, interceptData ) output=false {
-		var pathInfo = super.getCGIElement( "path_info", event );
+		var pathInfo = len( trim(super.getCGIElement( "path_info", event ) ) ) ? super.getCGIElement( "path_info", event ) : '/' ;
 		var domain   = super.getCGIElement( "server_name", event );
 		var site     = "";
 
@@ -123,7 +123,7 @@ component extends="coldbox.system.interceptors.SES" output=false {
 					var qs          = Len( Trim( request[ "preside.query_string" ] ?: "" ) ) ? "?#request[ "preside.query_string" ]#" : "";
 					var redirectUrl = sitePath & "/" & language.slug & path & qs;
 
-					location url=redirectUrl addtoken=false;
+					cflocation ( url=redirectUrl, addtoken=false);
 				}
 			}
 		}
@@ -155,7 +155,8 @@ component extends="coldbox.system.interceptors.SES" output=false {
 
 	private void function _setPresideUrlPath( event, interceptor ) output=false {
 		var site         = event.getSite();
-		var pathToRemove = ( site.path ?: "" ).reReplace( "/$", "" );
+		var sitePath     = ( site.path ?: "" );
+		var pathToRemove = sitePath.reReplace( "/$", "" );
 		var fullPath     = super.getCGIElement( "path_info", event );
 		var presidePath  = "";
 		var languageSlug = event.getLanguageSlug();

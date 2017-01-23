@@ -76,7 +76,7 @@ component {
 					viewlets.sitetemplates[ arguments.siteTemplate ][ arguments.viewletName ] = true;
 				}
 			}
-		}
+		};
 
 		for( var directory in directories ) {
 			var viewsDirectory    = directory & "/views";
@@ -105,7 +105,7 @@ component {
 
 				for( var handlerFile in handlerFiles ) {
 					var viewletNameBase = handlerFile.replace( expandedDirPath, "" ).reReplaceNoCase( "\.cfc$" , "" );
-					var handlerCfcPath  = handlersDirectory & viewletNameBase
+					var handlerCfcPath  = handlersDirectory & viewletNameBase;
 
 					handlerCfcPath  = handlerCfcPath.reReplaceNoCase( "^[\/\\]", "" );
 					handlerCfcPath  = handlerCfcPath.reReplaceNoCase( "[\/\\]" , ".", "all" );
@@ -115,7 +115,7 @@ component {
 					var actions = _readActionsFromHandler( handlerCfcPath );
 					for( var action in actions ) {
 						var viewletName = viewletNameBase & "." & action;
-						registerViewlet( viewletName, siteTemplate )
+						registerViewlet( viewletName, siteTemplate );
 					}
 				}
 

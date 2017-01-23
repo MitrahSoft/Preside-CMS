@@ -54,7 +54,7 @@
 						<ul class="list-unstyled rules-engine-condition-builder-expressions-list form-control">
 							<cfset currentCategory = "" />
 							<cfloop array="#expressions#" item="expression" index="i">
-								<cfif expression.category != currentCategory>
+								<cfif expression.category neq currentCategory>
 									<cfif currentCategory.len()>
 											</ul>
 										</li>

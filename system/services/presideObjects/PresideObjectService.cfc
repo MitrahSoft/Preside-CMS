@@ -197,7 +197,7 @@ component displayName="Preside Object Service" {
 		);
 
 		if ( args.useCache ) {
-			args.cachekey = args.objectName & "_" & Hash( LCase( Serialize( args ) ) );
+			args.cachekey = args.objectName & "_" & Hash( LCase( SerializeJson( args ) ) );
 
 			_announceInterception( "onCreateSelectDataCacheKey", args );
 
@@ -276,7 +276,6 @@ component displayName="Preside Object Service" {
 	 * );
 	 * ```
 	 *
-	 * @autodoc                      true
 	 * @objectName.hint              Name of the object in which to to insert a record
 	 * @data.hint                    Structure of data who's keys map to the properties that are defined on the object
 	 * @insertManyToManyRecords.hint Whether or not to insert multiple relationship records for properties that have a many-to-many relationship
@@ -524,7 +523,7 @@ component displayName="Preside Object Service" {
 		var joinTargets        = "";
 		var joins              = [];
 		var cleanedData        = Duplicate( arguments.data );
-		var manyToManyData     = {}
+		var manyToManyData     = {};
 		var key                = "";
 		var requiresVersioning = arguments.useVersioning && objectIsVersioned( arguments.objectName );
 		var preparedFilter     = "";
@@ -1531,7 +1530,7 @@ component displayName="Preside Object Service" {
 		var dsns    = {};
 
 		for( var objName in objects ){
-			dsns[ objects[ objName ].meta.dsn ] = 1
+			dsns[ objects[ objName ].meta.dsn ] = 1;
 		}
 
 		if ( StructCount( objects ) ) {
@@ -1585,7 +1584,7 @@ component displayName="Preside Object Service" {
 		var paths       = [];
 		var path        = "";
 		for( dir in dirs ) {
-			files = DirectoryList( path=dir, recurse=true, filter="*.cfc" );
+			files = DirectoryList( ExpandPath(dir), true, 'path', "*.cfc" );
 			dirExpanded = ExpandPath( dir );
 
 			for( file in files ) {
@@ -1661,7 +1660,7 @@ component displayName="Preside Object Service" {
 
 	private array function _convertUserFilterParamsToQueryParams( required struct columnDefinitions, required struct params, required any dbAdapter, required string objectName ) {
 		var key        = "";
-		var params     = [];
+		var _params    = [];
 		var param      = "";
 		var cols       = "";
 		var i          = 0;
@@ -1698,10 +1697,10 @@ component displayName="Preside Object Service" {
 				param.type = arguments.dbAdapter.sqlDataTypeToCfSqlDatatype( cols[ ListLast( key, "." ) ].dbType );
 			}
 
-			ArrayAppend( params, param );
+			ArrayAppend( _params, param );
 		}
 
-		return params;
+		return _params;
 	}
 
 	private array function _extractForeignObjectsFromArguments(
@@ -1731,7 +1730,7 @@ component displayName="Preside Object Service" {
 		var matches    = "";
 		var match      = "";
 
-		objects = {}
+		objects = {};
 
 		if ( IsStruct( filter ) ) {
 			StructAppend( all, filter );
@@ -1857,7 +1856,7 @@ component displayName="Preside Object Service" {
 					theStruct.delete( key );
 				}
 			}
-		}
+		};
 		var simpleReplacer = function( plainString, addAsAlias=false ) {
 			var replaced    = plainString;
 			var fAndRResult = findAndReplace( plainString );
@@ -1870,7 +1869,7 @@ component displayName="Preside Object Service" {
 			}
 
 			return replaced;
-		}
+		};
 
 		if ( args.keyExists( "selectFields" ) ) {
 			for( var i=1; i<=args.selectFields.len(); i++ ) {
@@ -1919,7 +1918,7 @@ component displayName="Preside Object Service" {
 
 		if ( ArrayLen( arguments.joinTargets ) ) {
 			var joinsCache    = _getCache();
-			var joinsCacheKey = "SQL Joins for #arguments.objectName# with join targets: #ArrayToList( arguments.joinTargets )#. From version table: #arguments.fromVersionTable#. Forcing joins: [#arguments.forceJoins#]."
+			var joinsCacheKey = "SQL Joins for #arguments.objectName# with join targets: #ArrayToList( arguments.joinTargets )#. From version table: #arguments.fromVersionTable#. Forcing joins: [#arguments.forceJoins#].";
 
 			joins = joinsCache.get( joinsCacheKey );
 
@@ -2100,7 +2099,8 @@ component displayName="Preside Object Service" {
 		for( var i=1; i <= fieldArray.len(); i++ ){
 			convertedArray.append( escapedAlias & "." & dbAdapter.escapeEntity( fieldArray[i] ) );
 			var prop = getObjectProperty( tableAlias, fieldArray[i] );
-			for( var alias in ( prop.aliases ?: "" ).listToArray() ) {
+			var _prop = prop.aliases ?: "";
+			for( var alias in _prop.listToArray() ) {
 				convertedArray.append( escapedAlias & "." & dbAdapter.escapeEntity( fieldArray[i] ) & " as " & dbAdapter.escapeEntity( alias ) );
 			}
 		}
@@ -2156,9 +2156,9 @@ component displayName="Preside Object Service" {
 				entities[ objName ] = 1;
 
 				for( var propertyName in objects[ objName ].meta.properties ) {
-					var prop = objects[ objName ].meta.properties[ propertyName ];
-
-					for( var alias in ( prop.aliases ?: "" ).listToArray() ) {
+					var prop  = objects[ objName ].meta.properties[ propertyName ];
+					var _prop = prop.aliases ?: "";
+					for( var alias in _prop.listToArray() ) {
 						entities[ alias ] = 1;
 						aliasEntitiesOnly[ alias ] = 1;
 					}
@@ -2371,7 +2371,7 @@ component displayName="Preside Object Service" {
 
 		var idField = getIdField( arguments.objectName );
 		var result = {
-			  filter       = arguments.keyExists( "id" ) ? { "#idField#" = arguments.id } : arguments.filter
+			  filter       = structkeyExists( arguments, "id" ) ? { "#idField#" = len( Trim( arguments['id'] ) ) ? arguments['id'] : ""  } : arguments.filter
 			, filterParams = arguments.filterParams
 			, having       = arguments.having
 		};
@@ -2497,23 +2497,24 @@ component displayName="Preside Object Service" {
 		var newData = Duplicate( arguments.data );
 
 		for( var propName in props ){
-			if ( !StructKeyExists( arguments.data, propName ) && Len( Trim( props[ propName ].default ?: "" ) ) ) {
-				var default = props[ propName ].default;
-				switch( ListFirst( default, ":" ) ) {
+			if ( !StructKeyExists( arguments.data, propName ) && Len( Trim( structKeyExists( props[ propName ], "default" ) ? props[ propName ]['default'] : "") ) ) {
+				var defaultValue = props[ propName ]['default'];
+				switch( ListFirst( defaultValue, ":" ) ) {
 					case "cfml":
-						newData[ propName ] = Evaluate( ListRest( default, ":" ) );
+						newData[ propName ] = Evaluate( ListRest( defaultValue, ":" ) );
 					break;
 					case "closure":
-						var func = Evaluate( ListRest( default, ":" ) );
+						var func = Evaluate( ListRest( defaultValue, ":" ) );
 						newData[ propName ] = func( arguments.data );
 					break;
 					case "method":
 						var obj = getObject( arguments.objectName );
+						var fun = obj[ ListRest( defaultValue, ":" ) ];
 
-						newData[ propName ] = obj[ ListRest( default, ":" ) ]( arguments.data );
+						newData[ propName ] = fun( arguments.data, arguments.objectName );
 					break;
 					default:
-						newData[ propName ] = default;
+						newData[ propName ] = defaultValue;
 				}
 			}
 		}

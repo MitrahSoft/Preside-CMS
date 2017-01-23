@@ -114,7 +114,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 						, extraFilters = [ dupeCheckFilter ]
 						, filterParams = { template = { type="cf_sql_varchar", value=templateId } }
 					}
-				).$results( queuedCount )
+				).$results( queuedCount );
 
 				expect( service.queueSendout( templateId ) ).toBe( queuedCount );
 				expect( mockRulesEngineFilterService.$callLog().getExpressionArrayForSavedFilter.len() ).toBe( 0 );
@@ -161,7 +161,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 						, extraFilters = extraFilters
 						, filterParams = { template = { type="cf_sql_varchar", value=templateId } }
 					}
-				).$results( queuedCount )
+				).$results( queuedCount );
 
 				expect( service.queueSendout( templateId ) ).toBe( queuedCount );
 			} );
@@ -260,7 +260,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var service     = _getService();
 				var id          = 49;
 				var recipientId = CreateUUId();
-				var templateId  = CreateUUId()
+				var templateId  = CreateUUId();
 				var dummyRecord = QueryNew( "id,recipient,template", "int,varchar,varchar", [ [ id, recipientId, templateId ] ] );
 
 				mockQueueDao.$( "selectData" ).$args(

@@ -24,7 +24,7 @@ component singleton=true {
 // PUBLIC API METHODS
 	public array function scaffoldWidget( required string id, string name="",  string description="", string icon="fa-magic", string options="", string extension="", boolean createHandler=false ) {
 		var filesCreated = _ensureExtensionExists( arguments.extension );
-		var i18nProps    = StructNew( "linked" );
+		var i18nProps    = StructNew( "ordered" );
 
 		if ( _getWidgetsService().widgetExists( arguments.id ) ) {
 			throw( type="scaffoldwidget.widget.exists", message="The '#arguments.id#' widget already exists" );
@@ -61,7 +61,7 @@ component singleton=true {
 
 	public array function scaffoldPageType( required string id, string name="", string pluralName=arguments.name, string description="", string icon="page-o" string fields="", string extension="", boolean createHandler=false ) {
 		var filesCreated = _ensureExtensionExists( arguments.extension );
-		var i18nProps    = StructNew( "linked" );
+		var i18nProps    = StructNew( "ordered" );
 
 		if ( _getPageTypesService().pageTypeExists( arguments.id ) ) {
 			throw( type="scaffoldpagetype.pagetype.exists", message="The '#arguments.id#' page type already exists" );
@@ -134,7 +134,7 @@ component singleton=true {
 		, required string extension
 	) {
 		var filesCreated = _ensureExtensionExists( arguments.extension );
-		var i18nProps    = StructNew( "linked" );
+		var i18nProps    = StructNew( "ordered" );
 
 		i18nProps[ "name" ]        = arguments.name;
 		i18nProps[ "description" ] = arguments.description;
@@ -199,7 +199,7 @@ component singleton=true {
 			fileContent &= "	private function #context#( event, rc, prc, args={} ) {" & _nl()
 			             & "		// TODO: create your handler logic here" & _nl()
 			             & "		return renderView( view='#viewPath#', args=args );" & _nl()
-			             & "	}" & _nl() & _nl()
+			             & "	}" & _nl() & _nl();
 		}
 
 		fileContent &= "}" & _nl();
@@ -314,7 +314,7 @@ component singleton=true {
 		}
 
 		fileContent &= _nl() & _nl();
-		fileContent &= "<cfoutput>##translateResource( uri='widgets.#arguments.widgetId#:title' )##</cfoutput>"
+		fileContent &= "<cfoutput>##translateResource( uri='widgets.#arguments.widgetId#:title' )##</cfoutput>";
 
 		_ensureDirectoryExists( GetDirectoryFromPath( filePath ) );
 		FileWrite( filePath, fileContent );
@@ -332,7 +332,7 @@ component singleton=true {
 			params &= '<cf_presideparam name="args.#arg#" editable="true" />' & _nl();
 		}
 
-		fileContent = ReplaceNoCase( fileContent, "${params}", params )
+		fileContent = ReplaceNoCase( fileContent, "${params}", params );
 
 		_ensureDirectoryExists( GetDirectoryFromPath( filePath ) );
 		FileWrite( filePath, fileContent );
@@ -469,7 +469,7 @@ component singleton=true {
 
 	public array function scaffoldRuleExpression( required string id, required string label, required string text, required string context, string extension="" ) {
 		var filesCreated = _ensureExtensionExists( arguments.extension );
-		var i18nProps    = StructNew( "linked" );
+		var i18nProps    = StructNew( "ordered" );
 
 		var root            = _getScaffoldRoot( arguments.extension );
 		var filePath        = root & "handlers/rules/expressions/" & arguments.id & ".cfc";
@@ -542,21 +542,21 @@ component singleton=true {
 			var resourceRoot = "/preside/system/services/devtools/scaffoldingResources/crudAdmin/";
 			var template     = FileRead( resourceRoot & arguments.templateName );
 
-			template = template.replaceNoCase( "${objectId}"          , templateVars.objectId          , "all" )
-			template = template.replaceNoCase( "${objectNamePlural}"  , templateVars.objectNamePlural  , "all" )
-			template = template.replaceNoCase( "${iconClass}"         , templateVars.iconClass         , "all" )
-			template = template.replaceNoCase( "${objectName}"        , templateVars.objectName        , "all" )
-			template = template.replaceNoCase( "${handlerRoot}"       , templateVars.handlerRoot       , "all" )
-			template = template.replaceNoCase( "${auditCategory}"     , templateVars.auditCategory     , "all" )
-			template = template.replaceNoCase( "${overalldescription}", templateVars.overalldescription, "all" )
-			template = template.replaceNoCase( "${translationFile}"   , templateVars.translationFile   , "all" )
-			template = template.replaceNoCase( "${pageIcon}"          , templateVars.pageIcon          , "all" )
-			template = template.replaceNoCase( "${permissionKey}"     , templateVars.permissionKey     , "all" )
-			template = template.replaceNoCase( "${labelfield}"        , templateVars.labelfield        , "all" )
-			template = template.replaceNoCase( "${handlerFolder}"     , templateVars.handlerFolder     , "all" )
+			template = template.replaceNoCase( "${objectId}"          , templateVars.objectId          , "all" );
+			template = template.replaceNoCase( "${objectNamePlural}"  , templateVars.objectNamePlural  , "all" );
+			template = template.replaceNoCase( "${iconClass}"         , templateVars.iconClass         , "all" );
+			template = template.replaceNoCase( "${objectName}"        , templateVars.objectName        , "all" );
+			template = template.replaceNoCase( "${handlerRoot}"       , templateVars.handlerRoot       , "all" );
+			template = template.replaceNoCase( "${auditCategory}"     , templateVars.auditCategory     , "all" );
+			template = template.replaceNoCase( "${overalldescription}", templateVars.overalldescription, "all" );
+			template = template.replaceNoCase( "${translationFile}"   , templateVars.translationFile   , "all" );
+			template = template.replaceNoCase( "${pageIcon}"          , templateVars.pageIcon          , "all" );
+			template = template.replaceNoCase( "${permissionKey}"     , templateVars.permissionKey     , "all" );
+			template = template.replaceNoCase( "${labelfield}"        , templateVars.labelfield        , "all" );
+			template = template.replaceNoCase( "${handlerFolder}"     , templateVars.handlerFolder     , "all" );
 
 			return template;
-		}
+		};
 		var rootPath  = _getScaffoldRoot( arguments.extension );
 		var templates = {
 			  handler     = { content=readAndReplaceTemplate( "handler.cfc.txt"          ), path="handlers/admin/#templateVars.handlerFolder#.cfc" }

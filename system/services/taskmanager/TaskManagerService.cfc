@@ -19,6 +19,7 @@ component displayName="Task Manager Service" {
 	 * @logger.inject                     logbox:logger:taskmanager
 	 * @errorLogService.inject            errorLogService
 	 * @siteService.inject                siteService
+	 * @baseEngine.inject                 baseEngine
 	 *
 	 */
 	public any function init(
@@ -31,6 +32,7 @@ component displayName="Task Manager Service" {
 		, required any logger
 		, required any errorLogService
 		, required any siteService
+		, required any baseEngine
 	) {
 		_setConfiguredTasks( arguments.configWrapper.getConfiguredTasks() );
 		_setController( arguments.controller );
@@ -41,6 +43,7 @@ component displayName="Task Manager Service" {
 		_setLogger( arguments.logger );
 		_setErrorLogService( arguments.errorLogService );
 		_setSiteService( arguments.siteService );
+		_setcfmlBaseEngine( arguments.baseEngine );
 
 		_initialiseDb();
 
@@ -55,7 +58,11 @@ component displayName="Task Manager Service" {
 	public struct function getTask( required string taskKey ) {
 		var tasks = _getConfiguredTasks();
 
-		return tasks[ arguments.taskKey ] ?: throw( type="TaskManager.missing.task", message="Task [#arguments.taskKey#] does not exist. Existing tasks are: #SerializeJson( listTasks() )#" );
+		if( structKeyExists( tasks, arguments.taskKey ) && isStruct( tasks[ arguments.taskKey ] ) ){
+			return tasks[ arguments.taskKey ];
+		} else {
+			cfthrow( type="TaskManager.missing.task", message="Task [#arguments.taskKey#] does not exist. Existing tasks are: #SerializeJson( listTasks() )#" );
+		}
 	}
 
 	public struct function getTaskConfiguration( required string taskKey ) {
@@ -187,7 +194,7 @@ component displayName="Task Manager Service" {
 			, maxRows      = 1
 		);
 
-		return runnableTasks.recordCount ? ValueArray( runnableTasks.task_key ) : [];
+		return runnableTasks.recordCount ? listToArray( ValueList( runnableTasks.task_key ) ) : [];
 	}
 
 	/**
@@ -307,7 +314,7 @@ component displayName="Task Manager Service" {
 	public array function listTasksStoredInStatusDb() {
 		var taskRecords = _getTaskDao().selectData( selectFields=[ "task_key" ] );
 
-		return taskRecords.recordCount ? ValueArray( taskRecords.task_key ) : [];
+		return taskRecords.recordCount ? listToArray( ValueList( taskRecords.task_key ) ) : [];
 	}
 
 	public void function ensureTasksExistInStatusDb() {
@@ -460,22 +467,16 @@ component displayName="Task Manager Service" {
 		var settings = _getSystemConfigurationService().getCategorySettings( "taskmanager" );
 		var enabled  = IsBoolean( settings.scheduledtasks_enabled ?: "" ) && settings.scheduledtasks_enabled;
 		var action   = enabled ? "update" : "delete";
-		var args     = {};
-
-		args.task = "PresideTaskManager_" & LCase( Hash( GetCurrentTemplatePath() ) );
+		var task     = "PresideTaskManager_" & LCase( Hash( GetCurrentTemplatePath() ) );
 
 		if ( enabled ) {
-			args.url       = _getScheduledTaskUrl( settings.site_context ?: "" );
-			args.startdate = "1900-01-01";
-			args.startTime = "00:00:00";
-			args.interval  = "30";
+			var port = cgi.server_port != 80 ? cgi.server_port : "";
 
-			if ( cgi.server_port != 80 ) {
-				args.port = cgi.server_port;
-			}
-		};
-
-		schedule action=action attributeCollection=args;
+			cfschedule( action=action, task=task, url=_getScheduledTaskUrl( settings.site_context ?: "" ), startdate="1900-01-01", startTime="00:00:00", interval="30", port=port );
+		}
+		else {
+			_getcfmlBaseEngine().deleteSchedule(task);
+		}
 	}
 
 	public array function getAllTaskDetails() {
@@ -751,6 +752,13 @@ component displayName="Task Manager Service" {
 	}
 	private void function _setSiteService( required any siteService ) {
 		_siteService = arguments.siteService;
+	}
+
+	private any function _getcfmlBaseEngine() {
+		return _setcfmlBaseEngine;
+	}
+	private any function _setcfmlBaseEngine( required any baseEngine ) {
+		_setcfmlBaseEngine = arguments.baseEngine;
 	}
 
 }

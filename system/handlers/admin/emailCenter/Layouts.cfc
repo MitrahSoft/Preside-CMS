@@ -172,7 +172,7 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					, detail   = formData
 				);
 				messagebox.info( translateResource( "cms:emailcenter.systemTemplates.layout.configuration.saved.message") );
-			} elseif ( Len( Trim( arguments.blueprint ) ) ) {
+			} else if ( Len( Trim( arguments.blueprint ) ) ) {
 				event.audit(
 					  action   = "save_blueprint_layout_configuration"
 					, type     = "emailblueprints"

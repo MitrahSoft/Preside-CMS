@@ -27,7 +27,7 @@ component output=false singleton=true {
 
 		if ( StructKeyExists( arguments, "params" ) ) {
 			for( param in arguments.params ){
-				param.value = param.value ?: "";
+				param.value = structKeyExists( param, "value" ) ? param.value : "";
 
 				if ( not IsSimpleValue( param.value ) ) {
 					throw(
@@ -35,6 +35,10 @@ component output=false singleton=true {
 						, message = "SQL Param values must be simple values"
 						, detail = "The value of the param, [#param.name#], was not of a simple type"
 					);
+				}
+
+				if( param.type == 'cf_sql_boolean' ) {
+					param.value = param.value ? 1 : 0;
 				}
 
 				if ( param.type eq 'cf_sql_bit' and not IsNumeric( param.value ) ) {
@@ -47,7 +51,7 @@ component output=false singleton=true {
 				}
 
 				param.cfsqltype = param.type; // mistakenly had thought we could do param.type - alas no, so need to fix it to the correct argument name here
-
+				structDelete(param, "type");
 				q.addParam( argumentCollection = param );
 			}
 		}
@@ -75,7 +79,7 @@ component output=false singleton=true {
 		postClause = postClause.reReplaceNoCase("\s!= :#arguments.paramName#", " is not null", "all" );
 		postClause = postClause.reReplaceNoCase("\s= :#arguments.paramName#", " is null", "all" );
 
-		return preClause & postClause
+		return preClause & postClause;
 	}
 
 // GETTERS AND SETTERS

@@ -33,7 +33,7 @@ component output=false singleton=true {
 		return locales._all;
 	}
 
-	public string function getResource( required string uri, string defaultValue="", string language, string country ) output=false {
+	public string function getResource( required string uri, string defaultValue="", string language="", string country="" ) output=false {
 		var bundle      = "";
 		var resourceKey = "";
 		var bundleData  = "";
@@ -179,7 +179,7 @@ component output=false singleton=true {
 		var files              = "";
 		var directory          = "";
 		var file               = "";
-		var bundleData         = StructNew( "linked" );
+		var bundleData         = StructNew( "ordered" );
 		var filePattern        = ListLast( arguments.bundleName, "." );
 
 		if ( ListLen( arguments.bundleName, "." ) gt 1 ) {

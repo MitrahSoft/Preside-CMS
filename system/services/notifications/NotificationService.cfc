@@ -61,31 +61,31 @@ component autodoc=true displayName="Notification Service" {
 		_announceInterception( "onCreateNotification", args );
 
 		if ( IsBoolean( topicConfig.save_in_cms ?: "" ) && topicConfig.save_in_cms ) {
-			var data = {
+			var _data = {
 				  topic = arguments.topic
 				, type  = arguments.type
 				, data  = SerializeJson( arguments.data )
 			};
-			data.data_hash = LCase( Hash( data.data ) );
+			_data.data_hash = LCase( Hash( _data.data ) );
 
 			var existingNotification = _getNotificationDao().selectData( filter={
-				  topic     = data.topic
-				, type      = data.type
-				, data_hash = data.data_hash
+				  topic     = _data.topic
+				, type      = _data.type
+				, data_hash = _data.data_hash
 			} );
 
 			if ( existingNotification.recordCount ) {
-				createNotificationConsumers( existingNotification.id, args.topic, data );
+				createNotificationConsumers( existingNotification.id, args.topic, _data );
 				return existingNotification.id;
 			}
 
 			_announceInterception( "preCreateNotification", args );
 
-			args.notificationId = _getNotificationDao().insertData( data=data );
+			args.notificationId = _getNotificationDao().insertData( data=_data );
 
 			_announceInterception( "postCreateNotification", args );
 
-			createNotificationConsumers( args.notificationId, topic, data );
+			createNotificationConsumers( args.notificationId, topic, _data );
 
 			if ( Len( Trim( topicConfig.send_to_email_address ?: "" ) ) ) {
 				sendGlobalNotificationEmail(
@@ -154,7 +154,7 @@ component autodoc=true displayName="Notification Service" {
 		var filter         = { "admin_notification_consumer.security_user" = arguments.userId };
 		var extraFilters   = [];
 		var sortableFields = [ "topic", "datecreated" ];
-		var sortableTables = { topic="admin_notification", datecreated="admin_notification_consumer" }
+		var sortableTables = { topic="admin_notification", datecreated="admin_notification_consumer" };
 
 		if ( Len( Trim( arguments.topic ) ) ) {
 			filter[ "admin_notification.topic" ] = arguments.topic;
@@ -342,7 +342,7 @@ component autodoc=true displayName="Notification Service" {
 
 		var subscriptions = _getSubscriptionDao().selectData( selectFields=[ "topic" ], filter={ security_user=arguments.userId } );
 
-		return subscriptions.recordCount ? ValueArray( subscriptions.topic ) : [];
+		return subscriptions.recordCount ? listToArray( ValueList( subscriptions.topic ) ) : [];
 	}
 
 	/**
@@ -352,9 +352,9 @@ component autodoc=true displayName="Notification Service" {
 	 *
 	 */
 	public struct function getGlobalTopicConfiguration( required string topic ) autodoc=true {
-		var topic = _getTopicDao().selectData( filter={ topic=arguments.topic } );
+		var _topic = _getTopicDao().selectData( filter={ topic=arguments.topic } );
 
-		for( var t in topic ) { return t; }
+		for( var t in _topic ) { return t; }
 
 		return {};
 	}
@@ -367,7 +367,7 @@ component autodoc=true displayName="Notification Service" {
 	public array function listTopicUserGroups( required string topic ) autodoc=true {
 		var groups = _getTopicDao().selectData( filter={ topic=arguments.topic }, selectFields=[ "available_to_groups.id" ], forcejoins="inner" );
 		if ( groups.recordCount ) {
-			return ValueArray( groups.id );
+			return listToArray( ValueList( groups.id ) );
 		}
 
 		return [];
@@ -491,7 +491,7 @@ component autodoc=true displayName="Notification Service" {
 		}
 
 		var data = Duplicate( arguments.settings );
-		data.security_user = arguments.userId
+		data.security_user = arguments.userId;
 		data.topic         = arguments.topic;
 
 		_getSubscriptionDao().insertData( data=data );
@@ -543,7 +543,7 @@ component autodoc=true displayName="Notification Service" {
 			}
 		}
 
-		existingTopics = ValueArray( existingTopics.topic );
+		existingTopics = listToArray( ValueList( existingTopics.topic ) );
 		for( var topic in configuredTopics ) {
 			if ( !existingTopics.findNoCase( topic ) ) {
 				topicsToInsert.append( topic );

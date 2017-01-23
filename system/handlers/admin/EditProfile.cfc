@@ -164,7 +164,7 @@ component output="false" extends="preside.system.base.AdminHandler" {
 			setNextEvent( url=event.buildAdminLink( linkTo="editProfile" ) );
 		}
 
-		var enforced = IsTrue( getSystemSetting( "admin-login-security", "tfa_enforced" ) )
+		var enforced = IsTrue( getSystemSetting( "admin-login-security", "tfa_enforced" ) );
 		var enabled  = enforced || loginService.isTwoFactorAuthenticationEnabledForUser();
 
 		if ( enforced || enabled ) {

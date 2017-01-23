@@ -58,7 +58,7 @@ component  {
 
 		switch( buildArgs.linkTo ) {
 			case "email.viewOnline":
-				link = "/e/v/#messageId#.html"
+				link = "/e/v/#messageId#.html";
 			break;
 			case "email.tracking.open":
 				link = "/e/t/o/#messageId#/";

@@ -49,11 +49,13 @@ component {
 		for( var attachment in attachments ) {
 			var md5sum   = Hash( attachment.binary );
 			var tmpDir   = getTempDirectory() & "/" & md5sum & "/";
-			var filePath = tmpDir & attachment.name
+			var filePath = tmpDir & attachment.name;
 			var remove   = IsBoolean( attachment.removeAfterSend ?: "" ) ? attachment.removeAfterSend : true;
 
 			if ( !FileExists( filePath ) ) {
-				DirectoryCreate( tmpDir, true, true );
+				if( !directoryExists( tmpDir ) ){
+					DirectoryCreate( tmpDir );
+				}
 				FileWrite( filePath, attachment.binary );
 			}
 

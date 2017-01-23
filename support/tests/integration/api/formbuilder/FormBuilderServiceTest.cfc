@@ -734,7 +734,7 @@ component extends="testbox.system.BaseSpec"{
 					, configuration = { name="test4" }
 				}];
 				var input          = { yes=false, no=true, test1=CreateUUId(), test2="nice", test4=CreateUUId() };
-				var processed      = { test2=CreateUUId(), test4={ complex=true, test=CreateUUId() } }
+				var processed      = { test2=CreateUUId(), test4={ complex=true, test=CreateUUId() } };
 				var expectedOutput = { test2=processed.test2, test4=processed.test4 };
 
 				service.$( "getFormItems" ).$args( id=formId ).$results( items );

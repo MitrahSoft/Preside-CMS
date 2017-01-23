@@ -1,6 +1,6 @@
 component {
 	public void function configure() {
-		var applicationSettings = getApplicationSettings();
+		var applicationSettings = getApplicationMetadata();
 
 		settings = {};
 
@@ -263,7 +263,7 @@ component {
 			 }
 		};
 
-		settings.adminRoles = StructNew( "linked" );
+		settings.adminRoles = StructNew( "Ordered" );
 
 		settings.adminRoles.sysadmin           = [ "cms.access", "usermanager.*", "groupmanager.*", "systemConfiguration.*", "presideobject.security_user.*", "presideobject.security_group.*", "websiteBenefitsManager.*", "websiteUserManager.*", "sites.*", "presideobject.links.*", "notifications.*", "passwordPolicyManager.*", "urlRedirects.*", "systemInformation.*", "taskmanager.navigate", "taskmanager.viewlogs", "auditTrail.*", "rulesEngine.*", "emailCenter.*" ];
 		settings.adminRoles.contentadmin       = [ "cms.access", "sites.*", "presideobject.site.*", "presideobject.link.*", "sitetree.*", "presideobject.page.*", "datamanager.*", "assetmanager.*", "presideobject.asset.*", "presideobject.asset_folder.*", "formbuilder.*", "!formbuilder.lockForm", "!formbuilder.activateForm", "rulesEngine.read", "emailCenter.*" ];

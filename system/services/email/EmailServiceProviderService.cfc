@@ -104,9 +104,9 @@ component {
 	 */
 	public string function getProviderForTemplate( required string templateId ) {
 		if ( Len( Trim( templateId ) ) ) {
-			var template = _getEmailTemplateService().getTemplate( templateId );
-
-			if ( ( template.service_provider ?: "" ).len() && isProviderEnabled( template.service_provider ) ) {
+			var template  = _getEmailTemplateService().getTemplate( templateId );
+			var _template = template.service_provider ?: "";
+			if ( _template.len() && isProviderEnabled( template.service_provider ) ) {
 				return template.service_provider;
 			}
 		}

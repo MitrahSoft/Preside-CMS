@@ -95,7 +95,7 @@ component {
 				var index = elems.find( selectedElem );
 				if ( !index ) {
 					elems.append( selectedElem );
-					elemStyles.append( StructNew( "linked" ) );
+					elemStyles.append( StructNew( "ordered" ) );
 					index = elems.len();
 				}
 				var elemStyle = elemStyles[ index ];
@@ -183,7 +183,8 @@ component {
 			}
 		}
 
-		if ( rule.trim().contains( "!important" ) ) {
+		var _rule = rule.trim();
+		if ( _rule.contains( "!important" ) ) {
 			score[ 1 ]++;
 		}
 

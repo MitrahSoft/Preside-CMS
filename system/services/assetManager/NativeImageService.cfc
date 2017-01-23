@@ -149,7 +149,7 @@ component displayname="Native Image Manipulation Service" {
 			}
 		}
 
-		pdf attributeCollection=pdfAttributes;
+		cfpdf( attributeCollection=pdfAttributes );
 
 		return FileReadBinary( tmpFilePath );
 	}
@@ -196,7 +196,7 @@ component displayname="Native Image Manipulation Service" {
 					iRotate = 180;
 				}
 				if ( iRotate > 0 ){
-					imageRotate( name = oImage, angle = iRotate, x = 2, interpolation = "bicubic" );
+					imageRotate( oImage, iRotate, 2, 2, "bicubic" );
 					imageBinary = imageGetBlob( oImage );
 				}
 			}

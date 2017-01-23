@@ -7,7 +7,7 @@ component {
 	property name="siteTreeService"        inject="siteTreeService";
 
 
-<!--- actions --->
+// actions
 	public void function saveAction( event, rc, prc ) {
 		var pageId   = rc.pageId   ?: "";
 		var object   = rc.object   ?: "";
@@ -153,7 +153,7 @@ component {
 				}
 			}
 
-			changedFields = "<ul>" & changedFields.toList( " " ) & "</ul>"
+			changedFields = "<ul>" & changedFields.toList( " " ) & "</ul>";
 			var prompt =  "<p>" & translateResource( uri="cms:frontendeditor.publish.prompt", data=[ objectTitle, recordLabel ] ) & "</p>";
 			    prompt &= "<p>" & translateResource( "cms:frontendeditor.publish.prompt.changed.fields.title" ) & "</p>";
 			    prompt &= changedFields;

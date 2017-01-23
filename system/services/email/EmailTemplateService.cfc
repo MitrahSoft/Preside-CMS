@@ -195,7 +195,7 @@ component {
 			, type          = "text"
 			, subject       = message.subject
 			, body          = replaceParameterTokens( messageTemplate.text_body, params, "text" )
-		}
+		};
 
 		message.htmlBody = _getEmailLayoutService().renderLayout(
 			  layout        = messageTemplate.layout
@@ -340,7 +340,8 @@ component {
 		);
 
 		for( var t in template ) {
-			if ( ( t.email_blueprint ?: "" ).len() ) {
+			var _emailBlueprint = t.email_blueprint ?: "";
+			if ( _emailBlueprint.len() ) {
 				var blueprint = $getPresideObject( "email_blueprint" ).selectData( id=t.email_blueprint );
 				if ( blueprint.recordCount ) {
 					t.layout           = blueprint.layout;
@@ -518,7 +519,7 @@ component {
 			, orderBy      = "schedule_date"
 		);
 
-		return records.recordCount ? ValueArray( records.id ) : [];
+		return records.recordCount ? listToArray( valueList( records.id ) ) : [];
 	}
 
 	/**
@@ -535,7 +536,7 @@ component {
 			, orderBy      = "schedule_next_send_date"
 		);
 
-		return records.recordCount ? ValueArray( records.id ) : [];
+		return records.recordCount ? listToArray( valueList( records.id ) ) : [];
 	}
 
 	/**
@@ -547,7 +548,7 @@ component {
 	 *
 	 */
 	public array function getAttachments( required string templateId ) {
-		var assetManagerService = _getAssetManagerService()
+		var assetManagerService = _getAssetManagerService();
 		var attachments         = [];
 		var assets              = $getPresideObject( "email_template" ).selectData(
 			  id           = arguments.templateId

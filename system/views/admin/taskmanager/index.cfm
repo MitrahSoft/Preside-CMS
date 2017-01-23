@@ -43,7 +43,7 @@
 		<div class="tabbable tabs-left">
 			<ul class="nav nav-tabs">
 				<cfloop array="#taskGroups#" index="i" item="group">
-					<li<cfif i==1> class="active"</cfif>>
+					<li<cfif i eq 1> class="active"</cfif>>
 						<a data-toggle="tab" href="##group-tab-#i#">
 							<i class="fa fa-fw #group.iconClass#"></i>
 							#group.title# (#group.stats.total#)
@@ -57,7 +57,7 @@
 
 	<cfloop array="#taskGroups#" index="i" item="group">
 		<cfif taskGroups.len() gt 1>
-			<div id="group-tab-#i#" class="tab-pane<cfif i==1> active</cfif>">
+			<div id="group-tab-#i#" class="tab-pane<cfif i eq 1> active</cfif>">
 		</cfif>
 
 		<table class="table table-striped table-hover">

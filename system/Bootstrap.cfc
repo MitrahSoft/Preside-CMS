@@ -25,7 +25,8 @@ component {
 		this.sessionManagement                       = arguments.sessionManagement ?: !this.statelessRequest;
 		this.sessionTimeout                          = arguments.sessionTimeout;
 		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
-
+		// Antisamy JAR already available in BUILT IN ACF
+		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar", _getPresideRoot() & "\system\services\qrcodes\lib\QRGen\", _getPresideRoot() & "\system\services\qrcodes\lib\zxing\", _getPresideRoot() & "\system\services\assetManager\xmp\xmpcore.jar", _getPresideRoot() & "\system\services\taskmanager\lib\" ], loadColdFusionClassPath = true, reloadOnChange= false };
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
 	}
@@ -84,13 +85,13 @@ component {
 		}
 	}
 
-	public void function onError(  required struct exception, required string eventName ) output=true {
+	public void function onError(  required any exception, required string eventName ) output=true {
 		if ( _dealWithSqlReloadProtectionErrors( arguments.exception ) ) {
 			return;
 		}
 
 		if ( _showErrors() ) {
-			throw object=arguments.exception;
+			throw ( object=arguments.exception );
 
 
 		} else {
@@ -115,13 +116,15 @@ component {
 		this.mappings[ "/coldbox"        ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox";
 		this.mappings[ "/sticker"        ] = presideroot & "/system/externals/sticker";
 		this.mappings[ "/spreadsheetlib" ] = presideroot & "/system/externals/lucee-spreadsheet";
-		this.mappings[ "/javaloader"     ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox/system/core/javaloader"
+		this.mappings[ "/javaloader"     ] = presideroot & "/system/externals/coldbox-standalone-3.8.2/coldbox/system/core/javaloader";
 
 		this.mappings[ arguments.appMapping     ] = arguments.appPath;
 		this.mappings[ arguments.assetsMapping  ] = arguments.assetsPath;
 		this.mappings[ arguments.logsMapping    ] = arguments.logsPath;
 
-		DirectoryCreate( presideroot & "/tmp", false, true );
+		if( !directoryExists( presideroot & "/tmp" ) ){
+			DirectoryCreate( presideroot & "/tmp" );
+		}
 		this.mappings[ "/aoptmp" ] = presideroot & "/tmp";
 
 		variables.COLDBOX_APP_ROOT_PATH = arguments.appPath;
@@ -156,7 +159,7 @@ component {
 					_announceInterception( "prePresideReload" );
 
 
-					log file="application" text="Application starting up (fwreinit called, or application starting for the first time).";
+					writelog( file="application", text="Application starting up (fwreinit called, or application starting for the first time)." );
 
 					_clearExistingApplication();
 					_ensureCaseSensitiveStructSettingsAreActive();
@@ -165,7 +168,7 @@ component {
 					_initColdBox();
 
 					_announceInterception( "postPresideReload" );
-					log file="application" text="Application start up complete";
+					writelog( file="application", text="Application start up complete" );
 				}
 			}
 		} catch( lock e ) {
@@ -181,10 +184,12 @@ component {
 	private void function _clearExistingApplication() {
 		onApplicationEnd( application );
 		application.clear();
-		SystemCacheClear( "template" );
 
 		if ( ( server.coldfusion.productName ?: "" ) == "Lucee" ) {
+			systemCacheClear( "template" );
 			getPageContext().getCFMLFactory().resetPageContext();
+		}else {
+			cacheRemove( "template" );
 		}
 	}
 
@@ -217,12 +222,12 @@ component {
 			var luceeCompilerSettings = "";
 
 			try {
-				admin action="getCompilerSettings" returnVariable="luceeCompilerSettings";
-				admin action               = "updateCompilerSettings"
-				      dotNotationUpperCase = false
-					  suppressWSBeforeArg  = luceeCompilerSettings.suppressWSBeforeArg
-					  nullSupport          = luceeCompilerSettings.nullSupport
-					  templateCharset      = luceeCompilerSettings.templateCharset;
+				cfadmin( action="getCompilerSettings", returnVariable="luceeCompilerSettings" );
+				cfadmin( action               = "updateCompilerSettings"
+				      , dotNotationUpperCase = false
+					  , suppressWSBeforeArg  = luceeCompilerSettings.suppressWSBeforeArg
+					  , nullSupport          = luceeCompilerSettings.nullSupport
+					  , templateCharset      = luceeCompilerSettings.templateCharset );
 			} catch( security e ) {
 				throw( type="security", message="PresideCMS could not automatically update Lucee settings to ensure dot notation for structs preserves case (rather than the default behaviour of converting to uppercase). Please either allow open access to admin APIs or change the setting in Lucee server settings." );
 			}
@@ -251,18 +256,18 @@ component {
 			var luceeAdminPassword = config[ "lucee.admin.password" ] ?: "";
 
 			// use cfadmin tag here; using this.datasources proving to be unreliable
-			admin action     = "updateDatasource"
-			      type       = "web"
-			      classname  = "org.gjt.mm.mysql.Driver"
-			      dsn        = "jdbc:mysql://#host#:#port#/#dbName#?useUnicode=true&characterEncoding=#encoding#&useLegacyDatetimeCode=true"
-			      name       = dsn
-			      newName    = dsn
-			      host       = host
-			      database   = dbname
-			      port       = port
-			      dbusername = username
-			      dbpassword = password
-			      password   = luceeAdminPassword;
+			cfadmin( action     = "updateDatasource"
+			     , type       = "web"
+			     , classname  = "org.gjt.mm.mysql.Driver"
+			     , dsn        = "jdbc:mysql://#host#:#port#/#dbName#?useUnicode=true&characterEncoding=#encoding#&useLegacyDatetimeCode=true"
+			     , name       = dsn
+			     , newName    = dsn
+			     , host       = host
+			     , database   = dbname
+			     , port       = port
+			     , dbusername = username
+			     , dbpassword = password
+			     , password   = luceeAdminPassword );
 		}
 	}
 
@@ -315,7 +320,7 @@ component {
 		return;
 	}
 
-	private boolean function _dealWithSqlReloadProtectionErrors( required struct exception ) output=true {
+	private boolean function _dealWithSqlReloadProtectionErrors( required any exception ) output=true {
 		var exceptionType = ( arguments.exception.type ?: "" );
 
 		if ( exceptionType == "presidecms.auto.schema.sync.disabled" ) {
@@ -333,8 +338,8 @@ component {
 			} catch( any e ) {}
 
 			var showScript = IsBoolean( this.showDbSyncScripts ?: "" ) && this.showDbSyncScripts;
-			header statuscode=503;content reset=true;
-			include template="/preside/system/views/errors/sqlRebuild.cfm";
+			cfheader( statuscode=503 ); cfcontent( reset=true );
+			cfinclude( template="/preside/system/views/errors/sqlRebuild.cfm" );
 			return true;
 		}
 
@@ -353,8 +358,8 @@ component {
 
 			var exception  = { detail=FileRead( sqlUpgradeFile ) };
 			var showScript = false;
-			header statuscode=503;content reset=true;
-			include template="/preside/system/views/errors/sqlRebuild.cfm";
+			cfheader( statuscode=503 );cfcontent( reset=true );
+			cfinclude( template="/preside/system/views/errors/sqlRebuild.cfm" );
 			abort;
 		}
 
@@ -366,7 +371,7 @@ component {
 	}
 
 	private void function _preventSessionFixation() {
-		var appSettings = getApplicationSettings();
+		var appSettings = getApplicationMetadata();
 
 		if ( ( appSettings.sessionType ?: "cfml" ) != "j2ee" ) {
 			SessionRotate();
@@ -374,7 +379,7 @@ component {
 	}
 
 	private void function _invalidateSessionIfNotUsed() {
-		var applicationSettings  = getApplicationSettings();
+		var applicationSettings  = getApplicationMetadata();
 		var sessionIsUsed        = false;
 		var ignoreKeys           = [ "cfid", "timecreated", "sessionid", "urltoken", "lastvisit", "cftoken" ];
 		var keysToBeEmptyStructs = [ "cbStorage", "cbox_flash_scope" ];
@@ -528,8 +533,8 @@ component {
 			).raiseError( attributes.e );
 		}
 
-		content reset=true;
-		header statuscode=arguments.statusCode;
+		cfcontent( reset=true );
+		cfheader( statuscode=arguments.statusCode );
 
 		if ( FileExists( ExpandPath( "/#arguments.statusCode#.htm" ) ) ) {
 			Writeoutput( FileRead( ExpandPath( "/#arguments.statusCode#.htm" ) ) );

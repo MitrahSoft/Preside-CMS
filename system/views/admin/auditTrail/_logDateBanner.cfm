@@ -7,9 +7,9 @@
 	<div class="timeline-label">
 		<span class="label label-primary arrowed-in-right label-lg">
 			<b>
-				<cfif daysOld == 0>
+				<cfif daysOld eq 0>
 					#translateResource( "cms:dates.today" )#
-				<cfelseif daysOld == 1>
+				<cfelseif daysOld eq 1>
 					#translateResource( "cms:dates.yesterday" )#
 				<cfelse>
 					#renderContent( renderer="date", data=args.logDate )#

@@ -123,7 +123,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 				mockColdboxController.$( "handlerExists" ).$args( "blah.blah.#expressionId#.getLabel" ).$results( false );
 
-				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:label", defaultValue=expressionId ).$results( label )
+				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:label", defaultValue=expressionId ).$results( label );
 
 				expect( service.getExpressionLabel( expressionId ) ).toBe( label );
 			} );
@@ -158,7 +158,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 				mockColdboxController.$( "handlerExists" ).$args( "blah.blah.#expressionId#.getText" ).$results( false );
 
-				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:text", defaultValue=expressionId ).$results( text )
+				service.$( "$translateResource" ).$args( uri="rules.expressions.#expressionId#:text", defaultValue=expressionId ).$results( text );
 
 				expect( service.getExpressionText( expressionId ) ).toBe( text );
 			} );
@@ -594,7 +594,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 				eventArgs.append( expressions[ expressionId ].filterHandlerArgs );
 				eventArgs.append( fields );
-				eventArgs.filterPrefix = filterPrefix
+				eventArgs.filterPrefix = filterPrefix;
 
 				mockColdboxController.$( "runEvent" ).$args(
 					  event          = expressions[ expressionId ].filterHandler

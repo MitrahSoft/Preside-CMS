@@ -600,7 +600,7 @@ component displayName="Admin login service" {
 	 * @size.hint Size of the image (pixels)
 	 */
 	public string function getTwoFactorAuthenticationQrCodeImage( required string key, numeric size=125 ) {
-		var userDetails     = getLoggedInUserDetails()
+		var userDetails     = getLoggedInUserDetails();
 		var applicationName = $getPresideSetting( "admin-login-security", "tfa_app_name" );
 
 		if ( !Len( Trim( applicationName ) ) ) {
@@ -775,8 +775,8 @@ component displayName="Admin login service" {
 		var cookieValue = _getCookieService().getVar( _getRememberMeCookieKey(), {} );
 
 		if ( IsStruct( cookieValue ) ) {
-			var keys = cookieValue.keyArray()
-			keys.sort( "textNoCase" );
+			var keys = structkeyArray( cookieValue );
+			arraySort( keys, "textNoCase" );
 
 			if ( keys.toList() == "expiry,loginId,series,token" ) {
 				return cookieValue;

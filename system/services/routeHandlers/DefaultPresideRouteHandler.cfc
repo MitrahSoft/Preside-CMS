@@ -17,7 +17,7 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // route handler methods
-	public boolean function match( required string path, required any event ) output=false {
+	public boolean function match( required string path, required any event ) {
 		if ( Len( Trim( event.getValue( "event", "" ) ) ) ) {
 			return false;
 		}
@@ -41,7 +41,7 @@ component implements="iRouteHandler" output=false singleton=true {
 		return false;
 	}
 
-	public void function translate( required string path, required any event ) output=false {
+	public void function translate( required string path, required any event ) {
 		var slug          = "";
 		var id            = "";
 		var subaction     = "";
@@ -83,11 +83,11 @@ component implements="iRouteHandler" output=false singleton=true {
 		event.setValue( _getEventName(), "core.SiteTreePageRequestHandler" );
 	}
 
-	public boolean function reverseMatch( required struct buildArgs, required any event ) output=false {
+	public boolean function reverseMatch( required struct buildArgs, required any event ) {
 		return Len( Trim( buildArgs.page ?: "" ) );
 	}
 
-	public string function build( required struct buildArgs, required any event ) output=false {
+	public string function build( required struct buildArgs, required any event ) {
 		var treeSvc  = _getSiteTreeService();
 		var homepage = treeSvc.getSiteHomepage();
 		var page     = _getPageByIdOrPageType( arguments.buildArgs.page );
@@ -128,7 +128,7 @@ component implements="iRouteHandler" output=false singleton=true {
 		return root & link;
 	}
 
-	private query function _getPageByIdOrPageType( required string page ) output=false {
+	private query function _getPageByIdOrPageType( required string page ) {
 		var ptService       = _getPageTypesService();
 		var siteTreeService = _getSiteTreeService();
 		var getPageArgs     = {
@@ -146,50 +146,50 @@ component implements="iRouteHandler" output=false singleton=true {
 
 		if ( siteTreeService.arePageSlugsMultilingual() ) {
 			getPageArgs.selectFields = [ "page.id", "page.slug", "page.site" ];
-			var page = Duplicate( siteTreeService.getPage( argumentCollection=getPageArgs ) );
+			var _page = Duplicate( siteTreeService.getPage( argumentCollection=getPageArgs ) );
 
-			if ( page.recordCount ) {
-				var ancestors = siteTreeService.getAncestors( id=page.id, selectFields=[ "slug" ] );
+			if ( _page.recordCount ) {
+				var ancestors = siteTreeService.getAncestors( id=_page.id, selectFields=[ "slug" ] );
 
 				if ( ancestors.recordCount ) {
-					var newSlug = "/" & ValueList( ancestors.slug, "/" ) & "/" & page.slug & "/";
+					var newSlug = "/" & ValueList( ancestors.slug, "/" ) & "/" & _page.slug & "/";
 					newSlug = newSlug.reReplace( "/+", "/", "all" );
-					page.slug[ 1 ] = newSlug;
+					_page.slug[ 1 ] = newSlug;
 				}
 			}
 
-			return page;
+			return _page;
 		}
 
 		return siteTreeService.getPage( argumentCollection=getPageArgs );
 	}
 
 // private getters and setters
-	private string function _getEventName() output=false {
+	private string function _getEventName() {
 		return _eventName;
 	}
-	private void function _setEventName( required string eventName ) output=false {
+	private void function _setEventName( required string eventName ) {
 		_eventName = arguments.eventName;
 	}
 
-	private any function _getSiteTreeService() output=false {
+	private any function _getSiteTreeService() {
 		return _siteTreeService;
 	}
-	private void function _setSiteTreeService( required any siteTreeService ) output=false {
+	private void function _setSiteTreeService( required any siteTreeService ) {
 		_siteTreeService = arguments.siteTreeService;
 	}
 
-	private any function _getSiteService() output=false {
+	private any function _getSiteService() {
 		return _siteService;
 	}
-	private void function _setSiteService( required any siteService ) output=false {
+	private void function _setSiteService( required any siteService ) {
 		_siteService = arguments.siteService;
 	}
 
-	private any function _getPageTypesService() output=false {
+	private any function _getPageTypesService() {
 		return _pageTypesService;
 	}
-	private void function _setPageTypesService( required any pageTypesService ) output=false {
+	private void function _setPageTypesService( required any pageTypesService ) {
 		_pageTypesService = arguments.pageTypesService;
 	}
 }

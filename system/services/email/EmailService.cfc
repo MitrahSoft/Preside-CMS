@@ -126,7 +126,7 @@ component displayName="Email service" {
 			dir   = ExpandPath( dir );
 			files = DirectoryList( dir, true, "path", "*.cfc" );
 
-			for( file in files ){
+			for( var file in files ){
 				var templateName = ReplaceNoCase( file, dir, "" );
 				    templateName = ReReplace( templateName, "\.cfc$", "" );
 				    templateName = ListChangeDelims( templateName, ".", "\/" );
@@ -193,7 +193,7 @@ component displayName="Email service" {
 			);
 		}
 
-		if ( !( sendArgs.to ?: [] ).len() ) {
+		if ( !arrayLen( sendArgs.to ?: arrayNew(1) ) ) {
 			throw(
 				  type   = "EmailService.missingToAddress"
 				, message= "Missing to email address(es) when sending message with subject [#sendArgs.subject ?: ''#]"
@@ -203,7 +203,7 @@ component displayName="Email service" {
 		if ( !Len( Trim( sendArgs.subject ?: "" ) ) ) {
 			throw(
 				  type   = "EmailService.missingSubject"
-				, message= "Missing subject when sending message to [#(sendArgs.to ?: []).toList(';')#], from [#(sendArgs.from ?: '')#]"
+				, message= "Missing subject when sending message to [#ArrayToList(sendArgs.to ?: arrayNew(1),';')#], from [#(sendArgs.from ?: '')#]"
 			);
 		}
 

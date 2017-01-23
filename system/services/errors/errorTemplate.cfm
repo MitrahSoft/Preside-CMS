@@ -96,7 +96,7 @@
 						<cfparam name="tc.codeprinthtml" default="">
 						<cfif len( tc.codeprinthtml )>
 
-							<cfset isFirst = ( idx == 1 )>
+							<cfset isFirst = ( idx eq 1 )>
 
 							<a class="-railo-icon-#isFirst ? 'minus' : 'plus'#" id="__btn$#idx#" onclick="__RAILO.oc( this );" style="cursor: pointer;">
 								#isFirst ? "<b>#tc.template#: line #tc.line#</b>" : "<b>called from</b> #tc.template#: line #tc.line#"#
@@ -107,7 +107,7 @@
 								#tc.codeprinthtml#<br>
 							</blockquote>
 						<cfelse>
-							<span class="-no-icon">#idx == 1 ? "<b>#tc.template#: line #tc.line#</b>" : "<b>called from</b> #tc.template#: line #tc.line#"#</span>
+							<span class="-no-icon">#idx eq 1 ? "<b>#tc.template#: line #tc.line#</b>" : "<b>called from</b> #tc.template#: line #tc.line#"#</span>
 							<br>
 						</cfif>
 					</cfloop>

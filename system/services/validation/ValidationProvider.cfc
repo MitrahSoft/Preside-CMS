@@ -75,7 +75,7 @@ component output="false" {
 			args[ param ] = arguments.params[ param ];
 		}
 
-		return sourceCfc[ method ]( argumentCollection = args );
+		return invoke( sourceCfc, method, args );
 	}
 
 	public array function getValidatorParamValues( required string name, struct params={} ) output=false {

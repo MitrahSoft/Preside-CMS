@@ -28,6 +28,6 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 			args    = "-s ""#arguments.source#"" ""#arguments.target#""";
 		}
 
-		execute name="#command#" arguments="#args#" timeout="10" variable="output" errorVariable="e";
+		cfexecute( name="#command#", arguments="#args#", timeout="10", variable="output", errorVariable="e" );
 	}
 }

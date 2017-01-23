@@ -142,7 +142,7 @@ component displayName="Preside Object View Service" {
 			return _parseFieldsFromViewFile(
 				  objectName = args.object
 				, filePath   = args.viewPath
-			)
+			);
 		} );
 	}
 
@@ -152,7 +152,7 @@ component displayName="Preside Object View Service" {
 		var regexes         = [ '<' & '(?:cfparam|cf_presideparam)\s[^>]*?name\s*=\s*"args\.(.*?)".*?>', 'param\s[^;]*?name\s*=\s*"args\.(.*?)".*?;' ];
 		var fieldRegex      = 'field\s*=\s*"(.*?)"';
 		var rendererRegex   = 'renderer\s*=\s*"(.*?)"';
-		var editableRegex   = 'editable\s*=\s*(true|"true")'
+		var editableRegex   = 'editable\s*=\s*(true|"true")';
 		var result          = "";
 		var startPos        = 1;
 		var match           = "";
@@ -308,7 +308,7 @@ component displayName="Preside Object View Service" {
 		keyArgs.delete( "value"                  );
 
 
-		selectDataArgs.objectName   = arguments.presideObject
+		selectDataArgs.objectName   = arguments.presideObject;
 		selectDataArgs.selectFields = [ "Max( #arguments.presideobject#.datemodified ) as datemodified" ];
 
 		var lastRecordModified = _getPresideObjectService().selectData( argumentCollection=selectDataArgs );

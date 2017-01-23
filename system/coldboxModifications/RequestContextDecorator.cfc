@@ -218,7 +218,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		event.setHTTPHeader( name="X-Robots-Tag"    , value="noindex" );
 		event.setHTTPHeader( name="WWW-Authenticate", value='Website realm="website"' );
 
-		content reset=true type="text/html";header statusCode="401";WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
+		cfcontent( reset=true, type="text/html" );cfheader( statusCode="401" );WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
 	}
 
 	public void function audit( userId=getAdminUserId() ) output=false {
@@ -371,7 +371,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 		var getPageArgs = {};
 		var isActive    = function( required boolean active, required string embargo_date, required string expiry_date ) {
 			return arguments.active && ( !IsDate( arguments.embargo_date ) || Now() >= arguments.embargo_date ) && ( !IsDate( arguments.expiry_date ) || Now() <= arguments.expiry_date );
-		}
+		};
 
 		if ( ( arguments.slug ?: "/" ) == "/" && !Len( Trim( arguments.pageId ?: "" ) ) && !Len( Trim( arguments.systemPage ?: "" ) ) ) {
 			page = sitetreeSvc.getSiteHomepage( getLatest=getLatest, allowDrafts=allowDrafts );
@@ -526,8 +526,8 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 	}
 
 	public void function preventPageCache() output=false {
-		header name="cache-control" value="no-cache, no-store";
-		header name="expires"       value="Fri, 20 Nov 2015 00:00:00 GMT";
+		cfheader( name="cache-control", value="no-cache, no-store" );
+		cfheader( name="expires"      , value="Fri, 20 Nov 2015 00:00:00 GMT" );
 	}
 
 	public boolean function canPageBeCached() output=false {
@@ -697,7 +697,8 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 	public void function notFound() output=false {
 		announceInterception( "onNotFound" );
 		getController().runEvent( "general.notFound" );
-		content reset=true type="text/html";header statusCode="404";WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
+		cfcontent( reset=true, type="text/html");
+		cfheader( statusCode="404");WriteOutput( getController().getPlugin("Renderer").renderLayout() );abort;
 	}
 
 	public void function accessDenied( required string reason ) output=false {

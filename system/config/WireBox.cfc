@@ -36,7 +36,7 @@
 	private void function _mapExtensionServices() {
 		var extensions  = getColdbox().getSetting( name="activeExtensions", defaultValue=[] );
 		for( var i=extensions.len(); i > 0; i-- ){
-			var servicesDir = ListAppend( extensions[i].directory, "services", "/" )
+			var servicesDir = ListAppend( extensions[i].directory, "services", "/" );
 			if ( DirectoryExists( servicesDir ) ) {
 				mapDirectory( packagePath=servicesDir, influence=function( mapping, objectPath ) {
 					_injectPresideSuperClass( argumentCollection=arguments );

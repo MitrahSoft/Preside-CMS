@@ -47,7 +47,10 @@ component {
 	private string function _getPolicyFile( required string policy ) {
 		var policies = _getPolicyFiles();
 
-		return policies[ arguments.policy ] ?: throw( type="preside.antisamyservice.policy.not.found", message="The policy [#arguments.policy#] was not found. Existing policies: '#SerializeJson( policies.keyArray() )#" );
+		if ( structKeyExists(policies, arguments.policy) )
+			return policies[ arguments.policy ];
+		else
+			throw( type="preside.antisamyservice.policy.not.found", message="The policy [#arguments.policy#] was not found. Existing policies: '#SerializeJson( policies.keyArray() )#" );
 	}
 
 	private string function _removeUnwantedCleanses( required string tooCleanString, required string policy ) {

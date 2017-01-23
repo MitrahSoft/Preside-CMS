@@ -161,7 +161,10 @@ component displayName="Website login service" {
 	 *
 	 * @securityAlertCallback.hint A function that will be invoked should their be a security alert during auto login checking. Use this to alert the user that their login may have been compromised.
 	 */
-	public boolean function isLoggedIn( function securityAlertCallback=function(){} ) autodoc=true {
+	public boolean function isLoggedIn( function securityAlertCallback ) autodoc=true {
+		if ( ! isdefined("arguments.securityAlertCallback") ){
+			arguments.securityAlertCallback = function(){};
+		}
 		var userSessionExists = _getSessionStorage().exists( name=_getSessionKey() );
 
 		return userSessionExists || _autoLogin( argumentCollection = arguments );
@@ -413,7 +416,7 @@ component displayName="Website login service" {
 			, forceJoins   = "inner"
 		);
 
-		return ValueArray( benefits.id );
+		return listToArray( ValueList( benefits.id ) );
 	}
 
 	/**
@@ -541,7 +544,7 @@ component displayName="Website login service" {
 		var cookieValue = _getCookieService().getVar( _getRememberMeCookieKey(), {} );
 
 		if ( IsStruct( cookieValue ) ) {
-			var keys = cookieValue.keyArray()
+			var keys = cookieValue.keyArray();
 			keys.sort( "textNoCase" );
 
 			if ( keys.toList() == "expiry,loginId,series,token" ) {

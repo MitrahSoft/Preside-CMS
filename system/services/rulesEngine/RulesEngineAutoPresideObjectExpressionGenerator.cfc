@@ -64,7 +64,7 @@ component {
 		var relationship = propertyDefinition.relationship ?: "";
 		var expressions  = [];
 
-		if ( !isRequired && !( [ "many-to-many", "one-to-many" ] ).findNoCase( relationship ) ) {
+		if ( !isRequired && !( arrayFindNoCase( [ "many-to-many", "one-to-many" ], relationship ) ) ) {
 			switch( propType ) {
 				case "string":
 				case "numeric":
@@ -135,7 +135,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_propertyIsEmpty_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", default=true, required=false } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", "default"=true, required=false } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.PropertyIsNull.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.PropertyIsNull.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.PropertyIsNull.getLabel"
@@ -155,7 +155,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_stringmatches_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _stringOperator={ fieldType="operator", variety="string", required=false, default="contains" }, value={ fieldType="text", required=false, default="" } }
+			, fields            = { _stringOperator={ fieldType="operator", variety="string", required=false, "default"="contains" }, value={ fieldType="text", required=false, "default"="" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.TextPropertyMatches.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.TextPropertyMatches.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.TextPropertyMatches.getLabel"
@@ -170,7 +170,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_enumMatches_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", required=false, default=true }, enumValue={ fieldType="enum", enum=arguments.enum, required=false, default="", defaultLabel="rules.dynamicExpressions:enumPropertyMatches.enumValue.default.label" } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", required=false, "default"=true }, enumValue={ fieldType="enum", enum=arguments.enum, required=false, "default"="", defaultLabel="rules.dynamicExpressions:enumPropertyMatches.enumValue.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.EnumPropertyMatches.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.EnumPropertyMatches.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.EnumPropertyMatches.getLabel"
@@ -185,7 +185,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_propertyIsSet_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", default=true, required=false } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", "default"=true, required=false } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.PropertyIsNull.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.PropertyIsNull.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.PropertyIsNull.getLabel"
@@ -205,7 +205,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_booleanistrue_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", required=false, default=true } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", required=false, "default"=true } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.BooleanPropertyIsTrue.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.BooleanPropertyIsTrue.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.BooleanPropertyIsTrue.getLabel"
@@ -220,7 +220,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_dateinrange_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _time={ fieldtype="timePeriod", type="alltime", required=false, default="" } }
+			, fields            = { _time={ fieldtype="timePeriod", type="alltime", required=false, "default"="" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.DatePropertyInRange.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.DatePropertyInRange.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.DatePropertyInRange.getLabel"
@@ -235,7 +235,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_numbercompares_#arguments.parentObjectname##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyName#"
-			, fields            = { _numericOperator={ fieldtype="operator", variety="numeric", required=false, default="eq" }, value={ fieldtype="number", required=false, default=0 } }
+			, fields            = { _numericOperator={ fieldtype="operator", variety="numeric", required=false, "default"="eq" }, value={ fieldtype="number", required=false, "default"=0 } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.NumericPropertyCompares.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.NumericPropertyCompares.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.NumericPropertyCompares.getLabel"
@@ -250,7 +250,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_manytoonematch_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", default=true, required=false }, value={ fieldType="object", object=propertyDefinition.relatedTo, multiple=true, required=true, default="", defaultLabel="rules.dynamicExpressions:manyToOneMatch.value.default.label" } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", "default"=true, required=false }, value={ fieldType="object", object=propertyDefinition.relatedTo, multiple=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:manyToOneMatch.value.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.ManyToOneMatch.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.ManyToOneMatch.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.ManyToOneMatch.getLabel"
@@ -269,7 +269,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_manytoonefilter_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { value={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, default="", defaultLabel="rules.dynamicExpressions:manyToOneFilter.value.default.label" } }
+			, fields            = { value={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:manyToOneFilter.value.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.ManyToOneFilter.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.ManyToOneFilter.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.ManyToOneFilter.getLabel"
@@ -288,7 +288,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_manytomanymatch_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _possesses={ fieldType="boolean", variety="hasDoesNotHave", default=true, required=false }, value={ fieldType="object", object=propertyDefinition.relatedTo, multiple=true, required=false, default="", defaultLabel="rules.dynamicExpressions:manyToManyMatch.value.default.label" } }
+			, fields            = { _possesses={ fieldType="boolean", variety="hasDoesNotHave", "default"=true, required=false }, value={ fieldType="object", object=propertyDefinition.relatedTo, multiple=true, required=false, "default"="", defaultLabel="rules.dynamicExpressions:manyToManyMatch.value.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.ManyToManyMatch.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.ManyToManyMatch.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.ManyToManyMatch.getLabel"
@@ -317,7 +317,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_onetomanymatch_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", default=true, required=false }, value={ fieldType="object", object=propertyDefinition.relatedTo, multiple=true, required=true, default="", defaultLabel="rules.dynamicExpressions:oneToManyMatch.value.default.label" } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", "default"=true, required=false }, value={ fieldType="object", object=propertyDefinition.relatedTo, multiple=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:oneToManyMatch.value.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.OneToManyMatch.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.OneToManyMatch.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.OneToManyMatch.getLabel"
@@ -340,7 +340,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_manytomanycount_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _numericOperator={ fieldtype="operator", variety="numeric", required=false, default="eq" }, value={ fieldType="number", required=false, default=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, default="", defaultLabel="rules.dynamicExpressions:manyToManyCount.savedFilter.default.label" } }
+			, fields            = { _numericOperator={ fieldtype="operator", variety="numeric", required=false, "default"="eq" }, value={ fieldType="number", required=false, "default"=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:manyToManyCount.savedFilter.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.ManyToManyCount.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.ManyToManyCount.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.ManyToManyCount.getLabel"
@@ -359,7 +359,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_manytomanyhas_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _possesses={ fieldType="boolean", variety="hasDoesNotHave", required=false, default=true }, value={ fieldType="number", required=false, default=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, default="", defaultLabel="rules.dynamicExpressions:manyToManyCount.savedFilter.default.label" } }
+			, fields            = { _possesses={ fieldType="boolean", variety="hasDoesNotHave", required=false, "default"=true }, value={ fieldType="number", required=false, "default"=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:manyToManyCount.savedFilter.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.ManyToManyHas.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.ManyToManyHas.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.ManyToManyHas.getLabel"
@@ -378,7 +378,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_onetomanycount_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _numericOperator={ fieldtype="operator", variety="numeric", required=false, default="eq" }, value={ fieldType="number", required=false, default=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, default="", defaultLabel="rules.dynamicExpressions:oneToManyCount.savedFilter.default.label" } }
+			, fields            = { _numericOperator={ fieldtype="operator", variety="numeric", required=false, "default"="eq" }, value={ fieldType="number", required=false, "default"=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:oneToManyCount.savedFilter.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.OneToManyCount.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.OneToManyCount.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.OneToManyCount.getLabel"
@@ -401,7 +401,7 @@ component {
 
 		expression.append( {
 			  id                = "presideobject_onetomanyhas_#arguments.parentObjectName##arguments.parentPropertyName##arguments.objectName#.#arguments.propertyDefinition.name#"
-			, fields            = { _is={ fieldType="boolean", variety="isIsNot", required=false, default=true }, value={ fieldType="number", required=false, default=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, default="", defaultLabel="rules.dynamicExpressions:oneToManyHas.savedFilter.default.label" } }
+			, fields            = { _is={ fieldType="boolean", variety="isIsNot", required=false, "default"=true }, value={ fieldType="number", required=false, "default"=0 }, savedFilter={ fieldType="filter", object=propertyDefinition.relatedTo, multiple=false, quickadd=true, quickedit=true, required=true, "default"="", defaultLabel="rules.dynamicExpressions:oneToManyHas.savedFilter.default.label" } }
 			, expressionHandler = "rules.dynamic.presideObjectExpressions.OneToManyHas.evaluateExpression"
 			, filterHandler     = "rules.dynamic.presideObjectExpressions.OneToManyHas.prepareFilters"
 			, labelHandler      = "rules.dynamic.presideObjectExpressions.OneToManyHas.getLabel"

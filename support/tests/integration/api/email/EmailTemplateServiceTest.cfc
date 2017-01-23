@@ -847,7 +847,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				};
 
 				service.$( "getTemplate", mockTemplate );
-				service.$( "prepareParameters", {} )
+				service.$( "prepareParameters", {} );
 				service.$( "getAttachments", [] );
 				service.$( "replaceParameterTokens", CreateUUId() );
 				service.$( "replaceParameterTokens", CreateUUId() );
@@ -1126,7 +1126,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, orderby      = "schedule_date"
 				).$results( templateRecords );
 
-				expect( service.listDueOneTimeScheduleTemplates() ).toBe( ValueArray( templateRecords.id ) );
+				expect( service.listDueOneTimeScheduleTemplates() ).toBe( listToArray( valueList( templateRecords.id ) ) );
 			} );
 		} );
 
@@ -1144,7 +1144,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, orderby      = "schedule_next_send_date"
 				).$results( templateRecords );
 
-				expect( service.listDueRepeatedScheduleTemplates() ).toBe( ValueArray( templateRecords.id ) );
+				expect( service.listDueRepeatedScheduleTemplates() ).toBe( listToArray( valueList( templateRecords.id ) ) );
 			} );
 		} );
 

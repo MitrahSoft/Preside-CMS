@@ -3,7 +3,7 @@
 	<cffunction name="test01_escapeEntity_shouldSurroundEntityInBackTicks" returntype="void">
 		<cfscript>
 			var adapter  = _getAdapter();
-			var expected = "`myEntity`"
+			var expected = "`myEntity`";
 			var result   = adapter.escapeEntity( "myEntity" );
 
 			super.assertEquals( expected, result );
@@ -13,7 +13,7 @@
 	<cffunction name="test01_1_escapeEntity_shouldEscapeEachPartOfDotDelimitedEntity" returntype="void">
 		<cfscript>
 			var adapter = _getAdapter();
-			var expected = "`some_alias_perhaps`.`some_column`"
+			var expected = "`some_alias_perhaps`.`some_column`";
 			var result   = adapter.escapeEntity( "some_alias_perhaps.some_column" );
 
 			super.assertEquals( expected, result );
@@ -629,7 +629,7 @@
 	<cffunction name="test30_getClauseSql_shouldUse_IN_syntax_whenValueIsAnArray" returntype="void">
 		<cfscript>
 			var adapter = _getAdapter();
-			var expected = " where `some_col` in ( :some_col )"
+			var expected = " where `some_col` in ( :some_col )";
 			var result = adapter.getClauseSql( filter={
 				  some_col = [ "blah", "yeah", "fubar", "test" ]
 			} );
@@ -641,7 +641,7 @@
 	<cffunction name="test31_getClauseSql_shouldPrependWHEREToSuppliedFilter_whenFilterIsAString" returntype="void">
 		<cfscript>
 			var adapter = _getAdapter();
-			var expected = " where ( this = :that or test = :whatever )"
+			var expected = " where ( this = :that or test = :whatever )";
 			var result = adapter.getClauseSql( filter="( this = :that or test = :whatever )" );
 
 			super.assertEquals( expected, result );
@@ -651,7 +651,7 @@
 	<cffunction name="test32_getClauseSql_shouldReplaceDotsWithDoubleUnderscoresFromFilterParams_whenFilterIsAString" returntype="void">
 		<cfscript>
 			var adapter = _getAdapter();
-			var expected = " where ( this.that = :that__this or test.fubar = :whatever__test )"
+			var expected = " where ( this.that = :that__this or test.fubar = :whatever__test )";
 			var result = adapter.getClauseSql( filter="( this.that = :that.this or test.fubar = :whatever.test )" );
 
 			super.assertEquals( expected, result );
@@ -662,7 +662,7 @@
 		<cfscript>
 			var adapter     = _getAdapter();
 			var originalSql = "select id from sometable";
-			var expected    = "select count(1) as `record_count` from ( select id from sometable ) `original_statement`"
+			var expected    = "select count(1) as `record_count` from ( select id from sometable ) `original_statement`";
 			var result      = adapter.getCountSql( originalStatement=originalSql );
 
 			super.assertEquals( expected, result );

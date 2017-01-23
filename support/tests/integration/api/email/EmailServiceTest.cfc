@@ -230,7 +230,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 
 	private any function _getEmailService() output=false {
-		templateDirs               = [ "/tests/resources/emailService/folder1", "/tests/resources/emailService/folder2", "/tests/resources/emailService/folder3" ]
+		templateDirs               = [ "/tests/resources/emailService/folder1", "/tests/resources/emailService/folder2", "/tests/resources/emailService/folder3" ];
 		mockColdBox                = createMock( "preside.system.coldboxModifications.Controller" );
 		mockEmailTemplateService   = createMock( "preside.system.services.email.EmailTemplateService" );
 		mockServiceProviderService = createMock( "preside.system.services.email.EmailServiceProviderService" );

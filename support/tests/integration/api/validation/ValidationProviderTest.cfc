@@ -104,8 +104,8 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		var actualResult   = "";
 
 		provider.addValidator( name="test" , method="validator2", params=[
-			{ name="param1"      , required=false, default="param1" },
-			{ name="anotherParam", required=false, default="param2" },
+			{ name="param1"      , required=false, "default"="param1" },
+			{ name="anotherParam", required=false, "default"="param2" },
 			{ name="param3"      , required=false }
 		]);
 

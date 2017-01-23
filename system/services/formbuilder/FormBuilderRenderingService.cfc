@@ -117,9 +117,9 @@
 	public string function getFormFieldLayoutViewlet( required string itemType, required string layout ) {
 		var layouts = listFormFieldLayouts( itemType=arguments.itemType );
 
-		for( var layout in layouts ) {
-			if ( layout.id == arguments.layout ) {
-				return layout.viewlet;
+		for( var _layout in layouts ) {
+			if ( _layout.id == arguments.layout ) {
+				return _layout.viewlet;
 			}
 		}
 		return "formbuilder.layouts.formfield.default";
@@ -136,9 +136,9 @@
 	public string function getFormLayoutViewlet( required string layout ) {
 		var layouts = listFormLayouts();
 
-		for( var layout in layouts ) {
-			if ( layout.id == arguments.layout ) {
-				return layout.viewlet;
+		for( var _layout in layouts ) {
+			if ( _layout.id == arguments.layout ) {
+				return _layout.viewlet;
 			}
 		}
 		return "formbuilder.layouts.form.default";

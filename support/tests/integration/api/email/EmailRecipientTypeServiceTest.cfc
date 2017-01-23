@@ -166,7 +166,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 		describe( "listRecipientTypeParameters()", function(){
 			it( "should return configured parameters for the given recipient type with translated titles and descriptions", function(){
 				var service       = _getService();
-				var recipientType = "websiteUser"
+				var recipientType = "websiteUser";
 				var expected      = [{
 					  id          = "known_as"
 					, title       = "Known as"

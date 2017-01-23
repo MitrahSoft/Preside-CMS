@@ -20,7 +20,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, title        = "Layout 3"
 					, description  = "Layout 3 is cool"
 					, configurable = false
-				} ]
+				} ];
 
 				for( var layout in expectedLayouts ) {
 					service.$( "$translateResource" ).$args( uri="email.layout.#layout.id#:title"      , defaultValue=layout.id ).$results( layout.title       );

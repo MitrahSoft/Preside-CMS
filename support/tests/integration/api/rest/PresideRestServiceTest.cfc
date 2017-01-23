@@ -355,7 +355,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should set a 400 error when 'Origin' request header is missing", function(){
 				var restService        = getService();
 				var resource           = { uriPattern="/some/uri/", handler="somehandler", tokens=[], verbs={ GET="testGetMethod", PUT="put", DELETE="delete" } };
-				var uri                = "/some/test/304958/"
+				var uri                = "/some/test/304958/";
 				var restResponse       = getRestResponse();
 				var restRequest        = getRestRequest( resource=resource, uri=uri, verb="OPTIONS" );
 				var mockRequestContext = getMockRequestContext();
@@ -382,7 +382,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should set a 400 error when 'Access-Control-Request-Method' request header is missing", function(){
 				var restService        = getService();
 				var resource           = { uriPattern="/some/uri/", handler="somehandler", tokens=[], verbs={ GET="testGetMethod", PUT="put", DELETE="delete" } };
-				var uri                = "/some/test/304958/"
+				var uri                = "/some/test/304958/";
 				var restResponse       = getRestResponse();
 				var restRequest        = getRestRequest( resource=resource, uri=uri, verb="OPTIONS" );
 				var mockRequestContext = getMockRequestContext();
@@ -435,7 +435,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should set a 'plain' renderer on the response object when access control request is valid", function(){
 				var restService        = getService();
 				var resource           = { uriPattern="/some/uri/", handler="somehandler", tokens=[], verbs={ GET="testGetMethod", PUT="put", DELETE="delete" } };
-				var uri                = "/some/test/304958/"
+				var uri                = "/some/test/304958/";
 				var mockRequestContext = getMockRequestContext();
 				var restResponse       = getRestResponse();
 				var restRequest        = getRestRequest( resource=resource, uri=uri, verb="OPTIONS" );
@@ -865,7 +865,7 @@ component extends="testbox.system.BaseSpec"{
 				var restService  = getService();
 				var response     = new preside.system.services.rest.PresideRestResponse();
 				var data         = { this="is some test data", which="is", very=true };
-				var expectedEtag = LCase( Hash( Serialize( data ) ) );
+				var expectedEtag = LCase( Hash( SerializeJson( data ) ) );
 
 				response.setData( data );
 

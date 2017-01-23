@@ -760,7 +760,7 @@
 
 			lock name="#instance.lockName#" type="readonly" timeout="15" throwontimeout="true" {
 				if ( controller.settingExists( cacheKey ) ) {
-					return controller.getSetting( cacheKey )
+					return controller.getSetting( cacheKey );
 				}
 			}
 
@@ -768,7 +768,7 @@
 			var mappings = {};
 
 			for( var viewDir in viewDirs ){
-				var fullDirPath = Replace( ExpandPath( viewDir ), "\", "/", "all" )
+				var fullDirPath = Replace( ExpandPath( viewDir ), "\", "/", "all" );
 				var viewFiles   = DirectoryList( fullDirPath, true, "path", "*.cfm" );
 
 				for ( var filePath in viewFiles ) {
@@ -782,7 +782,7 @@
 			}
 
 			lock name="#instance.lockName#" type="readonly" timeout="15" throwontimeout="true" {
-				controller.setSetting( cacheKey, mappings )
+				controller.setSetting( cacheKey, mappings );
 			}
 
 			return mappings;

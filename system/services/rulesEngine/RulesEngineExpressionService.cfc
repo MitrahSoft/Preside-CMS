@@ -51,7 +51,8 @@ component displayName="RulesEngine Expression Service" {
 			if ( filterOnContext && !(contexts.findNoCase( "global" ) || contexts.findNoCase( arguments.context ) ) ) {
 				continue;
 			}
-			if ( filterOnObject && !( ( allExpressions[ expressionId ].filterObjects ?: [] ).len() && allExpressions[ expressionId ].filterObjects.findNoCase( arguments.filterObject ) ) ) {
+			var _allExpressions = allExpressions[ expressionId ].filterObjects ?: [];
+			if ( filterOnObject && !( _allExpressions.len() && allExpressions[ expressionId ].filterObjects.findNoCase( arguments.filterObject ) ) ) {
 				continue;
 			}
 

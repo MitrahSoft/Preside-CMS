@@ -28,7 +28,7 @@ component output=false hint="Manage preside extensions" {
 
 	private any function list( event, rc, prc ) output=false {
 		var extensions = extensionManagerService.listExtensions();
-		var msg           = ""
+		var msg           = "";
 		var tableWidth    = 0;
 		var titleWidth    = 5;
 		var idWidth       = 2;
@@ -106,7 +106,7 @@ component output=false hint="Manage preside extensions" {
 		if ( !DirectoryExists( tmpDir ) ) {
 			var httpResult = "";
 			try {
-				http url=extensionUrl getasbinary=true result="httpResult" timeout=60 throwonerror=true;
+				cfhttp( url=extensionUrl, getasbinary=true, result="httpResult", timeout=60, throwonerror=true );
 			} catch ( any e ) {
 				return Chr(10) & "[[b;red;]Error fetching extension:] " & e.message & Chr(10);
 			}
@@ -114,7 +114,7 @@ component output=false hint="Manage preside extensions" {
 			var tmpZipFile = GetTempDirectory() & "/" & Hash( extensionUrl ) & ".zip";
 			FileWrite( tmpZipFile, httpResult.filecontent );
 			try {
-				zip action="unzip" file=tmpZipFile destination=GetTempDirectory() & "/" & Hash( extensionUrl );
+				cfzip( action="unzip", file=tmpZipFile, destination=GetTempDirectory() & "/" & Hash( extensionUrl ) );
 			} catch ( any e ) {
 				FileDelete( tmpZipFile );
 				return Chr(10) & "[[b;red;]Error unpacking extension (invalid zip archive?):] " & e.message & Chr(10);

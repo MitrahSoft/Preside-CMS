@@ -93,7 +93,7 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 			  jsonrpc = "2.0"
 			, id      = getRequestId()
 			, result  = arguments.result
-		}
+		};
 
 		event.renderData( data=response, type="JSON" );
 	}
@@ -103,9 +103,9 @@ component extends="coldbox.system.Plugin" output="false" singleton="true" {
 		var prc   = event.getCollection( private = true );
 		var response = {
 			  jsonrpc = "2.0"
-			, id      = prc._jsonRpc2Request.id ?: NullValue()
+			, id      = prc._jsonRpc2Request.id ?: javacast("null","")
 			, error   = { code : arguments.code, message=arguments.message }
-		}
+		};
 
 		if ( StructKeyExists( arguments, "data" ) ) {
 			response.error.data = arguments.data;

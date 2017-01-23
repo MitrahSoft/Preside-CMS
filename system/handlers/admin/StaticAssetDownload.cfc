@@ -18,9 +18,9 @@ component {
 
 		_doBrowserEtagLookup( etag );
 
-		header name="cache-control" value="max-age=31536000";
-		header name="etag" value=etag;
-		content file="#assetFile#" type=_getMimeType( assetFile );abort;
+		cfheader( name="cache-control", value="max-age=31536000" );
+		cfheader( name="etag", value=etag );
+		cfcontent( file="#assetFile#", type=_getMimeType( assetFile ) );abort;
 	}
 
 // PRIVATE HELPERS
@@ -41,7 +41,7 @@ component {
 
 	private string function _doBrowserEtagLookup( required string etag ) {
 		if ( ( cgi.http_if_none_match ?: "" ) == arguments.etag ) {
-			content reset=true;header statuscode=304 statustext="Not Modified";abort;
+			cfcontent( reset=true );cfheader( statuscode=304, statustext="Not Modified" );abort;
 		}
 	}
 
@@ -69,9 +69,9 @@ component {
 
 		_doBrowserEtagLookup( etag );
 
-		header name="cache-control" value="max-age=#( 2400 )#"; // cache for 20 min
-		header name="etag" value=etag;
-		content reset=true type="application/javascript";WriteOutput(js);abort;
+		cfheader( name="cache-control", value="max-age=#( 2400 )#" ); // cache for 20 min
+		cfheader( name="etag", value=etag );
+		cfcontent( reset=true, type="application/javascript" );WriteOutput(js);abort;
 	}
 
 	private string function _translatePath( required string path ) {

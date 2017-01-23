@@ -5,21 +5,21 @@ component validationProvider=true {
 	}
 
 	public boolean function minlength( required string fieldName, string value="", required numeric length, boolean list=false ) validatorMessage="cms:validation.minLength.default" {
-		var length = arguments.list ? ListLen( Trim( arguments.value ) ) : Len( Trim( arguments.value ) );
+		var defaultLength = arguments.list ? ListLen( Trim( arguments.value ) ) : Len( Trim( arguments.value ) );
 
-		return not length or length gte arguments.length;
+		return not defaultLength or defaultLength gte arguments.length;
 	}
 
 	public boolean function maxlength( required string fieldName, string value="", required numeric length, boolean list=false ) validatorMessage="cms:validation.maxLength.default" {
-		var length = arguments.list ? ListLen( Trim( arguments.value ) ) : Len( Trim( arguments.value ) );
+		var defaultLength = arguments.list ? ListLen( Trim( arguments.value ) ) : Len( Trim( arguments.value ) );
 
-		return not length or length lte arguments.length;
+		return not defaultLength or defaultLength lte arguments.length;
 	}
 
 	public boolean function rangelength( required string fieldname, string value="", required numeric minLength, required numeric maxLength, boolean list=false ) validatorMessage="cms:validation.rangeLength.default" {
-		var length = arguments.list ? ListLen( Trim( arguments.value ) ) : Len( Trim( arguments.value ) );
+		var defaultLength = arguments.list ? ListLen( Trim( arguments.value ) ) : Len( Trim( arguments.value ) );
 
-		return not length or ( length gte arguments.minLength and length lte arguments.maxLength );
+		return not defaultLength or ( defaultLength gte arguments.minLength and defaultLength lte arguments.maxLength );
 	}
 
 	public boolean function min( required string fieldName, string value="", required numeric min ) validatorMessage="cms:validation.min.default" {

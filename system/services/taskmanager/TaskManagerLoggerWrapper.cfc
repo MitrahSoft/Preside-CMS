@@ -22,7 +22,7 @@ component displayName="TaskManager Logger Wrapper" {
 		var loggingMethods = [ "DEBUG" ,"INFO" ,"WARN" ,"ERROR" ,"FATAL" ,"OFF" ];
 		var logger         = _getLogboxLogger();
 
-		if ( loggingMethods.findNoCase( arguments.methodName ) ) {
+		if ( arrayFindNoCase( loggingMethods, arguments.methodName ) ) {
 			var args = {
 				  message   = arguments.methodArgs[1] ?: ( arguments.methodArgs.message   ?: "" )
 				, extraInfo = arguments.methodArgs[2] ?: ( arguments.methodArgs.extraInfo ?: {} )
@@ -30,10 +30,12 @@ component displayName="TaskManager Logger Wrapper" {
 			args.extraInfo.taskRunId      = _getTaskRunId();
 			args.extraInfo.taskHistoryDao = _getTaskHistoryDao();
 
-			return logger[ arguments.methodName ]( argumentCollection=args );
+			cfinvoke ( method = "#logger[ arguments.methodName ]#", returnVariable = "result", argumentCollection = args );
+			return result;
 		}
 
-		return logger[ arguments.methodName ]( argumentCollection=arguments.methodArgs );
+		cfinvoke ( method = "#logger[ arguments.methodName ]#", returnVariable = "result", argumentCollection = arguments.methodArgs );
+		return result;
 	}
 
 

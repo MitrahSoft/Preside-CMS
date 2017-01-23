@@ -432,7 +432,7 @@ component extends="testbox.system.BaseSpec" {
 				var tm = _getTaskManagerService();
 				var taskKey = "my_task";
 				var nowish = Now();
-				var task = { timeout=120 }
+				var task = { timeout=120 };
 				var expectedExpiry = DateAdd( "s", task.timeout, nowish );
 
 				tm.$( "_getOperationDate", nowish );
@@ -454,7 +454,7 @@ component extends="testbox.system.BaseSpec" {
 
 				mockTaskDao.$( "updateData", 1 );
 
-				tm.markTaskAsCompleted( taskKey, true, 36 )
+				tm.markTaskAsCompleted( taskKey, true, 36 );
 
 				expect( mockTaskDao.$callLog().updateData.len() ).toBe( 1 );
 				expect( mockTaskDao.$callLog().updateData[1].filter ).toBe( { task_key = taskKey });

@@ -115,7 +115,7 @@ component displayName="System configuration service" {
 				}
 			}
 
-			var injected = _getInjectedConfig().filter( function( key ){ return key.startsWith( injectedStartsWith ) } );
+			var injected = _getInjectedConfig().filter( function( key ){ return key.startsWith( injectedStartsWith ); } );
 			for( var key in injected ) {
 				var setting = ListRest( key, "." );
 

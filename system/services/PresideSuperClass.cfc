@@ -721,6 +721,6 @@ component displayName="Preside Super Class" {
 	 * @autodoc
 	 */
 	public any function $announceInterception() {
-		return $getColdbox().getInterceptorService().processState( argumentCollection=arguments )
+		return $getColdbox().getInterceptorService().processState( argumentCollection=arguments );
 	}
 }

@@ -36,7 +36,7 @@
 
 			<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 				<cfloop array="#translations#" index="i" item="language">
-					<cfif language.id != currentLanguageId>
+					<cfif language.id neq currentLanguageId>
 						<li>
 							<a href="#translateUrlBase##language.id#">
 								<i class="fa fa-fw fa-pencil"></i>&nbsp; #language.name# (#translateResource( 'cms:multilingal.status.#language.status#' )#)

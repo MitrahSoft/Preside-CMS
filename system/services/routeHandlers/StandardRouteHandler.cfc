@@ -13,11 +13,11 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // route handler methods
-	public boolean function match( required string path, required any event ) output=false {
+	public boolean function match( required string path, required any event ) {
 		return ReFind( "./$", arguments.path );
 	}
 
-	public void function translate( required string path, required any event ) output=false {
+	public void function translate( required string path, required any event ) {
 		var site          = event.getSite();
 		var pathMinusSite = arguments.path;
 
@@ -38,11 +38,11 @@ component implements="iRouteHandler" output=false singleton=true {
 		event.setValue( _getEventName(), translated );
 	}
 
-	public boolean function reverseMatch( required struct buildArgs, required any event ) output=false {
+	public boolean function reverseMatch( required struct buildArgs, required any event ) {
 		return StructKeyExists( arguments.buildArgs, "linkTo" );
 	}
 
-	public string function build( required struct buildArgs, required any event ) output=false {
+	public string function build( required struct buildArgs, required any event ) {
 		var link = "/" & Replace( arguments.buildArgs.linkTo ?: "", ".", "/", "all" ) & "/";
 
 		link = ReReplaceNoCase( link, "index/$", "" );
@@ -55,17 +55,17 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // private getters and setters
-	private string function _getEventName() output=false {
+	private string function _getEventName() {
 		return _eventName;
 	}
-	private void function _setEventName( required string eventName ) output=false {
+	private void function _setEventName( required string eventName ) {
 		_eventName = arguments.eventName;
 	}
 
-	private any function _getController() output=false {
+	private any function _getController() {
 		return _controller;
 	}
-	private void function _setController( required any Ccntroller ) output=false {
+	private void function _setController( required any Ccntroller ) {
 		_controller = arguments.Ccntroller;
 	}
 }

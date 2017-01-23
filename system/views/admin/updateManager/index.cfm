@@ -44,7 +44,7 @@
 						<i class="fa fa-bolt"></i>
 						#translateResource( uri="cms:updateManager.install.version.btn" )#
 					</a>
-				<cfelseif downloadingVersions.keyExists( latestVersion.version )>
+				<cfelseif structKeyExists( downloadingVersions, "latestVersion.version" )>
 					#translateResource( uri="cms:updateManager.latest.version.downloading", data=[ "<strong>#currentVersion#</strong>", "<strong>#latestVersion.version#</strong>" ] )#
 					<a class="btn pull-right btn-disabled" disabled>
 						<i class="fa fa-cloud-download"></i>
@@ -52,7 +52,7 @@
 					</a>
 					<cfset event.includeData( { downloadingVersion=latestVersion.version } ) />
 				<cfelse>
-					#translateResource( uri="cms:updateManager.latest.version.downloadable", data=[ "<strong>#currentVersion#</strong>", "<strong>#latestVersion.version#</strong>", #dateformat(latestVersion.date,'mmmm dd, yyyy')#,  "<a href='#latestVersion.noteURL#'>#translateResource( uri="cms:updateManager.releaseNotes.th" )#</a>"] )# 
+					#translateResource( uri="cms:updateManager.latest.version.downloadable", data=[ "<strong>#currentVersion#</strong>", "<strong>#latestVersion.version#</strong>", dateformat(latestVersion.date,'mmmm dd, yyyy'),  "<a href='#latestVersion.noteURL#'>#translateResource( uri="cms:updateManager.releaseNotes.th" )#</a>"] )# 
 					<a class="btn pull-right btn-primary" href="#event.buildAdminLink( linkTo='updateManager.downloadVersionAction', queryString='version=#latestVersion.version#' )#">
 						<i class="fa fa-cloud-download"></i>
 						#translateResource( uri="cms:updateManager.download.version.btn" )#

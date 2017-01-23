@@ -14,7 +14,7 @@ component extends="preside.system.base.AdminHandler" output=false {
 
 		if ( IsBoolean( widgetConfigSaved ) && widgetConfigSaved && Len( Trim( widget ) ) ) {
 			if ( not IsStruct( savedConfig ) ) {
-				savedConfig eq {};
+				savedConfig = {};
 			}
 
 			event.includeData( { widgetSavedConfig = "{{widget:#Trim( widget )#:#Trim( UrlEncodedFormat( SerializeJson( savedConfig ) ) )#:widget}}" } );

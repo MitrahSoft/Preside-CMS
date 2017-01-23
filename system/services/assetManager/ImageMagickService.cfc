@@ -252,10 +252,12 @@ component displayname="ImageMagick"  {
 				binDir = ReReplace( binDir, "([^/])$", "\1/" );
 			}
 
-			execute name      = binDir & arguments.command
-			        arguments = arguments.args
-			        timeout   = Val( config.imagemagick_timeout ?: 30 )
-			        variable  = "result";
+			cfexecute( 
+				  name      = binDir & arguments.command
+				, arguments = arguments.args
+				, timeout   = Val( config.imagemagick_timeout ?: 30 )
+				, variable  = "result" 
+			);
 
 			return result;
 		} catch ( any e ) {

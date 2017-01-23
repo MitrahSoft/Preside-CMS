@@ -7,7 +7,7 @@ component output=false singleton=true accessors=true hint="I am a base Service o
 		return this;
 	}
 
-<!--- shared utility methods --->
+//shared utility methods
 	private any function getPresideObject( required string objectName ) output=false {
 		return _getPresideObjectService().getObject( objectName = arguments.objectName );
 	}

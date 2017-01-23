@@ -33,16 +33,18 @@ component {
 						, title   = translateResource( uri="locale:title", language=language, country=country )
 						, flag    = translateResource( uri="locale:flag" , language=language, country=country )
 						, selected = ( arguments.locale == currentLocale )
-					}
-				} ).sort( function( a, b ){
+					};
+
+				} );
+				ArraySort(args.locales, function( a, b ){
 					if ( a.locale == defaultLocale ) {
 						return -1;
 					}
-
-					return a.title < b.title ? -1 : 1;
-				} );
-
+					var reult = a.title < b.title ? -1 : 1;
+					return reult;
+				});
 				args.selectedLocale = args.locales[1];
+
 				args.locales.each(function( locale ){
 					if ( locale.locale == currentLocale ) {
 						args.selectedLocale = locale;

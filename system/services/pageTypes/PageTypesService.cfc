@@ -23,10 +23,10 @@ component output=false singleton=true {
 		var activeSiteTemplate = _getSiteService().getActiveSiteTemplate();
 
 		for( var id in pageTypes ){
-			var allowedBeneathParent = !Len( Trim( arguments.allowedBeneathParent ) ) || typeIsAllowedBeneathParentType( id, arguments.allowedBeneathParent );
+			var _allowedBeneathParent = !Len( Trim( arguments.allowedBeneathParent ) ) || typeIsAllowedBeneathParentType( id, arguments.allowedBeneathParent );
 			var allowedInSiteTemplate = isPageTypeAvailableToSiteTemplate( id, activeSiteTemplate );
 
-			if ( allowedBeneathParent && allowedInSiteTemplate && ( arguments.includeSystemPageTypes || !isSystemPageType( id ) ) ) {
+			if ( _allowedBeneathParent && allowedInSiteTemplate && ( arguments.includeSystemPageTypes || !isSystemPageType( id ) ) ) {
 				result.append( pageTypes[ id ] );
 			}
 		}

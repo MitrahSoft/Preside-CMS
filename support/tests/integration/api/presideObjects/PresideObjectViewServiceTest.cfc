@@ -41,7 +41,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase"{
 					, filter        = "fubar = :this"
 					, filterArgs    = { this = "is a test" }
 					, anything      = "really"
-				}
+				};
 				var expectedArguments = {
 					  objectName   = "object_b"
 					, selectFields = [ "label as title", "object_e.label as category", "object_b.datecreated as datecreated", "object_b.id as _id" ]

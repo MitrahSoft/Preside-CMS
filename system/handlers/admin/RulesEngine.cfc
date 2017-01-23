@@ -209,7 +209,7 @@ component extends="preside.system.base.AdminHandler" {
 			}
 		}
 		if ( validFilterObjects.len() ) {
-			contextAndObjectFilter.filter &= " or rules_engine_condition.filter_object in ( :rules_engine_condition.filter_object )"
+			contextAndObjectFilter.filter &= " or rules_engine_condition.filter_object in ( :rules_engine_condition.filter_object )";
 			contextAndObjectFilter.filterParams[ "rules_engine_condition.filter_object" ] = validFilterObjects;
 		}
 

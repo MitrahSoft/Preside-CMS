@@ -107,7 +107,7 @@ component {
 		var viewletArgs  = {};
 
 		for( var key in arguments ) {
-			if ( ![ "layout", "type", "emailTemplate", "blueprint" ].findNoCase( key ) ) {
+			if ( !arrayFindNoCase( [ "layout", "type", "emailTemplate", "blueprint" ], key ) ) {
 				viewletArgs[ key ] = arguments[ key ];
 			}
 		}

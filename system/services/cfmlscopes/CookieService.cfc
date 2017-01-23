@@ -25,7 +25,7 @@ component {
 		var args       = {
 			  secure   = arguments.secure
 			, httpOnly = arguments.httpOnly
-		}
+		};
 
 		if ( Len( Trim( arguments.expires ) ) && arguments.expires != 0 ) {
 			args.expires = arguments.expires;
@@ -42,8 +42,7 @@ component {
 		if ( Len( arguments.domain ) ) {
 			args.domain = arguments.domain;
 		}
-
-		cookie name=UCase( arguments.name ) value=encrypted attributeCollection=args;
+		cfcookie( name=UCase( arguments.name ), value=encrypted, attributeCollection=args );
 	}
 
 	public any function getVar( required string name, any default ) {
@@ -66,13 +65,13 @@ component {
 
 	public boolean function deleteVar( required string name, string domain="" ) {
 		if ( exists( arguments.name ) ) {
-			var args = { expires = "NOW" }
+			var args = { expires = "NOW" };
 
 			if ( Len( arguments.domain ) ) {
 				args.domain = arguments.domain;
 			}
 
-			cookie name=UCase( arguments.name ) value="" attributeCollection=args;
+			cfcookie( name=UCase( arguments.name ), value="", attributeCollection=args);
 			cookie.delete( arguments.name );
 
 			return true;

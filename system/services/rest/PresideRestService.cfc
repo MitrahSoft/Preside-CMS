@@ -19,7 +19,7 @@ component {
 		required array resourceDirectories,
 		required any   controller,
 		required any   configurationWrapper,
-		required any   validationEngine,
+		required any   validationEngine
 	) {
 		_readResourceDirectories( arguments.resourceDirectories );
 		_setController( arguments.controller );
@@ -179,9 +179,9 @@ component {
 			var message = "";
 
 			if ( isOriginAllowed ) {
-				message = "This CORS request is not allowed. The resource at [#restRequest.getUri()#] does not support the [#requestMethodHeader#] method."
+				message = "This CORS request is not allowed. The resource at [#restRequest.getUri()#] does not support the [#requestMethodHeader#] method.";
 			} else {
-				message = "This CORS request is not allowed. Either CORS is disabled for this resource, or the Origin [#originHeader#] has not been whitelisted."
+				message = "This CORS request is not allowed. Either CORS is disabled for this resource, or the Origin [#originHeader#] has not been whitelisted.";
 			}
 
 			restResponse.setError(
@@ -286,7 +286,7 @@ component {
 		var data = restResponse.getData();
 
 		if ( !IsNull( data ) ) {
-			return LCase( Hash( Serialize( restResponse.getData() ) ) );
+			return LCase( Hash( SerializeJson( restResponse.getData() ) ) );
 		}
 
 		return "";
@@ -344,7 +344,7 @@ component {
 	}
 
 	private void function _dealWithEtags( required any restRequest, required any restResponse, required any requestContext ) {
-		if ( [ "HEAD", "GET" ].findNoCase( restRequest.getVerb() ) ) {
+		if ( arrayfindNoCase( [ "HEAD", "GET" ], restRequest.getVerb() ) ) {
 			var etag = setEtag( restResponse );
 
 			if ( Len( Trim( etag ) ) ) {

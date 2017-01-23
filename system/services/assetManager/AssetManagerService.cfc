@@ -367,10 +367,10 @@ component displayName="AssetManager Service" {
 
 	public array function expandTypeList( required array types, boolean prefixExtensionsWithPeriod=false ) {
 		var expanded = [];
-		var types    = _getTypes();
+		var assertTypes    = _getTypes();
 
 		for( var typeName in arguments.types ){
-			if ( types.keyExists( typeName ) ) {
+			if ( assertTypes.keyExists( typeName ) ) {
 				expanded.append( typeName );
 			} else {
 				for( var typeName in listTypesForGroup( typeName ) ){
@@ -852,7 +852,7 @@ component displayName="AssetManager Service" {
 
 	public binary function getAssetBinary( required string id, string versionId="", boolean throwOnMissing=false, boolean isTrashed=false ) {
 		var assetBinary = "";
-		var isPrivate   = isAssetAccessRestricted( arguments.id )
+		var isPrivate   = isAssetAccessRestricted( arguments.id );
 		var storagePathField = arguments.isTrashed ? "trashed_path as storage_path" : "storage_path";
 		var asset       = Len( Trim( arguments.versionId ) )
 			? getAssetVersion( assetId=arguments.id, versionId=arguments.versionId, throwOnMissing=arguments.throwOnMissing, selectFields=[ "asset_version.#storagePathField#", "asset.asset_folder" ] )
@@ -886,13 +886,13 @@ component displayName="AssetManager Service" {
 		}
 
 		if ( asset.recordCount ) {
-			var private   = Len( Trim( arguments.derivativeName ) ) ? ( !isDerivativePubliclyAccessible( arguments.derivativeName ) && isAssetAccessRestricted( arguments.id ) ) : isAssetAccessRestricted( arguments.id )
+			var private   = Len( Trim( arguments.derivativeName ) ) ? ( !isDerivativePubliclyAccessible( arguments.derivativeName ) && isAssetAccessRestricted( arguments.id ) ) : isAssetAccessRestricted( arguments.id );
 			var assetInfo = _getStorageProviderForFolder( asset.asset_folder ).getObjectInfo(
 				  path    = asset.storage_path
 				, trashed = arguments.isTrashed
 				, private = private
 			);
-			var etag      = LCase( Hash( SerializeJson( assetInfo ) ) )
+			var etag      = LCase( Hash( SerializeJson( assetInfo ) ) );
 
 			return Left( etag, 8 );
 		}
@@ -995,7 +995,7 @@ component displayName="AssetManager Service" {
 	) {
 		if ( !arguments.trashed ) {
 			if ( Len( Trim( arguments.derivative ) ) && isDerivativePubliclyAccessible( arguments.derivative ) ) {
-				var permissions = { restricted = false }
+				var permissions = { restricted = false };
 			} else {
 				var permissions = getAssetPermissioningSettings( arguments.id );
 			}
@@ -1249,7 +1249,7 @@ component displayName="AssetManager Service" {
 			, fullLoginRequired                  = false
 			, grantAcessToAllLoggedInUsers       = false
 			, conditionId                        = ""
-		}
+		};
 
 		if ( !asset.recordCount ){ return settings; }
 
@@ -1538,7 +1538,7 @@ component displayName="AssetManager Service" {
 				}
 			}
 			return false;
-		}
+		};
 
 		if ( moveToCorrect( arguments.storagePath ) ) {
 			_getAssetDao().updateData( id=arguments.assetId, data={ asset_url="" } );
@@ -1572,7 +1572,7 @@ component displayName="AssetManager Service" {
 		var childRecords = _getFolderDao().selectData( filter={ parent_folder=arguments.parent }, selectFields=[ "id" ] );
 
 		if ( childRecords.recordCount ) {
-			childFolders = ValueArray( childRecords.id );
+			childFolders = listToArray( ValueList( childRecords.id ) );
 			for( var folder in childRecords ) {
 				childFolders.append( getChildFolders( childRecords.id ), true );
 			}
@@ -1634,7 +1634,7 @@ component displayName="AssetManager Service" {
 
 	private void function _setupConfiguredSystemFolder( required string id, required struct settings, required string parentId ) {
 		var dao            = _getFolderDao();
-		var existingRecord = dao.selectData( selectfields=[ "id" ], filter={ is_system_folder=true, system_folder_key=arguments.id } )
+		var existingRecord = dao.selectData( selectfields=[ "id" ], filter={ is_system_folder=true, system_folder_key=arguments.id } );
 		var folderId       = existingRecord.id ?: "";
 
 		if ( !Len( Trim( folderId ) ) ) {
@@ -1660,7 +1660,7 @@ component displayName="AssetManager Service" {
 		// todo, sanity check the input
 		args.asset    = arguments.assetBinary;
 
-		return _getAssetTransformer()[ arguments.transformationMethod ]( argumentCollection = args );
+		return invoke( _getAssetTransformer(), arguments.transformationMethod, args );
 	}
 
 	private array function _getPreconfiguredDerivativeTransformations( required string derivativeName ) {
@@ -1721,7 +1721,7 @@ component displayName="AssetManager Service" {
 	}
 
 	private struct function _getExcludeHiddenFilter() {
-		return { filter="hidden is null or hidden = '0'" }
+		return { filter="hidden is null or hidden = '0'" };
 	}
 
 	private numeric function _getNextAssetVersionNumber( required string assetId ) {

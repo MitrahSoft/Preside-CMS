@@ -123,7 +123,7 @@ component displayName="Website permissions service" {
 			, orderby      = "benefits.priority desc"
 		);
 
-		var userBenefits = ValueArray( benefits.id );
+		var userBenefits = listToArray( ValueList( benefits.id ) );
 		var comboFound   = false;
 
 		do {
@@ -386,7 +386,8 @@ component displayName="Website permissions service" {
 					exclusions.append( ReReplace( permissionKey, "^!(.*)$", "\1" ) );
 
 				} else if ( permissionKey contains "*" ) {
-					( _expandWildCardPermissionKey( permissionKey ) ).each( function( expandedKey ){
+					var permissionKeyArray = _expandWildCardPermissionKey( permissionKey );
+					permissionKeyArray.each( function( expandedKey ){
 						if ( !filtered.findNoCase( expandedKey ) ) {
 							filtered.append( expandedKey );
 						}
@@ -399,7 +400,8 @@ component displayName="Website permissions service" {
 
 		for( var exclusion in exclusions ){
 			if ( exclusion contains "*" ) {
-				( _expandWildCardPermissionKey( exclusion ) ).each( function( expandedKey ){
+				var permissionKeyArray = _expandWildCardPermissionKey( exclusion );
+				permissionKeyArray.each( function( expandedKey ){
 					filtered.delete( expandedKey );
 				} );
 			} else {

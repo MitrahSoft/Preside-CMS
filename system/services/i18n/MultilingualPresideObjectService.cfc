@@ -511,7 +511,7 @@ component displayName="Multilingual Preside Object Service" {
 			var configuredLanguages  = ListToArray( ListAppend( multilingualSettings.additional_languages ?: "", multilingualSettings.default_language ?: "" ) );
 
 			return configuredLanguages.findNoCase( lang.id ) ? lang : QueryNew( 'id,slug' );
-		}
+		};
 
 		if ( Len( Trim( arguments.localeSlug ) ) ) {
 			var languageFromSlug = languageObj.selectData( filter={ slug=arguments.localeSlug } );
@@ -719,7 +719,7 @@ component displayName="Multilingual Preside Object Service" {
 			, { "name":"hne"                          , "iso_code":"hne"       , "rtl":false, "native_name":"hne" }
 			, { "name":"me (Montenegro)"              , "iso_code":"me_ME"     , "rtl":false, "native_name":"me (Montenegro)" }
 			, { "name":"va (Spain)"                   , "iso_code":"va_ES"     , "rtl":false, "native_name":"va (Spain)" }
-		]
+		];
 	}
 
 // PRIVATE HELPERS
@@ -779,7 +779,7 @@ component displayName="Multilingual Preside Object Service" {
 			, propertyName = propertyName
 			, selector     = selector
 			, alias        = selectFieldParts.len() == 1 ? propertyName : selectFieldParts[ selectFieldParts.len() ]
-		}
+		};
 	}
 
 	private string function _transformSelectFieldToGetTranslationIfExists( required string objectName, required string selector, required string alias, required any dbAdapter ) {

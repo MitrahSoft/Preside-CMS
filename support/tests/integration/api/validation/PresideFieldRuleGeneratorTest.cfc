@@ -93,7 +93,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 	function test09_getRulesForField_shouldReturnUniqueIndexValidators_whenFieldHasUniqueIndexesAttribute(){
 		var expected  = [
 			{ fieldName="somefield", validator="presideObjectUniqueIndex", params={ objectName="test", fields="field1,field2,someField" }, message="preside-objects.test:validation.somefield.presideObjectUniqueIndex.message" },
-			{ fieldName="somefield", validator="presideObjectUniqueIndex", params={ objectName="test", fields="someField" }, message="preside-objects.test:validation.somefield.presideObjectUniqueIndex.message" },
+			{ fieldName="somefield", validator="presideObjectUniqueIndex", params={ objectName="test", fields="someField" }, message="preside-objects.test:validation.somefield.presideObjectUniqueIndex.message" }
 		];
 		var rules     = "";
 

@@ -24,7 +24,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, param3 = dummyFilters[2][1].filterParams.param3
 					, param4 = dummyFilters[3][1].filterParams.param4
 					, param5 = dummyFilters[4][1].filterParams.param5
-				}
+				};
 				var dummyCondition = [{
 					  expression = "test.expression"
 					, fields     = { test=CreateUUId(), _is=true }
@@ -85,7 +85,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					, param3 = dummyFilters[2][1].filterParams.param3
 					, param4 = dummyFilters[3][1].filterParams.param4
 					, param5 = dummyFilters[4][1].filterParams.param5
-				}
+				};
 				var dummyCondition = [{
 					  expression = "test.expression"
 					, fields     = { test=CreateUUId(), _is=true }

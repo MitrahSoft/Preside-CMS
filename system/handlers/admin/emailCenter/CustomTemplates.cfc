@@ -76,7 +76,7 @@ component extends="preside.system.base.AdminHandler" {
 	}
 
 	function preview( event, rc, prc ) {
-		_getTemplate( argumentCollection=arguments, allowDrafts=true )
+		_getTemplate( argumentCollection=arguments, allowDrafts=true );
 
 		var id      = rc.id ?: "";
 		var version = Val( rc.version ?: "" );
@@ -98,7 +98,7 @@ component extends="preside.system.base.AdminHandler" {
 		prc.canSaveDraft = hasCmsPermission( "emailCenter.customTemplates.saveDraft" );
 		prc.canPublish   = hasCmsPermission( "emailCenter.customTemplates.publish"   );
 		if ( !prc.canSaveDraft && !prc.canPublish ) {
-			event.adminAccessDenied()
+			event.adminAccessDenied();
 		}
 
 		var id = rc.id ?: "";

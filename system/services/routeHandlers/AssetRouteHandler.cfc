@@ -13,11 +13,11 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // route handler methods
-	public boolean function match( required string path, required any event ) output=false {
+	public boolean function match( required string path, required any event ) {
 		return ReFindNoCase( "^/asset/(.*?)/", arguments.path );
 	}
 
-	public void function translate( required string path, required any event ) output=false {
+	public void function translate( required string path, required any event ) {
 		var assetId        = UrlDecode( ReReplace( arguments.path, "^/asset/(.*?)/.*$", "\1" ) );
 		var versionId      = ListLen( assetId, "." ) > 1 ? ListRest( assetId, "." ) : "";
 		var isTrashedAsset = Left( assetId, 1 ) == "$";
@@ -38,14 +38,14 @@ component implements="iRouteHandler" output=false singleton=true {
 		}
 	}
 
-	public boolean function reverseMatch( required struct buildArgs, required any event ) output=false {
+	public boolean function reverseMatch( required struct buildArgs, required any event ) {
 		return Len( Trim( buildArgs.assetId ?: "" ) );
 	}
 
-	public string function build( required struct buildArgs, required any event ) output=false {
-		var assetId    = buildArgs.assetId    ?: ""
-		var derivative = buildArgs.derivative ?: ""
-		var versionId  = buildArgs.versionId  ?: ""
+	public string function build( required struct buildArgs, required any event ) {
+		var assetId    = buildArgs.assetId    ?: "";
+		var derivative = buildArgs.derivative ?: "";
+		var versionId  = buildArgs.versionId  ?: "";
 		var trashed    = IsBoolean( buildArgs.trashed ?: "" ) && buildArgs.trashed;
 		var link       = "";
 
@@ -71,17 +71,17 @@ component implements="iRouteHandler" output=false singleton=true {
 	}
 
 // private getters and setters
-	private string function _getEventName() output=false {
+	private string function _getEventName() {
 		return _eventName;
 	}
-	private void function _setEventName( required string eventName ) output=false {
+	private void function _setEventName( required string eventName ) {
 		_eventName = arguments.eventName;
 	}
 
-	private any function _getAssetManagerService() output=false {
+	private any function _getAssetManagerService() {
 		return _assetManagerService;
 	}
-	private void function _setAssetManagerService( required any assetManagerService ) output=false {
+	private void function _setAssetManagerService( required any assetManagerService ) {
 		_assetManagerService = arguments.assetManagerService;
 	}
 }

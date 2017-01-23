@@ -10,7 +10,7 @@
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
 			<cfloop array="#policyContexts#" index="policyContext">
-				<cfset active = ( policyContext == currentContext ) />
+				<cfset active = ( policyContext eq currentContext ) />
 
 				<li<cfif active> class="active"</cfif>>
 					<a href="#event.buildAdminLink( linkTo='passwordPolicyManager', queryString='context=' & policyContext )#">

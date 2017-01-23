@@ -1,8 +1,10 @@
-component output=false accessors=true {
-	property name="viewlet" type="string" default="";
-	property name="chain"   type="array"  default=ArrayNew(1);
+<cfcomponent output=false accessors=true> 
+    <cfproperty name="viewlet" type="string" default=""> 
+    <cfproperty name="chain"   type="array"  default=arrayNew(1)> 
 
-	public boolean function isChain(){
-		return ArrayLen( getChain() );
-	}
-}
+    <cfscript>
+    	public boolean function isChain(){
+			return ArrayLen( getChain() );
+		}
+    </cfscript> 
+</cfcomponent>

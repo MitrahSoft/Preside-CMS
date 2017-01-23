@@ -405,7 +405,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		mockBCryptService.$( "checkPw" ).$args( ListLast( testToken, "-" ), testRecord.reset_password_key ).$results( false );
 
 		super.assertFalse( userService.validateResetPasswordToken( testToken ) );
-		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() )
+		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() );
 	}
 
 	function test21_validateResetPasswordToken_shouldReturnTrue_whenRecordFoundAndNotExipiredAndHashedKeyMatches() output=false {
@@ -447,7 +447,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		).$results( true );
 
 		super.assert( userService.resetPassword( testToken, plainPassword ) );
-		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() )
+		super.assertEquals( 1, mockUserDao.$callLog().updateData.len() );
 	}
 
 

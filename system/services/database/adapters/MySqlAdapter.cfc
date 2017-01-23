@@ -26,7 +26,7 @@ component extends="BaseAdapter" {
 
 	) {
 
-		var columnDef  = escapeEntity( arguments.columnName )
+		var columnDef  = escapeEntity( arguments.columnName );
 		var isNullable = not arguments.primaryKey and ( arguments.nullable or StructKeyExists( arguments, 'defaultValue' ) );
 
 		columnDef &= " #arguments.dbType#";
@@ -66,14 +66,17 @@ component extends="BaseAdapter" {
 
 
 	) {
-		var columnDef = getColumnDefinitionSql(
+		var args = {
 			  columnName    = arguments.newName
 			, dbType        = arguments.dbType
-			, defaultValue  = arguments.defaultValue
 			, maxLength     = arguments.maxLength
 			, nullable      = arguments.nullable
 			, autoIncrement = arguments.autoIncrement
-		);
+		};
+		if( isDefined( "arguments.defaultValue" ) ){
+			structInsert( args, "defaultValue", arguments.defaultValue );
+		}
+		var columnDef = getColumnDefinitionSql( argumentCollection = args );
 
 		return "alter table #escapeEntity( arguments.tableName )# change #escapeEntity( arguments.columnName )# #columnDef#";
 	}
@@ -131,7 +134,7 @@ component extends="BaseAdapter" {
 	}
 
 	public string function getDeleteSql( required string tableName, required any filter, string tableAlias="" ) {
-		var sql = "delete from "
+		var sql = "delete from ";
 
 		if ( Len( Trim( arguments.tableAlias ) ) ) {
 			sql &= "#escapeEntity( arguments.tableAlias )# using #escapeEntity( arguments.tableName )# as #escapeEntity( arguments.tableAlias )#";

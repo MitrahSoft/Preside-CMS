@@ -351,7 +351,7 @@ component {
 		var noteURL = 'https://www.presidecms.com/release-notes/release-notes-for-';
 
 		try {
-			http url=versionFileUrl result="result" throwOnError=true;
+			cfhttp( url=versionFileUrl, result="result", throwOnError=true );
 			resultData = DeSerializeJson(result.fileContent);
 			resultData.date = result.responseheader['Last-Modified'];
 			// Release notes only available after 10.1.1 in https://www.presidecms.com/release-notes/release-notes-for-10-1-1.html
@@ -398,7 +398,7 @@ component {
 
 		thread name=downloadId downloadId=downloadId downloadUrl=arguments.downloadUrl unpackToDir=_getVersionContainerDirectory() downloadPath=tempPath updateManagerService=this version=arguments.version {
 			try {
-				http url=attributes.downloadUrl path=attributes.downloadPath throwOnError=true timeout=Val( _getSetting( "download_timeout", 120 ) );
+				cfhttp( url=attributes.downloadUrl, path=attributes.downloadPath, throwOnError=true, timeout=Val( _getSetting( "download_timeout", 120 ) ) );
 			} catch ( any e ) {
 				attributes.updateManagerService.markDownloadAsErrored( attributes.version, attributes.downloadId, e );
 				abort;
@@ -406,7 +406,7 @@ component {
 
 			if ( attributes.updateManagerService.downloadIsActive( attributes.version, attributes.downloadId ) ) {
 				try {
-					zip action="unzip" file=attributes.downloadPath destination=attributes.unpackToDir;
+					cfzip( action="unzip", file=attributes.downloadPath, destination=attributes.unpackToDir );
 				} catch( any e ) {
 					attributes.updateManagerService.markDownloadAsErrored( attributes.version, attributes.downloadId, e );
 					abort;
@@ -423,15 +423,15 @@ component {
 
 	private void function _updateMapping( required string newPath ) {
 		try {
-			admin action   = "updateMapping"
-			      password = _getSetting( "railo_admin_pw", "password" )
-			      type     = "web"
-			      virtual  = "/preside"
-			      physical = arguments.newPath
-			      archive  = ""
-			      primary  = "physical"
-			      trusted  = true
-			      toplevel = false;
+			cfadmin(  action   = "updateMapping"
+			        , password = _getSetting( "railo_admin_pw", "password" )
+			        , type     = "web"
+			        , virtual  = "/preside"
+			        , physical = arguments.newPath
+			        , archive  = ""
+			        , primary  = "physical"
+			        , trusted  = true
+			        , toplevel = false );
 
 			pagePoolClear();
 		} catch( "security" e ) {

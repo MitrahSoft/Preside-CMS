@@ -20,7 +20,7 @@ component output=false extends="coldbox.system.web.services.RequestService" {
 	 * If not, get our mock flash scope - otherwise, proceed as normal.
 	 */
 	public any function getFlashScope() output=false {
-		var appSettings = GetApplicationSettings( true );
+		var appSettings = getApplicationMetadata();
 
 		if ( IsBoolean( appSettings.sessionManagement ?: "" ) && appSettings.sessionManagement ) {
 			return super.getFlashScope();

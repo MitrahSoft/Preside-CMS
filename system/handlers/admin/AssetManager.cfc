@@ -116,8 +116,8 @@ component extends="preside.system.base.AdminHandler" {
 
 	function multiRecordAction( event, rc, prc ) {
 		// TODO: permissions checks, etc.
-		var action = rc.multiAction ?: ""
-		var ids    = rc.id          ?: ""
+		var action = rc.multiAction ?: "";
+		var ids    = rc.id          ?: "";
 
 		if ( not Len( Trim( ids ) ) ) {
 			setNextEvent( url=event.buildAdminLink( linkTo="assetmanager" ) );
@@ -381,7 +381,7 @@ component extends="preside.system.base.AdminHandler" {
 		_checkPermissions( argumentCollection=arguments, key="storagelocations.manage" );
 
 		var folderId          = ( rc.folder ?: "" );
-		var formName          = "preside-objects.asset_folder.admin.setlocation"
+		var formName          = "preside-objects.asset_folder.admin.setlocation";
 		var formData          = event.getCollectionForForm( formName );
 		var validationResult  = "";
 
@@ -727,7 +727,7 @@ component extends="preside.system.base.AdminHandler" {
 				);
 			} catch ( "AssetManager.mismatchedMimeType" e ) {
 				messagebox.error( translateResource( "cms:assetmanager.upload.new.version.mismatched.type.error" ) );
-				setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) )
+				setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) );
 
 			} catch ( any e ) {
 				success = false;
@@ -741,7 +741,7 @@ component extends="preside.system.base.AdminHandler" {
 			}
 		}
 
-		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) )
+		setNextEvent( url=event.buildAdminLink( linkTo="assetmanager.editAsset", queryString="asset=" & assetId ) );
 	}
 
 	function assetPickerBrowser( event, rc, prc ) {
@@ -850,7 +850,7 @@ component extends="preside.system.base.AdminHandler" {
 		);
 		var gridFields = [ "title", "datemodified" ];
 		var renderedOptions = [];
-		var checkboxCol     = []
+		var checkboxCol     = [];
 
 		var records = Duplicate( result.records );
 
@@ -888,7 +888,7 @@ component extends="preside.system.base.AdminHandler" {
 
 		var gridFields = [ "title", "datemodified" ];
 		var renderedOptions = [];
-		var checkboxCol     = []
+		var checkboxCol     = [];
 
 		var records = Duplicate( result.records );
 
@@ -1103,7 +1103,7 @@ component extends="preside.system.base.AdminHandler" {
 		var locationArgs = {
 			  storageProvider = provider
 			, configuration   = providerFormData
-		}
+		};
 		locationArgs.append( generalFormData );
 		var id = storageLocationService.addLocation( argumentCollection = locationArgs );
 		var editLink = '<a href="#event.buildAdminLink( linkTo='assetmanager.editLocation', querystring='id=#id#' )#">#( completeFormData.name ?: '' )#</a>';
@@ -1183,7 +1183,7 @@ component extends="preside.system.base.AdminHandler" {
 		var locationArgs = {
 			  id            = locationId
 			, configuration = providerFormData
-		}
+		};
 		locationArgs.append( generalFormData );
 
 		storageLocationService.updateLocation( argumentCollection = locationArgs );

@@ -38,14 +38,14 @@ component output=false singleton=true {
 		var httpResult = "";
 		var paramType  = arguments.httpMethod == "GET" ? "url" : "formfield";
 
-		http url="#_getEndpoint()#/api/#arguments.apiMethod#/" timeout=5 result="httpResult" {
-			httpparam name="publickey" value="#_getPublicKey()#"     type="#paramType#";
-			httpparam name="timestamp" value="#ts#"                  type="#paramType#";
-			httpparam name="signature" value="#signature#"           type="#paramType#";
-			httpparam name="method"    value="#arguments.apiMethod#" type="#paramType#";
+		cfhttp( url="#_getEndpoint()#/api/#arguments.apiMethod#/", timeout=5, result="httpResult" ) {
+			cfhttpparam( name="publickey", value="#_getPublicKey()#",     type="#paramType#" );
+			cfhttpparam( name="timestamp", value="#ts#",                  type="#paramType#" );
+			cfhttpparam( name="signature", value="#signature#",           type="#paramType#" );
+			cfhttpparam( name="method",    value="#arguments.apiMethod#", type="#paramType#" );
 
 			for( var arg in arguments.args ){
-				httpparam name="#arg#" value="#arguments.args[ arg ]#" type="#paramType#";
+				cfhttpparam( name="#arg#", value="#arguments.args[ arg ]#", type="#paramType#" );
 			}
 		}
 

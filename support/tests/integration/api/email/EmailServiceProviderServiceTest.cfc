@@ -140,7 +140,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var defaultProvider = CreateUUId();
 
 				service.$( "$getPresideSetting" ).$args( "email", "defaultProvider" ).$results( "" );
-				service.$( "listProviders", [ { id=defaultProvider } ] )
+				service.$( "listProviders", [ { id=defaultProvider } ] );
 
 				expect( service.getDefaultProvider() ).toBe( defaultProvider );
 			} );
@@ -149,7 +149,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var service = _getService();
 
 				service.$( "$getPresideSetting" ).$args( "email", "defaultProvider" ).$results( "" );
-				service.$( "listProviders", [] )
+				service.$( "listProviders", [] );
 
 				expect( service.getDefaultProvider() ).toBe( "" );
 			} );

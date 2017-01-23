@@ -123,8 +123,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		// mocking the coldbox calls
 		mockColdBox.$( "viewletExists", false );
-		mockColdBox.$( "renderViewlet" );
-			.$args( event="admin.viewlet.money", args={ data="8334" } ).$results( expectedRender );
+		mockColdBox.$( "renderViewlet" ).$args( event="admin.viewlet.money", args={ data="8334" } ).$results( expectedRender );
 
 		svc.registerRenderer( name="money", viewlet="admin.viewlet.money", context="admin" );
 		svc.registerRenderer( name="money", viewlet="test.viewlet.here", context="default" );
@@ -171,7 +170,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 	function test12_render_shouldCallChainOfRenderers_whenRendererIsAChain(){
 		var svc      = _getRendererService();
 		var expectedRender = "Third render";
-		var rendered       = ""
+		var rendered       = "";
 
 		svc.registerRenderer( name="myRenderer", viewlet="some.viewlet" );
 		svc.registerRenderer( name="myRenderer", viewlet="another.viewlet", context="admin" );

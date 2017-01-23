@@ -258,7 +258,7 @@
 				, ix_an_object_indexc     = { unique="false", fields="field4,field1"        }
 				, ux_an_object_uniqueness = { unique="true" , fields="field2,field1"        }
 				, ux_an_object_uniq       = { unique="true" , fields="field3"               }
-			}
+			};
 			var realIndexes = "";
 
 			poService.dbSync();
@@ -281,7 +281,7 @@
 				, ix_an_object_indexd     = { unique="false", fields="field2"               }
 				, ux_an_object_uniqueness = { unique="true" , fields="field4"               }
 				, ux_an_object_uniq       = { unique="true" , fields="field3"               }
-			}
+			};
 			var realIndexes = "";
 
 			poService.dbSync();
@@ -359,7 +359,7 @@
 					, fk_column = "object_b"
 					, on_update = "cascade"
 					, on_delete = "error"
-				},
+				}
 			};
 			var keys = "";
 
@@ -401,8 +401,8 @@
 			try {
 				_getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentWithBadRelationship/" ] );
 			} catch ( "RelationshipGuidance.BadRelationship" e ) {
-				super.assertEquals( expectedMessage, e.message )
-				super.assertEquals( expectedDetail , e.detail )
+				super.assertEquals( expectedMessage, e.message );
+				super.assertEquals( expectedDetail , e.detail );
 				errorThrown = true;
 			}
 
@@ -438,7 +438,7 @@
 			var filterParams = {
 				  label = "test%"
 				, age       = { value=2, type="cf_sql_integer" }
-			}
+			};
 
 			poService.dbSync();
 
@@ -473,7 +473,7 @@
 			var filterParams = {
 				  "object_e.label" = "test%"
 				, age       = { value=2, type="cf_sql_integer" }
-			}
+			};
 			var eId = "";
 
 			poService.dbSync();
@@ -1407,7 +1407,7 @@
 		<cfscript>
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 
-			super.assertFalse( poService.fieldExists( objectName="object_a", fieldName="i_do_not_exist" ), "fieldExists() returned true for a field that does not exist." )
+			super.assertFalse( poService.fieldExists( objectName="object_a", fieldName="i_do_not_exist" ), "fieldExists() returned true for a field that does not exist." );
 		</cfscript>
 	</cffunction>
 
@@ -1415,7 +1415,7 @@
 		<cfscript>
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 
-			super.assert( poService.fieldExists( objectName="object_b", fieldName="object_d" ), "fieldExists() returned false for a field that does exist." )
+			super.assert( poService.fieldExists( objectName="object_b", fieldName="object_d" ), "fieldExists() returned false for a field that does exist." );
 		</cfscript>
 	</cffunction>
 
@@ -1465,7 +1465,7 @@
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 			var q = new query();
 			var result = "";
-			var expected = [ { objectName="object_d", recordcount=2, fk="object_e" } ]
+			var expected = [ { objectName="object_d", recordcount=2, fk="object_e" } ];
 
 			poService.dbSync();
 
@@ -1493,7 +1493,7 @@
 			var poService = _getService( objectDirectories=[ "/tests/resources/PresideObjectService/componentsWithAutoJoinableRelationships/" ] );
 			var q = new query();
 			var result = "";
-			var expected = [ { objectName="object_d", recordcount=2 } ]
+			var expected = [ { objectName="object_d", recordcount=2 } ];
 
 			poService.dbSync();
 
@@ -1920,7 +1920,7 @@
 
 			actualPropNames.sort( "textnocase" );
 
-			super.assertEquals( expectedPropNames, actualPropNames )
+			super.assertEquals( expectedPropNames, actualPropNames );
 
 			for( key in mergedProperties ){
 				super.assertEquals( expectedMergedProperties[ key ], mergedProperties[ key ] );
@@ -2832,7 +2832,7 @@
 				, cacheBox           = cacheBox
 				, coldbox            = mockColdbox
 				, interceptorService = mockInterceptorService
-			)
+			);
 		</cfscript>
 	</cffunction>
 
@@ -2855,7 +2855,7 @@
 
 	<cffunction name="_getTableForeignKeys" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
-
+		<cfdbinfo type="Foreignkeys" name="keys" datasource="#application.dsn#" table="#arguments.table#" />
 		<cfscript>
 			var keys        = "";
 			var key         = "";
@@ -2865,14 +2865,13 @@
 			rules["0"] = "cascade";
 			rules["2"] = "set null";
 
-			dbinfo type="Foreignkeys" table=arguments.table datasource="#application.dsn#" name="keys";
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
 					  pk_table  = key.pktable_name
 					, fk_table  = key.fktable_name
 					, pk_column = key.pkcolumn_name
 					, fk_column = key.fkcolumn_name
-				}
+				};
 
 				if ( StructKeyExists( rules, key.update_rule ) ) {
 					constraints[ key.fk_name ].on_update = rules[ key.update_rule ];

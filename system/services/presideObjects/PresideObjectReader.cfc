@@ -49,7 +49,6 @@ component {
 		_removeObjectsUsedInDisabledFeatures( objects );
 
 		_announceInterception( state="postReadPresideObjects", interceptData={ objects=objects } );
-
 		return objects;
 	}
 
@@ -75,11 +74,14 @@ component {
 
 		meta.tablePrefix   = meta.tablePrefix   ?: _getTablePrefix();
 		meta.tableName     = meta.tableName     ?: componentName;
-		meta.versioned     = meta.versioned     ?: true;
+		// meta.versioned     = meta.versioned     ?: true;
 		meta.dsn           = meta.dsn           ?: _getDsn();
 		meta.propertyNames = meta.propertyNames ?: [];
 		meta.properties    = meta.properties    ?: {};
 
+		if(!structKeyExists(meta, "versioned")){
+			meta.versioned = true;
+		}
 
 		_defineIdField( meta );
 		_defineCreatedField( meta );
@@ -170,7 +172,7 @@ component {
 		var propName     = "";
 		var orderedProps = _getOrderedPropertiesInAHackyWayBecauseRailoGivesThemInRandomOrder( pathToCfc = arguments.pathToCfc );
 
-		param name="arguments.meta.properties"    default=StructNew( "linked" );
+		param name="arguments.meta.properties"    default=StructNew( "ordered" );
 		param name="arguments.meta.propertyNames" default=ArrayNew(1);
 
 		for( propName in orderedProps ){
@@ -208,7 +210,7 @@ component {
 	private struct function _readProperty( required struct property, required struct inheritedProperty ) {
 		var prop = Duplicate( arguments.property );
 
-		if ( prop.type == "any" ) {
+		if ( structKeyExists( prop, "type" ) && prop.type == "any" ) {
 			prop.delete( "type" );
 		}
 
@@ -244,7 +246,7 @@ component {
 				prop.relatedTo = propName;
 			}
 
-			if ( [ "many-to-many", "one-to-many" ].find( prop.relationship ?: "" ) ) {
+			if ( ArrayFindNoCase( [ "many-to-many", "one-to-many" ], prop.relationship ?: "" ) ) {
 				prop.dbtype = "none";
 			}
 		}
@@ -292,7 +294,8 @@ component {
 			ArrayPrepend( arguments.meta.propertyNames, idField );
 		}
 		if ( idField.len() && idField != "id" && !arguments.meta.propertyNames.findNoCase( "id" ) ) {
-			arguments.meta.properties[ idField ].aliases = ( arguments.meta.properties[ idField ].aliases ?: "" ).listAppend( "id" );
+			var _idFieldProperties = arguments.meta.properties[ idField ].aliases ?: "";
+			arguments.meta.properties[ idField ].aliases = _idFieldProperties.listAppend( "id" );
 		}
 
 		if ( arguments.meta.propertyNames.find( dateCreatedField ) ) {
@@ -304,7 +307,8 @@ component {
 			ArrayAppend( arguments.meta.propertyNames, dateCreatedField );
 		}
 		if ( dateCreatedField.len() && dateCreatedField != "dateCreated" && !arguments.meta.propertyNames.findNoCase( "dateCreated" ) ) {
-			arguments.meta.properties[ dateCreatedField ].aliases = ( arguments.meta.properties[ dateCreatedField ].aliases ?: "" ).listAppend( "dateCreated" );
+			var _dateCreatedFieldProperties = arguments.meta.properties[ dateCreatedField ].aliases ?: "";
+			arguments.meta.properties[ dateCreatedField ].aliases = _dateCreatedFieldProperties.listAppend( "dateCreated" );
 		}
 
 		if ( arguments.meta.propertyNames.find( dateModifiedField ) ) {
@@ -316,7 +320,8 @@ component {
 			ArrayAppend( arguments.meta.propertyNames, dateModifiedField );
 		}
 		if ( dateModifiedField.len() && dateModifiedField != "dateModified" && !arguments.meta.propertyNames.findNoCase( "dateModified" ) ) {
-			arguments.meta.properties[ dateModifiedField ].aliases = ( arguments.meta.properties[ dateModifiedField ].aliases ?: "" ).listAppend( "dateModified" );
+			var _dateModifiedFieldProperties = arguments.meta.properties[ dateModifiedField ].aliases ?: "";
+			arguments.meta.properties[ dateModifiedField ].aliases = _dateModifiedFieldProperties.listAppend( "dateModified" );
 		}
 
 	}
@@ -380,7 +385,7 @@ component {
 		param name="arguments.meta.properties"    default=StructNew();
 
 		var propName     = "";
-		var orderedProps = StructNew( 'linked' );
+		var orderedProps = StructNew( 'ordered' );
 
 		for( propName in arguments.meta.propertyNames ){
 			orderedProps[ propName ] = arguments.meta.properties[ propName ];
@@ -438,7 +443,7 @@ component {
 		} else {
 			arguments.objectMeta.labelfield = arguments.objectMeta.labelfield ?: "label";
 		}
-		arguments.objectMeta.noLabel = arguments.objectMeta.noLabel ?: arguments.objectMeta.labelfield !== "label";
+		arguments.objectMeta.noLabel = arguments.objectMeta.noLabel ?: arguments.objectMeta.labelfield != "label";
 	}
 
 	private void function _removeObjectsUsedInDisabledFeatures( required struct objects ) {

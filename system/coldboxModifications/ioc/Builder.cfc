@@ -28,7 +28,7 @@ component output=false extends="coldbox.system.ioc.Builder" {
 				StructAppend( constructorArgs, arguments.initArguments, true );
 			}
 
-			oModel[ thisMap.getConstructor() ]( argumentCollection=constructorArgs );
+			invoke( oModel, thisMap.getConstructor(), constructorArgs );
 		}
 
 		return oModel;

@@ -24,7 +24,7 @@ component {
 		var providers = _getConfiguredProviders();
 
 		if ( providers.keyExists( arguments.id ) ) {
-			return _createObject(
+			return _createInstanceObject(
 				  cfcPath         = providers[ arguments.id ].class
 				, constructorArgs = arguments.configuration
 				, skipConstructor = arguments.skipConstructor
@@ -45,10 +45,10 @@ component {
 	}
 
 // PRIVATE HELPERS
-	private any function _createObject( required string cfcPath, required struct constructorArgs, required boolean skipConstructor ) {
+	private any function _createInstanceObject( required string cfcPath, required struct constructorArgs, required boolean skipConstructor ) {
 		var instance = CreateObject( "component", arguments.cfcPath );
 
-		return arguments.skipConstructor ? instance : instance.init( argumentCollection=constructorArgs )
+		return arguments.skipConstructor ? instance : instance.init( argumentCollection=constructorArgs );
 	}
 
 // GETTERS AND SETTERS

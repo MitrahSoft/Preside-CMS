@@ -11,7 +11,7 @@
 <cfoutput>
 	<ul class="steps">
 		<cfloop array="#steps#" index="i" item="step">
-			<li data-step="#i#"<cfif i == args.activeStep> class="active"<cfelseif i lt args.activeStep> class="complete"</cfif>>
+			<li data-step="#i#"<cfif i eq args.activeStep> class="active"<cfelseif i lt args.activeStep> class="complete"</cfif>>
 				<span class="step">#i#</span>
 				<span class="title">#step#</span>
 			</li>

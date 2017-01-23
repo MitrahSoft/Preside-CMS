@@ -5,7 +5,7 @@
 
 component extends="preside.system.base.SystemPresideObject" labelfield="title" output=false displayname="Sitetree Page" siteFiltered=true {
 
-<!--- properties --->
+//properties
 	property name="title"        type="string"  dbtype="varchar"  maxLength="200" required=true control="textinput";
 	property name="main_content" type="string"  dbtype="text"                     required=false;
 	property name="teaser"       type="string"  dbtype="varchar"  maxLength="500" required=false;

@@ -59,7 +59,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 		describe( "listTemplateParameters()", function(){
 			it( "should return configured parameters for the given template with translated titles and descriptions", function(){
 				var service  = _getService();
-				var template = "adminResetPassword"
+				var template = "adminResetPassword";
 				var expected = [{
 					  id          = "resetLink"
 					, title       = "Reset link"
@@ -102,7 +102,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 		describe( "prepareParameters()", function(){
 			it( "should call the 'prepareParameters' method on the corresponding handler for the given template, passing any args through to the method, and return the result", function(){
 				var service    = _getService();
-				var template   = "adminWelcome"
+				var template   = "adminWelcome";
 				var args       = { moreTesting = CreateUUId() };
 				var mockResult = { test=CreateUUId() };
 
@@ -129,7 +129,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 			it( "should return an empty struct when the template does not have a corresponding prepareParameters handler action", function(){
 				var service    = _getService();
-				var template   = "adminWelcome"
+				var template   = "adminWelcome";
 				var args       = { moreTesting = CreateUUId() };
 
 				mockColdboxController.$( "handlerExists" ).$args( "email.template.#template#.prepareParameters" ).$results( false );
@@ -144,7 +144,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 		describe( "getPreviewParameters()", function(){
 			it( "should call the 'getPreviewParameters' method on the corresponding handler for the given template and return the result", function(){
 				var service    = _getService();
-				var template   = "adminWelcome"
+				var template   = "adminWelcome";
 				var mockResult = { test=CreateUUId() };
 
 				mockColdboxController.$( "handlerExists" ).$args( "email.template.#template#.getPreviewParameters" ).$results( true );
@@ -163,7 +163,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 			it( "should return an empty struct when the template does not have a corresponding getPreviewParameters handler action", function(){
 				var service    = _getService();
-				var template   = "adminWelcome"
+				var template   = "adminWelcome";
 
 				mockColdboxController.$( "handlerExists" ).$args( "email.template.#template#.getPreviewParameters" ).$results( false );
 
@@ -174,7 +174,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 		describe( "prepareAttachments()", function(){
 			it( "should call the 'prepareAttachments' method on the corresponding handler for the given template, passing any args through to the method, and return the result", function(){
 				var service    = _getService();
-				var template   = "adminWelcome"
+				var template   = "adminWelcome";
 				var args       = { moreTesting = CreateUUId() };
 				var mockResult = [{ name="test", location="/path/to/file.jpg" }];
 
@@ -201,7 +201,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 
 			it( "should return an empty array when the template does not have a corresponding prepareAttachments handler action", function(){
 				var service    = _getService();
-				var template   = "adminWelcome"
+				var template   = "adminWelcome";
 				var args       = { moreTesting = CreateUUId() };
 
 				mockColdboxController.$( "handlerExists" ).$args( "email.template.#template#.prepareAttachments" ).$results( false );
@@ -377,7 +377,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 			  adminResetPassword   = { feature="cms", parameters=[ { id="resetLink", required=true }, "testParam" ] }
 			, adminWelcome         = { feature="cms", layout="blah" }
 			, websiteResetPassword = { feature="websiteUsers", recipientType="websiteUser" }
-			, websiteWelcome       = { feature="websiteUsers", }
+			, websiteWelcome       = { feature="websiteUsers" }
 		};
 	}
 

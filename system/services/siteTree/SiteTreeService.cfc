@@ -608,7 +608,7 @@ component {
 		var pageTypeObjData = {};
 		var versionNumber   = "";
 
-		if ( homepage.recordCount && !Len( Trim( arguments.parent_page ?: "" ) ) ) {
+		if ( homepage.recordCount && !Len( Trim( StructKeyExists( arguments, "parent_page" ) ? arguments.parent_page : "" ) ) ) {
 			throw(
 				  type    = "SiteTreeService.MissingParent"
 				, message = "Error when adding site tree page. You have not supplied a parent page and there is already a root page for the site. There can only be a single root page per site."

@@ -50,7 +50,7 @@ component displayName="Website user action service" {
 			, detail     = SerializeJson( arguments.detail )
 			, identifier = arguments.identifier
 			, session_id = _getSessionId()
-			, uri        = cgi.request_url
+			, uri        = cgi.server_name & cgi.script_name & "?" & cgi.query_string
 			, user_ip    = cgi.remote_addr
 			, user_agent = cgi.http_user_agent
 			, visitor    = _getWebsiteVisitorService().getVisitorId()
@@ -228,7 +228,7 @@ component displayName="Website user action service" {
 
 // PRIVATE HELPERS
 	private boolean function _sessionsAreDisabled() {
-		var applicationSettings = getApplicationSettings( true );
+		var applicationSettings = getApplicationMetaData();
 
 		return !IsBoolean( applicationSettings.sessionManagement ?: "" ) || !applicationSettings.sessionManagement;
 	}

@@ -40,10 +40,10 @@ component displayName="System configuration service" {
 	 * @autodoc
 	 * @category.hint  Category name of the setting to get
 	 * @setting.hint   Name of the setting to get
-	 * @default.hint   A default value to return should no value be saved for the setting
+	 * @defaultStr.hint   A default value to return should no value be saved for the setting
 	 *
 	 */
-	public string function getSetting( required string category, required string setting, string default="" ) {
+	public string function getSetting( required string category, required string setting, string defaultStr="" ) {
 		_reloadCheck();
 
 		var injected   = _getInjectedConfig();
@@ -67,7 +67,7 @@ component displayName="System configuration service" {
 			return result.value;
 		}
 
-		return injected[ "#arguments.category#.#arguments.setting#" ] ?: arguments.default;
+		return injected[ "#arguments.category#.#arguments.setting#" ] ?: arguments.defaultStr;
 	}
 
 	/**

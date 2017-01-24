@@ -373,7 +373,7 @@ component extends="coldbox.system.web.context.RequestContextDecorator" output=fa
 			return arguments.active && ( !IsDate( arguments.embargo_date ) || Now() >= arguments.embargo_date ) && ( !IsDate( arguments.expiry_date ) || Now() <= arguments.expiry_date );
 		};
 
-		if ( ( arguments.slug ?: "/" ) == "/" && !Len( Trim( arguments.pageId ?: "" ) ) && !Len( Trim( arguments.systemPage ?: "" ) ) ) {
+		if ( (StructKeyExists( arguments, "slug" ) && len(Trim( arguments.slug ) ) ? arguments.slug : "/" ) == "/" && !Len( Trim( arguments.pageId ?: "" ) ) && !Len( Trim( arguments.systemPage ?: "" ) )) {
 			page = sitetreeSvc.getSiteHomepage( getLatest=getLatest, allowDrafts=allowDrafts );
 			parentPages = QueryNew( page.columnlist );
 		} else {

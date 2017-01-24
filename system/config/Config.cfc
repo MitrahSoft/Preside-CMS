@@ -401,7 +401,8 @@ component {
 
 // PRIVATE UTILITY
 	private array function _getUdfFiles() {
-		var udfs     = DirectoryList( "/preside/system/helpers", true, false, "*.cfm" );
+		var udfs     = DirectoryList( "#ExpandPath('/preside')#/system/helpers", true, false, "*.cfm" );
+
 		var siteUdfs = ArrayNew(1);
 		var udf      = "";
 		var i        = 0;
@@ -439,7 +440,7 @@ component {
 	}
 
 	private string function _discoverWireboxBinder() {
-		if ( FileExists( "#settings.appMapping#/config/WireBox.cfc" ) ) {
+		if ( FileExists( expandPath( "#settings.appMapping#/config/WireBox.cfc" ) ) ) {
 			return "#settings.appMappingPath#.config.WireBox";
 		}
 
@@ -447,7 +448,7 @@ component {
 	}
 
 	private string function _discoverCacheboxConfigurator() {
-		if ( FileExists( "#settings.appMapping#/config/Cachebox.cfc" ) ) {
+		if ( FileExists( expandPath( "#settings.appMapping#/config/Cachebox.cfc" ) ) ) {
 			return "#settings.appMappingPath#.config.Cachebox";
 		}
 
@@ -586,7 +587,7 @@ component {
 
 	private void function _loadConfigurationFromExtensions() {
 		for( var ext in settings.activeExtensions ){
-			if ( FileExists( ext.directory & "/config/Config.cfc" ) ) {
+			if ( FileExists( expandPath( ext.directory & "/config/Config.cfc" ) ) ) {
 				var cfcPath = ReReplace( ListChangeDelims( ext.directory & "/config/Config", ".", "/" ), "^\.", "" );
 
 				CreateObject( cfcPath ).configure( config=variables );

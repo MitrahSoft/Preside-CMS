@@ -45,12 +45,12 @@ component {
 
 	public void function onRequestEnd() {
 		_invalidateSessionIfNotUsed();
-		_cleanupCookies();
+		// _cleanupCookies();
 	}
 
 	public void function onAbort() {
 		_invalidateSessionIfNotUsed();
-		_cleanupCookies();
+		// _cleanupCookies();
 	}
 
 	public boolean function onRequest() output=true {
@@ -222,12 +222,14 @@ component {
 			var luceeCompilerSettings = "";
 
 			try {
-				cfadmin( action="getCompilerSettings", returnVariable="luceeCompilerSettings" );
-				cfadmin( action               = "updateCompilerSettings"
-				      , dotNotationUpperCase = false
-					  , suppressWSBeforeArg  = luceeCompilerSettings.suppressWSBeforeArg
-					  , nullSupport          = luceeCompilerSettings.nullSupport
-					  , templateCharset      = luceeCompilerSettings.templateCharset );
+				if ( ( server.coldfusion.productName ?: "" ) == "Lucee" ) {
+					cfadmin( action="getCompilerSettings", returnVariable="luceeCompilerSettings" );
+					cfadmin( action               = "updateCompilerSettings"
+					      , dotNotationUpperCase = false
+						  , suppressWSBeforeArg  = luceeCompilerSettings.suppressWSBeforeArg
+						  , nullSupport          = luceeCompilerSettings.nullSupport
+						  , templateCharset      = luceeCompilerSettings.templateCharset );
+				}
 			} catch( security e ) {
 				throw( type="security", message="PresideCMS could not automatically update Lucee settings to ensure dot notation for structs preserves case (rather than the default behaviour of converting to uppercase). Please either allow open access to admin APIs or change the setting in Lucee server settings." );
 			}
@@ -278,11 +280,11 @@ component {
 
 		var appMappingPath = Replace( ReReplace( COLDBOX_APP_MAPPING, "^/", "" ), "/", ".", "all" );
 
-		if ( FileExists( "#COLDBOX_APP_MAPPING#/config/LocalConfig.cfc" ) ) {
+		if ( FileExists( expandPath( "#COLDBOX_APP_MAPPING#/config/LocalConfig.cfc" ) ) ) {
 			return "#appMappingPath#.config.LocalConfig";
 		}
 
-		if ( FileExists( "#COLDBOX_APP_MAPPING#/config/Config.cfc" ) ) {
+		if ( FileExists( expandPath("#COLDBOX_APP_MAPPING#/config/Config.cfc") ) ) {
 			return "#appMappingPath#.config.Config";
 		}
 
@@ -405,7 +407,7 @@ component {
 				this.sessionTimeout = CreateTimeSpan( 0, 0, 0, 1 );
 			}
 
-			_removeSessionCookies();
+			// _removeSessionCookies();
 		}
 	}
 

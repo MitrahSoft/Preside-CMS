@@ -14,7 +14,7 @@ component {
 			return renderView( view="/admin/errorPages/notFound" );
 		}
 		event.initializePresideSiteteePage( systemPage="notFound" );
-		return renderView( view="/errors/notFound", presideobject="notFound", id=event.getCurrentPageId(), args=args );
+		return presideRenderView( view="/errors/notFound", presideobject="notFound", id=event.getCurrentPageId(), args=args );
 	}
 
 	private string function accessDeniedPageType( event, rc, prc, args={} ) {
@@ -30,7 +30,7 @@ component {
 		switch( args.reason ?: "" ){
 			case "INSUFFICIENT_PRIVILEGES":
 				event.initializePresideSiteteePage( systemPage="accessDenied" );
-				return renderView( view="/errors/insufficientPrivileges", presideobject="accessDenied", id=event.getCurrentPageId(), args=args );
+				return presideRenderView( view="/errors/insufficientPrivileges", presideobject="accessDenied", id=event.getCurrentPageId(), args=args );
 			default:
 				websiteLoginService.setPostLoginUrl( Len( Trim( args.postLoginUrl ?: "" ) ) ? args.postLoginUrl : event.getCurrentUrl() );
 				event.initializePresideSiteteePage( systemPage="login" );

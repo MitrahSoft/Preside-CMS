@@ -468,7 +468,7 @@
 					<cfset structInsert( controller.getSetting("layoutsRefMap"), cbox_layoutLocationKey, cbox_layoutLocation, true)>
 				</cflock>
 			</cfif>
-
+			<cfset cbox_layoutLocation = replace( cbox_layoutLocation, "//", "/" )>
 			<cfset viewLocations = discoverViewPaths( reverse ( listRest( reverse( cbox_layoutLocation ), ".")),arguments.module,cbox_explicitModule) />
 			<!--- RenderLayout --->
 			<cfset iData.renderedLayout = renderViewComposite(cbox_currentLayout, viewLocations.viewPath, viewLocations.viewHelperPath, args) />
@@ -504,7 +504,7 @@
 
 			for( var i=layoutDirs.len(); i>0; i-- ){
 				layoutPath = layoutDirs[i] & "/" & arguments.layout;
-				if ( FileExists( layoutPath ) ) {
+				if ( FileExists( expandPath( layoutPath ) ) ) {
 					return layoutPath;
 				}
 			}
@@ -578,7 +578,7 @@
 			var viewMappings = _getViewMappings();
 			var viewMapping  = ReReplace( arguments.view, "^/", "" );
 
-			return viewMappings[ viewMapping ] ?: "/#instance.appMapping#/#instance.viewsConvention#/#arguments.view#";
+			return structKeyExists( viewMappings, viewMapping ) ? viewMappings[ viewMapping ] : expandPath( "/#instance.appMapping#/#instance.viewsConvention#/#arguments.view#" );
 		</cfscript>
 	</cffunction>
 
@@ -750,7 +750,7 @@
 	</cffunction>
 
 	<cffunction name="_getThreadSafeInstanceOfThisPlugin" access="private" returntype="any" output="false">
-		<cfreturn Duplicate( this, false ) />
+		<cfreturn Duplicate( this ) />
 	</cffunction>
 
 	<cffunction name="_getViewMappings" access="private" returntype="struct" output="false">

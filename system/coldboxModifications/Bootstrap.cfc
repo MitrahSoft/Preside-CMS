@@ -228,7 +228,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 				interceptorData = StructNew();
 				interceptorData.exception = e;
 				interceptorService.processState( "onException", interceptorData );
-
+				cfcatch = {};
 				// Handle The Exception
 				ExceptionBean = exceptionService.ExceptionHandler( cfcatch, "application", "Application Execution Exception" );
 
@@ -301,7 +301,7 @@ component extends="coldbox.system.Coldbox" output="false" {
 	}
 
 	private boolean function areSessionsEnabled() output=false {
-		var appSettings = getApplicationSettings();
+		var appSettings = getApplicationMetaData();
 
 		return IsBoolean( appSettings.sessionManagement ?: "" ) && appSettings.sessionManagement;
 	}

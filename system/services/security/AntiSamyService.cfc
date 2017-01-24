@@ -5,7 +5,11 @@
 component {
 
 // CONSTRUCTOR
-	public any function init() {
+	/**
+	* @baseEngine.inject baseEngine
+	*/
+	public any function init( required any baseEngine ) {
+		_setBaseEngine( arguments.baseEngine );
 		_setLibPath( ExpandPath( "/preside/system/services/security/antisamylib" ) );
 		_setupPolicyFiles();
 		_setupAntiSamy();
@@ -35,9 +39,7 @@ component {
 	}
 
 	private void function _setupAntiSamy() {
-		var jars = DirectoryList( _getLibPath(), false, "path", "*.jar" );
-
-		_setAntiSamy( CreateObject( "java", "org.owasp.validator.html.AntiSamy", jars ) );
+		_setAntiSamy( _getBaseEngine().getAntiSamyObject( _getLibPath() ) );
 	}
 
 	private array function _listJars( required string directory ) {
@@ -85,5 +87,12 @@ component {
 	}
 	private void function _setAntiSamy( required any antiSamy ) {
 		_antiSamy = arguments.antiSamy;
+	}
+
+	private any function _getBaseEngine() {
+		return _baseEngine;
+	}
+	private void function _setBaseEngine( required any baseEngine ) {
+		_baseEngine = arguments.baseEngine;
 	}
 }

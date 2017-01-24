@@ -19,15 +19,15 @@
 	</cffunction>
 
 <!--- rendering --->
-	<cffunction name="renderView" access="public" returntype="any" output="false">
+	<cffunction name="presideRenderView" access="public" returntype="any" output="false">
 		<cfscript>
-			if ( Len( Trim( arguments.presideObject ?: "" ) ) ) {
+			if ( Len( Trim( structKeyExists( arguments, "presideObject" ) ? arguments.presideObject : "" ) ) ) {
 				return getSingleton( "presideObjectViewService" ).renderView(
 					argumentCollection = arguments
 				);
 			}
 
-			return getPlugin( "Renderer" ).renderView( argumentCollection=arguments );
+			return getPresidePlugin( "Renderer" ).renderView( argumentCollection=arguments );
 		</cfscript>
 	</cffunction>
 
@@ -136,7 +136,7 @@
 			var cacheKey = "translateResource" & SerializeJson( args );
 
 			return simpleRequestCache( cacheKey, function(){
-				return getPlugin( "i18n" ).translateResource( argumentCollection = args );
+				return getPresidePlugin( "i18n" ).translateResource( argumentCollection = args );
 			} );
 		</cfscript>
 	</cffunction>
@@ -168,9 +168,9 @@
 		<cfscript>
 			var baseUri      = getSingleton( "presideObjectService" ).getResourceBundleUriRoot( arguments.objectName );
 			var fullUri      = baseUri & "field.#propertyName#.title";
-			var defaultValue = translateResource( uri="cms:preside-objects.default.field.#propertyName#.title", defaultValue=arguments.defaultValue );
+			var _defaultValue = translateResource( uri="cms:preside-objects.default.field.#propertyName#.title", defaultValue=arguments.defaultValue );
 
-			return translateResource( uri=fullUri, defaultValue=defaultValue );
+			return translateResource( uri=fullUri, defaultValue=_defaultValue );
 		</cfscript>
 	</cffunction>
 
@@ -254,12 +254,12 @@
 			} );
 		</cfscript>
 	</cffunction>
-	<cffunction name="getPlugin" access="public" returntype="any" output="false">
+	<cffunction name="getPresidePlugin" access="public" returntype="any" output="false">
 		<cfargument name="pluginName" type="string" required="true" />
 
 		<cfscript>
 			var args = arguments;
-			return simpleRequestCache( "getPlugin" & args.pluginName, function(){
+			return simpleRequestCache( "getPresidePlugin" & args.pluginName, function(){
 				return getController().getPlugin( args.pluginName );
 			} );
 		</cfscript>

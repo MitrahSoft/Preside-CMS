@@ -5,7 +5,7 @@ component extends="testbox.system.BaseSpec"{
 
 			it( "Should, for now, not attempt to read meta from non-image files, returning an empty struct", function(){
 				var metaService = _getService();
-				var fileBinary = FileReadBinary( "/tests/resources/documentMetadataService/testdocument.pdf" );
+				var fileBinary = FileReadBinary( "#expandPath('/tests/resources/documentMetadataService/testdocument.pdf')#" );
 				var meta = metaService.getMetaData( fileBinary );
 
 				expect( meta ).toBe( {} );
@@ -13,7 +13,7 @@ component extends="testbox.system.BaseSpec"{
 
 			it( "Should read combined XMP and EXIF metadata from images", function(){
 				var metaService = _getService();
-				var fileBinary = FileReadBinary( "/tests/resources/documentMetadataService/jpg_with_exif.jpg" );
+				var fileBinary = FileReadBinary( "#expandPath('/tests/resources/documentMetadataService/jpg_with_exif.jpg')#" );
 				var xmp  = { rights="Some copyright notice", test=CreateUUId() };
 				var expectedMeta = {
 					  width  = 100

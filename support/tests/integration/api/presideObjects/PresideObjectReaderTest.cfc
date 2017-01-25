@@ -77,9 +77,8 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 			it( "should return a list of public method when component has public methods", function(){
 				var targetObject    = new tests.resources.presideObjectReader.object_with_methods();
 				var object          = getReader().readObject( targetObject );
-				var expectedMethods = "method1,method2,method3";
+				var expectedMethods = "method3,method2,method1";
 
-				super.assert( StructKeyExists( object, 'methods' ), "No methods key was returned" );
 				expect( object.methods ).toBe( expectedMethods );
 			} );
 
@@ -87,7 +86,6 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				var targetObject = new tests.resources.presideObjectReader.simple_object_with_dsn();
 				var object       = getReader().readObject( targetObject );
 
-				super.assert( StructKeyExists( object, 'dsn' ), "No dsn key was was returned" );
 				expect( object.dsn ).toBe( "different_dsn" );
 			} );
 

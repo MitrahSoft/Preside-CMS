@@ -34,7 +34,7 @@ component {
 	}
 
 	private any function _new( required string className ) {
-		return CreateObject( "java", arguments.className, _getLib() );
+		return CreateObject( "java", arguments.className );
 	}
 
 	private array function _getLib() {

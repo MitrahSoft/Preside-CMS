@@ -645,11 +645,11 @@ component displayName="Task Manager Service" {
 
 // PRIVATE HELPERS
 	private any function _createJodaTimeObject( required date cfmlDateTime ) {
-		return CreateObject( "java", "org.joda.time.DateTime", _getLib() ).init( cfmlDateTime );
+		return CreateObject( "java", "org.joda.time.DateTime" ).init( cfmlDateTime );
 	}
 
 	private any function _getCrontabExpressionObject( required string expression ) {
-		return CreateObject( "java", "fc.cron.CronExpression", _getLib() ).init( arguments.expression );
+		return CreateObject( "java", "fc.cron.CronExpression" ).init( arguments.expression );
 	}
 
 	private void function _initialiseDb() {

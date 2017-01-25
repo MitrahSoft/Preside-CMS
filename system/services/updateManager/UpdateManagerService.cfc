@@ -38,13 +38,12 @@ component {
 	public string function getCurrentVersion() {
 		var versionFile = ListAppend( _getPresidePath(), "version.json", "/" );
 		var versionInfo = "";
-
-		if ( !FileExists( versionFile ) ) {
+		if ( !FileExists( expandpath( versionFile ) ) ) {
 			return "unknown";
 		}
 
 		try {
-			versionInfo = DeSerializeJson( FileRead( versionFile ) );
+			versionInfo = DeSerializeJson( FileRead( expandpath( versionFile ) ) );
 		} catch ( any e ) {
 			return "unknown";
 		}
@@ -147,8 +146,8 @@ component {
 		}
 
 		var branchPath        = _getRemoteBranchPath();
-		var xPath             = "/:ListBucketResult/:Contents/:Key[starts-with(.,'#branchPath#')]";
-		var versionFiles      = XmlSearch( s3Listing, xPath );
+		var xPath             = "//*[local-name()='ListBucketResult']/*[local-name()='Contents']/*[local-name()='Key' and starts-with(.,""#branchPath#"")]";
+		var versionFiles= XmlSearch( s3Listing, xPath );
 		var jsonAndZipMatches = {};
 		var versions          = [];
 
@@ -180,15 +179,15 @@ component {
 
 	public array function listDownloadedVersions() {
 		var containerDirectory = _getVersionContainerDirectory();
-		var childDirectories   = DirectoryList( containerDirectory, false, "query" );
+		var childDirectories   = DirectoryList( expandpath ( containerDirectory ), false, "query" );
 		var versions           = [];
 
 		for( var dir in childDirectories ){
 			if ( dir.type == "Dir" ) {
 				var versionFile = containerDirectory & dir.name & "/version.json";
-				if ( FileExists( versionFile ) ) {
+				if ( FileExists( expandpath( versionFile ) ) ) {
 					try {
-						var versionInfo = DeSerializeJson( FileRead( versionFile ) );
+						var versionInfo = DeSerializeJson( FileRead( expandpath( versionFile ) ) );
 						versionInfo.path = ExpandPath( containerDirectory & dir.name );
 						versions.append( versionInfo );
 					} catch( any e ) {}

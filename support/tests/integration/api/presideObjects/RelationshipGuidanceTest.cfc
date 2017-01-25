@@ -298,8 +298,8 @@
 						, sort_order = { name="sort_order", control="auto", type="numeric" , dbtype="int" , maxLength="0", generator="none", relationship="none", required=false }
 					  }
 					, relationships = {
-						  "fk_e6b193a815d27df2cdc8482ee9c045bf" = { pk_table="pobj_obj_a", fk_table="pobj_obj_a__join__obj_b", pk_column="id", fk_column="obj_a", on_update="cascade", on_delete="cascade" }
-						, "fk_4f17cab05b8b011a3794ef069d336264" = { pk_table="pobj_obj_b", fk_table="pobj_obj_a__join__obj_b", pk_column="id", fk_column="obj_b", on_update="cascade", on_delete="cascade" }
+						  "fk_83cbac23973fc8b875cbeaefd8d4b9c4" = { pk_table="pobj_obj_a", fk_table="pobj_obj_a__join__obj_b", pk_column="id", fk_column="obj_a", on_update="cascade", on_delete="cascade" }
+						, "fk_03513e5dbaf4dce7e9718f91ae87cf02" = { pk_table="pobj_obj_b", fk_table="pobj_obj_a__join__obj_b", pk_column="id", fk_column="obj_b", on_update="cascade", on_delete="cascade" }
 					  }
 				  }
 			};
@@ -481,7 +481,7 @@
 
 			guidanceService.setupRelationships( objects );
 			var relationships = guidanceService.getObjectRelationships( "obj_a" );
-			super.assertEquals( 1, relationships.len() );
+			super.assertEquals( 1, StructCount(relationships) );
 			super.assertEquals( "obj_bs", relationships.obj_b[1].alias ?: "" );
 		</cfscript>
 	</cffunction>

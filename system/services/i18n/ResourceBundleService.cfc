@@ -202,7 +202,7 @@ component output=false singleton=true {
 			siteTemplate = _getSiteTemplateFromPath( directory );
 
 			if ( siteTemplate == "*" || siteTemplate == activeSiteTemplate ) {
-				files = DirectoryList( directory & subDirectory, false, "path", "*.properties" );
+				files = DirectoryList( ExpandPath( directory & subDirectory ), false, "path", "*.properties" );
 
 				for( file in files ){
 					if ( filePattern == ListLast( file, "\/" ) ) {

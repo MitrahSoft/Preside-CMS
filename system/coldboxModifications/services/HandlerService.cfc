@@ -188,7 +188,7 @@ component extends="coldbox.system.web.services.HandlerService" output=false {
 			for( var method in _getCfcMethods( metaextends ) ){
 				methods[ method ] = true;
 			}
-		}
+		}writeDump(arguments.meta.functions ?: []);abort;
 		var metaMethods = arguments.meta.functions ?: [];
 		for( var method in metaMethods ) {
 			methods[ method.name ] = true;

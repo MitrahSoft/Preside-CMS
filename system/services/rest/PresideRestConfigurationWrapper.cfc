@@ -36,10 +36,10 @@ component {
 		,          string api          = "/"
 	) {
 		var configuration    = _getConfiguration();
-		var apiSpecificValue = configuration.apis[ arguments.api ][ arguments.name ] ?: NullValue();
-		var globalValue      = configuration[ arguments.name ] ?: arguments.defaultValue;
+		var apiSpecificValue = structKeyExists(configuration,"apis" ) ? configuration.apis[ arguments.api ][ arguments.name ] : javaCast("null", "");
+		var globalValue      = structKeyExists(configuration, arguments.name ) ? configuration[ arguments.name ] : arguments.defaultValue;
 
-		return apiSpecificValue ?: globalValue;
+		return (!isnull( apiSpecificValue ) ? apiSpecificValue : globalValue);
 	}
 
 // PRIVATE GETTERS AND SETTERS

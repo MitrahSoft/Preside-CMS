@@ -66,7 +66,7 @@ component extends="coldbox.system.interceptors.SES" output=false {
 		}
 
 		return super.getModel(
-			  dsl           = arguments.dsl ?: NullValue()
+			  dsl           = arguments.dsl ?: javaCast( "null", "" )
 			, initArguments = arguments.initArguments
 		);
 	}

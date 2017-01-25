@@ -24,7 +24,7 @@ component displayname="Image Manipulation Service" {
         return this;
     }
 
-	public string function resize(
+	public binary function resize(
 		  required binary  asset
 		,          numeric width               = 0
 		,          numeric height              = 0

@@ -33,7 +33,7 @@ component output=false singleton=true displayname="Site Templates service" autod
 		var templateIds = {};
 
 		for( var dir in _getDirectories() ) {
-			var subs = DirectoryList( dir, false, "query" );
+			var subs = DirectoryList( expandpath( dir ), false, "query" );
 			for( sub in subs ){
 				if ( sub.type == "Dir" ) {
 					templateIds[ sub.name ] = true;

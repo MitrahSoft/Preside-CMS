@@ -9,13 +9,12 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 	function test01_listAvailableVersions_shouldReturnVersionsOfPresideBasedOnContentsOfS3BucketForGivenCurrentBranch() output=false {
 		var adapter  = _getAdapter();
 		var expected = [
-			  { version="0.1.1.00089", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.1.zip" }
-			, { version="0.1.2.00345", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.2.zip" }
+			  { version="0.1.2.00345", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.2.zip" }
+			, { version="0.1.1.00089", downloaded=false, path="presidecms/bleeding-edge/PresideCMS-0.1.1.zip" }
 		];
 
 		mockSettingsService.$( "getSetting" ).$args( category="updatemanager", setting="branch", default="release" ).$results( "bleedingEdge" );
-
-		adapter.$( "_fetchS3BucketListing", XmlParse( "/tests/resources/updateManager/s3BucketListing.xml" ) );
+		adapter.$( "_fetchS3BucketListing", XmlParse( ExpandPath("/tests/resources/updateManager/s3BucketListing.xml" ) ) );
 		adapter.$( "_fetchVersionInfo" ).$args( "presidecms/bleeding-edge/PresideCMS-0.1.1.json" ).$results( { version:"0.1.1.00089" } );
 		adapter.$( "_fetchVersionInfo" ).$args( "presidecms/bleeding-edge/PresideCMS-0.1.2.json" ).$results( { version:"0.1.2.00345" } );
 
@@ -39,7 +38,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 
 		mockSettingsService.$( "getSetting" ).$args( category="updatemanager", setting="branch", default="release" ).$results( "stable" );
 
-		adapter.$( "_fetchS3BucketListing", XmlParse( "/tests/resources/updateManager/s3BucketListing.xml" ) );
+		adapter.$( "_fetchS3BucketListing", XmlParse( ExpandPath( "/tests/resources/updateManager/s3BucketListing.xml" ) ) );
 		adapter.$( "_fetchVersionInfo" ).$args( "presidecms/stable/PresideCMS-0.1.0.json" ).$results( { version:"0.1.0.00011" } );
 		adapter.$( "_fetchVersionInfo" ).$args( "presidecms/stable/PresideCMS-0.1.1.json" ).$results( { version:"0.1.1.00089" } );
 

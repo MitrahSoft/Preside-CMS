@@ -136,7 +136,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 		describe( "createTranslationObject()", function(){
 			it( "should return an object who's table name is the source object prepended with ""_translation""", function(){
 				var svc               = _getService();
-				var dummyProps        = StructNew( "linked" );
+				var dummyProps        = createObject("java", "java.util.LinkedHashMap").init();
 
 				dummyProps.prop1 = { name="prop1", multilingual=true };
 				dummyProps.prop2 = { name="prop2", multilingual=false };
@@ -154,7 +154,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 
 			it( "should return an object with only multilingual properties from the source object carried over", function(){
 				var svc        = _getService();
-				var dummyProps = StructNew( "linked" );
+				var dummyProps = createObject("java", "java.util.LinkedHashMap").init();
 
 				dummyProps.prop1 = { name="prop1", multilingual=true };
 				dummyProps.prop2 = { name="prop2", multilingual=false };
@@ -213,7 +213,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 
 			it( "should modify db field list based on additional fields and multilingual fields", function(){
 				var svc        = _getService();
-				var dummyProps = StructNew( "linked" );
+				var dummyProps = createObject("java", "java.util.LinkedHashMap").init();
 
 				dummyProps.prop1 = { name="prop1", multilingual=true };
 				dummyProps.prop2 = { name="prop2", multilingual=false };
@@ -225,7 +225,7 @@ component extends="tests.resources.HelperObjects.PresideBddTestCase" {
 				var dummyObject = { meta={ name="app.preside-objects.myobject", multilingual=true, properties=dummyProps, dbFieldList="prop1,prop2,prop4,prop6" } };
 				var multilingualObject = svc.createTranslationObject( "myobject", dummyObject );
 
-				expect( multilingualObject.meta.dbFieldList ?: "" ).toBe( "prop1,prop6,_translation_source_record,_translation_language"  );
+				expect( multilingualObject.meta.dbFieldList ?: "" ).toBe( "prop1,prop2,prop4,prop6,_translation_source_record,_translation_language"  );
 			} );
 
 			it( "should add unique index to the object definition", function(){

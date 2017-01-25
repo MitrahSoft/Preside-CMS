@@ -120,11 +120,11 @@ component {
 
 			if ( applicationId.len() ) {
 				applications[ applicationId ] = {
-					  feature            = app.feature            ?: applicationId
-					, accessPermission   = app.accessPermission   ?: "#applicationId#.access"
-					, defaultEvent       = app.defaultEvent       ?: "admin.#applicationId#.index"
-					, activeEventPattern = app.activeEventPattern ?: "^admin\.#applicationId#.*"
-					, layout             = app.layout             ?: applicationId
+					  feature            = isdefined("app.feature")            ? app.feature : applicationId
+					, accessPermission   = isdefined("app.accessPermission")   ? app.accessPermission : "#applicationId#.access"
+					, defaultEvent       = isdefined("app.defaultEvent")       ? app.defaultEvent : "admin.#applicationId#.index"
+					, activeEventPattern = isdefined("app.activeEventPattern") ? app.activeEventPattern : "^admin\.#applicationId#.*"
+					, layout             = isdefined("app.layout")             ? app.layout : applicationId
 				};
 			}
 		}

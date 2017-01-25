@@ -62,12 +62,12 @@
 					, interceptorService = arguments.interceptorService
 					, featureService = mockFeatureService
 				);
-				var cachebox       = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
+				var localCachebox       = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
 				var dbInfoService  = new preside.system.services.database.DbInfoService();
 				var sqlRunner      = new preside.system.services.database.sqlRunner( logger = logger );
 
 				var adapterFactory = new preside.system.services.database.adapters.AdapterFactory(
-					  cache         = cachebox.getCache( "PresideSystemCache" )
+					  cache         = localCachebox.getCache( "PresideSystemCache" )
 					, dbInfoService = dbInfoService
 				);
 				var schemaVersioning = new preside.system.services.presideObjects.sqlSchemaVersioning(
@@ -88,7 +88,7 @@
 				);
 				var presideObjectDecorator = new preside.system.services.presideObjects.presideObjectDecorator();
 
-				var coldbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
+				var localColdbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
 				var versioningService = getMockBox().createMock( object=new preside.system.services.presideObjects.VersioningService() );
 
 				mockFilterService = getMockBox().createStub();
@@ -100,7 +100,7 @@
 
 					event.$( "isAdminUser", true );
 					event.$( "getAdminUserId", "" );
-					coldbox.$( "getRequestContext", event );
+					localColdbox.$( "getRequestContext", event );
 				}
 
 				request[ key ] = new preside.system.services.presideObjects.PresideObjectService(
@@ -113,9 +113,9 @@
 					, presideObjectDecorator = presideObjectDecorator
 					, versioningService      = versioningService
 					, filterService          = mockFilterService
-					, cache                  = cachebox.getCache( "PresideSystemCache" )
-					, defaultQueryCache      = cachebox.getCache( "defaultQueryCache" )
-					, coldboxController      = coldbox
+					, cache                  = localCachebox.getCache( "PresideSystemCache" )
+					, defaultQueryCache      = localCachebox.getCache( "defaultQueryCache" )
+					, coldboxController      = localColdbox
 					, interceptorService     = arguments.interceptorService
 					, reloadDb               = false
 				);

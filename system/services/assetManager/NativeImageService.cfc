@@ -26,6 +26,7 @@ component displayname="Native Image Manipulation Service" {
 	 */
 	public binary function resize(
 		  required binary  asset
+		, required string filename
 		,          numeric width               = 0
 		,          numeric height              = 0
 		,          string  quality             = "highPerformance"
@@ -38,18 +39,30 @@ component displayname="Native Image Manipulation Service" {
 		var currentAspectRatio = 0;
 
 		try {
-
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			currentImageInfo = ImageInfo( image );
 
-		} catch ( "java.io.IOException" e ) {
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &listLast( arguments.filename, "." );
+			imageWrite( image, tmpFilePath );
+			image = ImageNew(tmpFilePath);
+			fileDelete( tmpFilePath );
+
+		} catch ( "application" e ) {
 			throw( type="AssetTransformer.resize.notAnImage" );
 		}
 
 		if ( !arguments.height ) {
+			if ( currentImageInfo.width == arguments.width ) {
+				return ImageGetBlob( image );
+			}
 			ImageScaleToFit( image, arguments.width, "", interpolation );
 		} else if ( !arguments.width ) {
+			if ( currentImageInfo.height == arguments.height ) {
+				return ImageGetBlob( image );
+			}
 			ImageScaleToFit( image, "", arguments.height, interpolation );
+		} else if ( currentImageInfo.width == arguments.width && currentImageInfo.height == arguments.height ) {
+			return ImageGetBlob( image );
 		} else {
 			if ( maintainAspectRatio ) {
 				currentAspectRatio = currentImageInfo.width / currentImageInfo.height;
@@ -89,25 +102,30 @@ component displayname="Native Image Manipulation Service" {
 		  required binary  asset
 		, required numeric width
 		, required numeric height
-		,          string  quality = "highPerformance"
+		, required string  filename
+		,          string  quality  = "highPerformance"
 	) {
 		var image         = "";
 		var imageInfo     = "";
 		var interpolation = arguments.quality;
+		var fileExtension =  listLast( arguments.filename, "." ) != 'pdf' ? listLast( arguments.filename, "." ) : 'jpg';
 
 		try {
 
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			imageInfo = ImageInfo( image );
 
-		} catch ( "java.io.IOException" e ) {
+			var tmpFilePath = GetTempDirectory() & "/" & createUUID() & "." &fileExtension;
+			imageWrite( image, tmpFilePath );
+			image = ImageNew(tmpFilePath);
+			fileDelete( tmpFilePath );
+
+		} catch ( "application" e ) {
 			throw( type="AssetTransformer.shrinkToFit.notAnImage" );
 		}
 
 		if ( imageInfo.width > arguments.width || imageInfo.height > arguments.height ) {
 			ImageScaleToFit( image, arguments.width, arguments.height, interpolation );
-		}else{
-			ImageScaleToFit( image, imageInfo.width, imageInfo.height, interpolation );
 		}
 
 		return ImageGetBlob( image );
@@ -133,14 +151,19 @@ component displayname="Native Image Manipulation Service" {
 		,          string pages
 		,          string transparent
 	) {
+
+		var tmpPdfPath = GetTempDirectory() & "/" & createUUID() & ".pdf";
+		fileWrite( tmpPdfPath, arguments.asset );
+
 		var imagePrefix = CreateUUId();
-		var tmpFilePath = GetTempDirectory() & "/" & imagePrefix & "_page_" & arguments.page & ".jpg";
+		var tmpFilePath = GetTempDirectory() & "/" & imagePrefix & "_page_" & arguments.pages & ".jpg";
 		var allowedArgs = [ "scale", "resolution", "format", "pages", "transparent", "maxscale", "maxlength", "maxbreadth" ];
 		var pdfAttributes = {
 			  action      = "thumbnail"
-			, source      = asset
+			, source      = tmpPdfPath
 			, destination = GetTempDirectory()
 			, imagePrefix = imagePrefix
+			, overwrite   = true
 		};
 
 		for( var arg in allowedArgs ) {
@@ -150,6 +173,7 @@ component displayname="Native Image Manipulation Service" {
 		}
 
 		cfpdf( attributeCollection=pdfAttributes );
+		fileDelete( tmpPdfPath );
 
 		return FileReadBinary( tmpFilePath );
 	}
@@ -163,7 +187,7 @@ component displayname="Native Image Manipulation Service" {
 			image = ImageNew( correctImageOrientation( arguments.asset ) );
 			imageInfo = ImageInfo( image );
 
-		} catch ( "java.io.IOException" e ) {
+		} catch ( "application" e ) {
 			throw( type="AssetTransformer.shrinkToFit.notAnImage" );
 		}
 

@@ -339,7 +339,7 @@ component displayName="RulesEngine Expression Service" {
 			var field    = expression.fields[ fieldName ];
 			var required = IsBoolean( field.required ?: "" ) && field.required;
 
-			if ( required && IsEmpty( arguments.fields[ fieldName ] ?: "" ) ) {
+			if ( required && isNull( arguments.fields[ fieldName ] ?: "" ) ) {
 				arguments.validationResult.setGeneralMessage( "The [#arguments.expressionId#] expression is missing one or more required fields" );
 				return false;
 			}

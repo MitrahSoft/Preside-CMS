@@ -277,7 +277,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					  selectFields = [ "Count(1) as action_count" ]
 					, filter       = { "website_user_action.user"=userId, "website_user_action.type"=type, "website_user_action.action"=action }
 					, extraFilters = []
-				).$results( QueryNew( "action_count", "int", [ [ count ] ] ) );
+				).$results( QueryNew( "action_count", "integer", [ [ count ] ] ) );
 
 				expect( service.getActionCount(
 					  type   = type
@@ -298,7 +298,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					  selectFields = [ "Count(1) as action_count" ]
 					, filter       = { "website_user_action.visitor"=visitorId, "website_user_action.type"=type, "website_user_action.action"=action }
 					, extraFilters = []
-				).$results( QueryNew( "action_count", "int", [ [ count ] ] ) );
+				).$results( QueryNew( "action_count", "integer", [ [ count ] ] ) );
 
 				expect( service.getActionCount(
 					  type   = type
@@ -318,7 +318,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					  selectFields = [ "Count(1) as action_count" ]
 					, filter       = { "website_user_action.user"=userId, "website_user_action.type"=type, "website_user_action.action"=action }
 					, extraFilters = [ { filter="website_user_action.datecreated >= :datefrom", filterParams={ datefrom={ type="timestamp", value=dateFrom } } } ]
-				).$results( QueryNew( "action_count", "int", [ [ count ] ] ) );
+				).$results( QueryNew( "action_count", "integer", [ [ count ] ] ) );
 
 				expect( service.getActionCount(
 					  type     = type
@@ -340,7 +340,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					  selectFields = [ "Count(1) as action_count" ]
 					, filter       = { "website_user_action.user"=userId, "website_user_action.type"=type, "website_user_action.action"=action }
 					, extraFilters = [ { filter="website_user_action.datecreated <= :dateto", filterParams={ dateto={ type="timestamp", value=dateTo } } } ]
-				).$results( QueryNew( "action_count", "int", [ [ count ] ] ) );
+				).$results( QueryNew( "action_count", "integer", [ [ count ] ] ) );
 
 				expect( service.getActionCount(
 					  type   = type
@@ -363,7 +363,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					  selectFields = [ "Count(1) as action_count" ]
 					, filter       = { "website_user_action.user"=userId, "website_user_action.type"=type, "website_user_action.action"=action, "website_user_action.identifier"=identifiers }
 					, extraFilters = []
-				).$results( QueryNew( "action_count", "int", [ [ count ] ] ) );
+				).$results( QueryNew( "action_count", "integer", [ [ count ] ] ) );
 
 				expect( service.getActionCount(
 					  type        = type

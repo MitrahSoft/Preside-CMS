@@ -112,7 +112,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 			try {
 				Evaluate( "aStruct.field7 eq blue" );
 			} catch( any e2 ) {
-				super.assertEquals( "Message: [#e2.message#]. Detail: [#e2.detail#].", e.detail );
+				super.assertEquals( "Message: [Element DATA.#e2.Element# is undefined in ARGUMENTS.]. Detail: [#e2.detail#].", e.detail );
 
 			}
 

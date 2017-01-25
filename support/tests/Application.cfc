@@ -8,11 +8,12 @@ component {
 	this.mappings['/integration'] = currentDir & "integration";
 	this.mappings['/resources']   = currentDir & "resources";
 	this.mappings['/testbox']     = currentDir & "testbox";
-	this.mappings['/mxunit' ]     = currentDir & "testbox/system/compat";
-	this.mappings['/app']         = currentDir & "resources/testSite";
-	this.mappings['/preside']     = currentDir & "../../";
-	this.mappings['/coldbox']     = currentDir & "../../system/externals/coldbox-standalone-3.8.2/coldbox";
-
+	this.mappings['/mxunit' ]     = currentDir & "testbox\system\compat";
+	this.mappings['/app']         = currentDir & "resources\testSite";
+	this.mappings['/preside']     = currentDir & "..\..\";
+	this.mappings['/coldbox']     = currentDir & "..\..\system\externals\coldbox-standalone-3.8.2\coldbox";
+	this.sessionmanagement        = true;
+	this.javaSettings             = { LoadPaths = [ expandPath("..\..\system/services\encryption\bcrypt\lib\jbcrypt-0.3m.jar"), expandPath( "..\..\system/services\qrcodes\lib\QRGen\" ), expandPath( "..\..\system/services\qrcodes\lib\zxing\" ), expandPath("..\..\system/services\assetManager\xmp\xmpcore.jar"), expandPath("..\..\system/services\taskmanager\lib\"), expandPath("..\..\system/services\security\antisamylib\"), expandPath("..\..\system\services\email\lib\jsoup-1.10.1.jar") ], loadColdFusionClassPath = true, reloadOnChange= false };
 	setting requesttimeout="6000";
 	_loadDsn();
 
@@ -123,10 +124,10 @@ component {
 		} catch( any e ) {}
 	}
 
-	private string function _getEnvironmentVariable( required string variableName, string default="" ) {
+	private string function _getEnvironmentVariable( required string variableName, string defaultValue="" ) {
 		var result = CreateObject("java", "java.lang.System").getenv().get( arguments.variableName );
 
-		return IsNull( result ) ? arguments.default : result;
+		return IsNull( result ) ? arguments.defaultValue : result;
 	}
 
 	private boolean function _dsnExists() {

@@ -8,16 +8,18 @@ component extends="testbox.system.BaseSpec"{
 		describe( "getMemento()", function(){
 
 			it( "should return a struct with default values for all response settings when no methods called on the object", function(){
-				var restResponse = new preside.system.services.rest.PresideRestResponse();
-				var memento = restResponse.getMemento();
+				var restResponse   = new preside.system.services.rest.PresideRestResponse();
+				var memento        = restResponse.getMemento();
+				memento["headers"] = isNull( memento.headers );
+				memento["data"]    = isNull( memento.data );
 
 				expect( memento ).toBe( {
-					  data         = NullValue()
+					  data         = isNull( javacast("null","") )
 					, mimeType     = "application/json"
 					, renderer     = "json"
 					, statusCode   = 200
 					, statusText   = ""
-					, headers      = NullValue()
+					, headers      = isNull( javacast("null","") )
 				} );
 
 			} );

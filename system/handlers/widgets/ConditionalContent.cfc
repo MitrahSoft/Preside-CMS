@@ -2,7 +2,7 @@ component {
 	property name="rulesEngineWebRequestService" inject="rulesEngineWebRequestService";
 
 	private function index( event, rc, prc, args={} ) {
-		var conditionIsTrue = rulesEngineWebRequestService.evaluateCondition( args.condition ?: "" );
+		var conditionIsTrue = rulesEngineWebRequestService.evaluate_condition( args.condition ?: "" );
 
 		if ( conditionIsTrue ) {
 			return args.content;

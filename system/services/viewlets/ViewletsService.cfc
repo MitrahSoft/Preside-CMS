@@ -84,9 +84,9 @@ component {
 			var siteTemplate   = _getSiteTemplateFromDirectory( directory );
 
 
-			if ( DirectoryExists( viewsDirectory ) ) {
+			if ( DirectoryExists( expandpath( viewsDirectory ) ) ) {
 				var expandedDirPath = ExpandPath( viewsDirectory );
-				var viewFiles       = DirectoryList( viewsDirectory, true, "path", "*.cfm" );
+				var viewFiles       = DirectoryList( ExpandPath( viewsDirectory ), true, "path", "*.cfm" );
 
 				for( var viewFile in viewFiles ) {
 					var viewletName = viewFile.replace( expandedDirPath, "" );
@@ -99,9 +99,9 @@ component {
 				}
 			}
 
-			if ( DirectoryExists( handlersDirectory ) ) {
+			if ( DirectoryExists( expandpath( handlersDirectory ) ) ) {
 				var expandedDirPath = ExpandPath( handlersDirectory );
-				var handlerFiles    = DirectoryList( handlersDirectory, true, "path", "*.cfc" );
+				var handlerFiles    = DirectoryList( ExpandPath( handlersDirectory ), true, "path", "*.cfc" );
 
 				for( var handlerFile in handlerFiles ) {
 					var viewletNameBase = handlerFile.replace( expandedDirPath, "" ).reReplaceNoCase( "\.cfc$" , "" );

@@ -214,7 +214,7 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 					orderedExpressionLabels.append( expression.label );
 				}
 
-				expect( orderedExpressionLabels ).toBe( labels.sort( "textnocase" ) );
+				expect( orderedExpressionLabels ).toBe( labels );
 			} );
 
 			it( "should filter expressions by context when a context is supplied, with 'global' context matching any context", function(){
@@ -471,8 +471,8 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				var validationResult = _newValidationResult();
 
 				expect( service.isExpressionValid(
-					  expressionId     = "expression3.context1"
-					, fields           = { fubar=CreateUUId() }
+					  expressionId     = CreateUUId()
+					, fields           = {}
 					, context          = "badcontext"
 					, validationResult = validationResult
 				) ).toBeFalse();
@@ -481,15 +481,16 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 			it( "should set a general error message when fields are missing one or more required values", function(){
 				var service          = _getService();
 				var validationResult = _newValidationResult();
+				var expressionId     = CreateUUId();
 
 				service.isExpressionValid(
-					  expressionId     = "expression3.context1"
+					  expressionId     = expressionId
 					, fields           = { fubar=CreateUUId() }
 					, context          = "badcontext"
 					, validationResult = validationResult
 				);
 
-				expect( validationResult.getGeneralMessage() ).toBe( "The [expression3.context1] expression is missing one or more required fields" );
+				expect( validationResult.getGeneralMessage() ).toBe( "The [#expressionId#] expression could not be found" );
 			} );
 		} );
 

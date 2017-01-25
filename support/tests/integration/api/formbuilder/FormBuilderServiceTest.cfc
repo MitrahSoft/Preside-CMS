@@ -120,7 +120,7 @@ component extends="testbox.system.BaseSpec"{
 				var newId         = CreateUUId();
 				var topSortOrder  = 5;
 
-				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "int", [[ topSortOrder ]]) );
+				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "integer", [[ topSortOrder ]]) );
 				mockFormItemDao.$( "insertData" ).$args( data={
 					  form          = formId
 					, item_type     = itemType
@@ -144,7 +144,7 @@ component extends="testbox.system.BaseSpec"{
 				var newId         = CreateUUId();
 				var topSortOrder  = 5;
 
-				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "int", [[ topSortOrder ]]) );
+				mockFormItemDao.$( "selectData" ).$args( filter={ form=formId }, selectFields=[ "Max( sort_order ) as max_sort_order" ] ).$results( QueryNew( "max_sort_order", "integer", [[ topSortOrder ]]) );
 				mockFormItemDao.$( "insertData" ).$args( data={
 					  form          = formId
 					, item_type     = itemType
@@ -524,7 +524,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should return false when the given form is set to inactive", function(){
 				var service    = getService();
 				var formId     = CreateUUId();
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[false,NullValue(),NullValue()]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[false,javacast("null",""),javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -534,7 +534,7 @@ component extends="testbox.system.BaseSpec"{
 			it( "should return true when the given form is set to active and no active_from / active_to dates are set", function(){
 				var service    = getService();
 				var formId     = CreateUUId();
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,NullValue(),NullValue()]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,javacast("null",""),javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -545,7 +545,7 @@ component extends="testbox.system.BaseSpec"{
 				var service    = getService();
 				var formId     = CreateUUId();
 				var activeFrom = DateAdd( 'd', 1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,activeFrom,NullValue()]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,activeFrom,javacast("null","")]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -556,7 +556,7 @@ component extends="testbox.system.BaseSpec"{
 				var service    = getService();
 				var formId     = CreateUUId();
 				var activeTo   = DateAdd( 'd', -1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,NullValue(),activeTo]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,javacast("null",""),activeTo]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -568,7 +568,7 @@ component extends="testbox.system.BaseSpec"{
 				var formId     = CreateUUId();
 				var activeTo   = DateAdd( 'd', 1, Now() );
 				var activeFrom = DateAdd( 'd', -1, Now() );
-				var formRecord = QueryNew( 'active,active_from,active_to', 'boolean,date,date', [[true,activeFrom,activeTo]]);
+				var formRecord = QueryNew( 'active,active_from,active_to', 'bit,date,date', [[true,activeFrom,activeTo]]);
 
 				service.$( "getForm" ).$args( id=formId ).$results( formRecord );
 
@@ -739,7 +739,7 @@ component extends="testbox.system.BaseSpec"{
 
 				service.$( "getFormItems" ).$args( id=formId ).$results( items );
 				service.$( "getItemDataFromRequest" ).$args( itemType="type2", inputName="test2", requestData=input, itemConfiguration=items[2].configuration ).$results( processed.test2 );
-				service.$( "getItemDataFromRequest" ).$args( itemType="type3", inputName="test3", requestData=input, itemConfiguration=items[3].configuration ).$results( NullValue() );
+				service.$( "getItemDataFromRequest" ).$args( itemType="type3", inputName="test3", requestData=input, itemConfiguration=items[3].configuration ).$results( javacast("null","") );
 				service.$( "getItemDataFromRequest" ).$args( itemType="type4", inputName="test4", requestData=input, itemConfiguration=items[4].configuration ).$results( processed.test4 );
 
 				expect(
@@ -758,7 +758,7 @@ component extends="testbox.system.BaseSpec"{
 				var requestData        = { some="data" };
 				var formSubmissionData = { some="data", tests=CreateUUId() };
 				var formItems          = [ "just", "test", "data" ];
-				var formConfiguration  = QueryNew( 'use_captcha', "boolean", [ [ true ] ] );
+				var formConfiguration  = QueryNew( 'use_captcha', "bit", [ [ true ] ] );
 				var validationResult   = CreateEmptyMock( "preside.system.services.validation.ValidationResult" );
 
 				service.$( "getRequestDataForForm" ).$args(
@@ -789,7 +789,7 @@ component extends="testbox.system.BaseSpec"{
 				var formId             = CreateUUId();
 				var requestData        = { some="data" };
 				var formSubmissionData = { some="data", tests=CreateUUId() };
-				var formConfiguration  = QueryNew( 'use_captcha', "boolean", [ [ true ] ] );
+				var formConfiguration  = QueryNew( 'use_captcha', "bit", [ [ true ] ] );
 				var formItems          = [ "just", "test", "data" ];
 				var validationResult   = CreateEmptyMock( "preside.system.services.validation.ValidationResult" );
 				var userAgent          = CreateUUId();
@@ -818,8 +818,8 @@ component extends="testbox.system.BaseSpec"{
 					  formId      = formId
 					, requestData = requestData
 					, instanceId  = instanceId
-					, ipAddress   = ipAddress
-					, userAgent   = userAgent
+					, ipAddress   = Trim( ListLast( CGI.REMOTE_ADDR ?: "" ) )
+					, userAgent   = ( CGI.HTTP_USER_AGENT ?: "" )
 				) ).toBe( validationResult );
 
 				expect( mockFormSubmissionDao.$callLog().insertData.len() ).toBe( 1 );
@@ -827,8 +827,8 @@ component extends="testbox.system.BaseSpec"{
 					  form           = formId
 					, submitted_by   = userId
 					, form_instance  = instanceId
-					, ip_address     = ipAddress
-					, user_agent     = userAgent
+					, ip_address     = Trim( ListLast( CGI.REMOTE_ADDR ?: "" ) )
+					, user_agent     = ( CGI.HTTP_USER_AGENT ?: "" )
 					, submitted_data = SerializeJson( formSubmissionData )
 				} } );
 			} );
@@ -838,7 +838,7 @@ component extends="testbox.system.BaseSpec"{
 				var formId             = CreateUUId();
 				var requestData        = { some="data" };
 				var formSubmissionData = { some="data", tests=CreateUUId() };
-				var formConfiguration  = QueryNew( 'use_captcha', "boolean", [ [ true ] ] );
+				var formConfiguration  = QueryNew( 'use_captcha', "bit", [ [ true ] ] );
 				var formItems          = [ "just", "test", "data" ];
 				var validationResult   = CreateEmptyMock( "preside.system.services.validation.ValidationResult" );
 				var userAgent          = CreateUUId();
@@ -886,7 +886,7 @@ component extends="testbox.system.BaseSpec"{
 				var service       = getService();
 				var formId        = CreateUUId();
 				var responseCount = 453;
-				var queryResult   = QueryNew( "submission_count", "int", [ [ responseCount ] ] );
+				var queryResult   = QueryNew( "submission_count", "integer", [ [ responseCount ] ] );
 
 				mockFormSubmissionDao.$( "selectData" ).$args(
 					  filter       = { form=formId }

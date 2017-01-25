@@ -11,8 +11,10 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				service.$( "getExpressionFieldsFromFunctionDefinition", {} );
 
 				var expressions = service.getExpressionsFromCfc( componentPath=cfc, rootPath=rootPath );
+				var expressionKeys = expressions.keyArray();
+				arraySort( expressionKeys, "textnocase" );
 
-				expect( expressions.keyArray().sort( "textnocase" ) ).toBe( [ "SimpleExpressionHandler" ] );
+				expect( expressionKeys ).toBe( [ "SimpleExpressionHandler" ] );
 			} );
 
 			it( "should detail the expanded contexts as configured by the @expressionContexts tag on the CFC", function(){
@@ -121,7 +123,9 @@ component extends="resources.HelperObjects.PresideBddTestCase" {
 				service.$( "getFieldDefinition", {} );
 
 				var fields = service.getExpressionFieldsFromFunctionDefinition( dummyFunction );
-				expect( fields.keyArray().sort( "textnocase" ) ).toBe( [ "_any", "_is", "stuff", "test" ] );
+				var fieldsKey = fields.keyArray();
+				arraySort( fieldsKey, "textnocase" );
+				expect( fieldsKey ).toBe( [ "_any", "_is", "stuff", "test" ] );
 			} );
 
 			it( "should return configuration for each found field using the getFieldDefinition() method", function(){

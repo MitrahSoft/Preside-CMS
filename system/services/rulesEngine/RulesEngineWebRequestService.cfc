@@ -29,8 +29,8 @@ component displayName="RulesEngine Web Request Service" {
 	 * @autodoc
 	 * @conditionId.hint ID of the condition to evaluate
 	 */
-	public boolean function evaluateCondition( required string conditionId ) {
-		return _getConditionService().evaluateCondition(
+	public boolean function evaluate_condition( required string conditionId ) {
+		return _getConditionService().evaluate_condition(
 			  conditionId = arguments.conditionId
 			, context     = "webrequest"
 		);

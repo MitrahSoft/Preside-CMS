@@ -33,7 +33,7 @@ component {
 			, scope  = arguments._any // all / any / none
 		);
 
-		return arguments._is ? isMember : !isMember
+		return arguments._is ? isMember : !isMember;
 	}
 
 	/**

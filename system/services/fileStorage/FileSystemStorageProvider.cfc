@@ -201,7 +201,7 @@ component implements="preside.system.services.fileStorage.StorageProvider" displ
 		var relativePath = _cleanPath( arguments.path, arguments.trashed, arguments.private );
 		var rootPath     = arguments.trashed ? _getTrashDirectory() : ( arguments.private ? _getPrivateDirectory() : _getRootDirectory() );
 
-		return rootPath & relativePath;
+		return expandPath( rootPath & relativePath );
 	}
 
 	private string function _cleanPath( required string path, boolean trashed=false, boolean private=false ){

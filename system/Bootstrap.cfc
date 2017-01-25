@@ -26,7 +26,7 @@ component {
 		this.sessionTimeout                          = arguments.sessionTimeout;
 		this.showDbSyncScripts                       = arguments.showDbSyncScripts;
 		// Antisamy JAR already available in BUILT IN ACF
-		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar", _getPresideRoot() & "\system\services\qrcodes\lib\QRGen\", _getPresideRoot() & "\system\services\qrcodes\lib\zxing\", _getPresideRoot() & "\system\services\assetManager\xmp\xmpcore.jar", _getPresideRoot() & "\system\services\taskmanager\lib\" ], loadColdFusionClassPath = true, reloadOnChange= false };
+		this.javaSettings = { LoadPaths = [ _getPresideRoot() & "\system\services\encryption\bcrypt\lib\jbcrypt-0.3m.jar", _getPresideRoot() & "\system\services\qrcodes\lib\QRGen\", _getPresideRoot() & "\system\services\qrcodes\lib\zxing\", _getPresideRoot() & "\system\services\assetManager\xmp\xmpcore.jar", _getPresideRoot() & "\system\services\taskmanager\lib\", _getPresideRoot() & "\system\services\email\lib\jsoup-1.10.1.jar" ], loadColdFusionClassPath = true, reloadOnChange= false };
 		_setupMappings( argumentCollection=arguments );
 		_setupDefaultTagAttributes();
 	}

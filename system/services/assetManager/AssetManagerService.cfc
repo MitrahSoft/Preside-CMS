@@ -850,7 +850,7 @@ component displayName="AssetManager Service" {
 		);
 	}
 
-	public binary function getAssetBinary( required string id, string versionId="", boolean throwOnMissing=false, boolean isTrashed=false ) {
+	public any function getAssetBinary( required string id, string versionId="", boolean throwOnMissing=false, boolean isTrashed=false ) {
 		var assetBinary = "";
 		var isPrivate   = isAssetAccessRestricted( arguments.id );
 		var storagePathField = arguments.isTrashed ? "trashed_path as storage_path" : "storage_path";
@@ -865,6 +865,7 @@ component displayName="AssetManager Service" {
 				, private = isPrivate
 			);
 		}
+		return javacast( "null", 0 );
 	}
 
 	public string function getAssetEtag( required string id, string derivativeName="", string versionId="", boolean throwOnMissing=false, boolean isTrashed=false ) {

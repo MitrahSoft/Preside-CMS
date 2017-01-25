@@ -455,7 +455,7 @@ component displayName="Website permissions service" {
 			}
 		}
 
-		return NullValue();
+		return javacast( "null","" );
 	}
 
 	private array function _expandPermissions( required struct permissions, string prefix="" ) {

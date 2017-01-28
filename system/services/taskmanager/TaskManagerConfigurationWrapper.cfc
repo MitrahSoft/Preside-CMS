@@ -32,7 +32,7 @@ component displayName="TaskManager Configuration Wrapper" {
 				var filePath = dir & "/" & file;
 				var handler  = LCase( ReReplace( file, "\.cfc$", "" ) );
 
-				if ( FileExists( filePath ) ) {
+				if ( FileExists( expandPath( filePath ) ) ) {
 					var componentPath = Replace( filePath, "/", ".", "all" );
 					    componentPath = ReReplace( componentPath, "\.cfc$", "" );
 

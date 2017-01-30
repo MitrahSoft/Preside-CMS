@@ -50,8 +50,9 @@
 		<cfargument name="coldbox"            type="any"     required="false" />
 
 		<cfscript>
-			var key = "_presideObjectService" & Hash( SerializeJson( arguments ) );
-
+			// To do :: Need to make it unique based upon aruments. ACF making heapsize issue here, if we use serializeJson whole arguments scope.
+            localArguments = duplicate(arguments);
+            var key = "_presideObjectService" & Hash( SerializeXML( localArguments ) );
 			if ( arguments.forceNewInstance || !request.keyExists( key ) ) {
 				var logger = _getTestLogger();
 				var mockFeatureService = getMockBox().createEmptyMock( "preside.system.services.features.FeatureService" );
@@ -62,11 +63,12 @@
 					, interceptorService = arguments.interceptorService
 					, featureService = mockFeatureService
 				);
-				var localCachebox       = arguments.cachebox ?: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
-				var dbInfoService  = new preside.system.services.database.DbInfoService();
+				var localCachebox  = structKeyExists( arguments,"cachebox") ?arguments.cachebox: _getCachebox( cacheKey="_cacheBox" & key, forceNewInstance=arguments.forceNewInstance );
+				var baseEngine =  new preside.system.services.cfmlEngines.baseEngine();
+				var dbInfoService  = new preside.system.services.database.DbInfoService( baseEngine );
 				var sqlRunner      = new preside.system.services.database.sqlRunner( logger = logger );
 
-				var adapterFactory = new preside.system.services.database.adapters.AdapterFactory(
+				var adapterFactory  = new preside.system.services.database.adapters.AdapterFactory(
 					  cache         = localCachebox.getCache( "PresideSystemCache" )
 					, dbInfoService = dbInfoService
 				);
@@ -82,12 +84,12 @@
 					, schemaVersioningService     = schemaVersioning
 					, autoRunScripts              = true
 					, autoRestoreDeprecatedFields = true
+					, configuredDatabaseName      = true
 				);
 				var relationshipGuidance = new preside.system.services.presideObjects.relationshipGuidance(
 					  objectReader = objReader
 				);
 				var presideObjectDecorator = new preside.system.services.presideObjects.presideObjectDecorator();
-
 				var localColdbox = arguments.coldbox ?: getMockbox().createEmptyMock( "preside.system.coldboxModifications.Controller" );
 				var versioningService = getMockBox().createMock( object=new preside.system.services.presideObjects.VersioningService() );
 
@@ -208,17 +210,18 @@
 
 	<cffunction name="_getTableForeignKeys" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
+		<cfdbinfo type="Foreignkeys" table="#arguments.table#" name="keys" datasource="#application.dsn#" />
 
 		<cfscript>
-			var keys        = "";
-			var key         = "";
-			var constraints = {};
-			var rules       = {};
+			var key           = "";
+			var constraints   = {};
+			var rules         = _getcfmlBaseEngine().getFKRules();
 
-			rules["0"] = "cascade";
-			rules["2"] = "set null";
-
-			cfdbinfo( type="Foreignkeys", table=arguments.table, datasource="#application.dsn#", name="keys" );
+			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
+				var sql       = _getDbAdapter().getForeignKeyName( application.databaseName );
+				var getFkName = _getRunner().runSql( dsn = application.dsn, sql = sql );
+				keys          = _getcfmlBaseEngine().populateKeys( getFkName, keys, arguments.table );
+			}
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
 					  pk_table  = key.pktable_name
@@ -239,20 +242,17 @@
 					constraints[ key.fk_name ].on_delete = "error";
 				}
 			}
-
 			return constraints;
 		</cfscript>
 	</cffunction>
 
 	<cffunction name="_getTableIndexes" access="private" returntype="struct" output="false">
 		<cfargument name="tableName" type="string" required="true" />
-
+		<cfset indexes  = QueryNew('') />
+		<cfdbinfo type="index" table="#arguments.tableName#" name="indexes" datasource="#application.dsn#" />
 		<cfscript>
-			var indexes = "";
 			var index   = "";
 			var ixs     = {};
-
-			cfdbinfo( type="index", table="#arguments.tableName#", name="indexes", datasource="#application.dsn#" );
 
 			for( index in indexes ){
 				var isPrimaryKeyIndex = index.index_name == "PRIMARY" || ReFindNoCase( "^pk_", index.index_name ) || ReFindNoCase( "_pkey$", index.index_name );
@@ -276,20 +276,26 @@
 
 	<cffunction name="_getTableColumns" access="private" returntype="query" output="false">
 		<cfargument name="tableName" type="string" required="true" />
-
-		<cfscript>
-			var columns = "";
-
-			cfdbinfo( type="columns", name="columns", table=arguments.tableName, datasource=application.dsn );
-
-			return columns;
-		</cfscript>
+		<cfset columns  = QueryNew('') />
+		<cfdbinfo type="columns" table="#arguments.tableName#" name="columns" datasource="#application.dsn#" />
+			<cfreturn columns/>
 	</cffunction>
 
 	<cffunction name="_getDbAdapter" access="private" returntype="any" output="false">
+		<cfset baseEngine =  new preside.system.services.cfmlEngines.baseEngine() >
 		<cfreturn new preside.system.services.database.adapters.AdapterFactory(
-			dbInfoService = new preside.system.services.database.DbInfoService()
+			dbInfoService = new preside.system.services.database.DbInfoService( baseEngine )
 		).getAdapter( application.dsn ) />
 	</cffunction>
-
+	<cffunction name="_getcfmlBaseEngine" access="private" returntype="any" output="false">
+		<cfscript>
+			return new preside.system.services.cfmlEngines.baseEngine();
+		</cfscript>
+	</cffunction>
+	<cffunction name="_getRunner" access="private" returntype="any" output="false">
+		<cfset logger = new tests.resources.HelperObjects.TestLogger( logLevel = "DEBUG" )>
+		<cfscript>
+			return new preside.system.services.database.SqlRunner( logger = logger );
+		</cfscript>
+	</cffunction>
 </cfcomponent>

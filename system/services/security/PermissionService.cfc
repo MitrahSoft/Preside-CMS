@@ -49,7 +49,7 @@ component displayName="Admin permissions service" {
 	 *
 	 */
 	public array function listRoles() {
-		return _getRoles().keyArray();
+		return structKeyArray( _getRoles() );
 	}
 
 	/**
@@ -155,12 +155,13 @@ component displayName="Admin permissions service" {
 		}
 
 		if ( arguments.contextKeys.len() ) {
+			arraySort( expandedPermissionKeys, "textnocase" );
 			dbData = _getContextPermDao().selectData(
 				  selectFields = [ "granted", "permission_key", "security_group", "security_group.label as group_name" ]
 				, filter       = {
 					  context        = arguments.context
 					, context_key    = arguments.contextKeys
-					, permission_key = expandedPermissionKeys.sort( "textnocase" )
+					, permission_key = expandedPermissionKeys
 				  }
 			);
 
@@ -177,7 +178,7 @@ component displayName="Admin permissions service" {
 		if ( arguments.includeDefaults ) {
 			for( key in contextPerms ) {
 				_getDefaultGroupsForPermission( permissionKey=key ).each( function( group ){
-					if ( !contextPerms[ key ].granted.findNoCase( group ) ) {
+					if ( !contextPerms[ key ].granted.find( group ) ) {
 						contextPerms[ key ].granted.append( group );
 					}
 				} );

@@ -41,7 +41,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		super.assertEquals( "page-types.casestudy.index"                         , pageTypeBean.getViewlet()            );
 		super.assertEquals( "page-types.casestudy.add"                           , pageTypeBean.getAddForm()            );
 		super.assertEquals( "page-types.casestudy.edit"                          , pageTypeBean.getEditForm()           );
-		super.assertEquals( "casestudy,blog,event,some_page_type,page,teammember", pageTypeBean.getAllowedChildTypes()  );
+		super.assertEquals( "page,some_page_type,casestudy,teammember,blog,event", pageTypeBean.getAllowedChildTypes()  );
 		super.assertEquals( "*"                                                  , pageTypeBean.getAllowedParentTypes() );
 	}
 

@@ -91,8 +91,9 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 			, "sitetree.navigate"
 		];
 		var actual   = _getPermissionService( permissions=testPerms, roles=testRoles ).listPermissionKeys( role="user" );
+		arraySort( actual, "textnocase" );
 
-		super.assertEquals( expected, actual.sort( "textnocase" ) );
+		super.assertEquals( expected, actual );
 	}
 
 	function test06_listPermissionKeys_shouldReturnExpandedPermissions_whereSuppliedRoleHasPermissionsConfiguredWithWildCardsAndExclusions(){
@@ -399,7 +400,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		};
 		var expandedPermKeys = [ "sitetree.edit","assetmanager.folders.navigate","assetmanager.folders.read","assetmanager.folders.add","assetmanager.folders.edit","assetmanager.assets.edit","groupmanager.edit" ];
 
-		expandedPermKeys = expandedPermKeys.sort( "textnocase" );
+		arraySort( expandedPermKeys, "textnocase" );
 
 		mockContextPermDao.$( "selectData" ).$args(
 			  selectFields = [ "granted", "permission_key", "security_group", "security_group.label as group_name" ]
@@ -547,7 +548,7 @@ component output="false" extends="tests.resources.HelperObjects.PresideTestCase"
 		};
 		var expandedPermKeys = [ "sitetree.edit","assetmanager.folders.navigate","assetmanager.folders.read","assetmanager.folders.add","assetmanager.folders.edit","assetmanager.assets.edit","groupmanager.edit" ];
 
-		expandedPermKeys = expandedPermKeys.sort( "textnocase" );
+		arraySort( expandedPermKeys, "textnocase" );
 
 		mockContextPermDao.$( "selectData" ).$args(
 			  selectFields = [ "granted", "permission_key", "security_group", "security_group.label as group_name" ]

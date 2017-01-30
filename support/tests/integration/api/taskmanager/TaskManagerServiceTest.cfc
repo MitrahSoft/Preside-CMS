@@ -283,8 +283,8 @@ component extends="testbox.system.BaseSpec" {
 				tm.ensureTasksExistInStatusDb();
 
 				expect( tm.$callLog().addTaskToStatusDb.len() ).toBe( 2 );
-				expect( tm.$callLog().addTaskToStatusDb[1] ).toBe( [ "task_b" ] );
-				expect( tm.$callLog().addTaskToStatusDb[2] ).toBe( [ "task_d" ] );
+				expect( tm.$callLog().addTaskToStatusDb[1] ).toBe( {1= "task_b" } );
+				expect( tm.$callLog().addTaskToStatusDb[2] ).toBe( {1= "task_d" } );
 			} );
 
 			it( "should delete tasks from the DB when they do not exist in configuration", function(){
@@ -298,9 +298,9 @@ component extends="testbox.system.BaseSpec" {
 				tm.ensureTasksExistInStatusDb();
 
 				expect( tm.$callLog().removeTaskFromStatusDb.len() ).toBe( 3 );
-				expect( tm.$callLog().removeTaskFromStatusDb[1] ).toBe( [ "task_a1" ] );
-				expect( tm.$callLog().removeTaskFromStatusDb[2] ).toBe( [ "task_e" ] );
-				expect( tm.$callLog().removeTaskFromStatusDb[3] ).toBe( [ "task_g" ] );
+				expect( tm.$callLog().removeTaskFromStatusDb[1] ).toBe( { 1="task_a1" } );
+				expect( tm.$callLog().removeTaskFromStatusDb[2] ).toBe( { 1="task_e" } );
+				expect( tm.$callLog().removeTaskFromStatusDb[3] ).toBe( { 1="task_g" } );
 			} );
 		} );
 
@@ -553,7 +553,7 @@ component extends="testbox.system.BaseSpec" {
 				tm.markTaskAsCompleted( taskKey, false, timeTaken );
 
 				expect( tm.$callLog().completeTaskHistoryLog.len() ).toBe( 1 );
-				expect( tm.$callLog().completeTaskHistoryLog[1] ).toBe( [ taskKey, false, timeTaken ]  );
+				expect( tm.$callLog().completeTaskHistoryLog[1] ).toBe( { taskKey=taskKey, success=false, timeTaken=timeTaken }  );
 			} );
 
 			it( "should empty the run_expires expiry flag record", function(){

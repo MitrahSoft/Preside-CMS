@@ -122,7 +122,7 @@ component output=false singleton=true {
 
 					if ( !isSystemType ) {
 						var viewDir = dir & "/views/page-types/#objectName#/";
-						var layoutFiles = DirectoryList( viewDir, false, "name", "*.cfm" );
+						var layoutFiles = DirectoryList( expandpath(viewDir), false, "name", "*.cfm" );
 
 						for( var file in layoutFiles ) {
 							if ( !file.startsWith( "_" ) ) {
@@ -152,7 +152,7 @@ component output=false singleton=true {
 				}
 
 				var viewDir = dir & "/views/page-types/#id#/";
-				var layoutFiles = DirectoryList( viewDir, false, "name", "*.cfm" );
+				var layoutFiles = DirectoryList( expandpath(viewDir), false, "name", "*.cfm" );
 
 				for( var file in layoutFiles ) {
 					if ( !file.startsWith( "_" ) ) {
@@ -228,7 +228,7 @@ component output=false singleton=true {
 		var directory = GetDirectoryFromPath( arguments.path );
 		var fileName  = ListLast( arguments.path, "\/" );
 		var ext       = ListLast( fileName, "." );
-		var filesInDir = DirectoryList( directory, false, "name", "*.#ext#" );
+		var filesInDir = DirectoryList( expandpath(directory), false, "name", "*.#ext#" );
 
 		return filesInDir.findNoCase( fileName );
 

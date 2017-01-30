@@ -33,10 +33,18 @@ component displayName="TaskManager Configuration Wrapper" {
 				var handler  = LCase( ReReplace( file, "\.cfc$", "" ) );
 
 				if ( FileExists( expandPath( filePath ) ) ) {
-					var componentPath = Replace( filePath, "/", ".", "all" );
-					    componentPath = ReReplace( componentPath, "\.cfc$", "" );
+					var component_path = "";
+					var meta           = "";
+					var componentPath  = Replace( filePath, "/", ".", "all" );
+						componentPath  = ReReplace( componentPath, "\.cfc$", "" );
 
-					var meta = getComponentMetaData( componentPath );
+					try{
+						component_path = replace( componentPath, ".#listFirst(componentPath, '.')#.", "preside." );
+						meta = getComponentMetaData( component_path );
+					}catch( any e ){
+						component_path = replace( componentPath, ".#listFirst(componentPath, '.')#.", "tests." );
+						meta = getComponentMetaData( component_path );
+					}
 
 					for( var f in meta.functions ){
 						var isScheduledTaskMethod = Len( Trim( f.schedule ?: "" ) );

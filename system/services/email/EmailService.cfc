@@ -193,7 +193,7 @@ component displayName="Email service" {
 			);
 		}
 
-		if ( !arrayLen( sendArgs.to ?: arrayNew(1) ) ) {
+		if ( !sendArgs.to.len() ) {
 			throw(
 				  type   = "EmailService.missingToAddress"
 				, message= "Missing to email address(es) when sending message with subject [#sendArgs.subject ?: ''#]"

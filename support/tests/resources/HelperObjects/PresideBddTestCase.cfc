@@ -214,7 +214,6 @@
 		<cfdbinfo type="Foreignkeys" table="#arguments.table#" name="keys" datasource="#application.dsn#" />
 
 		<cfscript>
-			var keys        = "";
 			var key         = "";
 			var constraints = {};
 			var rules       = _getcfmlBaseEngine().getFKRules();
@@ -284,9 +283,23 @@
 	</cffunction>
 
 	<cffunction name="_getDbAdapter" access="private" returntype="any" output="false">
+		<cfset baseEngine =  new preside.system.services.cfmlEngines.baseEngine() >
 		<cfreturn new preside.system.services.database.adapters.AdapterFactory(
-			dbInfoService = new preside.system.services.database.DbInfoService()
+			dbInfoService = new preside.system.services.database.DbInfoService( baseEngine )
 		).getAdapter( application.dsn ) />
+	</cffunction>
+
+	<cffunction name="_getcfmlBaseEngine" access="private" returntype="any" output="false">
+		<cfscript>
+			return new preside.system.services.cfmlEngines.baseEngine();
+		</cfscript>
+	</cffunction>
+
+	<cffunction name="_getRunner" access="private" returntype="any" output="false">
+		<cfset logger = new tests.resources.HelperObjects.TestLogger( logLevel = "DEBUG" )>
+		<cfscript>
+			return new preside.system.services.database.SqlRunner( logger = logger );
+		</cfscript>
 	</cffunction>
 
 </cfcomponent>

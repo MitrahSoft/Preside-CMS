@@ -2855,16 +2855,18 @@
 
 	<cffunction name="_getTableForeignKeys" access="private" returntype="struct" output="false">
 		<cfargument name="table" type="string" required="true" />
-		<cfdbinfo type="Foreignkeys" name="keys" datasource="#application.dsn#" table="#arguments.table#" />
+		<cfdbinfo type="Foreignkeys" table="#arguments.table#" name="keys" datasource="#application.dsn#" />
+
 		<cfscript>
-			var keys        = "";
-			var key         = "";
-			var constraints = {};
-			var rules       = {};
+			var key           = "";
+			var constraints   = {};
+			var rules         = _getcfmlBaseEngine().getFKRules();
 
-			rules["0"] = "cascade";
-			rules["2"] = "set null";
-
+			if( ( server.coldfusion.productName ?: "" ) eq "ColdFusion Server" ) {
+				var sql       = _getDbAdapter().getForeignKeyName( application.databaseName );
+				var getFkName = _getRunner().runSql( dsn = application.dsn, sql = sql );
+				keys          = _getcfmlBaseEngine().populateKeys( getFkName, keys, arguments.table );
+			}
 			for( key in keys ){
 				constraints[ key.fk_name ] = {
 					  pk_table  = key.pktable_name

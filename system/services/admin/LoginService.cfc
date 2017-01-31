@@ -911,7 +911,7 @@ component displayName="Admin login service" {
 	}
 
 	private void function _preventSessionFixation() {
-		var appSettings = getApplicationSettings();
+		var appSettings = getApplicationMetaData();
 
 		if ( ( appSettings.sessionType ?: "cfml" ) != "j2ee" ) {
 			SessionRotate();

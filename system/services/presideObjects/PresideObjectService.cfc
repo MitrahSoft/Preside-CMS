@@ -2075,7 +2075,7 @@ component displayName="Preside Object Service" {
 			}
 		}
 
-		if ( manyToManyObjects.len() ) {
+		if ( structCount(manyToManyObjects) ) {
 			for( var join in arguments.joins ){
 				if ( manyToManyObjects.keyExists( join.joinFromObject ) ) {
 					join.joinFromObject = getVersionObjectName( join.joinFromObject );

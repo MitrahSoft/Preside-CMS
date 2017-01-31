@@ -1,7 +1,7 @@
 component extends="testbox.system.BaseSpec" {
 
 	function beforeAll() {
-		antiSamy = new preside.system.services.security.AntiSamyService();
+		antiSamy = new preside.system.services.security.AntiSamyService( baseEngine = new preside.system.services.cfmlEngines.baseEngine() );
 	}
 
 	function run(){
